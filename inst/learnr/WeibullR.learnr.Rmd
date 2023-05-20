@@ -277,6 +277,28 @@ suspensions<-c(100, 45, 10)
 fit<-MLEw3p(failures, suspensions, bounds=TRUE, show=TRUE)
 ```
 
+### Exercises
+
+```{r weibayes-eta, echo=FALSE}
+question("What is eta in the Weibayes example?",
+  answer("88.84", correct = TRUE),
+  answer("389.7"),
+  answer("87.89"),
+  answer("37.89"),
+  random_answer_order = TRUE
+)
+```
+
+```{r failure-free, echo=FALSE}
+question("What is the failure free period in the 3P Weibull example?",
+  answer("300", correct = TRUE),
+  answer("100"),
+  answer("-100"),
+  answer("-300"),
+  random_answer_order = TRUE
+)
+```
+
 ## Competing Failure Modes
 
 A part or machine may have multiple different failure modes (e.g. corrosion, fatigue, overload), where each failure mode has a different distribution of time to failure.
@@ -358,6 +380,17 @@ Add the 2 `wblr` objects to a list and plot both objects in a single chart.
 
 ```{r echo=TRUE}
 plot.wblr(list(obj1, obj2))
+```
+
+### Exercises
+
+```{r obj1-vs-obj2, echo=FALSE}
+question("What is the difference between obj1 and obj2?",
+  answer("obj1 includes suspensions"),
+  answer("obj2 includes suspensions"),
+  answer("obj2 has a fit with a lower beta"),
+  answer("Both 2 and 3 are true", correct = TRUE)
+)
 ```
 
 ## Wrapping Up
