@@ -6,3 +6,6 @@
 ^ReadMe\.md$
 ^ReadMe\.Rmd$
 ^news\.md$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
