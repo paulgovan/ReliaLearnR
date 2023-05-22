@@ -10,3 +10,5 @@
 ^docs$
 ^pkgdown$
 ^\.github$
+^inst/learnr/rsconnect$
+^index\.md$
