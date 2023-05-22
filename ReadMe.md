@@ -1,7 +1,3 @@
----
-output: html_document
----
-
 # WeibullR.learnr
 WeibullR.learnr is an interactive introduction to Life Data Analysis. WeibullR.learnr depends on WeibullR, a R package for Weibull Analysis, and learnr, a framework for building interactive learning modules in R. 
 
