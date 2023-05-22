@@ -23,4 +23,4 @@ To launch the learning module:
 WeibullR.learnr::WeibullR.learnr()
 ```
 
-Or to access the module in a browser, visit [paulgovan.shinyapps.io/weibullr.learnr](https://paulgovan.shinyapps.io/weibullr.learnr/). 
+Or to access the module in a browser, visit [paulgovan.shinyapps.io/weibullrlearnr](https://paulgovan.shinyapps.io/weibullrlearnr/). 

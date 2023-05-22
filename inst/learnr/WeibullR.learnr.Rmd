@@ -54,7 +54,9 @@ output$distPlot <- renderPlot({
 })
 ```
 
-Hint: Eta should be slightly larger than the mean of the normal distribution.
+<div id="filter-hint">
+**Hint:** Eta should be slightly larger than the mean of the normal distribution.
+</div>
 
 ### The Cumulative Distribution Function
 
@@ -385,11 +387,12 @@ plot.wblr(list(obj1, obj2))
 ### Exercises
 
 ```{r obj1-vs-obj2, echo=FALSE}
-question("What is the difference between obj1 and obj2?",
+question("What is the difference between obj1 and obj2 (select all that apply)?",
   answer("obj1 includes suspensions"),
-  answer("obj2 includes suspensions"),
-  answer("obj2 has a fit with a lower beta"),
-  answer("Both 2 and 3 are true", correct = TRUE)
+  answer("obj1 has a fit with a lower beta"),
+  answer("obj2 includes suspensions", correct=TRUE),
+  answer("obj2 has a fit with a lower beta", correct=TRUE),
+  random_answer_order = TRUE
 )
 ```
 
