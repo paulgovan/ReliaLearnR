@@ -148,6 +148,8 @@ failures<-c(30, 49, 82, 90, 96)
 fit<-MLEw2p(failures, bounds=TRUE, show=TRUE)
 ```
 
+Note that the horizontal axis on a probability plot is log scale, and the vertical axis is log(log(1-p)) scale, where p=(i-0.3)/(n+4) and i is the rank of the observation. By using this scale, the resulting plot of the Weibull data appears linear. T
+
 ### Exercises
 
 ```{r unreliability, echo=FALSE}
@@ -395,6 +397,10 @@ question("What is the difference between obj1 and obj2 (select all that apply)?"
   random_answer_order = TRUE
 )
 ```
+
+## Contour Plots
+
+
 
 ## Wrapping Up
 
