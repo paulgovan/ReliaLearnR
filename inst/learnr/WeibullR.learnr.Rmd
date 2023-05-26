@@ -75,7 +75,7 @@ And $\eta$ is the scale parameter or the quantile at 63.2% probability
 ### Exercises
 
 ```{r beta, echo=FALSE}
-question("Which beta below indicates a wear out failure mode?",
+question("Which beta below may indicate a wear out failure mode?",
   answer("1"),
   answer("0.5"),
   answer("2", correct = TRUE),
@@ -85,7 +85,7 @@ question("Which beta below indicates a wear out failure mode?",
 ```
 
 ```{r eta, echo=FALSE}
-question("What does eta represent?",
+question("What does the parameter eta represent?",
   answer("shape parameter"),
   answer("scale parameter", correct = TRUE),
   answer("failure rate"),
@@ -163,11 +163,11 @@ question("What is the approximate unreliability at time 100?",
 ```
 
 ```{r b50, echo=FALSE}
-question("What is the approximate P50 life (the time at which 50% of the machines are expected to fail?",
+question("What is the approximate P50 life (the time at which 50% of the machines are expected to fail?)",
   answer("70", correct = TRUE),
   answer("50"),
   answer("100"),
-  answer("50"),
+  answer("90"),
   random_answer_order = TRUE
 )
 ```
@@ -333,8 +333,9 @@ A basic Weibull with competing failure modes tends to -
 To see this behavior graphically, first create some Weibull data representing 3 different failure modes.
 
 ```{r echo=TRUE}
+set.seed(123)
 data <- data.frame(
-  time = c(rweibull(5, 0.5, 10), rweibull(10, 1, 10), rweibull(5, 2, 10), rweibull(100, 2, 10)),
+  time = c(rweibull(5, 0.5, 20), rweibull(10, 1, 10), rweibull(5, 2, 5), rweibull(100, 2, 10)),
   event = c(rep(1, 20), rep(0, 100)),
   failure_mode = c(rep("A", 5), rep("B", 10), rep("C", 5), rep("", 100))
   )
@@ -438,6 +439,8 @@ question("At a probability level of 90%...",
   random_answer_order = TRUE
 )
 ```
+
+**Challenge:** rerun the competing failure mode example with a different number in the `set.seed` function and see if the same results hold true.
 
 ## Wrapping Up
 
