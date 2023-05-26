@@ -12,3 +12,4 @@
 ^\.github$
 ^inst/learnr/rsconnect$
 ^index\.md$
+^cran-comments\.md$

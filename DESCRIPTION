@@ -4,9 +4,9 @@ Title: An Interactive Introduction to Life Data Analysis
 Version: 0.1.0
 URL: https://paulgovan.github.io/WeibullR.learnr/
 BugReports: https://github.com/paulgovan/weibullr.learnr/issues
-Authors@R: person("Paul", "Govan", email = "pgovan1@aggienetwork.com", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-1821-8492"))
-Description: WeibullR.learnr is an interactive introduction to Life Data Analysis
-  that depends on WeibullR, a R package for Weibull Analysis, and learnr, a 
+Authors@R: person("Paul", "Govan", email = "pgovan1@aggienetwork.com", role = c("aut", "cre", "cph"), comment = c(ORCID = "0000-0002-1821-8492"))
+Description: An interactive introduction to Life Data Analysis
+  that depends on 'WeibullR', a R package for Weibull Analysis, and 'learnr', a 
   framework for building interactive learning modules in R. 
 Imports:
   learnr,

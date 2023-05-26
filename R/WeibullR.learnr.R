@@ -4,7 +4,8 @@
 #' @import learnr
 #' @import WeibullR
 #' @export
-#' @seealso \url{http://paulgovan.github.io/WeibullR.learnr/}
+#' @seealso \url{https://paulgovan.github.io/WeibullR.learnr/}
+#' @return This function does not return a value.
 #' @examples
 #' if (interactive()) {
 #'   WeibullR.learnr()

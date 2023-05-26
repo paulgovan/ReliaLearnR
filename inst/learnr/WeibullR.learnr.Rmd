@@ -148,12 +148,12 @@ failures<-c(30, 49, 82, 90, 96)
 fit<-MLEw2p(failures, bounds=TRUE, show=TRUE)
 ```
 
-Note that the horizontal axis on a probability plot is log scale, and the vertical axis is log(log(1-p)) scale, where p=(i-0.3)/(n+4) and i is the rank of the observation. By using this scale, the resulting plot of the Weibull data appears linear. T
+Note that the horizontal axis on a probability plot is log scale, and the vertical axis is log(log(1-p)) scale, where p=(i-0.3)/(n+4) and i is the rank of the observation. By using this scale, the resulting plot of the Weibull data appears linear.
 
 ### Exercises
 
 ```{r unreliability, echo=FALSE}
-question("What is the estimated unreliability at time 100?",
+question("What is the approximate unreliability at time 100?",
   answer("50%"),
   answer("20%"),
   answer("75%"),
@@ -162,12 +162,12 @@ question("What is the estimated unreliability at time 100?",
 )
 ```
 
-```{r upper-confidence, echo=FALSE}
-question("What is the upper 90% confidence level at time 50?",
-  answer("50%", correct = TRUE),
-  answer("20%"),
-  answer("75%"),
-  answer("90%"),
+```{r b50, echo=FALSE}
+question("What is the approximate P50 life (the time at which 50% of the machines are expected to fail?",
+  answer("70", correct = TRUE),
+  answer("50"),
+  answer("100"),
+  answer("50"),
   random_answer_order = TRUE
 )
 ```
@@ -249,6 +249,24 @@ question("In the interval censored example, how many total failures occurred?",
 -   **Maximum Likelihood Estimation (MLE)** is based on estimating the parameters of the distribution by maximizing the likelihood function of the observed data.
 
 WeibullR includes functions for both methods, such as the `MRRw2p`, `MRRw3p` functions for MRR and the `MLEw2p`, `MLEw3p` functions for MLE.
+
+Let's rerun the right censored example and compare the MRR and MLE methods.
+
+```{r echo=TRUE}
+MRRfit <- wblr.conf(wblr.fit(wblr(failures, suspensions, col="blue"), method.fit="rr"))
+MLEfit <- wblr.conf(wblr.fit(wblr(failures, suspensions, col="red"), method.fit="mle"), method.conf="lrb")
+plot.wblr(list(MRRfit, MLEfit))
+```
+
+```{r mrr-vs-mle, echo=FALSE}
+question("What is the difference between the MRR and MLE fits (select all that apply)?",
+  answer("The MLE fit has a higher beta", correct = TRUE),
+  answer("The MRR fit has a higher beta"),
+  answer("The MLE fit results in a higher unreliability at time 30"),
+  answer("The MRR fit results in a higher unreliability at time 30", correct = TRUE),
+  random_answer_order = TRUE
+)
+```
 
 ## Other Weibull Models
 
@@ -400,7 +418,26 @@ question("What is the difference between obj1 and obj2 (select all that apply)?"
 
 ## Contour Plots
 
+Another way to compare multiple Weibull models is with contour plots. In this context, a contour plot consists of curves or contours that represent the Weibull distribution in terms of the parameters Beta and Eta. 
 
+Let's rerun the competing failure mode example and build contour plots for each failure mode at a probability level of 90%.
+
+```{r echo=TRUE, results='hide'}
+obj1 <- wblr.conf(wblr.fit(wblr(dat1, col="blue"), method="mle"), method="lrb")
+obj2 <- wblr.conf(wblr.fit(wblr(dat2, col="red"), method="mle"), method="lrb")
+obj3 <- wblr.conf(wblr.fit(wblr(dat3, col="orange"), method="mle"), method="lrb")
+plot_contour(list(obj1, obj2, obj3), CL=0.9)
+```
+
+```{r contour-plots, echo=FALSE}
+question("At a probability level of 90%...",
+  answer("obj3 (orange) is significantly different than the others"),
+  answer("obj2 (red) is significantly different than the others"),
+  answer("None of the distributions are significantly different", correct=TRUE),
+  answer("All of the distributions are significantly different"),
+  random_answer_order = TRUE
+)
+```
 
 ## Wrapping Up
 

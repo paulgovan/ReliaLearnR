@@ -6,6 +6,9 @@
 \usage{
 WeibullR.learnr()
 }
+\value{
+This function does not return a value.
+}
 \description{
 WeibullR.learnr is an interactive introduction to Life Data Analysis.
 }
@@ -15,5 +18,5 @@ if (interactive()) {
 }
 }
 \seealso{
-\url{http://paulgovan.github.io/WeibullR.learnr/}
+\url{https://paulgovan.github.io/WeibullR.learnr/}
 }
