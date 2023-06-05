@@ -290,13 +290,16 @@ plot(obj)
 The 3P Weibull has an additional parameter *t~0~* to represent a failure free period (i.e. a machine cannot fail until after time *t~0~*). Often parts or machines must age, wear, fatigue, etc. before they can actually fail, and the 3P Weibull can model this behavior.
 
 $$ R(t) = 1 - F(t) = e^-((t-t~0~)/\eta)^\beta $$
-
-Let's rerun the previous example as a 3P Weibull.
+Here is an example from "The New Weibull Handbook" by Robert Abernethy (2004). 
+Let's run this example as a 3P Weibull.
 
 ```{r echo=TRUE}
-failures<-c(30, 49, 82, 90, 96)
-suspensions<-c(100, 45, 10)
-fit<-MLEw3p(failures, suspensions, bounds=TRUE, show=TRUE)
+failures<-c(3.46623, 3.732711, 4.052996, 4.628703, 4.8157, 5.84517, 5.888313, 5.892967,
+            8.168362, 10.02799, 10.06062, 10.49785, 11.11493, 11.87369, 12.21122, 12.51854, 
+            12.91357, 18.04246, 18.20712, 19.57305, 21.20873, 30.03917, 34.88001, 36.87355,
+            53.91168)
+fit<- wblr.conf(wblr.fit(wblr(failures), dist="weibull3p"), col="darkgreen")
+plot(fit)
 ```
 
 ### Exercises
@@ -313,10 +316,59 @@ question("What is eta in the Weibayes example?",
 
 ```{r failure-free, echo=FALSE}
 question("What is the failure free period in the 3P Weibull example?",
-  answer("300", correct = TRUE),
-  answer("100"),
-  answer("-100"),
-  answer("-300"),
+  answer("3.3", correct = TRUE),
+  answer("0.85"),
+  answer("11.16"),
+  answer("0"),
+  random_answer_order = TRUE
+)
+```
+
+## Multi-Plots
+
+### Multi-Plots
+
+It's often helpful to compare multiple Weibull models on the same plot. To build a plot with multiple Weibull models, start by creating a `wblr` object
+
+```{r echo=TRUE}
+failures<-c(30, 49, 82, 90, 96)
+obj1<-wblr(failures) 
+```
+
+Add a default fit.
+
+```{r echo=TRUE}
+obj1<-wblr.fit(obj1, col="red") 
+```
+
+Add default confidence bounds.
+
+```{r echo=TRUE}
+obj1<-wblr.conf(obj1, lwd=1) 
+```
+
+Now create a second `wblr` object.
+
+```{r echo=TRUE}
+failures<-c(30, 49, 82, 90, 96)
+suspensions<-c(100, 45, 10)
+obj2<-wblr.conf(wblr.fit(wblr(failures, suspensions, col="purple"),),lwd=1)
+```
+
+Add the 2 `wblr` objects to a list and plot both objects in a single chart.
+
+```{r echo=TRUE}
+plot.wblr(list(obj1, obj2))
+```
+
+### Exercises
+
+```{r obj1-vs-obj2, echo=FALSE}
+question("What is the difference between obj1 and obj2 (select all that apply)?",
+  answer("obj1 includes suspensions"),
+  answer("obj1 has a fit with a lower beta"),
+  answer("obj2 includes suspensions", correct=TRUE),
+  answer("obj2 has a fit with a lower beta", correct=TRUE),
   random_answer_order = TRUE
 )
 ```
@@ -359,62 +411,13 @@ dat2$event[dat2$failure_mode != "B"] <- 0
 dat3$event[dat3$failure_mode != "C"] <- 0
 ```
 
-Finally, fit a wblr object for each failure mode and plot the results.
+Finally, fit a wblr object for each failure mode and create a multi-plot.
 
 ```{r echo=TRUE}
 obj1 <- wblr.fit(wblr(dat1, col="blue"))
 obj2 <- wblr.fit(wblr(dat2, col="red"))
 obj3 <- wblr.fit(wblr(dat3, col="orange"))
 plot.wblr(list(obj1, obj2, obj3), is.plot.legend = FALSE)
-```
-
-## Multi-Plots
-
-### Multi-Plots
-
-It's often helpful to compare multiple Weibull models on the same plot. To build a plot with multiple Weibull models, start by creating a `wblr` object
-
-```{r echo=TRUE}
-failures<-c(30, 49, 82, 90, 96)
-obj1<-wblr(failures) 
-```
-
-Add a default fit that appears as a red line on the plot.
-
-```{r echo=TRUE}
-obj1<-wblr.fit(obj1, col="red") 
-```
-
-Add default confidence bounds using a single width line.
-
-```{r echo=TRUE}
-obj1<-wblr.conf(obj1, lwd=1) 
-```
-
-Now create a second `wblr` object.
-
-```{r echo=TRUE}
-failures<-c(30, 49, 82, 90, 96)
-suspensions<-c(100, 45, 10)
-obj2<-wblr.conf(wblr.fit(wblr(failures, suspensions, col="purple"),),lwd=1)
-```
-
-Add the 2 `wblr` objects to a list and plot both objects in a single chart.
-
-```{r echo=TRUE}
-plot.wblr(list(obj1, obj2))
-```
-
-### Exercises
-
-```{r obj1-vs-obj2, echo=FALSE}
-question("What is the difference between obj1 and obj2 (select all that apply)?",
-  answer("obj1 includes suspensions"),
-  answer("obj1 has a fit with a lower beta"),
-  answer("obj2 includes suspensions", correct=TRUE),
-  answer("obj2 has a fit with a lower beta", correct=TRUE),
-  random_answer_order = TRUE
-)
 ```
 
 ## Contour Plots
@@ -458,13 +461,18 @@ For more help with the WeibullR package.
 help(package="WeibullR")
 ```
 
+### More resources
+
+[WeibullR.plotly](https://paulgovan.github.io/WeibullR.plotly/) is a package for building interactive Weibull models. 
+
+[WeibullR.shiny](https://paulgovan.github.io/WeibullR.shiny/) is a web application for life data analysis.
+
 ### References
+
+- Abernethy, R.B. (2004) The New Weibull Handbook. Fifth Edition.
 
 -   Aden-Buie G, Schloerke B, Allaire J, Rossell Hayes A (2023). learnr: Interactive Tutorials for R. https://rstudio.github.io/learnr/, https://github.com/rstudio/learnr.
 
 -   Silkworth, David. (2020). WeibullR: An R Package for Weibull Analysis for Reliability Engineers. 43-53. <https://doi.org/10.35566/isdsa2019c3>.
 
 -   Silkworth D, Symynck J (2022). *WeibullR: Weibull Analysis for Reliability Engineering*. R package version 1.2.1, <https://CRAN.R-project.org/package=WeibullR>.
-
-
-

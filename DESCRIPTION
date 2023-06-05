@@ -5,13 +5,14 @@ Version: 0.1.0
 URL: https://paulgovan.github.io/WeibullR.learnr/
 BugReports: https://github.com/paulgovan/weibullr.learnr/issues
 Authors@R: person("Paul", "Govan", email = "pgovan1@aggienetwork.com", role = c("aut", "cre", "cph"), comment = c(ORCID = "0000-0002-1821-8492"))
-Description: An interactive introduction to Life Data Analysis
-  that depends on 'WeibullR', a R package for Weibull Analysis, and 'learnr', a 
-  framework for building interactive learning modules in R. 
+Description: An interactive introduction to Life Data Analysis that depends on 'WeibullR' 
+  by David Silkworth and Jurgen Symynck (2022) <https://CRAN.R-project.org/package=WeibullR>, 
+  a R package for Weibull Analysis, and 'learnr' by Garrick Aden-Buie et al. (2023) 
+  <https://CRAN.R-project.org/package=learnr>, a framework for building interactive learning 
+  modules in R. 
 Imports:
   learnr,
   WeibullR
 License: Apache License
 Encoding: UTF-8
-LazyData: true
 RoxygenNote: 7.2.3
