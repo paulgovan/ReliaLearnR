@@ -3,7 +3,7 @@ status](https://www.r-pkg.org/badges/version/WeibullR.learnr)](https://CRAN.R-pr
 ![](http://cranlogs.r-pkg.org/badges/grand-total/WeibullR.learnr)
 ![](http://cranlogs.r-pkg.org/badges/WeibullR.learnr) [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-[![DOI](https://zenodo.org/badge/639144870.svg)](https://zenodo.org/badge/latestdoi/639144870)
+[![DOI](https://zenodo.org/badge/644030886.svg)](https://zenodo.org/badge/latestdoi/644030886)
 
 ## WeibullR.learnr
 
