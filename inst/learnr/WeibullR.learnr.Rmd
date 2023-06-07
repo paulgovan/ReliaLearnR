@@ -148,25 +148,29 @@ failures<-c(30, 49, 82, 90, 96)
 fit<-MLEw2p(failures, bounds=TRUE, show=TRUE)
 ```
 
+### The Weibull Probability Plot
+
+The Weibull Probability Plot shows the time (or equivalent) on the horizontal axis and the unreliability on the vertical axis. In this case, unreliability is analogous to the cumulative probability of failure. We know from the cumulative distribution function that the opposite of the failure probability is the survival probability or reliability. So an unreliability of 80% at a given time is equivalent to a reliability of 20% (100% - 80% = 20%).
+
 Note that the horizontal axis on a probability plot is log scale, and the vertical axis is log(log(1-p)) scale, where p=(i-0.3)/(n+4) and i is the rank of the observation. By using this scale, the resulting plot of the Weibull data appears linear.
 
 ### Exercises
 
 ```{r unreliability, echo=FALSE}
 question("What is the approximate unreliability at time 100?",
-  answer("50%"),
   answer("20%"),
-  answer("75%"),
+  answer("80%"),
+  answer("10%"),
   answer("90%", correct = TRUE),
   random_answer_order = TRUE
 )
 ```
 
 ```{r b50, echo=FALSE}
-question("What is the approximate P50 life (the time at which 50% of the machines are expected to fail?)",
-  answer("70", correct = TRUE),
-  answer("50"),
-  answer("100"),
+question("What is the approximate reliability at time 50?)",
+  answer("20%", correct = TRUE),
+  answer("80%"),
+  answer("10"),
   answer("90"),
   random_answer_order = TRUE
 )
@@ -422,9 +426,23 @@ plot.wblr(list(obj1, obj2, obj3), is.plot.legend = FALSE)
 
 ## Contour Plots
 
-Another way to compare multiple Weibull models is with contour plots. In this context, a contour plot consists of curves or contours that represent the Weibull distribution in terms of the parameters Beta and Eta. 
+Another way to compare multiple Weibull models is with contour plots. In this context, a contour plot consists of curves or contours that represent the Weibull distribution in terms of the parameters Beta and Eta.
+ 
+Let's start by rerunning the first example and building a contour plot.
 
-Let's rerun the competing failure mode example and build contour plots for each failure mode at a probability level of 90%.
+```{r echo=TRUE, results='hide'}
+failures<-c(30, 49, 82, 90, 96)
+obj <- wblr.conf(wblr.fit(wblr(failures, col="blue"), method="mle"), method="lrb")
+plot_contour(obj, CL=0.9)
+```
+
+The Weibull contour plot shows Eta on the horizontal axis, Beta on the vertical axis, and the contour plot at the selected probability (90% in this case).
+
+### Comparing Contour Plots
+
+When comparing Weibull models, it may be helpful to think about contour plots like Venn diagrams. When contours overlap, then similarities probably exist between the distributions. When contours have no overlap, then the distributions are probably different (at the selected probability).  
+
+To visualize these concepts, let's rerun the competing failure mode example and build contour plots for each failure mode at a probability level of 90%.
 
 ```{r echo=TRUE, results='hide'}
 obj1 <- wblr.conf(wblr.fit(wblr(dat1, col="blue"), method="mle"), method="lrb")
