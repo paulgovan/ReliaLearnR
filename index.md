@@ -11,10 +11,10 @@ An interactive introduction to Life Data Analysis.
 
 ## Getting Started
 
-To install WeibullR.plotly in R:
+To install WeibullR.learnr in R:
 
 ``` r
-install.packages('WeibullR.plotly')
+install.packages('WeibullR.learnr')
 ```
 
 To install the development version:
@@ -34,7 +34,7 @@ The modules can also be accessed in a browser at [WeibullR.learnr](https://paulg
 
 ## Functions
 
-Several helper functions for common RAM calculations are included:
+Several helper functions for common RAM calculations are also included:
 
 * `rel` - reliability function
 * `avail` - availability function
