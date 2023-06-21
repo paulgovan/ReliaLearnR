@@ -14,3 +14,5 @@
 ^index\.md$
 ^cran-comments\.md$
 ^CRAN-SUBMISSION$
+^inst/tutorials/WeibullR/rsconnect$
+^inst/tutorials/RAMR/rsconnect$

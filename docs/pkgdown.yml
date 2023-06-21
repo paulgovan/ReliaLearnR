@@ -2,7 +2,7 @@ pandoc: 2.14.0.3
 pkgdown: 2.0.7.9000
 pkgdown_sha: 39083f38bbb2de2e1126529392bddf3e6e262ab4
 articles: {}
-last_built: 2023-06-05T19:04Z
+last_built: 2023-06-21T00:36Z
 urls:
   reference: https://paulgovan.github.io/WeibullR.learnr/reference
   article: https://paulgovan.github.io/WeibullR.learnr/articles

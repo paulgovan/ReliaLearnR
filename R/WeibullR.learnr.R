@@ -11,5 +11,5 @@
 #'   WeibullR.learnr()
 #' }
 WeibullR.learnr <- function() {
-  learnr::run_tutorial('learnr', package = 'WeibullR.learnr')
+  learnr::run_tutorial('WeibullR', package = 'WeibullR.learnr')
 }

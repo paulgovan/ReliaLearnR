@@ -3,11 +3,11 @@ status](https://www.r-pkg.org/badges/version/WeibullR.learnr)](https://CRAN.R-pr
 ![](http://cranlogs.r-pkg.org/badges/grand-total/WeibullR.learnr)
 ![](http://cranlogs.r-pkg.org/badges/WeibullR.learnr) [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-[![DOI](https://zenodo.org/badge/639144870.svg)](https://zenodo.org/badge/latestdoi/639144870)
+[![DOI](https://zenodo.org/badge/644030886.svg)](https://zenodo.org/badge/latestdoi/644030886)
 
 ## WeibullR.learnr
 
-An interactive introduction to Life Data Analysis. This learning module depends on WeibullR, a R package for Weibull Analysis, and learnr, a framework for building interactive learning modules in R. 
+An interactive introduction to Life Data Analysis.
 
 ## Getting Started
 
@@ -17,19 +17,31 @@ To install WeibullR.plotly in R:
 install.packages('WeibullR.plotly')
 ```
 
-To install the developmental version:
+To install the development version:
 
-```
+``` r
 devtools::install_github('paulgovan/weibullr.learnr')
 ```
 
-To launch the learning module:
+## Modules
 
-```
-WeibullR.learnr::WeibullR.learnr()
-```
+There are currently two learning modules:
 
-Or to access the module in a browser, visit [paulgovan.shinyapps.io/weibullrlearnr](https://paulgovan.shinyapps.io/weibullrlearnr/). 
+* `WeibullR.learnr()` - An interactive introduction to Life Data Analysis.
+* `RAMR.learnr()` - A quick reference for common Reliability, Availability, and Maintainability concepts.
+
+The modules can also be accessed in a browser at [WeibullR.learnr](https://paulgovan.shinyapps.io/weibullrlearnr/) and [RAMR.learnr](https://paulgovan.shinyapps.io/ramrlearnr/).
+
+## Functions
+
+Several helper functions for common RAM calculations are included:
+
+* `rel` - reliability function
+* `avail` - availability function
+* `mttf` - mean time to failure
+* `mtbf` - mean time between failure
+* `serv` - serviceability factor
+* `fr` - failure rate
 
 ## More resources
 

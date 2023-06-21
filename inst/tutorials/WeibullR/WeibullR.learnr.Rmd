@@ -60,9 +60,9 @@ output$distPlot <- renderPlot({
 
 ### The Cumulative Distribution Function
 
-R(t) gives the cumulative probability of *survival* prior to time *t* while F(t) gives the cumulative probability of *failure* prior to time *t*
+***R(t)*** gives the cumulative probability of *survival* prior to time *t* while ***F(t)*** gives the cumulative probability of *failure* prior to time *t*
 
-$$ R(t) = 1 - F(t) = e^-(t/\eta)^\beta $$
+$$ R(t) = 1 - F(t) = e^{-(t/\eta)^\beta} $$
 
 Where $\beta$ is the shape parameter. In life data analysis $\beta$ has a physical interpretation:
 
