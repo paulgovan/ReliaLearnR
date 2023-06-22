@@ -1,4 +1,5 @@
 url: https://paulgovan.github.io/WeibullR.learnr/
 template:
   bootstrap: 5
-
+development:
+  mode: auto
