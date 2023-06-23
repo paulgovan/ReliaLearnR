@@ -1,0 +1,14 @@
+name: RAMRlearnr
+title: RAMRlearnr
+username:
+account: paulgovan
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 9339572
+bundleId: 7380267
+url: https://paulgovan.shinyapps.io/RAMRlearnr/
+when: 1687532222.50572
+lastSyncTime: 1687532222.50574
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: RAMRlearnr.html

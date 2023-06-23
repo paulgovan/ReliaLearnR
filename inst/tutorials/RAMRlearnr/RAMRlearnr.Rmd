@@ -222,3 +222,5 @@ The $B_n$ life for the Exponential distribution can be estimated with the base f
 ```{r echo=TRUE, eval=FALSE}
 qexp(0.1, 0.1)
 ```
+
+

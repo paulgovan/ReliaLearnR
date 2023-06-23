@@ -10,9 +10,9 @@
 ^docs$
 ^pkgdown$
 ^\.github$
-^inst/learnr/rsconnect$
 ^index\.md$
 ^cran-comments\.md$
 ^CRAN-SUBMISSION$
-^inst/tutorials/WeibullR/rsconnect$
-^inst/tutorials/RAMR/rsconnect$
+^inst/tutorials/WeibullRlearnr/rsconnect$
+^inst/tutorials/RAMRlearnr/rsconnect$
+^inst/tutorials/WeibullRlearnr/WeibullRlearnr_files$

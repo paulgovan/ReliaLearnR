@@ -11,5 +11,5 @@
 #'   RAMR.learnr()
 #' }
 RAMR.learnr <- function() {
-  learnr::run_tutorial('RAMR', package = 'WeibullR.learnr')
+  learnr::run_tutorial('RAMRlearnr', package = 'WeibullR.learnr')
 }
