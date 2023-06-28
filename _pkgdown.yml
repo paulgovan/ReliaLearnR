@@ -3,3 +3,10 @@ template:
   bootstrap: 5
 development:
   mode: auto
+tutorials:
+- name: WeibullRlearnr
+  title: An Introduction to Life Data Analysis
+  url: https://paulgovan.shinyapps.io/weibullrlearnr/
+- name: RAMRlearnr
+  title: Reliability, Availability, and Maintainability (RAM)
+  url: https://paulgovan.shinyapps.io/ramrlearnr/
