@@ -7,6 +7,8 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 
 # WeibullR.learnr
 
+An Interactive Introduction to Life Data Analysis. 
+
 ## Motivation
 
 Life data analysis is the study of how things, from machines to people, function over time. While no shortage of learning resources for this field exist, many reference proprietary software that is often unavailable to those hoping to get started with life data. `WeibullR.learnr` is an open source set of interactive learning modules, exercises, and functions for learning introductory life data analysis. The primary motivation for the development of `WeibullR.learnr` was to simultaneously introduce the basic concepts and also open source software tools for analyzing life data. 
