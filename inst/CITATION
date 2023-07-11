@@ -1,0 +1,13 @@
+citHeader("To cite WeibullR.learnr in publications use:")
+
+citEntry(
+  entry    = "Manual",
+  title    = "An Interactive Introduction to Life Data Analysis",
+  author   = "Paul Govan",
+  year     = "2023",
+  note     = "R package version 0.1.1",
+  url      = "https://paulgovan.github.io/WeibullR.learnr/",
+  textVersion = paste(
+
+  )
+)

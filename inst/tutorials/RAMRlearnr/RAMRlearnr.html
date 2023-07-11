@@ -111,11 +111,25 @@ if (window.hljs) {
 
 <div id="section-reliability-availability-and-maintainability" class="section level2">
 <h2>Reliability, Availability and Maintainability</h2>
-<p>Reliability, Availability, and Maintainability may sound like similar terms, but they actually represent different concepts.</p>
-<p><strong>Reliability</strong> is the ability of an item to not break down over time (e.g. a car that doesn’t have to go to the shop very often).</p>
-<p><strong>Availability</strong> is the ability of an item to be available for use (e.g. a car that’s waiting patiently in the garage).</p>
-<p><strong>Maintainability</strong> is the ability of an item to be maintained efficiently (e.g. a car that’s quick to fix if it has a problem).</p>
-<p>That being said, all 3 concepts are inter-related. For example, a car that’s not very reliable is probably not available very often. A car that’s also difficult to maintain is probably available even less.</p>
+<p>Reliability, Availability, and Maintainability may seem like similar terms, but they actually represent different concepts.</p>
+<p><strong>Reliability</strong> is the ability of an item to not break down over time. For example, a reliable car is one that does not break down very often.</p>
+<p><strong>Availability</strong> is the ability of an item to be available for use. An available car is one waiting patiently in the garage and not the shop.</p>
+<p><strong>Maintainability</strong> is the ability of an item to be maintained efficiently. A maintainable car is quick to fix if it has a problem.</p>
+<p>That being said, all 3 concepts are inter-related. For example, a car that is not very reliable is probably not available very often. A car that is also difficult to maintain is probably available even less.</p>
+</div>
+<div id="section-learning-objectives" class="section level2">
+<h2>Learning Objectives</h2>
+<p>This learning module provides a quick reference for basic Reliability, Availability, and Maintainability concepts. After completing this module, you should have a basic understanding of and a chance to apply the following concepts:</p>
+<ul>
+<li>Reliability</li>
+<li>Availability</li>
+<li>Mean Time to Repair (MTTR)</li>
+<li>Mean Time to Failure (MTTF)</li>
+<li>Mean Time Between Failures (MTBF)</li>
+<li>Failure Rate</li>
+<li>Probability of Failure</li>
+<li><span class="math inline">\(B_n\)</span> or <span class="math inline">\(L_n\)</span> life</li>
+</ul>
 </div>
 <div id="section-reliability" class="section level2">
 <h2>Reliability</h2>
@@ -278,16 +292,16 @@ session$onSessionEnded(function() {
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "reliability", 
     question = structure("An item has run for 3 years total and was failed for 5 of those days. What is the reliability of the item?", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_7a04fd7", 
+    "character")), answers = list(structure(list(id = "lnr_ans_f60284c", 
         option = "90%", value = "90%", label = structure("90%", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_f8cf9e4", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_3d603e6", 
         option = "0.5%", value = "0.5%", label = structure("0.5%", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_f98557e", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_bfd741d", 
         option = "99.5%", value = "99.5%", label = structure("99.5%", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_f6655c4", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_b3d3d15", 
         option = "75%", value = "75%", label = structure("75%", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
     "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -298,23 +312,23 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
     "character")), message = NULL, post_message = NULL), ids = list(
         answer = "reliability-answer", question = "reliability"), 
     loading = NULL, random_answer_order = TRUE, allow_retry = FALSE, 
-    seed = 1520393963.79201, options = list()), class = c("learnr_radio", 
+    seed = 432267316.79871, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "availability", 
     question = structure("An item has run for 3 years total, was failed for 5 days, and had scheduled maintenance for 14 days. What is the availability of the item?", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_f641", 
+    "character")), answers = list(structure(list(id = "lnr_ans_6dad2b6", 
         option = "95%", value = "95%", label = structure("95%", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_112e2ba", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_4a8c255", 
         option = "1.7%", value = "1.7%", label = structure("1.7%", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_2ac19d2", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_91845f8", 
         option = "98.3%", value = "98.3%", label = structure("98.3%", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_44e55e6", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_9889dac", 
         option = "50%", value = "50%", label = structure("50%", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
     "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -325,22 +339,22 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
     "character")), message = NULL, post_message = NULL), ids = list(
         answer = "availability-answer", question = "availability"), 
     loading = NULL, random_answer_order = TRUE, allow_retry = FALSE, 
-    seed = 649661980.197478, options = list()), class = c("learnr_radio", 
+    seed = 1635072113.23861, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "mttr", question = structure("1000 items run for 3 years total. During that time, 5 failures occur with repair times in days of 5, 10, 15, 8, and 12. What is the MTTR?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_b54abf6", 
+"character")), answers = list(structure(list(id = "lnr_ans_db13246", 
     option = "15 days", value = "15 days", label = structure("15 days", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_6062b8f", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_97e0d1d", 
     option = "5 days", value = "5 days", label = structure("5 days", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_e3e0b51", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_4203d49", 
     option = "10 days", value = "10 days", label = structure("10 days", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_26264d8", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_da04f5a", 
     option = "8 days", value = "8 days", label = structure("8 days", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
 "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -350,23 +364,23 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "mttr-answer", question = "mttr"), loading = NULL, 
-    random_answer_order = TRUE, allow_retry = FALSE, seed = 1455060416.82243, 
+    random_answer_order = TRUE, allow_retry = FALSE, seed = 950831303.057235, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "mttf", question = structure("1000 items run for 3 years total. During that time, 5 failures occur. What is the MTTF?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_1d30fff", 
+"character")), answers = list(structure(list(id = "lnr_ans_1469088", 
     option = "200 years", value = "200 years", label = structure("200 years", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_10cb6d3", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_b85aa48", 
     option = "0.6 years", value = "0.6 years", label = structure("0.6 years", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_3571ce5", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_e94fd43", 
     option = "600 years", value = "600 years", label = structure("600 years", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_96d6fa4", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_992ec8", 
     option = "500 years", value = "500 years", label = structure("500 years", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
 "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -376,23 +390,23 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "mttf-answer", question = "mttf"), loading = NULL, 
-    random_answer_order = TRUE, allow_retry = FALSE, seed = 360374067.332188, 
+    random_answer_order = TRUE, allow_retry = FALSE, seed = 1530988921.78708, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "mtbf", question = structure("An item fails 5 times during a total time of 45,000 hours. What is the MTBF of the item?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_2f01be4", 
+"character")), answers = list(structure(list(id = "lnr_ans_283e272", 
     option = "0.0001 hours", value = "0.0001 hours", label = structure("0.0001 hours", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_6b3f75f", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_37e2099", 
     option = "10000 hours", value = "10000 hours", label = structure("10000 hours", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_ebadc28", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_caf32ce", 
     option = "9000 hours", value = "9000 hours", label = structure("9000 hours", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_6cf4fe4", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_a80f77f", 
     option = "225,000 hours", value = "225,000 hours", label = structure("225,000 hours", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
 "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -402,7 +416,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "mtbf-answer", question = "mtbf"), loading = NULL, 
-    random_answer_order = TRUE, allow_retry = FALSE, seed = 550303503.743745, 
+    random_answer_order = TRUE, allow_retry = FALSE, seed = 492316221.770747, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
@@ -410,16 +424,16 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "failure-rate", 
     question = structure("100 items run for a total time of 5000 hours in a year. Out of these items, 75 have failures. What is the failure rate in hours?", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_5171279", 
+    "character")), answers = list(structure(list(id = "lnr_ans_a6aa9e7", 
         option = "0.75", value = "0.75", label = structure("0.75", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_d3192cc", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_7b76901", 
         option = "6667", value = "6667", label = structure("6667", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_c23600c", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_c85021", 
         option = "0.00015", value = "0.00015", label = structure("0.00015", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_6d688f", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_7f138c4", 
         option = "0.015", value = "0.015", label = structure("0.015", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
     "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -430,23 +444,23 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
     "character")), message = NULL, post_message = NULL), ids = list(
         answer = "failure-rate-answer", question = "failure-rate"), 
     loading = NULL, random_answer_order = TRUE, allow_retry = FALSE, 
-    seed = 85483296.4601937, options = list()), class = c("learnr_radio", 
+    seed = 565879305.736492, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "exponential", 
     question = structure("An item has a failure probability that follows the exponential distribution with a failure rate of 0.1. What is the probability of survival at time 5?", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_ce6a146", 
+    "character")), answers = list(structure(list(id = "lnr_ans_b5195e3", 
         option = "39.3%", value = "39.3%", label = structure("39.3%", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_3898cf4", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_b85e2d1", 
         option = "60.7%", value = "60.7%", label = structure("60.7%", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_80272a5", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_bb85927", 
         option = "6.1%", value = "6.1%", label = structure("6.1%", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_23c2bed", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_391ae55", 
         option = "93.9%", value = "93.9%", label = structure("93.9%", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
     "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -457,22 +471,22 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
     "character")), message = NULL, post_message = NULL), ids = list(
         answer = "exponential-answer", question = "exponential"), 
     loading = NULL, random_answer_order = TRUE, allow_retry = FALSE, 
-    seed = 1423004590.83736, options = list()), class = c("learnr_radio", 
+    seed = 622808211.209982, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "B-n", question = structure("An item has a failure probability that follows the exponential distribution with a failure rate of 0.1. What is the B10?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_49ab444", 
+"character")), answers = list(structure(list(id = "lnr_ans_5bc2abb", 
     option = "0.105", value = "0.105", label = structure("0.105", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_b0e6009", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_f150440", 
     option = "1.05", value = "1.05", label = structure("1.05", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_b8aa1ec", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_408d40b", 
     option = "60.7%", value = "60.7%", label = structure("60.7%", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_ac2a46d", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_1653642", 
     option = "39.3%", value = "39.3%", label = structure("39.3%", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
 "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -482,7 +496,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "B-n-answer", question = "B-n"), loading = NULL, 
-    random_answer_order = TRUE, allow_retry = FALSE, seed = 1813526135.15551, 
+    random_answer_order = TRUE, allow_retry = FALSE, seed = 940196176.062187, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>

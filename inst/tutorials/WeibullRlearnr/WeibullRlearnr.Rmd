@@ -13,11 +13,21 @@ library(learnr)
 
 ## Life Data Analysis
 
-Life data analysis is the study of how things, like people or machines, function over time. For example, in the automotive industry, life data analysis helps explain how long cars will last before they break down. In this example, life data is a record of how long it takes each car of a given type to break down. 
+Life data analysis is the study of how things, from machines to people, function over time. For example, in the automotive industry, life data analysis helps explain how long cars will last before they break down. In this example, life data is a record of how long it takes each car of a given type to break down. 
 
 Since cars can have multiple problems over their useful life, life data can also be a record of how often each car breaks down. If a car breaks down a lot, then it is considered unreliable, and if it rarely breaks down, then it is more reliable. 
 
 By collecting and modeling life data, we can make predictions about how long cars will last or how long before they will need to be repaired or replaced. 
+
+## Learning Objectives
+
+This learning module provides an introduction to Life Data Analysis. After completing this module, you should have a basic understanding of and a chance to apply the following concepts:
+
+* Weibull analysis
+* Data censoring, including Right Censored and Interval Censored Data
+* Different types of Weibull models, including the 2P Weibull, 3P Weibull, and Weibayes model
+* Parameter estimation methods Median Rank Regression (MRR) and Maximum Likelihood Estimation (MLE)
+* Different plotting methods such as Probability Plots and Contour Plots
 
 ## Weibull Analysis
 

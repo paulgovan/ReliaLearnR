@@ -14,15 +14,28 @@ library(WeibullR.learnr)
 
 ## Reliability, Availability and Maintainability
 
-Reliability, Availability, and Maintainability may sound like similar terms, but they actually represent different concepts. 
+Reliability, Availability, and Maintainability may seem like similar terms, but they actually represent different concepts. 
 
-**Reliability** is the ability of an item to not break down over time (e.g. a car that doesn't have to go to the shop very often). 
+**Reliability** is the ability of an item to not break down over time. For example, a reliable car is one that does not break down very often.
 
-**Availability** is the ability of an item to be available for use (e.g. a car that's waiting patiently in the garage).
+**Availability** is the ability of an item to be available for use. An available car is one waiting patiently in the garage and not the shop. 
 
-**Maintainability** is the ability of an item to be maintained efficiently (e.g. a car that's quick to fix if it has a problem).
+**Maintainability** is the ability of an item to be maintained efficiently. A maintainable car is quick to fix if it has a problem.
 
-That being said, all 3 concepts are inter-related. For example, a car that's not very reliable is probably not available very often. A car that's also difficult to maintain is probably available even less. 
+That being said, all 3 concepts are inter-related. For example, a car that is not very reliable is probably not available very often. A car that is also difficult to maintain is probably available even less. 
+
+## Learning Objectives
+
+This learning module provides a quick reference for basic Reliability, Availability, and Maintainability concepts. After completing this module, you should have a basic understanding of and a chance to apply the following concepts:
+
+* Reliability
+* Availability
+* Mean Time to Repair (MTTR)
+* Mean Time to Failure (MTTF)
+* Mean Time Between Failures (MTBF)
+* Failure Rate
+* Probability of Failure
+* $B_n$ or $L_n$ life
 
 ## Reliability
 

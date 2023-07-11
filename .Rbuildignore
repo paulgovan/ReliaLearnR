@@ -16,3 +16,5 @@
 ^inst/tutorials/WeibullRlearnr/rsconnect$
 ^inst/tutorials/RAMRlearnr/rsconnect$
 ^inst/tutorials/WeibullRlearnr/WeibullRlearnr_files$
+^LICENSE\.md$
+^CODE_OF_CONDUCT\.md$
