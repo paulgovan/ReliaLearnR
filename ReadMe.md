@@ -7,7 +7,7 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 
 # WeibullR.learnr
 
-An interactive introduction to Life Data Analysis. 
+An Interactive Introduction to Life Data Analysis. 
 
 ## Motivation
 
