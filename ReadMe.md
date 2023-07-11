@@ -33,7 +33,7 @@ This package depends on [WeibullR](https://CRAN.R-project.org/package=WeibullR) 
 
 The learning modules are designed to be plug-and-play, but changes can be made by forking this repository and modifying the fork. 
 
-There are currently two primary learning modules:
+There are currently two primary learning modules. These modules can be taken separately or together. 
 
 * `WeibullR.learnr()` - An interactive introduction to Life Data Analysis.
 * `RAMR.learnr()` - A quick reference for common Reliability, Availability, and Maintainability concepts.
