@@ -3,9 +3,7 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^ReadMe_files$
-^ReadMe\.md$
 ^ReadMe\.Rmd$
-^news\.md$
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$

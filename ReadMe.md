@@ -11,7 +11,7 @@ An Interactive Introduction to Life Data Analysis.
 
 ## Motivation
 
-Life data analysis is the study of how things, from machines to people, function over time. While no shortage of learning resources for this field exist, many reference proprietary software that is often unavailable to those hoping to get started with life data. `WeibullR.learnr` is an open source set of interactive learning modules, exercises, and functions for learning introductory life data analysis. The primary motivation for the development of `WeibullR.learnr` was to simultaneously introduce the basic concepts and also open source software for analyzing life data. 
+Life data analysis is the study of how things, from machines to people, function over time. Life data shows how long things last or how long before they need to be repaired or replaced. Although numerous learning resources exist, most reference proprietary software that is often unavailable to those hoping to get started with life data. This proprietary software is usually meant for commercial applications and may not be affordable for students or young professionals. `WeibullR.learnr` [@WeibullRlearnr] is an open source set of interactive learning modules, exercises, and functions for learning introductory life data analysis. The primary motivation for the development of `WeibullR.learnr` was to simultaneously introduce the basic concepts and also open source software for analyzing life data. The target audience for this project are beginning practitioners and university students. 
 
 ## Installation Instructions
 
@@ -27,16 +27,16 @@ To install the development version:
 devtools::install_github('paulgovan/weibullr.learnr')
 ```
 
-This package depends on [WeibullR](https://CRAN.R-project.org/package=WeibullR) by David Silkworth and Jurgen Symynck (2022), a R package for Weibull Analysis, and [learnr](https://CRAN.R-project.org/package=learnr) by Garrick Aden-Buie et al. (2023), a framework for building interactive learning modules in R. 
+`WeibullR.learnr` is written in R and is built using [WeibullR](https://CRAN.R-project.org/package=WeibullR) by David Silkworth and Jurgen Symynck (2022), a R package for Weibull Analysis, and [learnr](https://CRAN.R-project.org/package=learnr) by Garrick Aden-Buie et al. (2023), a framework for building interactive learning modules in R. 
 
 ## Usage
 
-The learning modules are designed to be plug-and-play, but changes can be made by forking this repository and modifying the fork. 
+Currently, two primary learning modules exist. These modules can be taken in either order and can be taken separately or together. The learning modules are designed to be plug-and-play, but changes can be made by forking the software repository and modifying the fork.
 
 There are currently two primary learning modules. These modules can be taken separately or together. 
 
-* `WeibullR.learnr()` - An interactive introduction to Life Data Analysis.
-* `RAMR.learnr()` - A quick reference for common Reliability, Availability, and Maintainability concepts.
+* `WeibullR.learnr()` - An interactive introduction to Life Data Analysis (estimated duration ~2 hours)
+* `RAMR.learnr()` - A quick reference for common Reliability, Availability, and Maintainability concepts (estimated duration ~ 1 hour)
 
 The modules can also be accessed in a browser at [WeibullR.learnr](https://paulgovan.shinyapps.io/weibullrlearnr/) and [RAMR.learnr](https://paulgovan.shinyapps.io/ramrlearnr/).
 
