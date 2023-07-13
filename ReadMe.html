@@ -55,22 +55,21 @@
 <p>An Interactive Introduction to Life Data Analysis.</p>
 <div class="section level2">
 <h2 id="motivation">Motivation<a class="anchor" aria-label="anchor" href="#motivation"></a></h2>
-<p>Life data analysis is the study of how things, from machines to people, function over time. Life data shows how long things last or how long before they need to be repaired or replaced. Although numerous learning resources exist, most reference proprietary software that is often unavailable to those hoping to get started with life data. This proprietary software is usually meant for commercial applications and may not be affordable for students or young professionals. <code>WeibullR.learnr</code> [@WeibullRlearnr] is an open source set of interactive learning modules, exercises, and functions for learning introductory life data analysis. The primary motivation for the development of <code>WeibullR.learnr</code> was to simultaneously introduce the basic concepts and also open source software for analyzing life data. The target audience for this project are beginning practitioners and university students.</p>
+<p>Life data analysis is the study of how things, from machines to people, function over time. Life data shows how long things last or how long before they need to be repaired or replaced. Although numerous learning resources exist, most reference proprietary software that is often unavailable to those hoping to get started with life data. This proprietary software is usually meant for commercial applications and may not be affordable for students or young professionals. <code>WeibullR.learnr</code> is an open source set of interactive learning modules, exercises, and functions for learning introductory life data analysis. The primary motivation for the development of <code>WeibullR.learnr</code> was to simultaneously introduce the basic concepts and also open source software for analyzing life data. The target audience for this project are beginning practitioners and university students.</p>
 </div>
 <div class="section level2">
 <h2 id="installation-instructions">Installation Instructions<a class="anchor" aria-label="anchor" href="#installation-instructions"></a></h2>
+<p><code>WeibullR.learnr</code> is written in R and is built using <a href="https://CRAN.R-project.org/package=WeibullR" class="external-link">WeibullR</a> by David Silkworth and Jurgen Symynck (2022), a R package for Weibull Analysis, and <a href="https://CRAN.R-project.org/package=learnr" class="external-link">learnr</a> by Garrick Aden-Buie et al. (2023), a framework for building interactive learning modules in R.</p>
 <p>To install WeibullR.learnr in R:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'WeibullR.learnr'</span><span class="op">)</span></span></code></pre></div>
 <p>To install the development version:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">'paulgovan/weibullr.learnr'</span><span class="op">)</span></span></code></pre></div>
-<p><code>WeibullR.learnr</code> is written in R and is built using <a href="https://CRAN.R-project.org/package=WeibullR" class="external-link">WeibullR</a> by David Silkworth and Jurgen Symynck (2022), a R package for Weibull Analysis, and <a href="https://CRAN.R-project.org/package=learnr" class="external-link">learnr</a> by Garrick Aden-Buie et al. (2023), a framework for building interactive learning modules in R.</p>
 </div>
 <div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h2>
 <p>Currently, two primary learning modules exist. These modules can be taken in either order and can be taken separately or together. The learning modules are designed to be plug-and-play, but changes can be made by forking the software repository and modifying the fork.</p>
-<p>There are currently two primary learning modules. These modules can be taken separately or together.</p>
 <ul><li>
 <code><a href="reference/WeibullR.learnr.html">WeibullR.learnr()</a></code> - An interactive introduction to Life Data Analysis (estimated duration ~2 hours)</li>
 <li>
