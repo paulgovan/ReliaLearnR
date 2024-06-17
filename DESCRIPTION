@@ -4,7 +4,7 @@ Title: An Interactive Introduction to Life Data Analysis
 Version: 0.1.2
 URL: https://paulgovan.github.io/WeibullR.learnr/
 BugReports: https://github.com/paulgovan/weibullr.learnr/issues
-Authors@R: person("Paul", "Govan", email = "pgovan1@aggienetwork.com", role = c("aut", "cre", "cph"), comment = c(ORCID = "0000-0002-1821-8492"))
+Authors@R: person("Paul", "Govan", email = "paul.govan2@gmail.com", role = c("aut", "cre", "cph"), comment = c(ORCID = "0000-0002-1821-8492"))
 Year: 2023
 Description: An interactive introduction to Life Data Analysis that depends on 'WeibullR' 
   by David Silkworth and Jurgen Symynck (2022) <https://CRAN.R-project.org/package=WeibullR>, 
