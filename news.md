@@ -1,6 +1,10 @@
-# WeibullR.learnr 0.1.1
+# WeibullR.learnr 0.1.3
 
-# WeibullR.learnr v0.1
+## Minor Improvements and bug fixes
+* Update contact info
+* Update citation
+
+# WeibullR.learnr 0.1.2
 
 ## Initial release
 * Weibullr.learnr function
