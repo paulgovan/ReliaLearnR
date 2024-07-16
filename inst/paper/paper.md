@@ -33,6 +33,8 @@ Currently, two primary learning modules exist. These modules can be taken in eit
 
 The modules can also be accessed in a browser at [WeibullR.learnr](https://paulgovan.shinyapps.io/weibullrlearnr/) and [RAMR.learnr](https://paulgovan.shinyapps.io/ramrlearnr/).
 
+![](https://github.com/paulgovan/WeibullR.learnr/blob/master/inst/paper/WeibullRlearnr.png?raw=true)<!-- -->
+
 Several helper functions for common RAM calculations are also included. These functions make it easy to apply the concepts covered in this module.
 
 * `rel()` - reliability function
