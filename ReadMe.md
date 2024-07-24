@@ -1,9 +1,11 @@
-[![CRAN
-status](https://www.r-pkg.org/badges/version/WeibullR.learnr)](https://CRAN.R-project.org/package=WeibullR.learnr)
-![](http://cranlogs.r-pkg.org/badges/grand-total/WeibullR.learnr)
-![](http://cranlogs.r-pkg.org/badges/WeibullR.learnr) [![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+<!-- badges: start -->
+[![CRAN status](https://www.r-pkg.org/badges/version/WeibullR.learnr)](https://CRAN.R-project.org/package=WeibullR.learnr)
+[![CRAN checks](https://badges.cranchecks.info/summary/WeibullR.learnr.svg)](https://cran.r-project.org/web/checks/check_results_WeibullR.learnr.html)
+[![](http://cranlogs.r-pkg.org/badges/last-month/WeibullR.learnr)](https://cran.r-project.org/package=WeibullR.learnr)
+[![](http://cranlogs.r-pkg.org/badges/grand-total/WeibullR.learnr)](https://cran.r-project.org/package=WeibullR.learnr)
+[![Lifecycle:experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![DOI](https://zenodo.org/badge/644030886.svg)](https://zenodo.org/badge/latestdoi/644030886)
+<!-- badges: end -->
 
 # WeibullR.learnr
 
