@@ -1,21 +1,20 @@
 <!-- badges: start -->
-[![CRAN status](https://www.r-pkg.org/badges/version/WeibullR.learnr)](https://CRAN.R-project.org/package=WeibullR.learnr)
-[![CRAN checks](https://badges.cranchecks.info/summary/WeibullR.learnr.svg)](https://cran.r-project.org/web/checks/check_results_WeibullR.learnr.html)
-[![](http://cranlogs.r-pkg.org/badges/last-month/WeibullR.learnr)](https://cran.r-project.org/package=WeibullR.learnr)
+[![CRAN status](https://www.r-pkg.org/badges/version/WeibullR.learnr)](https://CRAN.R-project.org/package=WeibullR.learnr) 
+[![CRAN checks](https://badges.cranchecks.info/summary/WeibullR.learnr.svg)](https://cran.r-project.org/web/checks/check_results_WeibullR.learnr.html) 
+[![](http://cranlogs.r-pkg.org/badges/last-month/WeibullR.learnr)](https://cran.r-project.org/package=WeibullR.learnr) 
 [![](http://cranlogs.r-pkg.org/badges/grand-total/WeibullR.learnr)](https://cran.r-project.org/package=WeibullR.learnr)
 [![Lifecycle:experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![DOI](https://zenodo.org/badge/644030886.svg)](https://zenodo.org/badge/latestdoi/644030886)
 <!-- badges: end -->
 
-# WeibullR.learnr
+## WeibullR.learnr: An Interactive Introduction to Life Data Analysis
 
-An Interactive Introduction to Life Data Analysis. 
+Welcome to `WeibullR.learnr`! This package contains a set of interactive learning modules for life data analysis, focusing on reliability, availability, and maintainability (RAM). It is designed for beginners, including university students and early-career professionals.
+
 
 ## Motivation
 
-Life data analysis is the study of how things, from machines to people, function over time. Life data shows how long things last or how long before they need to be repaired or replaced. Although numerous learning resources exist, most reference proprietary software that is often unavailable to those hoping to get started with life data. This proprietary software is usually meant for commercial applications and may not be affordable for students or young professionals. 
-
-`WeibullR.learnr` is an open source set of interactive learning modules, exercises, and functions for learning introductory life data analysis. The primary motivation for the development of `WeibullR.learnr` was to simultaneously introduce the basic concepts and also open source software for analyzing life data. The target audience for this project are beginning practitioners and university students.
+Life data analysis is the study of how things function over time, from machines to people. Although many learning resources exist, most reference proprietary software, which may be expensive and inaccessible to students or those new to the field. `WeibullR.learnr` is an open-source alternative, introducing basic concepts and tools for life data analysis using R.
 
 ## Installation Instructions
 
@@ -52,6 +51,11 @@ Several helper functions for common RAM calculations are also included:
 * `mtbf()` - mean time between failure
 * `serv()` - serviceability factor
 * `fr()` - failure rate
+
+## Future Development
+
+* `ALT.learnr()` - An Interactive Introduction to Accelterated Life Testing (ALT)
+* `RGA.learnr()` - An Interactive Introduction to Reliability Growth Analysis (RGA)
 
 ## Code of Conduct
 

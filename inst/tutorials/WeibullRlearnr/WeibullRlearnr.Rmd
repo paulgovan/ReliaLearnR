@@ -11,17 +11,21 @@ runtime: shiny_prerendered
 library(learnr)
 ```
 
-## Life Data Analysis
+## Introduction
 
-Life data analysis is the study of how things, from machines to people, function over time. For example, in the automotive industry, life data analysis helps explain how long cars will last before they break down. In this example, life data is a record of how long it takes each car of a given type to break down. 
+Welcome to the tutorial on **Life Data Analysis**! In this tutorial, you will learn about the basics of life data analysis and how to apply it to various fields, such as the automotive industry.
 
-Since cars can have multiple problems over their useful life, life data can also be a record of how often each car breaks down. If a car breaks down a lot, then it is considered unreliable, and if it rarely breaks down, then it is more reliable. 
+## What is Life Data Analysis?
 
-By collecting and modeling life data, we can make predictions about how long cars will last or how long before they will need to be repaired or replaced. 
+Life data analysis is the study of how things, from machines to people, function over time. For example, in the automotive industry, life data analysis helps explain how long cars will last before they break down. 
+
+## Why is Life Data Analysis Important?
+
+Understanding life data analysis helps in predicting the lifespan and maintenance needs of various systems, thereby improving reliability and efficiency. By collecting and modeling life data, we can make predictions about how long cars will last or how long before they will need to be repaired or replaced. 
 
 ## Learning Objectives
 
-This learning module provides an introduction to Life Data Analysis. After completing this module, you should have a basic understanding of and a chance to apply the following concepts:
+After completing this module, you should have a basic understanding of and a chance to apply the following concepts:
 
 * Weibull analysis
 * Data censoring, including Right Censored and Interval Censored Data
@@ -35,7 +39,9 @@ This learning module provides an introduction to Life Data Analysis. After compl
 
 Life data analysis is often referred to as Weibull analysis because the Weibull distribution is commonly used to model life data. 
 
-Why? Because the Weibull is a **flexible** distribution that can fit many different types of data.
+### Why the Weibull Distribution?
+
+The Weibull is a **flexible** distribution that can fit many different types of data.
 
 ### The Normal Distribution
 
@@ -192,7 +198,7 @@ question("What is the approximate reliability at time 50?)",
 
 Right censored data includes **suspensions** or units that have operated for a period of time without failure. 
 
-Let's add right censored data to the previous example. In addition to the 5 machines that failed, add suspensions for 3 machines that are right censored at times 100, 45, and 10 respectively.
+Let's add right censored data to the previous example. In addition to the 5 machines that failed, add suspensions for 3 machines that did not fail (right censored) at times 100, 45, and 10 respectively.
 
 ```{r echo=TRUE}
 suspensions<-c(100, 45, 10)
@@ -407,7 +413,7 @@ data <- data.frame(
   )
 ```
 
-Fit an overall Weibull to the data.
+Fit an overall Weibull to the data. Notice how the probability data does not appear to be linear.
 
 ```{r echo=TRUE}
 obj <- wblr.conf(wblr.fit(wblr(data)))
@@ -473,7 +479,9 @@ question("At a probability level of 90%...",
 
 **Challenge:** rerun the competing failure mode example with a different number in the `set.seed` function and see if the same results hold true.
 
-## Wrapping Up
+## Summary
+
+In this tutorial, we've introduced the concepts of life data analysis and reliability. You have learned to calculate reliability using the Weibull distribution and  visualize life data
 
 ### To Get Help
 
