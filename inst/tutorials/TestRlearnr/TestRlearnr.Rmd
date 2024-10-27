@@ -44,7 +44,7 @@ By the end of this tutorial, you will be able to:
 
 **The Duane Model** was developed by J. T. Duane in 1964 and provides a simple and graphical way to observe and analyze whether failure rates are improving as changes are made to a product or system. 
 
-Specifically, the Duane Model is a log-log plot of the cumulative Mean Time Between Failures (MTBF) vs cumulative time. 
+Specifically, the Duane Model is a log-log plot of the cumulative Mean Time Between Failures (MTBF) vs cumulative time.
 
 The slope of the line on the plot indicates the rate of reliability growth:
 
@@ -117,8 +117,6 @@ question("Which beta value may indicate an infant mortality failure mode?",
   random_answer_order = TRUE
 )
 ```
-
-*Hint: the Duane Plot does not necessarily provide information on the type of failure mode.*
 
 ## ReliaGrowR
 
@@ -363,7 +361,7 @@ First, check if WeibullR.ALT is installed in R and install if not.
 if(!(require(WeibullR.ALT))){install.packages('WeibullR.ALT')}
 ```
 
-For this example, we will use the built in data set `MeekerData`. First, load the data set and view the first few samples.
+For this example, we will use the data set `MeekerData` that comes prepackaged with `WeibullR.ALT`. First, load the data set and view the first few samples.
 
 ```{r}
 data <- MeekerData("table10")
@@ -429,7 +427,7 @@ Where:
 * \( S \) is the applied stress
 * \( n \) is the stress exponent that characterizes how sensitive the life is to changes in the stress level
 
-For this example, we will use the built in data set `NelsonData`. First, load the data set and view the type of data.
+For this example, we will use the data set `NelsonData` that comes prepackaged with `WeibullR.ALT`. First, load the data set and view the class of data.
 
 ```{r}
 data <- NelsonData("table3.1")
@@ -470,11 +468,11 @@ question("Which subset of data does not seem to follow the Power Law model?",
 ```
 
 ```{r pwr2, echo=FALSE}
-question("How should you interpret a subset that is plotted to the right of another set (e.g. set 2 in green vs set 3 in red)?",
-  answer("The set to the right has a lower unreliability than the one to the left", correct = TRUE),
-  answer("The set to the right a higher unreliability than the one to the left"),
-  answer("The set to the right has a lower reliability than the one to the left"),
-  answer("The set to the right has a higher reliability than the one to the left", correct = TRUE),
+question("How would you interpret a plot to the right of another plot (e.g. set 2 in green vs set 3 in red)?",
+  answer("The plot to the right has a lower unreliability than the one to the left", correct = TRUE),
+  answer("The plot to the right a higher unreliability than the one to the left"),
+  answer("The plot to the right has a lower reliability than the one to the left"),
+  answer("The plot to the right has a higher reliability than the one to the left", correct = TRUE),
   random_answer_order = TRUE
 )
 ```
@@ -498,14 +496,12 @@ Where:
 
 A common assumption in ALT is that the subset of data at each stress level have the same slope or shape factor. If each model subset has the same slope, then all models appear as parallel plots. 
 
-To run a parallel model, we can use the `alt.parallel` function
-
-For the Meekder data example:
+To fit a parallel model to the Meeker data, use the `alt.parallel` function.
 ```{r}
 prlobj <- alt.parallel(arrobj)
 ```
 
-For the Nelson data example:
+Similarly, a parallel model can be fitted to the Nelson data.
 ```{r}
 expobj <- alt.parallel(pwrobj)
 ```

@@ -4,7 +4,7 @@
 [![](http://cranlogs.r-pkg.org/badges/last-month/WeibullR.learnr)](https://cran.r-project.org/package=WeibullR.learnr) 
 [![](http://cranlogs.r-pkg.org/badges/grand-total/WeibullR.learnr)](https://cran.r-project.org/package=WeibullR.learnr)
 [![Lifecycle:experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-[![DOI](https://zenodo.org/badge/644030886.svg)](https://zenodo.org/badge/latestdoi/644030886)
+[![](https://img.shields.io/badge/doi-10.32614/CRAN.package.WeibullR.learnr-green.svg)](https://doi.org/10.32614/CRAN.package.WeibullR.learnr)
 <!-- badges: end -->
 
 ## WeibullR.learnr: An Interactive Introduction to Life Data Analysis
@@ -39,7 +39,7 @@ Currently, three primary learning modules exist. These modules can be taken in e
 * `RAMR.learnr()` - A quick reference for common Reliability, Availability, and Maintainability concepts (estimated duration ~ 1 hour)
 * `TestR.learnr()`- An interactive introduction to Reliability Testing
 
-The modules can also be accessed in a browser at [WeibullR.learnr](https://paulgovan.shinyapps.io/weibullrlearnr/) and [RAMR.learnr](https://paulgovan.shinyapps.io/ramrlearnr/).
+The modules can also be accessed in a browser at [WeibullR.learnr](https://paulgovan.shinyapps.io/weibullrlearnr/) and [RAMR.learnr](https://paulgovan.shinyapps.io/ramrlearnr/),
 [TestR.learnr](https://govan.shinyapps.io/TestRlearnr/)
 
 ![](https://github.com/paulgovan/WeibullR.learnr/blob/master/inst/paper/WeibullRlearnr.png?raw=true)<!-- -->
