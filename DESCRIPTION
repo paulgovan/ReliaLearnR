@@ -12,7 +12,12 @@ Description: An interactive introduction to Life Data Analysis that depends on '
   modules in R. 
 Imports:
   learnr,
-  WeibullR
+  ReliaGrowR,
+  WeibullR,
+  WeibullR.ALT
+Suggests:
+  WeibullR.plotly,
+  WeibullR.shiny
 License: CC BY 4.0
 Encoding: UTF-8
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2

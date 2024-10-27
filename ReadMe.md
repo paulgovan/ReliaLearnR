@@ -11,7 +11,6 @@
 
 Welcome to `WeibullR.learnr`! This package contains a set of interactive learning modules for life data analysis, focusing on reliability, availability, and maintainability (RAM). It is designed for beginners, including university students and early-career professionals.
 
-
 ## Motivation
 
 Life data analysis is the study of how things function over time, from machines to people. Although many learning resources exist, most reference proprietary software, which may be expensive and inaccessible to students or those new to the field. `WeibullR.learnr` is an open-source alternative, introducing basic concepts and tools for life data analysis using R.
@@ -34,12 +33,14 @@ devtools::install_github('paulgovan/weibullr.learnr')
 
 ## Usage
 
-Currently, two primary learning modules exist. These modules can be taken in either order and can be taken separately or together. The learning modules are designed to be plug-and-play, but changes can be made by forking the software repository and modifying the fork.
+Currently, three primary learning modules exist. These modules can be taken in either order and can be taken separately or together. The learning modules are designed to be plug-and-play, but changes can be made by forking the software repository and modifying the fork.
 
 * `WeibullR.learnr()` - An interactive introduction to Life Data Analysis (estimated duration ~2 hours)
 * `RAMR.learnr()` - A quick reference for common Reliability, Availability, and Maintainability concepts (estimated duration ~ 1 hour)
+* `TestR.learnr()`- An interactive introduction to Reliability Testing
 
 The modules can also be accessed in a browser at [WeibullR.learnr](https://paulgovan.shinyapps.io/weibullrlearnr/) and [RAMR.learnr](https://paulgovan.shinyapps.io/ramrlearnr/).
+[TestR.learnr](https://govan.shinyapps.io/TestRlearnr/)
 
 ![](https://github.com/paulgovan/WeibullR.learnr/blob/master/inst/paper/WeibullRlearnr.png?raw=true)<!-- -->
 
@@ -51,11 +52,6 @@ Several helper functions for common RAM calculations are also included:
 * `mtbf()` - mean time between failure
 * `serv()` - serviceability factor
 * `fr()` - failure rate
-
-## Future Development
-
-* `ALT.learnr()` - An Interactive Introduction to Accelterated Life Testing (ALT)
-* `RGA.learnr()` - An Interactive Introduction to Reliability Growth Analysis (RGA)
 
 ## Code of Conduct
 

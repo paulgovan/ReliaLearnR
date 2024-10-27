@@ -25,13 +25,15 @@ Life data analysis is the study of how things, from machines to people, function
 
 `WeibullR.learnr` is written in R [@R] and is built using `WeibullR` [@WeibullR], a R package for Life Data Analysis in the tradition of Waloddi Weibull [@Weibull], and `learnr` [@learnr], a framework for building interactive learning modules in R.
 
-Currently, two primary learning modules exist. These modules can be taken in either order and can be taken separately or together. The learning modules are designed to be plug-and-play, but changes can be made by forking the software repository and modifying the fork.
+Currently, three primary learning modules exist. These modules can be taken in either order and can be taken separately or together. The learning modules are designed to be plug-and-play, but changes can be made by forking the software repository and modifying the fork.
 
 `WeibullR.learnr()` provides an interactive introduction to Life Data Analysis. The learning objectives include basic Weibull analysis, data censoring including right censored data and interval censored data, different types of Weibull models including the 2P Weibull, 3P Weibull, and Weibayes model, parameter estimation methods Median Rank Regression (MRR) and Maximum Likelihood Estimation (MLE), and different plotting methods such as Probability Plots and Contour Plots. The estimation duration for this module is approximately 2 hours. 
 
 `RAMR.learnr()` is a quick reference for common Reliability, Availability, and Maintainability (RAM) concepts. The learning objectives include the basic concepts and application of Reliability, Availability, Mean Time to Repair (MTTR), Mean Time to Failure (MTTF), Mean Time Between Failures (MTBF), Failure Rate, Probability of Failure, and $B_n$ or $L_n$ life. The esimated duration of this module is about 1 hour.
 
-The modules can also be accessed in a browser at [WeibullR.learnr](https://paulgovan.shinyapps.io/weibullrlearnr/) and [RAMR.learnr](https://paulgovan.shinyapps.io/ramrlearnr/).
+`TestR.learnr()` provides an interactive introduction to Reliability Testing. The learning objectives include defining key reliability growth concepts, including Crow-AMSAA and Duane models; fitting a reliability growth model to real-world data using R; interpreting reliability growth plots and identifying trends; applying the Crow-AMSAA model to assess reliability growth; explaining fundamental concepts of accelerated life testing, including the use of Arrhenius and Power Law Models; conducting an accelerated life test with real-world datasets, utilizing R for analysis; nnalyzing plots that illustrate the relationships in accelerated life testing, identifying key patterns and data trends; utilizing Arrhenius and Power Law models to evaluate the impact of stress factors on product reliability. The estimated duration of this module is about 2 hours.
+
+The modules can also be accessed in a browser at [WeibullR.learnr](https://paulgovan.shinyapps.io/weibullrlearnr/),  [RAMR.learnr](https://paulgovan.shinyapps.io/ramrlearnr/), and [TestR.learnr](https://govan.shinyapps.io/TestRlearnr/).
 
 ![](https://github.com/paulgovan/WeibullR.learnr/blob/master/inst/paper/WeibullRlearnr.png?raw=true)<!-- -->
 
