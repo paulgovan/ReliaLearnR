@@ -37,7 +37,7 @@ Currently, three primary learning modules exist. These modules can be taken in e
 
 * `WeibullR.learnr()` - An interactive introduction to Life Data Analysis (estimated duration ~2 hours)
 * `RAMR.learnr()` - A quick reference for common Reliability, Availability, and Maintainability concepts (estimated duration ~ 1 hour)
-* `TestR.learnr()`- An interactive introduction to Reliability Testing
+* `TestR.learnr()`- An interactive introduction to Reliability Testing (estimated duration ~ 2 hours)
 
 The modules can also be accessed in a browser at [WeibullR.learnr](https://paulgovan.shinyapps.io/weibullrlearnr/) and [RAMR.learnr](https://paulgovan.shinyapps.io/ramrlearnr/),
 [TestR.learnr](https://govan.shinyapps.io/TestRlearnr/)
