@@ -19,3 +19,4 @@
 ^inst/tutorials/TestRlearnr/TestRlearnr_files$
 ^LICENSE\.md$
 ^CODE_OF_CONDUCT\.md$
+^inst/tutorials/TestRlearnr/rsconnect/documents/TestRlearnr\.Rmd/shinyapps\.io/govan/TestRlearnr\.dcf$
