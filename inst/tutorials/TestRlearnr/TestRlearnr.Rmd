@@ -329,27 +329,18 @@ output$altPlot <- renderPlot({
 
 The **Arrhenius Model** is widely used in ALT to model the effect of temperature on the rate of chemical reactions, which directly relates to the degradation or failure rate of materials.
 
-The Arrhenius equation is expressed as:
+The Acceleration Factor (AF) for the Arrhenius model is given by:
 
-\[k(T) = A \cdot e^{-\frac{E_a}{k_B \cdot T}}\]
+$$ AF = \exp\left(\frac{E_a}{k} \left( \frac{1}{T_{\text{use}}} - \frac{1}{T_{\text{stress}}} \right) \right) $$
 
 Where:
 
-* \( k(T) \) is the reaction rate at temperature \( T \)
-* \( A \) is the pre-exponential factor
-* \( E_a \) is the activation energy
-* \( k_B \) is the Boltzmann constant
-* \( T \) is the absolute temperature in Kelvin
+- \( E_a \) = Activation energy in eV
+- \( k \) = Boltzmann constant (\( 8.617 \times 10^{-5} \, \text{eV/K} \))
+- \( T_{\text{use}} \) = Temperature at normal use condition in Kelvin
+- \( T_{\text{stress}} \) = Temperature at accelerated stress condition in Kelvin
 
-### The Arrhenius Life Model
-
-The Arrhenius model relates the life of a product to temperature using the following form:
-
-\[\log(\text{Life}) = -\frac{E_a}{k_B} \cdot \frac{1}{T} + \log(A)\]
-
-Where \( \log(\text{Life}) \) is the natural logarithm of the expected life.
-
-By fitting this model to test data, you can estimate the activation energy and predict product life under normal operating conditions.
+By fitting this model to test data, you can estimate the AF and predict product life under normal operating conditions.
 
 ## WeibullR.ALT
 
@@ -383,11 +374,22 @@ data80C <- alt.data(data[which(data$TempC==80), 1:3],
                     stress = data[which(data$TempC==80), 4][1])
 ```
 
-Finally, use the `alt.make` function to fit an Arrhenius-Weibull model to the data.
+Then, use the `alt.make` function to fit an Arrhenius-Weibull model to the data.
 
 ```{r}
 arrobj <- alt.make(list(data10C, data40C, data60C, data80C), dist = "weibull",
                 alt.model = "arrhenius", method.fit = "mle")
+```
+
+Finally, calculate the AF at 80 degrees C using the Arrhenius Model. Assume that the Activation Energy is 0.7 eV.
+
+```{r, results='asis'}
+E_a <- 0.7
+k <- 8.617E-5
+T_use <- 10 + 273
+T_stress <- 80 + 273
+AF <- exp(E_a / k * (1 / T_use - 1 / T_stress))
+cat(paste0("The Acceleration Factor at 80 degrees C is ", round(AF, 2)))
 ```
 
 ### Exercises
@@ -416,22 +418,21 @@ question("What is the approximate reliability for a duration of 1000 and an oper
 
 The **Power Law Model** is another commonly used model in ALT, particularly for mechanical systems and components. This model describes how a product's life is affected by a certain stress factor (such as temperature, voltage, or pressure). Unlike the Arrhenius model, which is primarily used for temperature-based stresses, the Power Law Model can be applied to a wide variety of stress factors.
 
-The general form of the Power Law Model is given by:
+The AF for the Power Law model is given by:
 
-\[\text{Life}(S) = \frac{A}{S^n}\]
+$$ AF = \left( \frac{S_{\text{stress}}}{S_{\text{use}}} \right)^{n} $$
 
 Where:
 
-* \( \text{Life}(S) \) is the expected life under stress level \( S \)
-* \( A \) is a constant representing life at a reference stress level
-* \( S \) is the applied stress
-* \( n \) is the stress exponent that characterizes how sensitive the life is to changes in the stress level
+- \( S_{\text{stress}} \) = Stress level during accelerated testing (e.g., voltage, load)
+- \( S_{\text{use}} \) = Stress level during normal use conditions
+- \( n \) = Stress exponent, indicating the sensitivity of the failure mechanism to the applied stress
 
 For this example, we will use the data set `NelsonData` that comes prepackaged with `WeibullR.ALT`. First, load the data set and view the class of data.
 
-```{r}
+```{r results='asis'}
 data <- NelsonData("table3.1")
-class(data)
+cat(class(data))
 ```
 
 The data is a list of time to failure data at 7 different voltage stress levels, 26KV, 28kV, 30kV, 32kV, 34kV, 36kV, and 38kV.
@@ -448,7 +449,7 @@ data36 <- alt.data(data$kV36, stress = 36)
 data38 <- alt.data(data$kV38, stress = 38)
 ```
 
-Finally, use the `alt.make` function to fit an Power-Weibull model to the data.
+Then, use the `alt.make` function to fit an Power-Weibull model to the data.
 
 ```{r}
 pwrobj <- alt.make(list(data26, data28, data30, data32, data34, data36, data38), 

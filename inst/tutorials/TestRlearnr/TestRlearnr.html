@@ -456,33 +456,23 @@ acceleration factor input to see this impact in action.</p>
 <p>The <strong>Arrhenius Model</strong> is widely used in ALT to model
 the effect of temperature on the rate of chemical reactions, which
 directly relates to the degradation or failure rate of materials.</p>
-<p>The Arrhenius equation is expressed as:</p>
-<p><span class="math display">\[k(T) = A \cdot e^{-\frac{E_a}{k_B \cdot
-T}}\]</span></p>
+<p>The Acceleration Factor (AF) for the Arrhenius model is given by:</p>
+<p><span class="math display">\[ AF = \exp\left(\frac{E_a}{k} \left(
+\frac{1}{T_{\text{use}}} - \frac{1}{T_{\text{stress}}} \right) \right)
+\]</span></p>
 <p>Where:</p>
 <ul>
-<li><span class="math inline">\(k(T)\)</span> is the reaction rate at
-temperature <span class="math inline">\(T\)</span></li>
-<li><span class="math inline">\(A\)</span> is the pre-exponential
-factor</li>
-<li><span class="math inline">\(E_a\)</span> is the activation
-energy</li>
-<li><span class="math inline">\(k_B\)</span> is the Boltzmann
-constant</li>
-<li><span class="math inline">\(T\)</span> is the absolute temperature
-in Kelvin</li>
+<li><span class="math inline">\(E_a\)</span> = Activation energy in
+eV</li>
+<li><span class="math inline">\(k\)</span> = Boltzmann constant (<span
+class="math inline">\(8.617 \times 10^{-5} \, \text{eV/K}\)</span>)</li>
+<li><span class="math inline">\(T_{\text{use}}\)</span> = Temperature at
+normal use condition in Kelvin</li>
+<li><span class="math inline">\(T_{\text{stress}}\)</span> = Temperature
+at accelerated stress condition in Kelvin</li>
 </ul>
-<div id="section-the-arrhenius-life-model" class="section level3">
-<h3>The Arrhenius Life Model</h3>
-<p>The Arrhenius model relates the life of a product to temperature
-using the following form:</p>
-<p><span class="math display">\[\log(\text{Life}) = -\frac{E_a}{k_B}
-\cdot \frac{1}{T} + \log(A)\]</span></p>
-<p>Where <span class="math inline">\(\log(\text{Life})\)</span> is the
-natural logarithm of the expected life.</p>
-<p>By fitting this model to test data, you can estimate the activation
-energy and predict product life under normal operating conditions.</p>
-</div>
+<p>By fitting this model to test data, you can estimate the AF and
+predict product life under normal operating conditions.</p>
 </div>
 <div id="section-weibullr.alt" class="section level2">
 <h2>WeibullR.ALT</h2>
@@ -516,11 +506,20 @@ data60C &lt;- alt.data(data[which(data$TempC==60), 1:3],
                     stress = data[which(data$TempC==60), 4][1])
 data80C &lt;- alt.data(data[which(data$TempC==80), 1:3], 
                     stress = data[which(data$TempC==80), 4][1])</code></pre>
-<p>Finally, use the <code>alt.make</code> function to fit an
+<p>Then, use the <code>alt.make</code> function to fit an
 Arrhenius-Weibull model to the data.</p>
 <pre class="r"><code>arrobj &lt;- alt.make(list(data10C, data40C, data60C, data80C), dist = &quot;weibull&quot;,
                 alt.model = &quot;arrhenius&quot;, method.fit = &quot;mle&quot;)</code></pre>
 <p><img src="TestRlearnr_files/figure-html/unnamed-chunk-18-1.png" width="624" /></p>
+<p>Finally, calculate the AF at 80 degrees C using the Arrhenius Model.
+Assume that the Activation Energy is 0.7 eV.</p>
+<pre class="r"><code>E_a &lt;- 0.7
+k &lt;- 8.617E-5
+T_use &lt;- 10 + 273
+T_stress &lt;- 80 + 273
+AF &lt;- exp(E_a / k * (1 / T_use - 1 / T_stress))
+cat(paste0(&quot;The Acceleration Factor at 80 degrees C is &quot;, round(AF, 2)))</code></pre>
+<p>The Acceleration Factor at 80 degrees C is 296.54</p>
 <div id="section-exercises-3" class="section level3">
 <h3>Exercises</h3>
 <div class="panel panel-default tutorial-question-container">
@@ -549,26 +548,24 @@ describes how a product’s life is affected by a certain stress factor
 (such as temperature, voltage, or pressure). Unlike the Arrhenius model,
 which is primarily used for temperature-based stresses, the Power Law
 Model can be applied to a wide variety of stress factors.</p>
-<p>The general form of the Power Law Model is given by:</p>
-<p><span class="math display">\[\text{Life}(S) =
-\frac{A}{S^n}\]</span></p>
+<p>The AF for the Power Law model is given by:</p>
+<p><span class="math display">\[ AF = \left(
+\frac{S_{\text{stress}}}{S_{\text{use}}} \right)^{n} \]</span></p>
 <p>Where:</p>
 <ul>
-<li><span class="math inline">\(\text{Life}(S)\)</span> is the expected
-life under stress level <span class="math inline">\(S\)</span></li>
-<li><span class="math inline">\(A\)</span> is a constant representing
-life at a reference stress level</li>
-<li><span class="math inline">\(S\)</span> is the applied stress</li>
-<li><span class="math inline">\(n\)</span> is the stress exponent that
-characterizes how sensitive the life is to changes in the stress
-level</li>
+<li><span class="math inline">\(S_{\text{stress}}\)</span> = Stress
+level during accelerated testing (e.g., voltage, load)</li>
+<li><span class="math inline">\(S_{\text{use}}\)</span> = Stress level
+during normal use conditions</li>
+<li><span class="math inline">\(n\)</span> = Stress exponent, indicating
+the sensitivity of the failure mechanism to the applied stress</li>
 </ul>
 <p>For this example, we will use the data set <code>NelsonData</code>
 that comes prepackaged with <code>WeibullR.ALT</code>. First, load the
 data set and view the class of data.</p>
 <pre class="r"><code>data &lt;- NelsonData(&quot;table3.1&quot;)
-class(data)</code></pre>
-<pre><code>## [1] &quot;list&quot;</code></pre>
+cat(class(data))</code></pre>
+<p>list</p>
 <p>The data is a list of time to failure data at 7 different voltage
 stress levels, 26KV, 28kV, 30kV, 32kV, 34kV, 36kV, and 38kV.</p>
 <p>Next, use the <code>alt.data</code> function to create a separate
@@ -580,11 +577,11 @@ data32 &lt;- alt.data(data$kV32, stress = 32)
 data34 &lt;- alt.data(data$kV34, stress = 34)
 data36 &lt;- alt.data(data$kV36, stress = 36)
 data38 &lt;- alt.data(data$kV38, stress = 38)</code></pre>
-<p>Finally, use the <code>alt.make</code> function to fit an
-Power-Weibull model to the data.</p>
+<p>Then, use the <code>alt.make</code> function to fit an Power-Weibull
+model to the data.</p>
 <pre class="r"><code>pwrobj &lt;- alt.make(list(data26, data28, data30, data32, data34, data36, data38), 
                    dist = &quot;weibull&quot;, alt.model = &quot;power&quot;)</code></pre>
-<p><img src="TestRlearnr_files/figure-html/unnamed-chunk-21-1.png" width="624" /></p>
+<p><img src="TestRlearnr_files/figure-html/unnamed-chunk-22-1.png" width="624" /></p>
 <div id="section-exercises-4" class="section level3">
 <h3>Exercises</h3>
 <div class="panel panel-default tutorial-question-container">
@@ -635,10 +632,10 @@ same slope, then all models appear as parallel plots.</p>
 <p>To fit a parallel model to the Meeker data, use the
 <code>alt.parallel</code> function.</p>
 <pre class="r"><code>prlobj &lt;- alt.parallel(arrobj)</code></pre>
-<p><img src="TestRlearnr_files/figure-html/unnamed-chunk-22-1.png" width="624" /></p>
+<p><img src="TestRlearnr_files/figure-html/unnamed-chunk-23-1.png" width="624" /></p>
 <p>Similarly, a parallel model can be fitted to the Nelson data.</p>
 <pre class="r"><code>expobj &lt;- alt.parallel(pwrobj)</code></pre>
-<p><img src="TestRlearnr_files/figure-html/unnamed-chunk-23-1.png" width="624" /></p>
+<p><img src="TestRlearnr_files/figure-html/unnamed-chunk-24-1.png" width="624" /></p>
 </div>
 <div id="section-relationship-plots" class="section level2">
 <h2>Relationship Plots</h2>
@@ -661,11 +658,11 @@ have an impact on life.</li>
 model to the data and then plot the results.</p>
 <pre class="r"><code>lnrobj &lt;- alt.fit(prlobj)
 plot(lnrobj, suppress.dev.new = TRUE)</code></pre>
-<p><img src="TestRlearnr_files/figure-html/unnamed-chunk-24-1.png" width="624" /></p>
+<p><img src="TestRlearnr_files/figure-html/unnamed-chunk-25-1.png" width="624" /></p>
 <p>Similarly, a relationship plot can be fitted to the Nelson data.</p>
 <pre class="r"><code>lnrobj2 &lt;- alt.fit(expobj)
 plot(lnrobj2, suppress.dev.new = TRUE)</code></pre>
-<p><img src="TestRlearnr_files/figure-html/unnamed-chunk-25-1.png" width="624" /></p>
+<p><img src="TestRlearnr_files/figure-html/unnamed-chunk-26-1.png" width="624" /></p>
 <div id="section-exercises-5" class="section level3">
 <h3>Exercises</h3>
 <div class="panel panel-default tutorial-question-container">
@@ -792,15 +789,15 @@ output$duanePlot <- renderPlot({
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "duane1", question = structure("What does a Duane Plot with a slope of greater than 1 indicate?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_7c06588", 
+"character")), answers = list(structure(list(id = "lnr_ans_45bee82", 
     option = "A) The system's reliability is improving", value = "A) The system's reliability is improving", 
     label = structure("A) The system’s reliability is improving", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_9c23cbd", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_a4a1523", 
     option = "B) The system's reliability is deteriorating", 
     value = "B) The system's reliability is deteriorating", label = structure("B) The system’s reliability is deteriorating", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_d247607", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_f4986a2", 
     option = "C) The system has no change in reliability", value = "C) The system has no change in reliability", 
     label = structure("C) The system has no change in reliability", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
@@ -811,23 +808,23 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "duane1-answer", question = "duane1"), loading = NULL, 
-    random_answer_order = TRUE, allow_retry = FALSE, seed = 1900456519.61503, 
+    random_answer_order = TRUE, allow_retry = FALSE, seed = 1478820189.81137, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "duane2", question = structure("Which beta value may indicate an infant mortality failure mode?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_a306503", 
+"character")), answers = list(structure(list(id = "lnr_ans_a6ebd58", 
     option = "1", value = "1", label = structure("1", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_1a4e0d8", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_fc5812c", 
     option = "0.5", value = "0.5", label = structure("0.5", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_98cb09b", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_f328f66", 
     option = "2", value = "2", label = structure("2", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_ad8f093", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_485d816", 
     option = "Unable to be determined in this case", value = "Unable to be determined in this case", 
     label = structure("Unable to be determined in this case", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
@@ -838,7 +835,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "duane2-answer", question = "duane2"), loading = NULL, 
-    random_answer_order = TRUE, allow_retry = FALSE, seed = 1180638937.45022, 
+    random_answer_order = TRUE, allow_retry = FALSE, seed = 448643991.291084, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
@@ -846,16 +843,16 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "duane3", question = structure("In this example, what is the approximate cumulative MTBF at time 100?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_d3fc77", 
+"character")), answers = list(structure(list(id = "lnr_ans_93b9075", 
     option = "200", value = "200", label = structure("200", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_8362a69", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_2a6cc36", 
     option = "100", value = "100", label = structure("100", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_f63baf7", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_cf9ef05", 
     option = "120", value = "120", label = structure("120", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_e988fe8", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_63c2029", 
     option = "150", value = "150", label = structure("150", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
 "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -865,22 +862,22 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "duane3-answer", question = "duane3"), loading = NULL, 
-    random_answer_order = TRUE, allow_retry = FALSE, seed = 811949627.121907, 
+    random_answer_order = TRUE, allow_retry = FALSE, seed = 302485851.859144, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "duane4", question = structure("How would you describe the reliability of this system?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_d44356a", 
+"character")), answers = list(structure(list(id = "lnr_ans_a359036", 
     option = "The system reliability is improving", value = "The system reliability is improving", 
     label = structure("The system reliability is improving", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_14c47b", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_d522a0d", 
     option = "The system reliability is worsening", value = "The system reliability is worsening", 
     label = structure("The system reliability is worsening", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_91e8fa2", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_e3b3452", 
     option = "The system reliability is Stable", value = "The system reliability is Stable", 
     label = structure("The system reliability is Stable", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
@@ -891,7 +888,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "duane4-answer", question = "duane4"), loading = NULL, 
-    random_answer_order = TRUE, allow_retry = FALSE, seed = 1374915394.35976, 
+    random_answer_order = TRUE, allow_retry = FALSE, seed = 682271683.182292, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
@@ -914,16 +911,16 @@ output$crowPlot <- renderPlot({
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "rga1", question = structure("In this example, what is the cumulative number of failures at time 400?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_b5838af", 
+"character")), answers = list(structure(list(id = "lnr_ans_e41903", 
     option = "4", value = "4", label = structure("4", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_e17e4b9", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_e80b0c5", 
     option = "8", value = "8", label = structure("8", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_a11dc59", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_f3e96f8", 
     option = "6", value = "6", label = structure("6", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_1eae916", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_aaac49d", 
     option = "7", value = "7", label = structure("7", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
 "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -933,7 +930,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "rga1-answer", question = "rga1"), loading = NULL, 
-    random_answer_order = TRUE, allow_retry = FALSE, seed = 1883425219.62296, 
+    random_answer_order = TRUE, allow_retry = FALSE, seed = 846358988.105883, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
@@ -941,15 +938,15 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "rga2", question = structure("How would you describe the reliability of this system?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_e7c3592", 
+"character")), answers = list(structure(list(id = "lnr_ans_24a70cb", 
     option = "The reliability of the system is mproving", value = "The reliability of the system is mproving", 
     label = structure("The reliability of the system is mproving", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_4de9f24", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_c58c631", 
     option = "The reliability of the system is worsening", value = "The reliability of the system is worsening", 
     label = structure("The reliability of the system is worsening", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_141924", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_cc7ef1d", 
     option = "The reliability of the system is stable", value = "The reliability of the system is stable", 
     label = structure("The reliability of the system is stable", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
@@ -960,7 +957,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "rga2-answer", question = "rga2"), loading = NULL, 
-    random_answer_order = TRUE, allow_retry = FALSE, seed = 403997873.811874, 
+    random_answer_order = TRUE, allow_retry = FALSE, seed = 1283194381.90247, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
@@ -1156,7 +1153,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 <!--/html_preserve-->
 <!--html_preserve-->
 <script type="application/shiny-prerendered" data-context="execution_dependencies">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages","version"]},"class":{"type":"character","attributes":{},"value":["data.frame"]},"row.names":{"type":"integer","attributes":{},"value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57]}},"value":[{"type":"character","attributes":{},"value":["backports","base","bslib","cachem","checkmate","cli","commonmark","compiler","datasets","digest","ellipsis","evaluate","fastmap","fontawesome","graphics","grDevices","grid","highr","htmltools","htmlwidgets","httpuv","jquerylib","jsonlite","knitr","later","lattice","learnr","lifecycle","magrittr","markdown","MASS","memoise","methods","mime","nlme","promises","R6","Rcpp","ReliaGrowR","rlang","rmarkdown","rprojroot","rstudioapi","sass","segmented","shiny","splines","stats","tools","utils","vctrs","WeibullR","WeibullR.ALT","withr","xfun","xtable","yaml"]},{"type":"character","attributes":{},"value":["1.5.0","4.4.0","0.7.0","1.1.0","2.3.1","3.6.3","1.9.1","4.4.0","4.4.0","0.6.36","0.3.2","0.24.0","1.2.0","0.5.2","4.4.0","4.4.0","4.4.0","0.11","0.5.8.1","1.6.4","1.6.15","0.1.4","1.8.8","1.48","1.3.2","0.22-6","0.11.5","1.0.4","2.0.3","1.13","7.3-61","2.0.1","4.4.0","0.12","3.1-165","1.3.0","2.5.1","1.0.12","0.1.0","1.1.4","2.27","2.0.4","0.16.0","0.4.9","2.1-1","1.8.1.1","4.4.0","4.4.0","4.4.0","4.4.0","0.6.5","1.2.1","0.7.2","3.0.0","0.45","1.8-4","2.3.9"]}]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages","version"]},"class":{"type":"character","attributes":{},"value":["data.frame"]},"row.names":{"type":"integer","attributes":{},"value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57]}},"value":[{"type":"character","attributes":{},"value":["backports","base","bslib","cachem","checkmate","cli","commonmark","compiler","datasets","digest","ellipsis","evaluate","fastmap","fontawesome","graphics","grDevices","grid","highr","htmltools","htmlwidgets","httpuv","jquerylib","jsonlite","knitr","later","lattice","learnr","lifecycle","magrittr","markdown","MASS","memoise","methods","mime","nlme","promises","R6","Rcpp","ReliaGrowR","rlang","rmarkdown","rprojroot","rstudioapi","sass","segmented","shiny","splines","stats","tools","utils","vctrs","WeibullR","WeibullR.ALT","withr","xfun","xtable","yaml"]},{"type":"character","attributes":{},"value":["1.5.0","4.4.0","0.7.0","1.1.0","2.3.1","3.6.3","1.9.1","4.4.0","4.4.0","0.6.36","0.3.2","0.24.0","1.2.0","0.5.2","4.4.0","4.4.0","4.4.0","0.11","0.5.8.1","1.6.4","1.6.15","0.1.4","1.8.8","1.48","1.3.2","0.22-6","0.11.5","1.0.4","2.0.3","1.13","7.3-61","2.0.1","4.4.0","0.12","3.1-165","1.3.0","2.5.1","1.0.12","0.1.2","1.1.4","2.27","2.0.4","0.16.0","0.4.9","2.1-1","1.8.1.1","4.4.0","4.4.0","4.4.0","4.4.0","0.6.5","1.2.1","0.7.2","3.0.0","0.45","1.8-4","2.3.9"]}]}]}
 </script>
 <!--/html_preserve-->
 </div>

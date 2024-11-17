@@ -5,7 +5,7 @@ account: govan
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 13143095
-bundleId: 9275210
+bundleId: 9374546
 url: https://govan.shinyapps.io/TestRlearnr/
 version: 1
 asMultiple: FALSE
