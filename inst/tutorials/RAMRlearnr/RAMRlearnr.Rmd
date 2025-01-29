@@ -114,7 +114,7 @@ question("1000 items run for 3 years total. During that time, 5 failures occur. 
 
 ## Mean Time Between Failures (MTBF)
 
-MTBF is a measure of reliability for *repairable systems*. The calculation is the same as MTTF, just that the interpretation is slightly different. 
+MTBF is a measure of reliability for *repairable systems*. The calculation is similar to the MTTF, just with a slightly different interpretation. 
 
 ```{r mtbf, echo=FALSE}
 question("An item fails 5 times during a total time of 45,000 hours. What is the MTBF of the item?",
