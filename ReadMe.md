@@ -13,7 +13,9 @@ Welcome to `WeibullR.learnr`! This package contains a set of interactive learnin
 
 ## Motivation
 
-Life data analysis is the study of how things function over time, from machines to people. Although many learning resources exist, most reference proprietary software, which may be expensive and inaccessible to students or those new to the field. `WeibullR.learnr` is an open-source alternative, introducing basic concepts and tools for life data analysis using R.
+Life data analysis is the study of how systems function over time, from machines to people. While various learning resources exist, many rely on proprietary software that can be inaccessible to students and early-career professionals.
+
+`WeibullR.learnr` [@WeibullRlearnr] is an open-source collection of interactive learning modules, exercises, and functions designed for introductory life data analysis. The primary goal of this project is to introduce fundamental concepts while providing an open-source alternative for analyzing life data. 
 
 ## Installation Instructions
 

@@ -17,7 +17,7 @@ Welcome to the tutorial on **Life Data Analysis**! In this tutorial, you will le
 
 ## What is Life Data Analysis?
 
-Life data analysis is the study of how things, from machines to people, function over time. For example, in the automotive industry, life data analysis helps explain how long cars will last before they break down. 
+Life data analysis is the study of how systems, from machines to people, function over time. For example, in the automotive industry, life data helps explain how long cars will last before they break down. 
 
 ## Why is Life Data Analysis Important?
 
