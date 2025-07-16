@@ -141,7 +141,7 @@ fit <- duane_plot(times, failures, line_col = "red")
 ### Exercises
 
 ```{r duane3, echo=FALSE}
-question("In this example, what is the approximate cumulative MTBF at time 100?",
+question("In this example, what is the approximate cumulative MTBF at time 1000?",
   answer("200"),
   answer("100"),
   answer("120"),
@@ -161,7 +161,7 @@ question("How would you describe the reliability of this system?",
 
 ## The Crow-AMSAA Model
 
-**The Crow-AMSAA** or **Non-Homogeneous Poisson Process (NHPP)** model was developed by Larry H. Crow and is based on the Army Materiel Systems Analysis Activity (AMSAA) testing framework.
+**The Crow-AMSAA** is a **Non-Homogeneous Poisson Process (NHPP)** model developed by Larry H. Crow and is based on the Army Materiel Systems Analysis Activity (AMSAA) testing framework.
 
 Specifically, the Crow-AMSAA Model is a plot of the cumulative number of failures vs cumulative time. 
 
@@ -240,20 +240,20 @@ question("In this example, what is the cumulative number of failures at time 400
 
 ```{r rga2, echo=FALSE}
 question("How would you describe the reliability of this system?",
-  answer("The reliability of the system is mproving"),
-  answer("The reliability of the system is worsening", correct = TRUE),
+  answer("The reliability of the system is improving", correct = TRUE),
+  answer("The reliability of the system is worsening"),
   answer("The reliability of the system is stable"),
   random_answer_order = TRUE
 )
 ```
 
-### The Piecewise Weibull NHPP Model
+### The Piecewise NHPP Model
 
-The **Piecewise Weibull NHPP** model is an extension of the standard NHPP model that includes different segments or phases of time that follow separate Weibull failure distributions. This model is particularly useful when a system experiences changes in failure behavior over different development phases, such as the initial, interim and final phases of a development process.
+The **Piecewise NHPP** model is an extension of the standard NHPP model that includes different segments or phases of time that follow separate failure distributions. This model is particularly useful when a system experiences changes in failure behavior over different development phases, such as the initial, interim and final phases of a development process.
 
-### The Weibull Distribution
+### The Failure Distribution
 
-The Weibull intensity function for each time segment \(i\) is modeled as:
+The failure intensity function for each time segment \(i\) is modeled as:
 
 \[\lambda_i(t) = \frac{\beta_i}{\eta_i} \left( \frac{t - t_{i-1}}{\eta_i} \right)^{\beta_i - 1}\]
 
@@ -266,36 +266,36 @@ Where:
 
 ### Example
 
-To run a Piecewise Weibull NHPP with ReliaGrowR, first, set up some cumulative time and failure data and specify a breakpoint:
+To run a Piecewise NHPP with ReliaGrowR, first, set up some cumulative time and failure data and specify a breakpoint:
 ```{r}
-times <- c(100, 200, 300, 400, 500, 600, 700, 800, 900, 1000)
-failures <- c(1, 2, 1, 1, 1, 2, 3, 1, 2, 4)
-breakpoints <- 400
+times <- c(25, 55, 97, 146, 201, 268, 341, 423, 513, 609, 710, 820, 940, 1072, 1217)
+failures <- c(1, 1, 2, 4, 4, 1, 1, 2, 1, 4, 1, 1, 3, 3, 4)
+breaks <- 500
 ```
 
 Then run the rga and plot the results:
 ```{r}
-result <- rga(times, failures, model_type = "Piecewise Weibull NHPP", breakpoints = breakpoints)
+result <- rga(times, failures, model_type = "Piecewise NHPP", breaks = breaks)
 plot_rga(result)
 ```
 
-### The Piecewise Weibull NHPP with Change Point Detection
+### The Piecewise NHPP with Change Point Detection
 
-The **Piecewise Weibull NHPP with Change Point Detection** is an advanced model to identify changes in failure behavior and model system reliability. This method builds on the Piecewise Weibull NHPP model by introducing the concept of change points, which represent the time when the underlying failure behavior changes. Detection of change points involves statistical techniques that analyze failure data to automatically identify when the behavior changes, allowing for a more precise segmentation of the model into different Weibull distributions.
+The **Piecewise NHPP with Change Point Detection** is an advanced model to identify changes in failure behavior and model system reliability. This method builds on the Piecewise NHPP model by introducing the concept of change points, which represent the time when the underlying failure behavior changes. Detection of change points involves statistical techniques that analyze failure data to automatically identify when the behavior changes, allowing for a more precise segmentation of the model into different failure distributions.
 
 ### Example
 
-To run a Piecewise Weibull NHPP with Change Point Detection with ReliaGrowR, first, set up some cumulative time and failure data:
+To run a Piecewise NHPP with Change Point Detection with ReliaGrowR, first, set up some cumulative time and failure data:
 
 ```{r}
-times <- c(100, 200, 300, 400, 500, 600, 700, 800, 900, 1000)
-failures <- c(1, 2, 1, 1, 1, 2, 3, 1, 2, 4)
+times <- c(25, 55, 97, 146, 201, 268, 341, 423, 513, 609, 710, 820, 940, 1072, 1217)
+failures <- c(1, 1, 2, 4, 4, 1, 1, 2, 1, 4, 1, 1, 3, 3, 4)
 ```
 
 Then run the rga and plot the results:
 
 ```{r}
-result <- rga(times, failures, model_type = "Piecewise Weibull NHPP")
+result <- rga(times, failures, model_type = "Piecewise NHPP")
 plot_rga(result)
 ```
 
