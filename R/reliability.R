@@ -10,22 +10,18 @@
 #' total <- 1000
 #' rel(outage, total)
 #' @export
-rel <- function(outageTime, totalTime)
-
-  {
-
+rel <- function(outageTime, totalTime) {
   # Check for a numeric vector of forced outage times
-  if(all(!is.null(outageTime), !is.numeric(outageTime))) {
+  if (all(!is.null(outageTime), !is.numeric(outageTime))) {
     stop("Argument \"outageTime\" must be a numeric vector")
   }
 
   # Check for a numeric vector of time periods
-  if(all(!is.null(totalTime), !is.numeric(totalTime))) {
+  if (all(!is.null(totalTime), !is.numeric(totalTime))) {
     stop("Argument \"totalTime\" must be a numeric vector")
   }
 
   # Calculate reliability
-  rel <-  1 - (sum(outageTime)/sum(totalTime))
+  rel <- 1 - (sum(outageTime) / sum(totalTime))
   print(rel)
-
 }

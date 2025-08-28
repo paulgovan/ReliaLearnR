@@ -9,22 +9,18 @@
 #' total <- 5000
 #' fr(fail, total)
 #' @export
-fr <- function(failures, totalTime)
-
-{
-
+fr <- function(failures, totalTime) {
   # Check for a numeric value of failures
-  if(all(!is.null(failures), !is.numeric(failures))) {
+  if (all(!is.null(failures), !is.numeric(failures))) {
     stop("Argument \"failures\" must be a numeric vector")
   }
 
   # Check for a numeric vector of time periods
-  if(all(!is.null(totalTime), !is.numeric(totalTime))) {
+  if (all(!is.null(totalTime), !is.numeric(totalTime))) {
     stop("Argument \"totalTime\" must be a numeric vector")
   }
 
   # Calculate reliability
-  fr <-  failures/sum(totalTime)
+  fr <- failures / sum(totalTime)
   print(fr)
-
 }
