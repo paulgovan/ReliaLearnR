@@ -12,7 +12,7 @@ authors:
 affiliations:
  - name: Technical Leader, Reliability and Data Analytics, GE Renewable Energy
    index: 1
-date: 10 July 2023
+date: 31 August 2025
 bibliography: paper.bib
 
 ---

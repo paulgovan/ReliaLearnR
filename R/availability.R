@@ -10,22 +10,18 @@
 #' total <- 1000
 #' avail(unavail, total)
 #' @export
-avail <- function(unavailTime, totalTime)
-
-{
-
+avail <- function(unavailTime, totalTime) {
   # Check for a numeric vector of unavailable times
-  if(all(!is.null(unavailTime), !is.numeric(unavailTime))) {
+  if (all(!is.null(unavailTime), !is.numeric(unavailTime))) {
     stop("Argument \"unavailTime\" must be a numeric vector")
   }
 
   # Check for a numeric vector of time periods
-  if(all(!is.null(totalTime), !is.numeric(totalTime))) {
+  if (all(!is.null(totalTime), !is.numeric(totalTime))) {
     stop("Argument \"totalTime\" must be a numeric vector")
   }
 
   # Calculate availability
-  avail <-  1 - (sum(unavailTime)/sum(totalTime))
+  avail <- 1 - (sum(unavailTime) / sum(totalTime))
   print(avail)
-
 }

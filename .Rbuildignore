@@ -2,8 +2,8 @@
 ^renv\.lock$
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^.*_files$
-^ReadMe\.Rmd$
+^README_files$
+^README\.Rmd$
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
