@@ -10,22 +10,18 @@
 #' total <- 1000
 #' serv(service, total)
 #' @export
-serv <- function(serviceTime, totalTime)
-
-{
-
+serv <- function(serviceTime, totalTime) {
   # Check for a numeric vector of forced outage times
-  if(all(!is.null(serviceTime), !is.numeric(serviceTime))) {
+  if (all(!is.null(serviceTime), !is.numeric(serviceTime))) {
     stop("Argument \"serviceTime\" must be a numeric vector")
   }
 
   # Check for a numeric vector of time periods
-  if(all(!is.null(totalTime), !is.numeric(totalTime))) {
+  if (all(!is.null(totalTime), !is.numeric(totalTime))) {
     stop("Argument \"totalTime\" must be a numeric vector")
   }
 
   # Calculate serviceability factor
-  serv <-  serviceTime/totalTime
+  serv <- serviceTime / totalTime
   print(serv)
-
 }

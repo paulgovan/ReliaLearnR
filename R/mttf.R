@@ -9,22 +9,18 @@
 #' total <- 1000
 #' mtbf(fail, total)
 #' @export
-mtbf <- function(failures, totalTime)
-
-{
-
+mtbf <- function(failures, totalTime) {
   # Check for a numeric value of failures
-  if(all(!is.null(failures), !is.numeric(failures))) {
+  if (all(!is.null(failures), !is.numeric(failures))) {
     stop("Argument \"failures\" must be a numeric vector")
   }
 
   # Check for a numeric vector of time periods
-  if(all(!is.null(totalTime), !is.numeric(totalTime))) {
+  if (all(!is.null(totalTime), !is.numeric(totalTime))) {
     stop("Argument \"totalTime\" must be a numeric vector")
   }
 
   # Calculate reliability
-  mtbf <-  totalTime/failures
+  mtbf <- totalTime / failures
   print(mtbf)
-
 }
