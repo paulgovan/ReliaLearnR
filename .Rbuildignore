@@ -14,9 +14,6 @@
 ^inst/tutorials/WeibullRlearnr/rsconnect$
 ^inst/tutorials/RAMRlearnr/rsconnect$
 ^inst/tutorials/TestRRlearnr/rsconnect$
-^inst/tutorials/WeibullRlearnr/WeibullRlearnr_files$
-^inst/tutorials/RAMRlearnr/RAMRlearnr_files$
-^inst/tutorials/TestRlearnr/TestRlearnr_files$
 ^LICENSE\.md$
 ^CODE_OF_CONDUCT\.md$
 ^inst/tutorials/TestRlearnr/rsconnect/documents/TestRlearnr\.Rmd/shinyapps\.io/govan/TestRlearnr\.dcf$
