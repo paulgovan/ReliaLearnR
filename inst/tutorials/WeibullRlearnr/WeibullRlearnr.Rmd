@@ -25,13 +25,13 @@ Understanding life data analysis helps in predicting the lifespan and maintenanc
 
 ## Learning Objectives
 
-After completing this module, you should have a basic understanding of and a chance to apply the following concepts:
+By the end of this module, learners will be able to:
 
-* Weibull analysis
-* Data censoring, including Right Censored and Interval Censored Data
-* Different types of Weibull models, including the 2P Weibull, 3P Weibull, and Weibayes model
-* Parameter estimation methods Median Rank Regression (MRR) and Maximum Likelihood Estimation (MLE)
-* Different plotting methods such as Probability Plots and Contour Plots
+* Describe the purpose of Weibull analysis in reliability engineering.
+* Differentiate between types of data censoring, including right-censored and interval-censored data.
+* Differentiate between different Weibull models (2-parameter Weibull, 3-parameter Weibull, and Weibayes).
+* Apply Median Rank Regression (MRR) and Maximum Likelihood Estimation (MLE) estimation methods to sample datasets.
+* Interpret results using plotting methods, including probability plots and contour plots.
 
 ## Weibull Analysis
 

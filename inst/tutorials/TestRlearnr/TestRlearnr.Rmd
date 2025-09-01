@@ -25,16 +25,15 @@ Reliability testing helps organizations predict the future reliability of produc
 
 ## Learning Objectives
 
-By the end of this tutorial, you will be able to:
+By the end of this tutorial, learners will be able to:
 
-1. Define key reliability growth concepts, including Crow-AMSAA and Duane models.
-2. Fit a reliability growth model to real-world data using R.
-3. Interpret reliability growth plots and identify trends.
-4. Apply the Crow-AMSAA model to assess reliability growth.
-5. Explain fundamental concepts of accelerated life testing, including the use of Arrhenius and Power Law Models.
-6. Conduct an accelerated life test with real-world datasets, utilizing R for analysis.
-7. Analyze plots that illustrate the relationships in accelerated life testing, identifying key patterns and data trends.
-8. Utilize Arrhenius and Power Law models to evaluate the impact of stress factors on product reliability.
+* Define key reliability growth concepts, including the Crow-AMSAA and Duane models.
+* Explain fundamental principles of accelerated life testing, including the Arrhenius and Power Law models.
+* Fit reliability growth models to real-world datasets using R.
+* Apply the Crow-AMSAA model to assess reliability growth.
+* Conduct accelerated life tests with real-world datasets, utilizing R for analysis.
+* Interpret accelerated life testing plots to identify trends.
+* Analyze the impact of stress factors on product reliability using Arrhenius and Power Law models.
 
 ## Reliability Growth Analysis
 

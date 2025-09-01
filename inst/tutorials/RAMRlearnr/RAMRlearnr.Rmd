@@ -30,16 +30,12 @@ That being said, all 3 terms are inter-related. A car that is not very reliable 
 
 ## Learning Objectives
 
-This learning module provides a quick reference for basic RAM concepts. After completing this module, you should have a basic understanding of and a chance to apply the following concepts:
-
-* Reliability
-* Availability
-* Mean Time to Repair (MTTR)
-* Mean Time to Failure (MTTF)
-* Mean Time Between Failures (MTBF)
-* Failure Rate
-* Probability of Failure
-* $B_n$ or $L_n$ life
+By the end of this module, learners will be able to:
+* Define key reliability metrics, including reliability, availability, and failure rate.
+* Describe the significance of MTTR, MTTF, and MTBF in reliability engineering.
+* Calculate probability of failure using given reliability data.
+* Interpret $B_n$ or $L_n$ life values in the context of product reliability.
+* Differentiate between different reliability measures.
 
 ## Reliability
 
