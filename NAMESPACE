@@ -2,12 +2,12 @@
 
 export(RAMR.learnr)
 export(TestR.learnr)
+export(WeibullR.learnr)
 export(avail)
 export(fr)
 export(mtbf)
 export(mttf)
 export(rel)
-export(serv)
 import(ReliaGrowR)
 import(WeibullR)
 import(WeibullR.ALT)

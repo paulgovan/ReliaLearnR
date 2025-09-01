@@ -1,14 +1,14 @@
-#' An Interactive Introduction to Reliability Testing
+#' An Interactive Introduction to Life Data Analysis
 #'
-#' TestR.learnr is an interactive introduction to Reliability Testing.
-#' @import learnr ReliaGrowR WeibullR.ALT
+#' WeibullR.learnr is an interactive introduction to life data analysis.
+#' @import learnr WeibullR
 #' @export
 #' @seealso \url{https://paulgovan.github.io/WeibullR.learnr/}
 #' @return This function does not return a value.
 #' @examples
 #' if (interactive()) {
-#'   TestR.learnr()
+#'   WeibullR.learnr()
 #' }
-TestR.learnr <- function() {
-  learnr::run_tutorial('TestRlearnr', package = 'WeibullR.learnr')
+WeibullR.learnr <- function() {
+  learnr::run_tutorial('WeibullRlearnr', package = 'WeibullR.learnr')
 }
