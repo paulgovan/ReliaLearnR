@@ -47,15 +47,24 @@ Unreliability is the opposite of reliability, that is, the probability that an i
 
 $$ Unreliability = 1 - Reliability = (Failed Time/Total Time)*100 $$
 
-### Example
-
-```{r reliability, echo=FALSE}
-question("An item has run for 3 years total and was failed for 5 of those days. What is the reliability of the item?",
-  answer("90%"),
-  answer("0.5%"),
-  answer("99.5%", correct = TRUE),
-  answer("75%"),
-  random_answer_order = TRUE
+```{r quiz1, echo=FALSE}
+quiz(caption = "Exercise: Reliability",
+  question("An item has run for 3 years total and was failed for 5 of those days. What is the reliability of the item?",
+    answer("90%", message = "Not quite, try again."),
+    answer("0.5%", message = "0.5% is the unreliability, not the reliability."),
+    answer("99.5%", correct = TRUE),
+    answer("75%", message = "Not quite, try again."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("What is the unreliability of the item?",
+    answer("0.5%", correct = TRUE),
+    answer("90%", message = "Not quite, try again."),
+    answer("99.5%", message = "99.5% is the reliability, not the unreliability."),
+    answer("75%", message = "Not quite, try again."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  )
 )
 ```
 
@@ -68,12 +77,23 @@ $$ Availability = (1 - (Unavailable Time/Total Time))*100 $$
 Unavailable time is different than standby time, where standby time is when the item is available for service, but is not being used. 
 
 ```{r availability, echo=FALSE}
-question("An item has run for 3 years total, was failed for 5 days, and had scheduled maintenance for 14 days. What is the availability of the item?",
-  answer("95%"),
-  answer("1.7%"),
-  answer("98.3%", correct = TRUE),
-  answer("50%"),
-  random_answer_order = TRUE
+quiz(caption = "Exercise: Availability",
+     question("What is the difference between reliability and availability?",
+       answer("Reliability includes scheduled maintenance, availability does not.", message = "Not quite, try again."),
+       answer("Availability includes scheduled maintenance, reliability does not.", correct = TRUE),
+       answer("There is no difference, they are the same.", message = "There is a slight difference, try again."),
+       answer("Reliability is always larger than availability.", message = "Not always, try again."),
+       random_answer_order = TRUE,
+       allow_retry = TRUE
+     ),
+  question("An item has run for 3 years total, was failed for 5 days, and had scheduled maintenance for 14 days. What is the availability of the item?",
+    answer("95%", message = "Not quite, try again."),
+    answer("1.7%", message = "1.7% is too low, try again."),
+    answer("98.3%", correct = TRUE),
+    answer("50%", message = "50% is too low, try again."),
+    random_answer_order = TRUE,
+  allow_retry = TRUE
+  )
 )
 ```
 
@@ -83,43 +103,65 @@ The MTTR is a measure of maintainability and is the mean time to repair an item.
 
 $$ MTTR = \sum_{i=1}^n RepairTime_i/RepairCount $$
 
-```{r mttr, echo=FALSE}
-question("1000 items run for 3 years total. During that time, 5 failures occur with repair times in days of 5, 10, 15, 8, and 12. What is the MTTR?",
-  answer("15 days"),
-  answer("5 days"),
-  answer("10 days", correct = TRUE),
-  answer("8 days"),
-  random_answer_order = TRUE
+```{r quiz3, echo=FALSE}
+quiz(caption = "Exercise: MTTR",
+  question("What does MTTR stand for?",
+    answer("Mean Time to Recovery", message = "Not quite, try again."),
+    answer("Mean Time to Repair", correct = TRUE),
+    answer("Mean Time to Reliability", message = "Not quite, try again."),
+    answer("Mean Time to Reboot", message = "Not quite, try again."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("1000 items run for 3 years total. During that time, 5 failures occur with repair times in days of 5, 10, 15, 8, and 12. What is the MTTR?",
+    answer("15 days", message = "15 days is too high, try again."),
+    answer("5 days", message = "5 days is too low, try again."),
+    answer("10 days", correct = TRUE),
+    answer("8 days", message = "8 days is too low, try again."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  )
 )
 ```
 
 ## Mean Time to Failure (MTTF)
 
-The MTTF is a measure of reliability for *non-repairable* items. It is the ratio of total time by the number of failures for a given item
+The MTTF is a measure of reliability for *non-repairable* items, meaning that once the item fails, it is not repaired, but replaced. The MTTF is the ratio of total time by the number of failures for a given item.
 
 $$ MTTF = Total Time/FailureCount $$
 
-```{r mttf, echo=FALSE}
-question("1000 items run for 3 years total. During that time, 5 failures occur. What is the MTTF?",
-  answer("200 years"),
-  answer("0.6 years"),
-  answer("600 years", correct = TRUE),
-  answer("500 years"),
-  random_answer_order = TRUE
-)
-```
-
 ## Mean Time Between Failures (MTBF)
 
-MTBF is a measure of reliability for *repairable systems*. The calculation is similar to the MTTF, just with a slightly different interpretation. 
+MTBF is a measure of reliability for *repairable systems*, meaning that once the item fails, it is repaired and put back into service. In this way, the item can fail multiple times. The MTBF is the ratio of total time by the number of failures for a given item.
 
-```{r mtbf, echo=FALSE}
-question("An item fails 5 times during a total time of 45,000 hours. What is the MTBF of the item?",
-  answer("0.0001 hours"),
-  answer("10000 hours"),
-  answer("9000 hours", correct = TRUE),
-  answer("225,000 hours"),
-  random_answer_order = TRUE
+The calculation is similar to the MTTF, just with a slightly different interpretation. 
+
+```{r quiz4, echo=FALSE}
+quiz(caption = "Exercise: MTTF and MTBF",
+  question("What is the difference between MTTF and MTBF?",
+    answer("MTTF is for repairable systems, MTBF is for non-repairable systems.", message = "Not quite, try again."),
+    answer("MTTF is for non-repairable items, MTBF is for repairable systems.", correct = TRUE),
+    answer("There is no difference, they are the same.", message = "There is a slight difference, try again."),
+    answer("MTTF is always larger than MTBF.", message = "Not always, try again."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("1000 items run for 3 years total. During that time, 5 failures occur. What is the MTTF?",
+    answer("200 years", message = "200 years is too low, try again."),
+    answer("0.6 years", message = "0.6 years is too low, try again."),
+    answer("600 years", correct = TRUE),
+    answer("500 years", message = "500 years is slightly too low, try again."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("An item fails 5 times during a total time of 45,000 hours. What is the MTBF of the item?",
+    answer("0.0001 hours", message = "0.0001 hours is the failure rate, not the MTBF."),
+    answer("10000 hours", message = "10000 hours is too low, try again."),
+    answer("9000 hours", correct = TRUE),
+    answer("225,000 hours", message = "225,000 hours is too high, try again."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  )
 )
 ```
 
@@ -130,15 +172,7 @@ The failure rate is the ratio of the number of failures by the total operational
 A key assumption of MTBF is that the failure rate is constant. Under this assumption, the failure rate is the inverse of the MTBF.
 
 $$ \lambda = 1/MTBF $$
-```{r failure-rate, echo=FALSE}
-question("100 items run for a total time of 5000 hours in a year. Out of these items, 75 have failures. What is the failure rate in hours?",
-  answer("0.75"),
-  answer("6667"),
-  answer("0.00015", correct = TRUE),
-  answer("0.015"),
-  random_answer_order = TRUE
-)
-```
+Where $\lambda$ is the failure rate.
 
 ## Probability of Failure
 
@@ -155,15 +189,6 @@ The cumulative probability of *survival* prior to time *t*, ***R(t)***, is the o
 
 $$ R(t) = 1 - F(t) $$
 
-```{r exponential, echo=FALSE}
-question("An item has a failure probability that follows the exponential distribution with a failure rate of 0.1. What is the probability of survival at time 5?",
-  answer("39.3%"),
-  answer("60.7%", correct = TRUE),
-  answer("6.1%"),
-  answer("93.9%"),
-  random_answer_order = TRUE
-)
-```
 
 ## $B_n$ or $L_n$ Life
 
@@ -175,13 +200,39 @@ $$ t = -ln(1-F(t))/\lambda $$
 
 Where *F(t)* is analogous with *n* in this case.
 
-```{r B-n, echo=FALSE}
-question("An item has a failure probability that follows the exponential distribution with a failure rate of 0.1. What is the B10?",
-  answer("0.105"),
-  answer("1.05", correct = TRUE),
-  answer("60.7%"),
-  answer("39.3%"),
-  random_answer_order = TRUE
+```{r quiz5, echo=FALSE}
+quiz(caption = "Exercise: Failure Rate, Probability of Failure, and Bn Life",
+  question("What is the relationship between failure rate and MTBF?",
+    answer("Failure rate is the square of MTBF.", message = "Not quite, try again."),
+    answer("Failure rate is the inverse of MTBF.", correct = TRUE),
+    answer("Failure rate is the same as MTBF.", message = "Not quite, try again."),
+    answer("Failure rate is the logarithm of MTBF.", message = "Not quite, try again."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("100 items run for a total time of 5000 hours in a year. Out of these items, 75 have failures. What is the failure rate in hours?",
+    answer("0.75", message = "0.75 is too high, try again."),
+    answer("6667", message = "6667 is too high, try again."),
+    answer("0.00015", correct = TRUE),
+    answer("0.015", message = "0.015 is too high, try again."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("An item has a failure probability that follows the exponential distribution with a failure rate of 0.1. What is the probability of survival at time 5?",
+    answer("39.3%", message = "39.3% is the failure probability, not the survival probability."),
+    answer("60.7%", correct = TRUE),
+    answer("6.1%", message = "6.1% is too low, try again."),
+    answer("93.9%", message = "93.9% is too high, try again."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("An item has a failure probability that follows the exponential distribution with a failure rate of 0.1. What is the B10?",
+    answer("0.105", message = "0.105 is too low, try again."),
+    answer("1.05", correct = TRUE),
+    answer("60.7%", message = "60.7% is a probability, not a time."),
+    answer("39.3%", message = "39.3% is a probability, not a time."),
+    random_answer_order = TRUE
+  )
 )
 ```
 
@@ -238,6 +289,8 @@ qexp(0.1, 0.1)
 ```
 
 ## Summary
+
+Congratulations on completing the Reliability, Availability, and Maintainability (RAM) tutorial!
 
 In this tutorial, we've introduced the concepts of Reliability, Availability, and Maintainability. You have learned to calculate reliability using different assumptions and explored the importance of these concepts in system design.
 

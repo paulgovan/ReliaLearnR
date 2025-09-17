@@ -95,25 +95,40 @@ Where $\beta$ is the shape parameter. In life data analysis $\beta$ has a physic
 
 And $\eta$ is the scale parameter or the quantile at 63.2% probability
 
-### Exercises
-
-```{r beta, echo=FALSE}
-question("Which beta below may indicate a wear out failure mode?",
-  answer("1"),
-  answer("0.5"),
-  answer("2", correct = TRUE),
-  answer("0"),
-  random_answer_order = TRUE
-)
-```
-
-```{r eta, echo=FALSE}
-question("What does the parameter eta represent?",
-  answer("shape parameter"),
-  answer("scale parameter", correct = TRUE),
-  answer("failure rate"),
-  answer("mean time between failures"),
-  random_answer_order = TRUE
+```{r quiz1, echo=FALSE}
+quiz(caption = "Quiz: The Weibull Parameters",
+  question("Which beta indicates an increasing failure rate?",
+    answer("1", message = "Beta of 1 indicates a constant failure rate."),
+    answer("0.5", message = "Beta less than 1 indicates a decreasing failure rate."),
+    answer("2", correct = TRUE, message = "Correct! Beta greater than 1 indicates an increasing failure rate."),
+    answer("0", message = "Beta cannot be 0."),
+    random_answer_order = TRUE, 
+    allow_retry = TRUE
+  ),
+  question("What does the parameter eta represent?",
+    answer("shape parameter", message = "Eta is the scale parameter, not the shape parameter."),
+    answer("scale parameter", correct = TRUE, message = "Correct! Eta is the scale parameter."),
+    answer("failure rate", message = "Eta is not the failure rate."),
+    answer("mean time between failures", message = "Eta is not the mean time between failures."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("What is the cumulative probability when t = eta?",
+    answer("0%", message = "At t = eta, the cumulative probability is not 0%."),
+    answer("50%", message = "At t = eta, the cumulative probability is not 50%."),
+    answer("63.2%", correct = TRUE, message = "Correct! At t = eta, the cumulative probability is 63.2%."),
+    answer("100%", message = "At t = eta, the cumulative probability is not 100%."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("What is the cumulative probability when t = 0?",
+    answer("0%", correct = TRUE, message = "Correct! At t = 0, the cumulative probability is 0%."),
+    answer("50%", message = "At t = 0, the cumulative probability is not 50%."),
+    answer("63.2%", message = "At t = 0, the cumulative probability is not 63.2%."),
+    answer("100%", message = "At t = 0, the cumulative probability is not 100%."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  )
 )
 ```
 
@@ -174,33 +189,50 @@ fit<-MLEw2p(failures, bounds=TRUE, show=TRUE)
 
 ### The Weibull Probability Plot
 
-The Weibull Probability Plot shows the time (or equivalent) on the horizontal axis and the unreliability on the vertical axis. In this case, unreliability is analogous to the cumulative probability of failure. We know from the cumulative distribution function that the opposite of the failure probability is the survival probability or reliability. So an unreliability of 80% at a given time is equivalent to a reliability of 20% (100% - 80% = 20%).
+The Weibull Probability Plot shows the time (or equivalent) on the horizontal axis and the unreliability on the vertical axis. In this case, unreliability is analogous to the cumulative probability of failure. We know from the cumulative distribution function that the opposite of the failure probability is the survival probability or reliability. For example, if the unreliability at time 50 is 20%, then the reliability at time 50 is 80%.
 
 Note that the horizontal axis on a probability plot is log scale, and the vertical axis is log(log(1-p)) scale, where p=(i-0.3)/(n+4) and i is the rank of the observation. By using this scale, the resulting plot of the Weibull data appears linear.
 
-### Exercises
-
-```{r unreliability, echo=FALSE}
-question("What is the approximate unreliability at time 100?",
-  answer("20%"),
-  answer("80%"),
-  answer("10%"),
-  answer("90%", correct = TRUE),
-  random_answer_order = TRUE
-)
-```
-
-```{r b50, echo=FALSE}
-question("What is the approximate reliability at time 50?)",
-  answer("20%", correct = TRUE),
-  answer("80%"),
-  answer("10"),
-  answer("90"),
-  random_answer_order = TRUE
+```{r quiz2, echo=FALSE}
+quiz(caption = "Quiz: Interpreting the Probability Plot",
+  question("What is the approximate unreliability at time 100?",
+    answer("20%", message = "20% is too low."),
+    answer("80%", message = "80% is slightly too low."),
+    answer("10%", message = "10% is the reliability, not the unreliability."),
+    answer("90%", correct = TRUE, message = "Correct! The unreliability at time 100 is approximately 90%."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("What is the approximate reliability at time 50?)",
+    answer("20%", correct = TRUE, message = "Correct! The reliability at time 50 is approximately 20%."),
+    answer("80%", message = "80% is the unreliability, not the reliability."),
+    answer("10%", message = "10% is slightly too low."),
+    answer("90%", message = "90% is too high."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("What is the approximate beta of the fit?",
+    answer("1.5", message = "1.5 is too low."),
+    answer("3.5", message = "3.5 is slightly too high."),
+    answer("0.5", message = "0.5 is too low."),
+    answer("3.2", correct = TRUE, message = "Correct! The beta of the fit is approximately 1.5."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("What is the approximate eta of the fit?",
+    answer("77.81", correct = TRUE, message = "Correct! The eta of the fit is approximately 77.81."),
+    answer("88.84", message = "88.84 is slightly too high."),
+    answer("37.89", message = "37.89 is too low."),
+    answer("389.7", message = "389.7 is too high."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  )
 )
 ```
 
 ## Data Censoring
+
+In life data analysis, data is often **censored**. Censoring occurs when the exact time to failure is not known for all units.
 
 ### Right Censored Data
 
@@ -248,27 +280,50 @@ Instead of points, the interval censored data is shown as black horizontal lines
 
 Life data is often compiled into groups (i.e. a group of machines failed or survived at a certain time). 
 
-Notice how the previous example contained groups in the `qty` column.
+Notice how the previous example contained groups in the `qty` column. Let's look at the inspection data again.
 
-### Exercises
-
-```{r qty, echo=FALSE}
-question("In the interval censored example, how many units are in the group of suspensions that did not fail?",
-  answer("73", correct = TRUE),
-  answer("17"),
-  answer("94"),
-  answer("63.48"),
-  random_answer_order = TRUE
+``` {r echo=TRUE}
+knitr::kable(
+  head(inspection_data, topn=10)
 )
 ```
 
-```{r failure-count, echo=FALSE}
-question("In the interval censored example, how many total failures occurred?",
-  answer("73"),
-  answer("17"),
-  answer("94", correct = TRUE),
-  answer("63.48"),
-  random_answer_order = TRUE
+The `qty` column indicates how many units failed in each interval. For example, 5 units failed between time 0 and 6.12, 16 units failed between time 6.12 and 19.92, and so on.
+
+```{r quiz3, echo=FALSE}
+quiz(caption = "Quiz: Interval Censored Data",
+  question("In the interval censored example above, how many units are in the group of suspensions that did not fail?",
+    answer("73", correct = TRUE, message = "Correct! There are 73 units in the group of suspensions that did not fail."),
+    answer("17", message = "17 is the number of failures in the last interval."),
+    answer("94", message = "94 is the total number of units (failures + suspensions)."),
+    answer("63.48", message = "63.48 is the time of the last inspection."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("In the interval censored example, how many total failures occurred?",
+    answer("73", message = "73 is the number of suspensions that did not fail."),
+    answer("17", message = "17 is the number of failures in the last interval."),
+    answer("94", correct = TRUE, message = "Correct! There are a total of 94 failures."),
+    answer("63.48", message = "63.48 is the time of the last inspection."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("In the interval censored example, how many total units are in the data set?",
+    answer("73", message = "73 is the number of suspensions that did not fail."),
+    answer("17", message = "17 is the number of failures in the last interval."),
+    answer("94", message = "94 is the total number of failures."),
+    answer("167", correct = TRUE, message = "Correct! There are a total of 167 units (failures + suspensions)."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("In the interval censored example, how many failures occurred between time 19.92 and 35.4?",
+    answer("12", message = "12 is the number of failures between time 6.12 and 19.92."),
+    answer("18", correct = TRUE, message = "Correct! There are 18 failures between time 19.92 and 35.4."),
+    answer("16", message = "16 is the number of failures between time 0 and 6.12."),
+    answer("2", message = "2 is the number of failures between time 39.72 and 45.32."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  )
 )
 ```
 
@@ -285,21 +340,32 @@ WeibullR includes functions for both methods, such as the `MRRw2p`, `MRRw3p` fun
 Let's rerun the right censored example and compare the MRR and MLE methods using the `wblr` function.
 
 ```{r echo=TRUE}
-MRRfit <- wblr.conf(wblr.fit(wblr(failures, suspensions, col="blue"), method.fit="rr"))
-MLEfit <- wblr.conf(wblr.fit(wblr(failures, suspensions, col="red"), method.fit="mle"), method.conf="lrb")
+MRRfit <- wblr.fit(wblr(failures, suspensions, col="blue"), method.fit="rr")
+MLEfit <- wblr.fit(wblr(failures, suspensions, col="red"), method.fit="mle")
 plot.wblr(list(MRRfit, MLEfit))
 ```
 
 The blue model is the MRR fit and the red model is the MLE fit. While both models fit the data well,
 there are some slight differences in the parameters and unreliability.
 
-```{r mrr-vs-mle, echo=FALSE}
-question("What is the difference between the MRR and MLE fits (select all that apply)?",
-  answer("The MLE fit has a higher beta", correct = TRUE),
-  answer("The MRR fit has a higher beta"),
-  answer("The MLE fit results in a higher unreliability at time 30"),
-  answer("The MRR fit results in a higher unreliability at time 30", correct = TRUE),
-  random_answer_order = TRUE
+```{r quiz4, echo=FALSE}
+quiz(caption = "Quiz: MRR vs MLE",
+  question("What is the difference between the MRR and MLE fits (select all that apply)?",
+    answer("The MLE fit has a higher beta", correct = TRUE),
+    answer("The MRR fit has a higher beta"),
+    answer("The MLE fit results in a higher unreliability at time 30"),
+    answer("The MRR fit results in a higher unreliability at time 30", correct = TRUE),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("Which fit has a slightly higher unreliability at time 100?",
+    answer("MRR", message = "The MRR fit has a slightly lower unreliability at time 100."),
+    answer("MLE", correct = TRUE, message = "The MLE fit has a slightly higher unreliability at time 100."),
+    answer("Both are the same", message = "The fits are slightly different at time 100."),
+    answer("Cannot be determined from the plot", message = "The unreliability can be determined from the plot."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  )
 )
 ```
 
@@ -343,25 +409,39 @@ Note that the 3P Weibull model has a failure free period of approximately 3.3 ti
 The model appears curved at lower probabilities, which is typical of a 3P Weibull.
 The curvature is due to the failure free period, which shifts the distribution to the right.
 
-### Exercises
-
-```{r weibayes-eta, echo=FALSE}
-question("What is eta in the Weibayes example?",
-  answer("88.84", correct = TRUE),
-  answer("389.7"),
-  answer("87.89"),
-  answer("37.89"),
-  random_answer_order = TRUE
-)
-```
-
-```{r failure-free, echo=FALSE}
-question("What is the failure free period in the 3P Weibull example?",
-  answer("3.3", correct = TRUE),
-  answer("0.85"),
-  answer("11.16"),
-  answer("0"),
-  random_answer_order = TRUE
+```{r quiz5, echo=FALSE}
+quiz(caption = "Quiz: Other Weibull Models",
+  question("In the Weibayes example, what is eta?",
+    answer("88.84", correct = TRUE, message = "Correct! Eta is approximately 88.84."),
+    answer("389.7", message = "389.7 is too high."),
+    answer("87.89", message = "87.89 is slightly too low."),
+    answer("37.89", message = "37.89 is too low."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("What is the failure free period in the 3P Weibull example?",
+    answer("3.3", correct = TRUE, message = "Correct! The failure free period is approximately 3.3 time units."),
+    answer("0.85", message = "0.85 is the beta parameter, not the failure free period."),
+    answer("11.16", message = "11.16 is the eta parameter, not the failure free period."),
+    answer("0", message = "The failure free period is greater than 0."),
+    random_answer_order = TRUE
+  ),
+  question("In the 3P Weibull example, what is beta?",
+    answer("0.85", correct = TRUE, message = "Correct! Beta is approximately 0.85."),
+    answer("3.3", message = "3.3 is the failure free period, not beta."),
+    answer("11.16", message = "11.16 is the eta parameter, not beta."),
+    answer("1", message = "Beta is not equal to 1."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("In the 3P Weibull example, what is eta?",
+    answer("11.16", correct = TRUE, message = "Correct! Eta is approximately 11.16."),
+    answer("0.85", message = "0.85 is the beta parameter, not eta."),
+    answer("3.3", message = "3.3 is the failure free period, not eta."),
+    answer("1", message = "Eta is not equal to 1."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  )
 )
 ```
 
@@ -405,15 +485,24 @@ plot.wblr(list(obj1, obj2))
 The red model is the fit without suspensions and the purple model is the fit with suspensions. 
 Note how the fit with suspensions has a lower beta and higher eta.
 
-### Exercises
-
-```{r obj1-vs-obj2, echo=FALSE}
-question("What is the difference between obj1 and obj2 (select all that apply)?",
-  answer("obj1 includes suspensions"),
-  answer("obj1 has a fit with a lower beta"),
-  answer("obj2 includes suspensions", correct=TRUE),
-  answer("obj2 has a fit with a lower beta", correct=TRUE),
-  random_answer_order = TRUE
+```{r quiz6, echo=FALSE}
+quiz(caption = "Quiz: Multi-Plots",
+  question("What is the difference between obj1 and obj2 (select all that apply)?",
+    answer("obj1 includes suspensions"),
+    answer("obj1 has a fit with a lower beta"),
+    answer("obj2 includes suspensions", correct=TRUE),
+    answer("obj2 has a fit with a lower beta", correct=TRUE),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("Which fit has a higher unreliability at time 100?",
+    answer("obj2", message = "obj2 has a slightly lower unreliability at time 100."),
+    answer("obj1", correct = TRUE, message = "Correct! obj1 has a slightly higher unreliability at time 100."),
+    answer("Both are the same", message = "The fits are slightly different at time 100."),
+    answer("Cannot be determined from the plot", message = "The unreliability can be determined from the plot."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  )
 )
 ```
 
@@ -498,19 +587,30 @@ plot_contour(list(obj1, obj2, obj3), CL=0.9)
 
 The blue, red, and orange contours represent the 3 different failure modes. 
 
-```{r contour-plots, echo=FALSE}
-question("At a probability level of 90%...",
-  answer("obj3 (orange) is significantly different than the others"),
-  answer("obj2 (red) is significantly different than the others"),
-  answer("None of the distributions are significantly different", correct=TRUE),
-  answer("All of the distributions are significantly different"),
-  random_answer_order = TRUE
+```{r quiz7, echo=FALSE}
+quiz(caption = "Quiz: Contour Plots",
+  question("In the single contour plot example, what is the approximate beta at the center of the contour?",
+    answer("Between 2 and 3", message = "3 is slightly too low."),
+    answer("Between 75 and 80", message = "The approximate eta is between 75 and 80."),
+    answer("Between 4 and 4.5", message = "4 is slightly too high."),
+    answer("Between 3 and 3.5", correct = TRUE, message = "Correct! The approximate beta at the center of the contour is between 3 and 3.5."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("In the multi-contour plot example, at a probability level of 90%...",
+    answer("obj3 (orange) is significantly different than the others", message = "obj3 (orange) overlaps with obj1 (blue) and obj2 (red), so they are not significantly different."),
+    answer("obj2 (red) is significantly different than the others", message = "obj2 (red) overlaps with obj3 (orange), so they are not significantly different."),
+    answer("None of the distributions are significantly different", correct=TRUE, message = "Correct! All of the distributions overlap, so they are not significantly different."),
+    answer("All of the distributions are significantly different", message = "The distributions overlap, so they are not significantly different."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  )
 )
 ```
 
-**Challenge:** rerun the competing failure mode example with a different number in the `set.seed` function and see if the same results hold true.
-
 ## Summary
+
+Congratulations on completing the tutorial on life data analysis!
 
 In this tutorial, we've introduced the concepts of life data analysis and reliability. You have learned to calculate reliability using the Weibull distribution and visualize life data.
 
