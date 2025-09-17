@@ -47,10 +47,10 @@ The Weibull is a **flexible** distribution that can fit many different types of 
 
 Take the following normal distribution with a mean of 5 and standard deviation of 1.5. 
 
-```{r echo=TRUE}
-x <- seq(0, 10, by = .1)
-y <- dnorm(x, mean = 5, sd = 1.5)
-plot(x,y, type = "l", col = "blue", xlab = "Variable", ylab = "Probability")
+```{r echo=FALSE}
+x <- seq(0, 10, by = .1) # Create a sequence of x values
+y <- dnorm(x, mean = 5, sd = 1.5) # Calculate the normal density function
+plot(x,y, type = "l", col = "blue", xlab = "Variable", ylab = "Probability") # Plot the normal distribution
 ```
 
 ### The Weibull vs Normal
@@ -58,11 +58,12 @@ plot(x,y, type = "l", col = "blue", xlab = "Variable", ylab = "Probability")
 The Weibull can *mimic* the normal and many others. Adjust the scale parameter in the slider below until the Weibull looks similar to the Normal above.
 
 ```{r, echo=FALSE}
-sliderInput("eta", "Eta:", min = 1, max = 10, value = 1, step = 0.1)
-plotOutput("distPlot")
+sliderInput("eta", "Eta:", min = 1, max = 10, value = 1, step = 0.1) # Slider for eta
+plotOutput("distPlot") # Plot output
 ```
 
 ```{r, context="server"}
+# Plot the Weibull distribution
 output$distPlot <- renderPlot({
   x <- seq(0, 10, by = .1)
   y <- dweibull(x, shape = 3.67, scale = input$eta)
@@ -118,11 +119,12 @@ Let's vary the parameters of the Weibull distribution to see these relationships
 Varying Beta changes the **shape** of the cumulative distribution function. Use the slider below to adjust the shape of the Weibull. 
 
 ```{r, echo=FALSE}
-sliderInput("beta", "Beta:", min = 0.5, max = 3, value = 1)
-plotOutput("cummPlot")
+sliderInput("beta", "Beta:", min = 0.5, max = 3, value = 1) # Slider for beta
+plotOutput("cummPlot") # Plot output
 ```
 
 ```{r, context="server"}
+# Plot the cumulative distribution function
 output$cummPlot <- renderPlot({
   x <- seq(0, 50, by = .1)
   plot(pweibull(x, shape = input$beta, scale = 10), col = "blue", type = "l", xlab = "Variable", ylab = "Cumulative Probability") 
@@ -134,11 +136,12 @@ output$cummPlot <- renderPlot({
 Varying Eta moves the weibull distribution along the x-axis. Use the slider below to adjust the scale of the Weibull. 
 
 ```{r, echo=FALSE}
-sliderInput("eta2", "Eta:", min = 1, max = 20, value = 1)
-plotOutput("cummPlot2")
+sliderInput("eta2", "Eta:", min = 1, max = 20, value = 1) # Slider for eta
+plotOutput("cummPlot2") # Plot output
 ```
 
 ```{r, context="server"}
+# Plot the cumulative distribution function
 output$cummPlot2 <- renderPlot({
   x <- seq(0, 50, by = .1)
   plot(pweibull(x, shape = 1, scale = input$eta2), col = "red", type = "l", xlab = "Variable", ylab = "Cumulative Probability") 
@@ -198,12 +201,14 @@ question("What is the approximate reliability at time 50?)",
 
 Right censored data includes **suspensions** or units that have operated for a period of time without failure. 
 
-Let's add right censored data to the previous example. In addition to the 5 machines that failed, add suspensions for 3 machines that did not fail (right censored) at times 100, 45, and 10 respectively.
+Let's add right censored data to the previous example. In addition to the 5 machines that failed, add suspensions for 3 machines that did not fail (right censored) at times 100, 45, and 10 respectively. Then use the `MLEw2p` function to fit a Weibull to the data using the MLE method.
 
 ```{r echo=TRUE}
 suspensions<-c(100, 45, 10)
 fit<-MLEw2p(failures, suspensions, bounds=TRUE, show=TRUE)
 ```
+
+Note how the fit has changed after adding suspensions. The fit now has a lower beta and higher eta. 
 
 ### Interval Censored Data
 
@@ -231,6 +236,8 @@ obj1<-wblr.fit(obj1, method.fit="mle", col="red")
 obj1<-wblr.conf(obj1, method.conf="fm", lty=2)
 plot(obj1)
 ```
+
+Instead of points, the interval censored data is shown as black horizontal lines representing the intervals where failures occurred.
 
 ### Grouped Data
 
@@ -270,13 +277,16 @@ question("In the interval censored example, how many total failures occurred?",
 
 WeibullR includes functions for both methods, such as the `MRRw2p`, `MRRw3p` functions for MRR and the `MLEw2p`, `MLEw3p` functions for MLE.
 
-Let's rerun the right censored example and compare the MRR and MLE methods.
+Let's rerun the right censored example and compare the MRR and MLE methods using the `wblr` function.
 
 ```{r echo=TRUE}
 MRRfit <- wblr.conf(wblr.fit(wblr(failures, suspensions, col="blue"), method.fit="rr"))
 MLEfit <- wblr.conf(wblr.fit(wblr(failures, suspensions, col="red"), method.fit="mle"), method.conf="lrb")
 plot.wblr(list(MRRfit, MLEfit))
 ```
+
+The blue model is the MRR fit and the red model is the MLE fit. While both models fit the data well,
+there are some slight differences in the parameters and unreliability.
 
 ```{r mrr-vs-mle, echo=FALSE}
 question("What is the difference between the MRR and MLE fits (select all that apply)?",
@@ -296,7 +306,7 @@ A WeiBayes or 1P Weibull has a fixed $\beta$ or shape parameter based on *prior*
 
 Weibayes models are typically used when failure data is limited and/or other Weibull models do not fit the data well. 
 
-Let's rerun a previous example as a WeiBayes model with a Beta of 2.
+Let's rerun a previous example as a WeiBayes model with a Beta of 2. First,  create the failure and suspension data. Then fit the WeiBayes model and plot the results.
 
 ```{r echo=TRUE, warning=FALSE}
 failures<-c(30, 49, 82, 90, 96)
@@ -305,13 +315,15 @@ obj <- wblr.fit(wblr(failures, suspensions, col="blue"), method.fit="weibayes", 
 plot(obj)
 ```
 
+Note that confidence bounds are not shown for the WeiBayes model. Confidence bounds for the WeiBayes model are not well defined because the shape parameter is fixed.
+
 ### The 3-Parameter Weibull Model
 
 The 3P Weibull has an additional parameter *t~0~* to represent a failure free period (i.e. a machine cannot fail until after time *t~0~*). Often parts or machines must age, wear, fatigue, etc. before they can actually fail, and the 3P Weibull can model this behavior.
 
 $$ R(t) = 1 - F(t) = e^-((t-t~0~)/\eta)^\beta $$
 Here is an example from "The New Weibull Handbook" by Robert Abernethy (2004). 
-Let's run this example as a 3P Weibull.
+Let's run this example as a 3P Weibull. First, create the failure data. Then fit the 3P Weibull model and plot the results.
 
 ```{r echo=TRUE}
 failures<-c(3.46623, 3.732711, 4.052996, 4.628703, 4.8157, 5.84517, 5.888313, 5.892967,
@@ -321,6 +333,10 @@ failures<-c(3.46623, 3.732711, 4.052996, 4.628703, 4.8157, 5.84517, 5.888313, 5.
 fit<- wblr.conf(wblr.fit(wblr(failures), dist="weibull3p"), col="darkgreen")
 plot(fit)
 ```
+
+Note that the 3P Weibull model has a failure free period of approximately 3.3 time units.
+The model appears curved at lower probabilities, which is typical of a 3P Weibull.
+The curvature is due to the failure free period, which shifts the distribution to the right.
 
 ### Exercises
 
@@ -348,7 +364,7 @@ question("What is the failure free period in the 3P Weibull example?",
 
 ### Multi-Plots
 
-It's often helpful to compare multiple Weibull models on the same plot. To build a plot with multiple Weibull models, start by creating a `wblr` object
+It's often helpful to compare multiple Weibull models on the same plot. To build a plot with multiple Weibull models, start by creating a `wblr` object:
 
 ```{r echo=TRUE}
 failures<-c(30, 49, 82, 90, 96)
@@ -380,6 +396,9 @@ Add the 2 `wblr` objects to a list and plot both objects in a single chart.
 ```{r echo=TRUE}
 plot.wblr(list(obj1, obj2))
 ```
+
+The red model is the fit without suspensions and the purple model is the fit with suspensions. 
+Note how the fit with suspensions has a lower beta and higher eta.
 
 ### Exercises
 
@@ -413,12 +432,14 @@ data <- data.frame(
   )
 ```
 
-Fit an overall Weibull to the data. Notice how the probability data does not appear to be linear.
+Fit an overall Weibull to the data.
 
 ```{r echo=TRUE}
 obj <- wblr.conf(wblr.fit(wblr(data)))
 plot(obj, col="darkgreen", is.plot.legend = FALSE)
 ```
+
+The overall fit has a beta of approximately 1, which indicates random failures. However, we know that the data actually contains 3 different failure modes.
 
 Now create a separate data set for each failure mode.
 
@@ -440,11 +461,14 @@ obj3 <- wblr.fit(wblr(dat3, col="orange"))
 plot.wblr(list(obj1, obj2, obj3), is.plot.legend = FALSE)
 ```
 
+Note how each failure mode has a different beta and eta. Failure mode A (blue) has a beta less than 1, which may indicate infant mortality. Failure mode B (red) has a beta of approximately 1, which may indicate random failures. Failure mode C (orange) has a beta greater than 1, which may indicate wear out.
+
 ## Contour Plots
 
 Another way to compare multiple Weibull models is with contour plots. In this context, a contour plot consists of curves or contours that represent the Weibull distribution in terms of the parameters Beta and Eta.
  
-Let's start by rerunning the first example and building a contour plot.
+Let's start by rerunning the first example and building a contour plot. First, create the failure data. 
+Then fit the Weibull model and build the contour plot at a probability level of 90%.
 
 ```{r echo=TRUE, results='hide'}
 failures<-c(30, 49, 82, 90, 96)
@@ -452,7 +476,7 @@ obj <- wblr.conf(wblr.fit(wblr(failures, col="blue"), method="mle"), method="lrb
 plot_contour(obj, CL=0.9)
 ```
 
-The Weibull contour plot shows Eta on the horizontal axis, Beta on the vertical axis, and the contour plot at the selected probability (90% in this case).
+The Weibull contour plot shows Eta on the horizontal axis, Beta on the vertical axis, and the contour plot at the selected probability (90% in this case). 
 
 ### Comparing Contour Plots
 
@@ -466,6 +490,9 @@ obj2 <- wblr.conf(wblr.fit(wblr(dat2, col="red"), method="mle"), method="lrb")
 obj3 <- wblr.conf(wblr.fit(wblr(dat3, col="orange"), method="mle"), method="lrb")
 plot_contour(list(obj1, obj2, obj3), CL=0.9)
 ```
+
+The blue, red, and orange contours represent the 3 different failure modes. 
+
 
 ```{r contour-plots, echo=FALSE}
 question("At a probability level of 90%...",
@@ -481,7 +508,7 @@ question("At a probability level of 90%...",
 
 ## Summary
 
-In this tutorial, we've introduced the concepts of life data analysis and reliability. You have learned to calculate reliability using the Weibull distribution and  visualize life data
+In this tutorial, we've introduced the concepts of life data analysis and reliability. You have learned to calculate reliability using the Weibull distribution and visualize life data.
 
 ### To Get Help
 

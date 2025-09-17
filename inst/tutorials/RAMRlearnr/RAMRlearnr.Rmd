@@ -31,6 +31,7 @@ That being said, all 3 terms are inter-related. A car that is not very reliable 
 ## Learning Objectives
 
 By the end of this module, learners will be able to:
+
 * Define key reliability metrics, including reliability, availability, and failure rate.
 * Describe the significance of MTTR, MTTF, and MTBF in reliability engineering.
 * Calculate probability of failure using given reliability data.

@@ -56,11 +56,12 @@ The slope of the line on the plot indicates the rate of reliability growth:
 Take the following example Duane Plot. Adjust the Beta value input to see the failure rate both decreasing and increasing.
 
 ```{r echo=FALSE}
-numericInput("beta", label = h3("Beta Value:"), value = 1, min = 0, max = 5, step = 0.1, width = '50%')
-plotOutput("duanePlot")
+numericInput("beta", label = h3("Beta Value:"), value = 1, min = 0, max = 5, step = 0.1, width = '50%') # Numeric input for beta value
+plotOutput("duanePlot") # Plot output for the Duane plot
 ```
 
 ```{r, context="server"}
+# Plotting the Duane Model based on user input for beta value
 output$duanePlot <- renderPlot({
   x <- seq(1, 100, by = .1)
   y <- 0.1 * x ^ (input$beta - 1)
@@ -175,11 +176,12 @@ Similar to the Duane Model, the shape of the model indicates the rate of reliabi
 Take the following example Crow-AMSAA model. Adjust the Beta value input to see the failure rate both decreasing and increasing.
 
 ```{r echo=FALSE}
-numericInput("beta", label = h3("Beta Value:"), value = 1, min = 0, max = 5, step = 0.1, width = '50%')
-plotOutput("crowPlot")
+numericInput("beta", label = h3("Beta Value:"), value = 1, min = 0, max = 5, step = 0.1, width = '50%') # Numeric input for beta value
+plotOutput("crowPlot") # Plot output for the Crow-AMSAA plot
 ```
 
 ```{r, context="server"}
+# Plotting the Crow-AMSAA Model based on user input for beta value
 output$crowPlot <- renderPlot({
   x <- seq(1, 100, by = .1)
   y <- 0.5 * x ^ input$beta
@@ -309,11 +311,12 @@ Take a product that is designed to last 10,000 hours. Waiting for it to fail nat
 The following plot shows the relationship between the acceleration or stress factor and the expected life of the product: as the acceleration factor increases, the expected life tends to decrease. Adjust the acceleration factor input to see this impact in action. 
 
 ```{r echo=FALSE}
-sliderInput("af", label = h3("Acceleration Factor:"), value = 1, min = 1, max = 10, step = 0.1, width = '50%')
-plotOutput("altPlot")
+sliderInput("af", label = h3("Acceleration Factor:"), value = 1, min = 1, max = 10, step = 0.1, width = '50%') # Slider input for acceleration factor
+plotOutput("altPlot") # Plot output for the ALT plot
 ```
 
 ```{r, context="server"}
+# Plotting the Accelerated Life Testing model based on user input for acceleration factor
 output$altPlot <- renderPlot({
   y <- seq(1, 10, by = .1)
   x <- 3678.79 * exp(1 / y)
