@@ -53,6 +53,9 @@ To install the development version:
 pak::pak("paulgovan/WeibullR.learnr")
 ```
 
+Note: You may be prompted to update dependent packages before installing. 
+To do this when prompted during installation type 1 (All) to update.
+
 ## Usage
 
 Currently, three primary learning modules exist. These modules can be
