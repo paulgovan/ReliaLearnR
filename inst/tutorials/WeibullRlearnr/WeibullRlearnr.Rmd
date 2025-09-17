@@ -37,13 +37,19 @@ By the end of this module, learners will be able to:
 
 ### The Weibull Distribution
 
-Life data analysis is often referred to as Weibull analysis because the Weibull distribution is commonly used to model life data. 
+The Weibull distribution is a continuous probability distribution used in life data analysis and many other fields.
+
+Life data analysis is often referred to as Weibull analysis because the Weibull distribution is commonly used to model life data.
+
+While other distributions can be used to model life data, this tutorial focuses on the Weibull distribution because of its wide application.
 
 ### Why the Weibull Distribution?
 
 The Weibull is a **flexible** distribution that can fit many different types of data.
 
 ### The Normal Distribution
+
+The normal distribution is another common distribution used in statistics.
 
 Take the following normal distribution with a mean of 5 and standard deviation of 1.5. 
 
@@ -81,11 +87,11 @@ output$distPlot <- renderPlot({
 
 $$ R(t) = 1 - F(t) = e^{-(t/\eta)^\beta} $$
 
-Where $\beta$ is the shape parameter. In life data analysis $\beta$ has a physical interpretation:
+Where $\beta$ is the shape parameter. In life data analysis $\beta$ has a physical interpretation related to the failure rate. The failure rate is the rate at which failures occur over time.
 
--   $\beta$ \< 1 - the failure rate is decreasing (may indicate infant mortality)
--   $\beta$ = 1 - the failure rate is constant (random failures or possible mix of failure modes)
--   $\beta$ \> 1 - the failure rate is increasing (may indicate wear out)
+-   $\beta$ \< 1 - the failure rate is decreasing
+-   $\beta$ = 1 - the failure rate is constant
+-   $\beta$ \> 1 - the failure rate is increasing
 
 And $\eta$ is the scale parameter or the quantile at 63.2% probability
 
@@ -133,8 +139,7 @@ output$cummPlot <- renderPlot({
 
 ### Varying Eta
 
-Varying Eta moves the weibull distribution along the x-axis. Use the slider below to adjust the scale of the Weibull. 
-
+Varying Eta moves the Weibull distribution along the x-axis. Use the slider below to adjust the scale of the Weibull. 
 ```{r, echo=FALSE}
 sliderInput("eta2", "Eta:", min = 1, max = 20, value = 1) # Slider for eta
 plotOutput("cummPlot2") # Plot output
@@ -152,7 +157,7 @@ output$cummPlot2 <- renderPlot({
 
 ### Getting Started with WeibullR
 
-For this tutorial, we will use WeibullR: an R package for life data analysis in the tradition of Walodi Weibull.
+For this tutorial, we will use WeibullR: an R package for Weibull analysis.
 
 First, check if WeibullR is installed in R and install if not.
 
@@ -414,7 +419,7 @@ question("What is the difference between obj1 and obj2 (select all that apply)?"
 
 ## Competing Failure Modes
 
-A part or machine may have multiple different failure modes (e.g. corrosion, fatigue, overload), where each failure mode has a different distribution of time to failure.
+A part or machine may have multiple different failure modes, where each failure mode has a different distribution of time to failure. A failure mode is a specific way in which a part or machine can fail  (e.g. corrosion, fatigue, overload). 
 
 A basic Weibull with competing failure modes tends to -
 
@@ -461,7 +466,7 @@ obj3 <- wblr.fit(wblr(dat3, col="orange"))
 plot.wblr(list(obj1, obj2, obj3), is.plot.legend = FALSE)
 ```
 
-Note how each failure mode has a different beta and eta. Failure mode A (blue) has a beta less than 1, which may indicate infant mortality. Failure mode B (red) has a beta of approximately 1, which may indicate random failures. Failure mode C (orange) has a beta greater than 1, which may indicate wear out.
+Note how each failure mode has a different beta and eta. Failure mode A (blue) has a beta less than 1, which means the failure rate is decreasing. Failure mode B (red) has a beta of approximately 1, which indicates a constant failure rate. Failure mode C (orange) has a beta greater than 1, which means that the failure rate is increasing.
 
 ## Contour Plots
 
@@ -492,7 +497,6 @@ plot_contour(list(obj1, obj2, obj3), CL=0.9)
 ```
 
 The blue, red, and orange contours represent the 3 different failure modes. 
-
 
 ```{r contour-plots, echo=FALSE}
 question("At a probability level of 90%...",
@@ -526,7 +530,7 @@ help(package="WeibullR")
 
 ### More resources
 
-[WeibullR.plotly](https://paulgovan.github.io/WeibullR.plotly/) is a package for building interactive Weibull models. 
+[WeibullR.plotly](https://paulgovan.github.io/WeibullR.plotly/) is a package for building interactive Weibull models.
 
 [WeibullR.shiny](https://paulgovan.github.io/WeibullR.shiny/) is a web application for life data analysis.
 
