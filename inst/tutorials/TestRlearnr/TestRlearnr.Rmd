@@ -41,7 +41,7 @@ By the end of this tutorial, learners will be able to:
 
 ## The Duane Model
 
-**The Duane Model** was developed by J. T. Duane in 1964 and provides a simple and graphical way to observe and analyze whether failure rates are improving as changes are made to a product or system. 
+**The Duane model** provides a simple and graphical way to observe and analyze whether failure rates are improving as changes are made to a product or system. 
 
 Specifically, the Duane Model is a log-log plot of the cumulative Mean Time Between Failures (MTBF) vs cumulative time.
 
@@ -97,32 +97,11 @@ Where:
   - If \( \beta = 1 \), the system reliability is constant (no improvement or degradation).
   - If \( \beta < 1 \), the system reliability is deteriorating (the failure rate increases over time).
 
-### Exercises
-
-```{r duane1, echo=FALSE}
-question("What does a Duane Plot with a slope of greater than 1 indicate?",
-  answer("A) The system's reliability is improving", correct = TRUE),
-  answer("B) The system's reliability is deteriorating"),
-  answer("C) The system has no change in reliability"),
-  random_answer_order = TRUE
-)
-```
-
-```{r duane2, echo=FALSE}
-question("Which beta value may indicate an infant mortality failure mode?",
-  answer("1"),
-  answer("0.5"),
-  answer("2"),
-  answer("Unable to be determined in this case", correct = TRUE),
-  random_answer_order = TRUE
-)
-```
-
 ## ReliaGrowR
 
 ### Getting Started with ReliaGrowR
 
-For this tutorial, we will use **ReliaGrowR**: a R package for Reliability Growth Analysis.
+For this tutorial, we will use **ReliaGrowR**: an R package for Reliability Growth Analysis.
 
 First, check if ReliaGrowR is installed in R and install if not.
 
@@ -130,38 +109,63 @@ First, check if ReliaGrowR is installed in R and install if not.
 if(!(require(ReliaGrowR))){install.packages('ReliaGrowR')}
 ```
 
-Next, set up some cumulative time and failure data. Then use the `duane_plot` function to fit a Duane Model to the data. 
+Next, set up some cumulative time and failure data. Then use the `duane` function to fit a Duane Model to the data and the `plot` function to plot the results:
 
 ```{r echo=TRUE}
 times <- c(100, 200, 300, 400, 500)
 failures <- c(1, 2, 1, 3, 2)
-fit <- duane_plot(times, failures, line_col = "red")
+fit <- duane(times, failures)
+plot(fit, main = "Duane Model Example", xlab = "Cumulative Time", ylab = "Cumulative MTBF")
 ```
 
-### Exercises
+The plot shows a Duane Model fit to the data. The slope of the line indicates whether the system is improving, stable, or worsening.
 
-```{r duane3, echo=FALSE}
-question("In this example, what is the approximate cumulative MTBF at time 1000?",
-  answer("200"),
-  answer("100"),
-  answer("120"),
-  answer("150", correct = TRUE),
-  random_answer_order = TRUE
-)
-```
-
-```{r duane4, echo=FALSE}
-question("How would you describe the reliability of this system?",
-  answer("The system reliability is improving", correct = TRUE),
-  answer("The system reliability is worsening"),
-  answer("The system reliability is Stable"),
-  random_answer_order = TRUE
+```{r quiz1, echo=FALSE}
+quiz(caption = "Quiz: Duane Model",
+  question("What does a Duane Plot with a slope greater than 1 indicate?",
+    answer("The system's reliability is improving", correct = TRUE, 
+           message = "A slope greater than 1 indicates improvement."),
+    answer("The system's reliability is deteriorating", 
+           message = "A slope less than 1 indicates deterioration."),
+    answer("The system has no change in reliability", 
+           message = "A slope of 1 indicates no change in reliability."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("What does a Duane Plot with a slope less than 1 indicate?",
+    answer("The system's reliability is improving",
+           message = "A slope greater than 1 indicates improvement."),
+    answer("The system's reliability is deteriorating", correct = TRUE, 
+           message = "A slope less than 1 indicates deterioration."),
+    answer("The system has no change in reliability", 
+           message = "A slope of 1 indicates no change in reliability."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("In the previous example, what is the approximate cumulative MTBF at time 1000?",
+    answer("200", message = "200 is too high, try again."),
+    answer("100", message = "100 is too low, try again."),
+    answer("120", message = "120 is slightly too low, try again."),
+    answer("150", correct = TRUE, message = "The cumulative MTBF at time 1000 is approximately 150."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("In the previous example, how would you describe the reliability of the system?",
+    answer("The system reliability is improving", correct = TRUE, 
+           message = "The slope is greater than 1, so the system is improving."),
+    answer("The system reliability is worsening", 
+           message = "The slope is not less than 1, so the system is not worsening."),
+    answer("The system reliability is stable", 
+           message = "The slope is not close to 1, so the system is not stable."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  )
 )
 ```
 
 ## The Crow-AMSAA Model
 
-**The Crow-AMSAA** is a **Non-Homogeneous Poisson Process (NHPP)** model developed by Larry H. Crow and is based on the Army Materiel Systems Analysis Activity (AMSAA) testing framework.
+The Army Materiel Systems Analysis Activity model by Crow **(Crow-AMSAA)** takes failure behavior as a **Non-Homogeneous Poisson Process (NHPP)** governed by a power law, making the model particularly effective for systems undergoing reliability growth due to continuous improvements.
 
 Specifically, the Crow-AMSAA Model is a plot of the cumulative number of failures vs cumulative time. 
 
@@ -221,49 +225,69 @@ times <- c(100, 200, 300, 400, 500)
 failures <- c(1, 2, 1, 3, 2)
 ```
 
-Then use the `rga` function to fit the model and the `plot_rga` function to plot the results:
+Then use the `rga` function to fit the model and the `plot` function to plot the results:
 ```{r}
 result <- rga(times, failures)
-plot_rga(result, line_col = "orange")
+plot(result, main = "Crow-AMSAA Model Example", xlab = "Cumulative Time", ylab = "Cumulative Failures")
 ```
 
-### Exercises
+The plot shows a Crow-AMSAA Model fit to the data. The curvature of the line indicates whether the system is improving, stable, or worsening.
 
-```{r rga1, echo=FALSE}
-question("In this example, what is the cumulative number of failures at time 400?",
-  answer("4"),
-  answer("8"),
-  answer("6"),
-  answer("7", correct = TRUE),
-  random_answer_order = TRUE
-)
-```
-
-```{r rga2, echo=FALSE}
-question("How would you describe the reliability of this system?",
-  answer("The reliability of the system is improving", correct = TRUE),
-  answer("The reliability of the system is worsening"),
-  answer("The reliability of the system is stable"),
-  random_answer_order = TRUE
+```{r quiz2, echo=FALSE}
+quiz(caption = "Quiz: Crow-AMSAA Model",
+  question("What does a Crow-AMSAA Model with a Beta greater than 1 indicate?",
+    answer("The system's reliability is improving", 
+           message = "A Beta less than 1 indicates improvement."),
+    answer("The system's reliability is deteriorating", correct = TRUE, 
+           message = "A Beta greater than 1 indicates deterioration."),
+    answer("The system has no change in reliability", 
+           message = "A Beta of 1 indicates no change in reliability."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("What does a Crow-AMSAA Model with a Beta less than 1 indicate?",
+    answer("The system's reliability is improving", correct = TRUE, 
+           message = "A Beta less than 1 indicates improvement."),
+    answer("The system's reliability is deteriorating", 
+           message = "A Beta greater than 1 indicates deterioration."),
+    answer("The system has no change in reliability", 
+           message = "A Beta of 1 indicates no change in reliability."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("In the previous example, what is the cumulative number of failures at time 1000?",
+    answer("4", message = "4 is too low, try again."),
+    answer("8", message = "8 is slightly too high, try again."),
+    answer("6", message = "6 is slightly too low, try again."),
+    answer("7", correct = TRUE, 
+           message = "The cumulative number of failures at time 1000 is approximately 7."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("In the previous example, how would you describe the reliability of this system?",
+    answer("The reliability of the system is improving", correct = TRUE, 
+           message = "The slope is curving downward, so the reliability is improving."),
+    answer("The reliability of the system is worsening", 
+           message = "The slope is not curving upward, so the reliability is not worsening."),
+    answer("The reliability of the system is stable", 
+           message = "The slope is not linear, so the reliability is not stable."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  )
 )
 ```
 
 ### The Piecewise NHPP Model
 
-The **Piecewise NHPP** model is an extension of the standard NHPP model that includes different segments or phases of time that follow separate failure distributions. This model is particularly useful when a system experiences changes in failure behavior over different development phases, such as the initial, interim and final phases of a development process.
+**The Piecewise NHPP model** is an extension of the standard NHPP model that includes different segments or phases of time that follow separate failure distributions. This model is particularly useful when a system experiences changes in failure behavior over different development phases, such as the initial, interim and final phases of a development process.
 
-### The Failure Distribution
+For a Piecewise NHPP model, the cumulative number of failures is modeled as a piecewise function, where each segment has its own parameters. Formally, for time t within phase i, the relationship between the cumulative number of failures and cumulative time is given by:
 
-The failure intensity function for each time segment \(i\) is modeled as:
+\[
+N_i(t) = N(t_{i-1}) + \lambda_i (t - t_{i-1})^{\beta_i}, \, \text{for } t_{i-1} < t \leq t_i
+\]
 
-\[\lambda_i(t) = \frac{\beta_i}{\eta_i} \left( \frac{t - t_{i-1}}{\eta_i} \right)^{\beta_i - 1}\]
-
-Where:
-
-* \( \lambda_i(t) \) is the failure intensity in time interval \( i \),
-* \( \beta_i \) is the shape parameter for interval \( i \),
-* \( \eta_i \) is the scale parameter (characteristic life) for interval \( i \),
-* \( t_{i-1} \) is the start time of the interval.
+where \(N_i(t)\) is the cumulative number of failures by time \(t\) in phase \(i\), \(\lambda_i\) is the scale parameter for phase \(i\), and \(\beta_i\) is the shape parameter for phase \(i\).
 
 ### Example
 
@@ -274,10 +298,12 @@ failures <- c(1, 1, 2, 4, 4, 1, 1, 2, 1, 4, 1, 1, 3, 3, 4)
 breaks <- 500
 ```
 
+The plot shows a Piecewise NHPP Model fit to the data, with a breakpoint at time 500. The breakpoint indicates a change in failure behavior, with different failure rates before and after the breakpoint.
+
 Then run the rga and plot the results:
 ```{r}
 result <- rga(times, failures, model_type = "Piecewise NHPP", breaks = breaks)
-plot_rga(result)
+plot(result, main = "Piecewise NHPP Model Example", xlab = "Cumulative Time", ylab = "Cumulative Failures")
 ```
 
 ### The Piecewise NHPP with Change Point Detection
@@ -297,8 +323,10 @@ Then run the rga and plot the results:
 
 ```{r}
 result <- rga(times, failures, model_type = "Piecewise NHPP")
-plot_rga(result)
+plot(result, main = "Piecewise NHPP with Change Point Detection", xlab = "Cumulative Time", ylab = "Cumulative Failures")
 ```
+
+The plot shows a Piecewise NHPP Model fit to the data, with change points automatically detected. The change points indicate changes in failure behavior, with different failure rates in each segment.
 
 ## Accelerated Life Testing
 
@@ -376,12 +404,14 @@ data80C <- alt.data(data[which(data$TempC==80), 1:3],
                     stress = data[which(data$TempC==80), 4][1])
 ```
 
-Then, use the `alt.make` function to fit an Arrhenius-Weibull model to the data.
+Then, use the `alt.make` function to fit an Arrhenius-Weibull model to the data and plot the results.
 
 ```{r}
 arrobj <- alt.make(list(data10C, data40C, data60C, data80C), dist = "weibull",
                 alt.model = "arrhenius", method.fit = "mle")
 ```
+
+The plot shows an Arrhenius-Weibull model fit to the data. The different colors represent the different temperature levels. Starting with a temperature level of 40 degrees C on the right, the curves shift to the left as the temperature increases, indicating that higher temperatures lead to shorter life.
 
 Finally, calculate the AF at 80 degrees C using the Arrhenius Model. Assume that the Activation Energy is 0.7 eV.
 
@@ -394,25 +424,49 @@ AF <- exp(E_a / k * (1 / T_use - 1 / T_stress))
 cat(paste0("The Acceleration Factor at 80 degrees C is ", round(AF, 2)))
 ```
 
-### Exercises
-
-```{r arrhns1, echo=FALSE}
-question("What is the approximate unreliability for a duration of 3000 and an operating stress of 60?",
-  answer("90%"),
-  answer("10%"),
-  answer("70%"),
-  answer("30%", correct = TRUE),
-  random_answer_order = TRUE
-)
-```
-
-```{r arrhns2, echo=FALSE}
-question("What is the approximate reliability for a duration of 1000 and an operating stress of 80?",
-  answer("70%"),
-  answer("30%"),
-  answer("40%"),
-  answer("60%", correct = TRUE),
-  random_answer_order = TRUE
+```{r quiz3, echo=FALSE}
+quiz(caption = "Quiz: Arrhenius Model",
+  question("What does the Arrhenius-Weibull model indicate about the relationship between temperature and life?",
+    answer("Higher temperatures lead to longer life", 
+           message = "Higher temperatures actually lead to shorter life."),
+    answer("Higher temperatures lead to shorter life", correct = TRUE, 
+           message = "Higher temperatures lead to shorter life, as indicated by the leftward shift of the curves."),
+    answer("Temperature has no impact on life", 
+           message = "Temperature does have an impact on life, as shown by the different curves."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("In the Arrhenius Model, what does the Activation Energy (E_a) represent?",
+    answer("The energy required to initiate a chemical reaction", correct = TRUE, 
+           message = "Activation Energy is the energy required to initiate a chemical reaction."),
+    answer("The temperature at which a material fails", 
+           message = "Activation Energy is not the temperature at which a material fails."),
+    answer("The rate of degradation of a material", 
+           message = "Activation Energy is not the rate of degradation of a material."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("In the previous example, what is the approximate unreliability for 
+           a duration of 3000 and an operating temperature of 60 (the green curve)?",
+    answer("90%", message = "90% is the approximate unreliability for a duration of 
+           3000 and an operating temperature of 80 (the purple curve)."),
+    answer("10%", message = "10% is too low, try again."),
+    answer("70%", message = "70% is the reliability at these levels, not the unreliability"),
+    answer("30%", correct = TRUE, 
+           message = "The approximate unreliability for a duration of 3000 and 
+           an operating temperature of 60 is 30%."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("In the previous example, what is the approximate reliability for a duration of 1000 and an operating stress of 80 (the purple curve)?",
+    answer("70%", message = "70% is too high, try again."),
+    answer("30%", message = "30% is too low, try again."),
+    answer("40%", message = "40% is the unreliability at these levels, not the reliability"),
+    answer("60%", correct = TRUE, message = "The approximate reliability for a duration of 1000 and 
+           an operating temperature of 80 is 60%."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  )
 )
 ```
 
@@ -451,32 +505,37 @@ data36 <- alt.data(data$kV36, stress = 36)
 data38 <- alt.data(data$kV38, stress = 38)
 ```
 
-Then, use the `alt.make` function to fit an Power-Weibull model to the data.
+Then, use the `alt.make` function to fit an Power-Weibull model to the data and plot the results.
 
 ```{r}
 pwrobj <- alt.make(list(data26, data28, data30, data32, data34, data36, data38), 
                    dist = "weibull", alt.model = "power")
 ```
 
-### Exercises
+The plot shows a Power-Weibull model fit to the data. The different colors represent the different voltage stress levels. Starting with a stress level of 28kV on the right (dark green curve), the curves shift to the left as the stress increases, indicating that higher stress leads to shorter life.
 
-```{r pwr1, echo=FALSE}
-question("Which subset of data does not seem to follow the Power Law model?",
-  answer("The data with a stress level of 38kV"),
-  answer("The data with a stress level of 28kV"),
-  answer("The data with a stress level of 36kV"),
-  answer("The data with a stress level of 26kV", correct = TRUE),
-  random_answer_order = TRUE
-)
-```
-
-```{r pwr2, echo=FALSE}
-question("How would you interpret a plot to the right of another plot (e.g. set 2 in green vs set 3 in red)?",
-  answer("The plot to the right has a lower unreliability than the one to the left", correct = TRUE),
-  answer("The plot to the right a higher unreliability than the one to the left"),
-  answer("The plot to the right has a lower reliability than the one to the left"),
-  answer("The plot to the right has a higher reliability than the one to the left", correct = TRUE),
-  random_answer_order = TRUE
+```{r quiz4, echo=FALSE}
+quiz(caption = "Quiz: Power Law Model",
+  question("In the previous example, which subset of data does not seem to follow the Power Law model?",
+              answer("The data with a stress level of 38kV", 
+                     message = "The data with a stress level of 38kV seems to follow the same shape as the other subsets."),
+              answer("The data with a stress level of 28kV", 
+                     message = "The data with a stress level of 28kV seems to follow the same shape as the other subsets."),
+              answer("The data with a stress level of 36kV", 
+                     message = "The data with a stress level of 36kV seems to follow the same shape as the other subsets."),
+              answer("The data with a stress level of 26kV", correct = TRUE, 
+                     message = "The data with a stress level of 26kV has a different shape than the other subsets. Although this may be due to limited data at this stress level (only 3 failures)."),
+              random_answer_order = TRUE,
+              allow_retry = TRUE
+     ),
+   question("In the previous example, what is the relationship between the data with a stress level of 26kV (the dark green curve) and the data with a stress level of 30kV (the red curve)?",
+            answer("The plot to the right (dark green) has a lower unreliability than the one to the left (red)", correct = TRUE),
+            answer("The plot to the right (dark green) a higher unreliability than the one to the left (red)"),
+            answer("The plot to the right (dark green) has a lower reliability than the one to the left (red)"),
+            answer("The plot to the right (dark green) has a higher reliability than the one to the left (red)", correct = TRUE),
+            random_answer_order = TRUE,
+            allow_retry = TRUE
+   )
 )
 ```
 
@@ -495,6 +554,8 @@ Where:
 * \( B \) and \( C \) are model parameters,
 * \( S \) is the applied stress factor (e.g., temperature, voltage, humidity).
 
+This module does not include an example of the Eyring Model, but the `WeibullR.ALT` package does support it. See the package documentation for more information.
+
 ## Parallellization
 
 A common assumption in ALT is that the subset of data at each stress level have the same slope or shape factor. If each model subset has the same slope, then all models appear as parallel plots. 
@@ -503,6 +564,8 @@ To fit a parallel model to the Meeker data, use the `alt.parallel` function.
 ```{r}
 prlobj <- alt.parallel(arrobj)
 ```
+
+The plot shows a Parallel model fit to the data. All curves have the same slope, indicating that all subsets have the same shape factor.
 
 Similarly, a parallel model can be fitted to the Nelson data.
 ```{r}
@@ -525,6 +588,8 @@ lnrobj <- alt.fit(prlobj)
 plot(lnrobj, suppress.dev.new = TRUE)
 ```
 
+The relationship plot shows a negative slope, indicating that higher temperature stress tends to lead to shorter life. Each line indicates a different probability of failure. For example, the P63.2 line indicates the stress vs life relationship for a 63.2% probability of failure. The P90 line indicates the stress vs life relationship for a 90% probability of failure.
+
 Similarly, a relationship plot can be fitted to the Nelson data.
 
 ```{r}
@@ -532,28 +597,56 @@ lnrobj2 <- alt.fit(expobj)
 plot(lnrobj2, suppress.dev.new = TRUE)
 ```
 
-### Exercises
+Similarly, the relationship plot shows a negative slope, indicating that higher voltage stress tends to lead to shorter life.
 
-```{r rel1, echo=FALSE}
-question("What does the slope of the power-Weibull relationship plot indicate?",
-  answer("Higher stress does not seem to have an impact on life"),
-  answer("Higher stress tends to lead to longer life"),
-  answer("Higher stress tends to lead to shorter life", correct = TRUE),
-  random_answer_order = TRUE
+```{r quiz5, echo=FALSE}
+quiz(caption = "Quiz: Relationship Plots",
+  question("In the Arrhenius Weibull example, what is the approximate P63.2 time to failure at a stress level of 50?",
+    answer("1000", message = "1000 is too low, try again."),
+    answer("5,000", correct = TRUE, 
+           message = "The approximate P63.2 time to failure at a stress level of 40 is 5,000."),
+    answer("50,000", message = "50,000 is too high, try again."),
+    answer("100,000", message = "100,000 is way too high, try again."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("In the Arrhenius Weibull example, what does the slope of the relationship plot indicate about the relationship between stress and life?",
+    answer("Higher stress does not seem to have an impact on life", 
+           message = "A flat slope would indicate that higher stress does not have an impact on life."),
+    answer("Higher stress tends to lead to longer life", message = "A positive slope would indicate that higher stress leads to longer life."),
+    answer("Higher stress tends to lead to shorter life", correct = TRUE, 
+           message = "The negative slope indicates that higher stress tends to lead to shorter life."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("In the Power Weibull example, what does the slope of the relationship plot indicate about the relationship between stress and life?",
+    answer("Higher stress does not seem to have an impact on life", 
+           message = "A flat slope would indicate that higher stress does not have an impact on life."),
+    answer("Higher stress tends to lead to longer life", message = "A positive slope would indicate that higher stress leads to longer life."),
+    answer("Higher stress tends to lead to shorter life", correct = TRUE, 
+           message = "The negative slope indicates that higher stress tends to lead to shorter life."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("In the Power Weibull example, what is the approximate P90 time to failure at a stress level of 30?",
+    answer("100", correct = TRUE, 
+           message = "The approximate P90 time to failure at a stress level of 30 is 100."),
+    answer("10", message = "10 is too low, try again."),
+    answer("1000", message = "1000 is too high, try again."),
+    answer("100,000", message = "100,000 is way too high, try again."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  )
 )
 ```
 
 ```{r rel2, echo=FALSE}
-question("On the power-Weibull relationship plot, what is the approximate P90 time to failure at a stress level of 30?",
-  answer("100", correct = TRUE),
-  answer("10"),
-  answer("1000"),
-  answer("1"),
-  random_answer_order = TRUE
-)
+
 ```
 
 ## Summary
+
+Congratulations on completing the Reliability Testing tutorial!
 
 In this tutorial, we've introduced the concepts of Reliability Growth Analysis and Accelerated Life Testing. You have learned to calculate and visualize reliability using different types of models.
 
