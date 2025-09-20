@@ -1,10 +1,21 @@
+---
+output: github_document
+---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
 
 # ReliaLearnR
 
 <!-- badges: start -->
-
 [![CRAN
 status](https://www.r-pkg.org/badges/version/ReliaLearnR)](https://CRAN.R-project.org/package=ReliaLearnR)
 [![CRAN
@@ -39,7 +50,7 @@ data.
 [WeibullR](https://CRAN.R-project.org/package=WeibullR) by David
 Silkworth and Jurgen Symynck (2022), a R package for Weibull Analysis,
 and [learnr](https://CRAN.R-project.org/package=learnr) by Garrick
-Aden-Buie et al. (2023), a framework for building interactive learning
+Aden-Buie et al. (2023), a framework for building interactive learning
 modules in R.
 
 To install ReliaLearnR in R:
@@ -55,9 +66,8 @@ To install the development version:
 pak::pak("paulgovan/ReliaLearnR")
 ```
 
-Note: You may be prompted to update dependent packages before
-installing. To do this when prompted during installation type 1 (All) to
-update.
+Note: You may be prompted to update dependent packages before installing. 
+To do this when prompted during installation type 1 (All) to update.
 
 ## Usage
 
@@ -66,33 +76,34 @@ taken in either order and can be taken separately or together. The
 learning modules are designed to be plug-and-play, but changes can be
 made by forking the software repository and modifying the fork.
 
-- `lda()` - An introduction to Life Data Analysis (estimated duration ~2
-  hours)
-- `ram()` - A quick reference for common Reliability, Availability, and
-  Maintainability concepts (estimated duration ~ 1 hour)
-- `rt()`- An interactive introduction to Reliability Testing (estimated
-  duration ~ 2 hours)
+-   `lda()` - An introduction to Life Data
+    Analysis (estimated duration \~2 hours)
+-   `ram()` - A quick reference for common Reliability,
+    Availability, and Maintainability concepts (estimated duration \~ 1
+    hour)
+-   `rt()`- An interactive introduction to Reliability Testing
+    (estimated duration \~ 2 hours)
 
 The modules can also be accessed in a browser at
-<https://paulgovan.shinyapps.io/RAMAnalysis/>,
-<https://paulgovan.shinyapps.io/LifeDataAnalysis/> and
-<https://paulgovan.shinyapps.io/ReliabilityTesting/>.
+[https://paulgovan.shinyapps.io/RAMAnalysis/](https://paulgovan.shinyapps.io/RAMAnalysis/),
+[https://paulgovan.shinyapps.io/LifeDataAnalysis/](https://paulgovan.shinyapps.io/LifeDataAnalysis/) and
+[https://paulgovan.shinyapps.io/ReliabilityTesting/](https://paulgovan.shinyapps.io/ReliabilityTesting/).
 
 ![](https://github.com/paulgovan/WeibullR.learnr/blob/master/inst/paper/WeibullRlearnr.png?raw=true)<!-- -->
 
 Several helper functions for common RAM calculations are also included:
 
-- `rel()` - reliability function
-- `avail()` - availability function
-- `mttf()` - mean time to failure
-- `mtbf()` - mean time between failure
-- `fr()` - failure rate
+-   `rel()` - reliability function
+-   `avail()` - availability function
+-   `mttf()` - mean time to failure
+-   `mtbf()` - mean time between failure
+-   `fr()` - failure rate
 
 ## Code of Conduct
 
-Please note that the ReliaLearnR project is released with a [Contributor
-Code of Conduct](CODE_OF_CONDUCT.md). By contributing to this project,
-you agree to abide by its terms.
+Please note that the ReliaLearnR project is released with a
+[Contributor Code of Conduct](CODE_OF_CONDUCT.md). By contributing to
+this project, you agree to abide by its terms.
 
 ## More resources
 

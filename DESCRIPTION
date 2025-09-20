@@ -1,15 +1,13 @@
-Package: WeibullR.learnr
+Package: ReliaLearnR
 Type: Package
-Title: An Interactive Introduction to Life Data Analysis
+Title: Learning Modules for Reliability Analysis
 Version: 0.2.1
-URL: https://paulgovan.github.io/WeibullR.learnr/, https://github.com/paulgovan/WeibullR.learnr
-BugReports: https://github.com/paulgovan/WeibullR.learnr/issues
-Authors@R: person("Paul", "Govan", email = "paul.govan2@gmail.com", role = c("aut", "cre", "cph"), comment = c(ORCID = "0000-0002-1821-8492"))
-Description: An interactive introduction to Life Data Analysis that depends on 'WeibullR' 
-  by David Silkworth and Jurgen Symynck (2022) <https://CRAN.R-project.org/package=WeibullR>, 
-  a R package for Weibull Analysis, and 'learnr' by Garrick Aden-Buie et al. (2023) 
-  <https://CRAN.R-project.org/package=learnr>, a framework for building interactive learning 
-  modules in R. 
+URL: https://paulgovan.github.io/ReliaLearnR/, https://github.com/paulgovan/ReliaLearnR
+BugReports: https://github.com/paulgovan/ReliaLearnR/issues
+Authors@R: person("Paul", "Govan", email = "paul.govan2@gmail.com", role = c("aut", "cre", "cph"), 
+  comment = c(ORCID = "0000-0002-1821-8492"))
+Description: Learning modules for reliability analysis including modules for Reliability, 
+  Availability, and Maintainability (RAM) Analysis, Life Data Analysis, and Reliability Testing.
 Imports:
   learnr,
   ReliaGrowR,
