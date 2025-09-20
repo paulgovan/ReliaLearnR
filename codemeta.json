@@ -1,0 +1,146 @@
+{
+  "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
+  "@type": "SoftwareSourceCode",
+  "identifier": "ReliaLearnR",
+  "description": "Learning modules for reliability analysis including modules for Reliability, Availability, and Maintainability (RAM) Analysis, Life Data Analysis, and Reliability Testing.",
+  "name": "ReliaLearnR: Learning Modules for Reliability Analysis",
+  "relatedLink": "https://paulgovan.github.io/ReliaLearnR/",
+  "codeRepository": "https://github.com/paulgovan/ReliaLearnR",
+  "issueTracker": "https://github.com/paulgovan/ReliaLearnR/issues",
+  "license": "Apache License 2",
+  "version": "0.2.1",
+  "programmingLanguage": {
+    "@type": "ComputerLanguage",
+    "name": "R",
+    "url": "https://r-project.org"
+  },
+  "runtimePlatform": "R version 4.4.2 (2024-10-31)",
+  "author": [
+    {
+      "@type": "Person",
+      "givenName": "Paul",
+      "familyName": "Govan",
+      "email": "paul.govan2@gmail.com",
+      "@id": "https://orcid.org/0000-0002-1821-8492"
+    }
+  ],
+  "copyrightHolder": [
+    {
+      "@type": "Person",
+      "givenName": "Paul",
+      "familyName": "Govan",
+      "email": "paul.govan2@gmail.com",
+      "@id": "https://orcid.org/0000-0002-1821-8492"
+    }
+  ],
+  "maintainer": [
+    {
+      "@type": "Person",
+      "givenName": "Paul",
+      "familyName": "Govan",
+      "email": "paul.govan2@gmail.com",
+      "@id": "https://orcid.org/0000-0002-1821-8492"
+    }
+  ],
+  "softwareSuggestions": [
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "WeibullR.plotly",
+      "name": "WeibullR.plotly",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=WeibullR.plotly"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "WeibullR.shiny",
+      "name": "WeibullR.shiny",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=WeibullR.shiny"
+    }
+  ],
+  "softwareRequirements": {
+    "1": {
+      "@type": "SoftwareApplication",
+      "identifier": "learnr",
+      "name": "learnr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=learnr"
+    },
+    "2": {
+      "@type": "SoftwareApplication",
+      "identifier": "ReliaGrowR",
+      "name": "ReliaGrowR",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=ReliaGrowR"
+    },
+    "3": {
+      "@type": "SoftwareApplication",
+      "identifier": "WeibullR",
+      "name": "WeibullR",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=WeibullR"
+    },
+    "4": {
+      "@type": "SoftwareApplication",
+      "identifier": "WeibullR.ALT",
+      "name": "WeibullR.ALT",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=WeibullR.ALT"
+    },
+    "SystemRequirements": null
+  },
+  "fileSize": "4651.652KB",
+  "citation": [
+    {
+      "@type": "SoftwareSourceCode",
+      "datePublished": "2023",
+      "author": [
+        {
+          "@type": "Person",
+          "givenName": "Paul",
+          "familyName": "Govan"
+        }
+      ],
+      "name": "WeibullR.learnr: An Interactive Introduction to Life Data Analysis",
+      "identifier": "10.32614/CRAN.package.WeibullR.learnr",
+      "url": "https://CRAN.R-project.org/package=WeibullR.learnr",
+      "description": "R package version 0.1.1",
+      "@id": "https://doi.org/10.32614/CRAN.package.WeibullR.learnr",
+      "sameAs": "https://doi.org/10.32614/CRAN.package.WeibullR.learnr"
+    }
+  ],
+  "releaseNotes": "https://github.com/paulgovan/ReliaLearnR/blob/main/NEWS.md",
+  "readme": "https://github.com/paulgovan/ReliaLearnR/blob/master/README.md",
+  "developmentStatus": "https://lifecycle.r-lib.org/articles/stages.html#experimental",
+  "keywords": ["life-data-analysis", "r", "tutorial", "weibull-analysis", "reliability"]
+}

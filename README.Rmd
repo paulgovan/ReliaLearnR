@@ -16,14 +16,14 @@ knitr::opts_chunk$set(
 # ReliaLearnR
 
 <!-- badges: start -->
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/ReliaLearnR)](https://CRAN.R-project.org/package=ReliaLearnR)
-[![CRAN
-checks](https://badges.cranchecks.info/summary/ReliaLearnR.svg)](https://cran.r-project.org/web/checks/check_results_ReliaLearnR.html)
+[![R-CMD-check](https://github.com/paulgovan/ReliaLearnR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/paulgovan/ReliaLearnR/actions/workflows/R-CMD-check.yaml)
 [![](http://cranlogs.r-pkg.org/badges/last-month/ReliaLearnR)](https://cran.r-project.org/package=ReliaLearnR)
 [![](http://cranlogs.r-pkg.org/badges/grand-total/ReliaLearnR)](https://cran.r-project.org/package=ReliaLearnR)
-[![Lifecycle:experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![](https://img.shields.io/badge/doi-10.32614/CRAN.package.ReliaLearnR-green.svg)](https://doi.org/10.32614/CRAN.package.ReliaLearnR)
+
 <!-- badges: end -->
 
 Welcome to `ReliaLearnR`! This package contains a set of interactive
