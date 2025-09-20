@@ -5,14 +5,14 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>An Interactive Introduction to Life Data Analysis • WeibullR.learnr</title>
+<title>Learning Modules for Reliability Analysis • ReliaLearnR</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="An Interactive Introduction to Life Data Analysis">
-<meta name="description" content="An interactive introduction to Life Data Analysis that depends on WeibullR by David Silkworth and Jurgen Symynck (2022) &lt;https://CRAN.R-project.org/package=WeibullR&gt;, a R package for Weibull Analysis, and learnr by Garrick Aden-Buie et al. (2023) &lt;https://CRAN.R-project.org/package=learnr&gt;, a framework for building interactive learning modules in R.">
-<meta property="og:description" content="An interactive introduction to Life Data Analysis that depends on WeibullR by David Silkworth and Jurgen Symynck (2022) &lt;https://CRAN.R-project.org/package=WeibullR&gt;, a R package for Weibull Analysis, and learnr by Garrick Aden-Buie et al. (2023) &lt;https://CRAN.R-project.org/package=learnr&gt;, a framework for building interactive learning modules in R.">
+<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Learning Modules for Reliability Analysis">
+<meta name="description" content="Learning modules for reliability analysis including modules for Reliability, Availability, and Maintainability (RAM) Analysis, Life Data Analysis, and Reliability Testing.">
+<meta property="og:description" content="Learning modules for reliability analysis including modules for Reliability, Availability, and Maintainability (RAM) Analysis, Life Data Analysis, and Reliability Testing.">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -20,7 +20,7 @@
 
     <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
 
-    <a class="navbar-brand me-2" href="index.html">WeibullR.learnr</a>
+    <a class="navbar-brand me-2" href="index.html">ReliaLearnR</a>
 
     <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.2.1</small>
 
@@ -35,9 +35,9 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-tutorials" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Tutorials</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-tutorials">
-<li><a class="dropdown-item" href="tutorials/WeibullRlearnr.html">An Introduction to Life Data Analysis</a></li>
-    <li><a class="dropdown-item" href="tutorials/RAMRlearnr.html">Reliability, Availability, and Maintainability (RAM)</a></li>
-    <li><a class="dropdown-item" href="tutorials/TestRlearnr.html">An Introduction to Reliability Testing</a></li>
+<li><a class="dropdown-item" href="tutorials/ram.html">Reliability, Availability, and Maintainability (RAM)</a></li>
+    <li><a class="dropdown-item" href="tutorials/lda.html">An Introduction to Life Data Analysis</a></li>
+    <li><a class="dropdown-item" href="tutorials/rt.html">An Introduction to Reliability Testing</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
@@ -46,7 +46,7 @@
 <li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="search.json">
 </form></li>
-<li class="nav-item"><a class="external-link nav-link" href="https://github.com/paulgovan/WeibullR.learnr/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/paulgovan/ReliaLearnR/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul>
 </div>
 
@@ -54,27 +54,30 @@
   </div>
 </nav><div class="container template-home">
 <div class="row">
-  <main id="main" class="col-md-9">
-<div class="section level2">
-<h2 id="weibullrlearnr-an-interactive-introduction-to-life-data-analysis">WeibullR.learnr: An Interactive Introduction to Life Data Analysis<a class="anchor" aria-label="anchor" href="#weibullrlearnr-an-interactive-introduction-to-life-data-analysis"></a>
-</h2>
-<p>Welcome to <code>WeibullR.learnr</code>! This package contains a set of interactive learning modules for life data analysis, focusing on reliability, availability, and maintainability (RAM). It is designed for beginners, including university students and early-career professionals.</p>
-</div>
+  <main id="main" class="col-md-9"><div class="section level1">
+<div class="page-header"><h1 id="relialearnr">ReliaLearnR<a class="anchor" aria-label="anchor" href="#relialearnr"></a>
+</h1></div>
+<!-- badges: start -->
+
+<p>Welcome to <code>ReliaLearnR</code>! This package contains a set of interactive learning modules for life data analysis, focusing on reliability, availability, and maintainability (RAM). It is designed for beginners, including university students and early-career professionals.</p>
 <div class="section level2">
 <h2 id="motivation">Motivation<a class="anchor" aria-label="anchor" href="#motivation"></a>
 </h2>
-<p>Life data analysis is the study of how things function over time, from machines to people. Although many learning resources exist, most reference proprietary software, which may be expensive and inaccessible to students or those new to the field. <code>WeibullR.learnr</code> is an open-source alternative, introducing basic concepts and tools for life data analysis using R.</p>
+<p>Life data analysis is the study of how systems function over time, from machines to people. While various learning resources exist, many rely on proprietary software that can be inaccessible to students and early-career professionals.</p>
+<p><code>ReliaLearnR</code> is an open-source collection of interactive learning modules, exercises, and functions designed for introductory life data analysis. The primary goal of this project is to introduce fundamental concepts while providing an open-source alternative for analyzing life data.</p>
 </div>
 <div class="section level2">
-<h2 id="installation-instructions">Installation Instructions<a class="anchor" aria-label="anchor" href="#installation-instructions"></a>
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p><code>WeibullR.learnr</code> is written in R and is built using <a href="https://CRAN.R-project.org/package=WeibullR" class="external-link">WeibullR</a> by David Silkworth and Jurgen Symynck (2022), a R package for Weibull Analysis, and <a href="https://CRAN.R-project.org/package=learnr" class="external-link">learnr</a> by Garrick Aden-Buie et al. (2023), a framework for building interactive learning modules in R.</p>
-<p>To install WeibullR.learnr in R:</p>
+<p><code>ReliaLearnR</code> is written in R and is built using <a href="https://CRAN.R-project.org/package=WeibullR" class="external-link">WeibullR</a> by David Silkworth and Jurgen Symynck (2022), a R package for Weibull Analysis, and <a href="https://CRAN.R-project.org/package=learnr" class="external-link">learnr</a> by Garrick Aden-Buie et al. (2023), a framework for building interactive learning modules in R.</p>
+<p>To install ReliaLearnR in R:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'WeibullR.learnr'</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'ReliaLearnR'</span><span class="op">)</span></span></code></pre></div>
 <p>To install the development version:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">'paulgovan/weibullr.learnr'</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># install.packages("pak")</span></span>
+<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"paulgovan/ReliaLearnR"</span><span class="op">)</span></span></code></pre></div>
+<p>Note: You may be prompted to update dependent packages before installing. To do this when prompted during installation type 1 (All) to update.</p>
 </div>
 <div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
@@ -82,13 +85,13 @@
 <p>Currently, three primary learning modules exist. These modules can be taken in either order and can be taken separately or together. The learning modules are designed to be plug-and-play, but changes can be made by forking the software repository and modifying the fork.</p>
 <ul>
 <li>
-<code><a href="reference/WeibullR.learnr.html">WeibullR.learnr()</a></code> - An interactive introduction to Life Data Analysis (estimated duration ~2 hours)</li>
+<code><a href="reference/lda.html">lda()</a></code> - An introduction to Life Data Analysis (estimated duration ~2 hours)</li>
 <li>
-<code><a href="reference/RAMR.learnr.html">RAMR.learnr()</a></code> - A quick reference for common Reliability, Availability, and Maintainability concepts (estimated duration ~ 1 hour)</li>
+<code><a href="reference/ram.html">ram()</a></code> - A quick reference for common Reliability, Availability, and Maintainability concepts (estimated duration ~ 1 hour)</li>
 <li>
-<code><a href="reference/TestR.learnr.html">TestR.learnr()</a></code>- An interactive introduction to Reliability Testing (estimated duration ~ 2 hours)</li>
+<code><a href="reference/rt.html">rt()</a></code>- An interactive introduction to Reliability Testing (estimated duration ~ 2 hours)</li>
 </ul>
-<p>The modules can also be accessed in a browser at <a href="https://paulgovan.shinyapps.io/weibullrlearnr/" class="external-link">WeibullR.learnr</a> and <a href="https://paulgovan.shinyapps.io/ramrlearnr/" class="external-link">RAMR.learnr</a>, <a href="https://govan.shinyapps.io/TestRlearnr/" class="external-link">TestR.learnr</a></p>
+<p>The modules can also be accessed in a browser at <a href="https://paulgovan.shinyapps.io/RAMAnalysis/" class="external-link uri">https://paulgovan.shinyapps.io/RAMAnalysis/</a>, <a href="https://paulgovan.shinyapps.io/LifeDataAnalysis/" class="external-link uri">https://paulgovan.shinyapps.io/LifeDataAnalysis/</a> and <a href="https://paulgovan.shinyapps.io/ReliabilityTesting/" class="external-link uri">https://paulgovan.shinyapps.io/ReliabilityTesting/</a>.</p>
 <p><img src="https://github.com/paulgovan/WeibullR.learnr/blob/master/inst/paper/WeibullRlearnr.png?raw=true"><!-- --></p>
 <p>Several helper functions for common RAM calculations are also included:</p>
 <ul>
@@ -101,15 +104,13 @@
 <li>
 <code><a href="reference/mtbf.html">mtbf()</a></code> - mean time between failure</li>
 <li>
-<code>serv()</code> - serviceability factor</li>
-<li>
 <code><a href="reference/fr.html">fr()</a></code> - failure rate</li>
 </ul>
 </div>
 <div class="section level2">
 <h2 id="code-of-conduct">Code of Conduct<a class="anchor" aria-label="anchor" href="#code-of-conduct"></a>
 </h2>
-<p>Please note that the WeibullR.learnr project is released with a <a href="https://paulgovan.github.io/WeibullR.learnr/CODE_OF_CONDUCT.html">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
+<p>Please note that the ReliaLearnR project is released with a <a href="CODE_OF_CONDUCT.html">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
 </div>
 <div class="section level2">
 <h2 id="more-resources">More resources<a class="anchor" aria-label="anchor" href="#more-resources"></a>
@@ -117,13 +118,12 @@
 <p><a href="https://paulgovan.github.io/WeibullR.plotly/" class="external-link">WeibullR.plotly</a> is a package for building interactive Weibull models.</p>
 <p><a href="https://paulgovan.github.io/WeibullR.shiny/" class="external-link">WeibullR.shiny</a> is a web application for life data analysis.</p>
 </div>
-
+</div>
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li><a href="https://cloud.r-project.org/package=WeibullR.learnr" class="external-link">View on CRAN</a></li>
-<li><a href="https://github.com/paulgovan/WeibullR.learnr/" class="external-link">Browse source code</a></li>
-<li><a href="https://github.com/paulgovan/WeibullR.learnr/issues" class="external-link">Report a bug</a></li>
+<li><a href="https://github.com/paulgovan/ReliaLearnR/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/paulgovan/ReliaLearnR/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
 
@@ -145,7 +145,7 @@
 <div class="citation">
 <h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li><a href="authors.html#citation">Citing WeibullR.learnr</a></li>
+<li><a href="authors.html#citation">Citing ReliaLearnR</a></li>
 </ul>
 </div>
 
