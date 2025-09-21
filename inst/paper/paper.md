@@ -1,10 +1,14 @@
 ---
-title: 'WeibullR.learnr: An Interactive Introduction to Reliability Engineering'
+title: 'ReliaLearnR: Learning Modules for Reliability Analysis'
 tags:
   - R
   - life data analysis
   - Weibull analysis
   - reliability engineering
+  - availability
+  - maintainability
+  - reliability testing
+  - accelerated life testing
 authors:
   - name: Paul B. Govan
     orcid: 0000-0002-1821-8492
@@ -19,42 +23,53 @@ bibliography: paper.bib
 
 # Statement of Need
 
-Life data analysis is the study of how systems, from machines to people, perform 
-over time. Life data includes lifespans, failure rates, and repair or replacement
-timelines. While various learning resources exist, many rely on proprietary software
-that can be inaccessible to students and early-career professionals due to cost constraints.
+Reliability analysis is an important aspect of engineering that focuses on ensuring
+systems perform as expected over time. Key components of reliability analysis include
+life data analysis, reliability, availability, and maintainability (RAM) analysis,
+and reliability testing. These concepts are essential for engineers and professionals
+involved in product design, manufacturing, and maintenance. However, many learning resources
+for these topics rely on proprietary software, which can be expensive and inaccessible
+to students and early-career professionals. 
 
-`WeibullR.learnr` [@WeibullRlearnr] is an open-source collection of interactive 
-learning modules, exercises, and functions designed for introductory life data analysis. 
-The primary goal of this project is to introduce fundamental concepts while providing 
-an open-source alternative for analyzing life data. The target audience includes 
-beginner practitioners and university students.
+`ReliaLearnR` [@ReliaLearnR] addresses this gap by providing an open-source
+solution for learning reliability analysis using R [@R], a widely-used programming
+language for statistical computing and data analysis. The primary objective of this
+project is to introduce fundamental concepts of reliability analysis while providing
+an open-source alternative for analyzing reliability data. The target audience for
+this project includes beginner practitioners and university students interested
+in learning the fundamentals of reliability analysis.
 
 # Description
 
-`WeibullR.learnr` is written in R [@R] and utilizes `WeibullR` [@WeibullR], an R 
-package for Life Data Analysis based on the methodologies of Waloddi Weibull [@Weibull],
-and `learnr` [@learnr], a framework for building interactive learning modules in R.
+`ReliaLearnR` is writtn in R [@R] and utilizes `WeibullR` [@WeibullR], a 
+package for Life Data Analysis [@Weibull], `WeibullR.alt` [@WeibullRalt], a package
+for Accelerated Life Testing [@WeibullRalt], `ReliaGrowR` [@ReliaGrowR], a package
+for Reliability Growth Analysis [@ReliaGrowR], and `learnr` [@learnr], a framework for building 
+interactive learning modules.  
 
-Currently, three primary learning modules are available. These modules are independent
-and can be completed in any order. They are designed to be plug-and-play, but users 
-can modify them by forking the repository.
+The package includes three interactive learning modules, which can be run locally or
+hosted on a web server. Each module includes instructional content, code examples,
+and exercises to reinforce learning. Users can run the modules in any R environment 
+by calling the `lda()`, `ram()`, or `rt()` functions.
 
-`lda()` provides an interactive introduction to Life Data Analysis. 
-The learning objectives include basic Weibull analysis, censoring techniques such 
-as right and interval censored data, different types of Weibull models including 
-the 2P Weibull, 3P Weibull, and Weibayes model, parameter estimation methods Median
-Rank Regression (MRR) and Maximum Likelihood Estimation (MLE), and data visualization
-methods such as Probability Plots and Contour Plots. The estimated duration for 
-this module is approximately 2 hours. 
+`lda()` provides an introduction to Life Data Analysis. 
+The learning objectives include describing the purpose of Weibull analysis in reliability 
+engineering, differentiating between types of data censoring, including right-censored 
+and interval-censored data, differentiating between different Weibull models (2-parameter 
+Weibull, 3-parameter Weibull, and Weibayes, applying Median Rank Regression (MRR) 
+and Maximum Likelihood Estimation (MLE) estimation methods to sample datasets, interpreting
+results using plotting methods, including probability plots and contour plots. The 
+estimated duration for this module is approximately 2 hours. 
 
 `ram()` is a quick reference for common Reliability, Availability, and Maintainability
-(RAM) concepts. The learning objectives include the basic concepts and application 
-of Reliability, Availability, Mean Time to Repair (MTTR), Mean Time to Failure (MTTF), 
-Mean Time Between Failures (MTBF), Failure Rate, Probability of Failure, and $B_n$ 
-or $L_n$ life. The estimated duration of this module is about 1 hour.
+(RAM) concepts. The learning objectives include defining key reliability metrics, 
+including reliability, availability, and failure rate, Describing the significance 
+of MTTR, MTTF, and MTBF in reliability engineering, calculating probability of failure 
+using given reliability data, interpreting $B_n$ or $L_n$ life values in the context 
+of product reliability, differentiating between different reliability measures. 
+The estimated duration of this module is about 1 hour.
 
-`rt()` provides an interactive introduction to Reliability Testing. The 
+`rt()` provides an introduction to Reliability Testing. The 
 learning objectives include defining key reliability growth concepts, including 
 Crow-AMSAA and Duane models, fitting a reliability growth model to real-world data
 using R, interpreting reliability growth plots and identifying trends, applying 
@@ -71,10 +86,10 @@ The modules can also be accessed in a browser at
 [https://paulgovan.shinyapps.io/LifeDataAnalysis/](https://paulgovan.shinyapps.io/LifeDataAnalysis/), 
 and [https://paulgovan.shinyapps.io/ReliabilityTesting/](https://paulgovan.shinyapps.io/ReliabilityTesting/).
 
-![](https://github.com/paulgovan/WeibullR.learnr/blob/master/inst/paper/WeibullRlearnr.png?raw=true)<!-- -->
+![](https://github.com/paulgovan/ReliaLearnR/blob/master/inst/paper/WeibullRlearnr.png?raw=true)<!-- -->
 
 Several helper functions for common RAM calculations are also included. These functions
-make it easy to apply the concepts covered in this module.
+make it easy to apply the concepts covered in the RAM module.
 
 * `rel()` - reliability function
 * `avail()` - availability function
@@ -82,28 +97,27 @@ make it easy to apply the concepts covered in this module.
 * `mtbf()` - mean time between failure
 * `fr()` - failure rate
 
-The project documentation includes installation instructions for `WeibullR.learnr`
+The project documentation includes installation instructions for `ReliaLearnR`
 and the required dependencies, examples of running the programs, and references 
 to previous work used to build the modules. The documentation also references more
-resources for learners looking for expanded applications. These resources include 
-`WeibullR.plotly` [@WeibullRplotly], a R package for interactive Weibull probability
-plots, and `WeibullR.shiny` [@WeibullRshiny], a shiny [@shiny] web application for 
-Life Data Analysis.
+resources for users interest in learning more. These resources include 
+`ReliaPlotR` [@ReliaPlotR], an R package for interactive Weibull probability
+plots, and `ReliaShinR` [@ReliaShinR], a shiny [@shiny] web application for 
+reliability analysis.
 
-This project is based on a reliability program at a major technology company. The 
+This project is based on a reliability program at a major technology company. The
 original program helped many early-career professionals learn the fundamentals
-of reliability engineering. However, this program was proprietary, limiting accessibility 
+of reliability engineering. However, the program was proprietary, limiting accessibility
 and leading to outdated learning materials as software evolved. By providing an open-source 
 alternative, this project aims to reach a broader audience and foster a community 
 of collaboration. 
 
-Users are encouraged to explore the modules and contribute to the project. Contributions
-can be made via Issues and Pull Requests in the repository, which includes a Contributor
-Code of Conduct.
+Contributions are welcome from the community. Users can submit pull requests, 
+report issues, or suggest enhancements through the repository, which includes contributing guidelines. 
 
 # Acknowledgements
 
 The author acknowledges the creators of the original Reliability Program that inspired
-this initiative.
+this project. 
 
 # References
