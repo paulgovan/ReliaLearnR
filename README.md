@@ -14,35 +14,16 @@ status](https://www.r-pkg.org/badges/version/ReliaLearnR)](https://CRAN.R-projec
 [![](http://cranlogs.r-pkg.org/badges/last-month/ReliaLearnR)](https://cran.r-project.org/package=ReliaLearnR)
 [![](http://cranlogs.r-pkg.org/badges/grand-total/ReliaLearnR)](https://cran.r-project.org/package=ReliaLearnR)
 [![](https://img.shields.io/badge/doi-10.32614/CRAN.package.ReliaLearnR-green.svg)](https://doi.org/10.32614/CRAN.package.ReliaLearnR)
-
 <!-- badges: end -->
 
-Welcome to `ReliaLearnR`! This package contains a set of interactive
-learning modules for life data analysis, focusing on reliability,
-availability, and maintainability (RAM). It is designed for beginners,
-including university students and early-career professionals.
-
-## Motivation
-
-Life data analysis is the study of how systems function over time, from
-machines to people. While various learning resources exist, many rely on
-proprietary software that can be inaccessible to students and
-early-career professionals.
-
-`ReliaLearnR` is an open-source collection of interactive learning
-modules, exercises, and functions designed for introductory life data
-analysis. The primary goal of this project is to introduce fundamental
-concepts while providing an open-source alternative for analyzing life
-data.
+Welcome to **ReliaLearnR!** This package provides interactive learning
+modules for beginners in reliability analysis. The modules are built
+using the `learnr` package and cover topics such as life data analysis,
+reliability testing, and reliability, availability, and maintainability
+(RAM) concepts. The package also includes helper functions for common
+RAM calculations.
 
 ## Installation
-
-`ReliaLearnR` is written in R and is built using
-[WeibullR](https://CRAN.R-project.org/package=WeibullR) by David
-Silkworth and Jurgen Symynck (2022), a R package for Weibull Analysis,
-and [learnr](https://CRAN.R-project.org/package=learnr) by Garrick
-Aden-Buie et al. (2023), a framework for building interactive learning
-modules in R.
 
 To install ReliaLearnR in R:
 
@@ -63,10 +44,8 @@ update.
 
 ## Usage
 
-Currently, three primary learning modules exist. These modules can be
-taken in either order and can be taken separately or together. The
-learning modules are designed to be plug-and-play, but changes can be
-made by forking the software repository and modifying the fork.
+The package includes three interactive learning modules. To access them,
+load the package and call the respective function:
 
 - `lda()` - An introduction to Life Data Analysis (estimated duration ~2
   hours)
@@ -82,7 +61,8 @@ The modules can also be accessed in a browser at
 
 ![](https://github.com/paulgovan/WeibullR.learnr/blob/master/inst/paper/WeibullRlearnr.png?raw=true)<!-- -->
 
-Several helper functions for common RAM calculations are also included:
+Several helper functions for common RAM calculations are also included.
+These functions can be used independently of the learning modules:
 
 - `rel()` - reliability function
 - `avail()` - availability function
