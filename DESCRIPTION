@@ -14,8 +14,11 @@ Imports:
   WeibullR,
   WeibullR.ALT
 Suggests:
-  WeibullR.plotly,
-  WeibullR.shiny
+    knitr,
+    rmarkdown,
+    WeibullR.plotly,
+    WeibullR.shiny
 License: Apache License (>= 2)
 Encoding: UTF-8
 RoxygenNote: 7.3.2
+VignetteBuilder: knitr
