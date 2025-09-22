@@ -82,9 +82,9 @@ the impact of stress factors on product reliability. The estimated duration of t
 module is about 2 hours.
 
 The modules can also be accessed in a browser at 
-[https://paulgovan.shinyapps.io/RAMAnalysis/](https://paulgovan.shinyapps.io/RAMAnalysis/), 
-[https://paulgovan.shinyapps.io/LifeDataAnalysis/](https://paulgovan.shinyapps.io/LifeDataAnalysis/), 
-and [https://paulgovan.shinyapps.io/ReliabilityTesting/](https://paulgovan.shinyapps.io/ReliabilityTesting/).
+[paulgovan.shinyapps.io/RAMAnalysis/](https://paulgovan.shinyapps.io/RAMAnalysis/), 
+[paulgovan.shinyapps.io/LifeDataAnalysis/](https://paulgovan.shinyapps.io/LifeDataAnalysis/), 
+and [paulgovan.shinyapps.io/ReliabilityTesting/](https://paulgovan.shinyapps.io/ReliabilityTesting/).
 
 ![](https://github.com/paulgovan/ReliaLearnR/blob/master/inst/paper/ReliaLearnR.png?raw=true)<!-- -->
 
