@@ -5,7 +5,7 @@ account: paulgovan
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 15498152
-bundleId: 10923618
+bundleId: 10937066
 url: https://paulgovan.shinyapps.io/ReliabilityTesting/
 version: 1
 asMultiple: FALSE
