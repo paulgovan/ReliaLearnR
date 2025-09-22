@@ -86,7 +86,7 @@ The modules can also be accessed in a browser at
 [https://paulgovan.shinyapps.io/LifeDataAnalysis/](https://paulgovan.shinyapps.io/LifeDataAnalysis/), 
 and [https://paulgovan.shinyapps.io/ReliabilityTesting/](https://paulgovan.shinyapps.io/ReliabilityTesting/).
 
-![](https://github.com/paulgovan/ReliaLearnR/blob/master/inst/paper/WeibullRlearnr.png?raw=true)<!-- -->
+![](https://github.com/paulgovan/ReliaLearnR/blob/master/inst/paper/ReliaLearnR.png?raw=true)<!-- -->
 
 Several helper functions for common RAM calculations are also included. These functions
 make it easy to apply the concepts covered in the RAM module.
