@@ -50,7 +50,15 @@ interactive learning modules.
 The package includes three interactive learning modules, which can be run locally or
 hosted on a web server. Each module includes instructional content, code examples,
 and exercises to reinforce learning. Users can run the modules in any R environment 
-by calling the `lda()`, `ram()`, or `rt()` functions.
+by calling the `ram()`, `lda()`, or `rt()` functions.
+
+`ram()` is a quick reference for common Reliability, Availability, and Maintainability
+(RAM) concepts. The learning objectives include defining key reliability metrics, 
+including reliability, availability, and failure rate, Describing the significance 
+of MTTR, MTTF, and MTBF in reliability engineering, calculating probability of failure 
+using given reliability data, interpreting $B_n$ or $L_n$ life values in the context 
+of product reliability, differentiating between different reliability measures. 
+The estimated duration of this module is about 1 hour.
 
 `lda()` provides an introduction to Life Data Analysis. 
 The learning objectives include describing the purpose of Weibull analysis in reliability 
@@ -60,14 +68,6 @@ Weibull, 3-parameter Weibull, and Weibayes, applying Median Rank Regression (MRR
 and Maximum Likelihood Estimation (MLE) estimation methods to sample datasets, interpreting
 results using plotting methods, including probability plots and contour plots. The 
 estimated duration for this module is approximately 2 hours. 
-
-`ram()` is a quick reference for common Reliability, Availability, and Maintainability
-(RAM) concepts. The learning objectives include defining key reliability metrics, 
-including reliability, availability, and failure rate, Describing the significance 
-of MTTR, MTTF, and MTBF in reliability engineering, calculating probability of failure 
-using given reliability data, interpreting $B_n$ or $L_n$ life values in the context 
-of product reliability, differentiating between different reliability measures. 
-The estimated duration of this module is about 1 hour.
 
 `rt()` provides an introduction to Reliability Testing. The 
 learning objectives include defining key reliability growth concepts, including 
