@@ -101,8 +101,8 @@ The project documentation includes installation instructions for `ReliaLearnR`
 and the required dependencies, examples of running the programs, and references 
 to previous work used to build the modules. The documentation also references more
 resources for users interest in learning more. These resources include 
-`ReliaPlotR` [@ReliaPlotR], an R package for interactive Weibull probability
-plots, and `ReliaShinR` [@ReliaShinR], a shiny [@shiny] web application for 
+`ReliaPlotR` [@ReliaPlotR], an R package for interactive reliability analysis
+plots, and `ReliaShinR` [@ReliaShiny], a shiny [@shiny] web application for 
 reliability analysis.
 
 This project is based on a reliability program at a major technology company. The
