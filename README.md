@@ -47,12 +47,12 @@ update.
 The package includes three interactive learning modules. To access them,
 load the package and call the respective function:
 
-- `lda()` - An introduction to Life Data Analysis (estimated duration ~2
-  hours)
 - `ram()` - A quick reference for common Reliability, Availability, and
   Maintainability concepts (estimated duration ~ 1 hour)
-- `rt()`- An interactive introduction to Reliability Testing (estimated
-  duration ~ 2 hours)
+- `lda()` - An introduction to Life Data Analysis (estimated duration ~2
+  hours)
+- `rt()`- An introduction to Reliability Testing (estimated duration ~ 2
+  hours)
 
 The modules can also be accessed in a browser at
 [paulgovan.shinyapps.io/RAMAnalysis/](https://paulgovan.shinyapps.io/RAMAnalysis/),
