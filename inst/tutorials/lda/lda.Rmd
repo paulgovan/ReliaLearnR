@@ -15,14 +15,6 @@ library(learnr)
 
 Welcome to the tutorial on **Life Data Analysis**! In this tutorial, you will learn about the basics of life data analysis and how to apply it to various fields, such as the automotive industry.
 
-## What is Life Data Analysis?
-
-Life data analysis is the study of how systems, from machines to people, function over time. For example, in the automotive industry, life data helps explain how long cars will last before they break down. 
-
-## Why is Life Data Analysis Important?
-
-Understanding life data analysis helps in predicting the lifespan and maintenance needs of various systems, thereby improving reliability and efficiency. By collecting and modeling life data, we can make predictions about how long cars will last or how long before they will need to be repaired or replaced. 
-
 ## Learning Objectives
 
 By the end of this module, learners will be able to:
@@ -32,6 +24,14 @@ By the end of this module, learners will be able to:
 * Differentiate between different Weibull models (2-parameter Weibull, 3-parameter Weibull, and Weibayes).
 * Apply Median Rank Regression (MRR) and Maximum Likelihood Estimation (MLE) estimation methods to sample datasets.
 * Interpret results using plotting methods, including probability plots and contour plots.
+
+## What is Life Data Analysis?
+
+Life data analysis is the study of how systems, from machines to people, function over time. For example, in the automotive industry, life data helps explain how long cars will last before they break down. 
+
+## Why is Life Data Analysis Important?
+
+Understanding life data analysis helps in predicting the lifespan and maintenance needs of various systems, thereby improving reliability and efficiency. By collecting and modeling life data, we can make predictions about how long cars will last or how long before they will need to be repaired or replaced. 
 
 ## Weibull Analysis
 
