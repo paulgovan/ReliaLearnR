@@ -11,5 +11,5 @@
 #'   lda()
 #' }
 lda <- function() {
-  learnr::run_tutorial('lda', package = 'WeibullR.learnr')
+  learnr::run_tutorial('lda', package = 'ReliaLearnR')
 }

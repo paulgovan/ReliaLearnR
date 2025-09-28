@@ -12,5 +12,5 @@
 #'   ram()
 #' }
 ram <- function() {
-  learnr::run_tutorial('ram', package = 'WeibullR.learnr')
+  learnr::run_tutorial('ram', package = 'ReliaLearnR')
 }
