@@ -10,5 +10,5 @@
 #'   rt()
 #' }
 rt <- function() {
-  learnr::run_tutorial('rt', package = 'ReliaLearnR')
+  learnr::run_tutorial("rt", package = "ReliaLearnR")
 }
