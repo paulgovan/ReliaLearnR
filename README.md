@@ -42,6 +42,14 @@ Note: You may be prompted to update dependent packages before
 installing. To do this when prompted during installation type 1 (All) to
 update.
 
+## Prerequisites
+
+These modules are designed for engineering students and professionals
+interested in learning the fundamentals of reliability analysis. They
+assume a basic understanding of R and statistics. For a complete
+beginners’ guide to R, check out the resources at
+<https://education.rstudio.com/learn/beginner/>.
+
 ## Usage
 
 The package includes three interactive learning modules. To access them,
