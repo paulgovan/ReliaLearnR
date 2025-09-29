@@ -16,6 +16,16 @@ library(WeibullR.learnr)
 
 Welcome to the tutorial on **Reliability, Availability, and Maintainability (RAM)**! In this tutorial, you will learn about these fundamental concepts and their applications.
 
+## Learning Objectives
+
+By the end of this module, learners will be able to:
+
+* Define key reliability metrics, including reliability, availability, and failure rate.
+* Describe the significance of MTTR, MTTF, and MTBF in reliability engineering.
+* Calculate probability of failure using given reliability data.
+* Interpret $B_n$ or $L_n$ life values in the context of product reliability.
+* Differentiate between different reliability measures.
+
 ## What is RAM?
 
 The terms Reliability, Availability, and Maintainability may sound similar, but they actually represent different concepts.
@@ -27,16 +37,6 @@ The terms Reliability, Availability, and Maintainability may sound similar, but 
 **Maintainability**: The ease and speed with which an item can be restored to operational status after a failure.
 
 That being said, all 3 terms are inter-related. A car that is not very reliable is probably not available very often. A car that is also difficult to maintain is probably available even less. 
-
-## Learning Objectives
-
-By the end of this module, learners will be able to:
-
-* Define key reliability metrics, including reliability, availability, and failure rate.
-* Describe the significance of MTTR, MTTF, and MTBF in reliability engineering.
-* Calculate probability of failure using given reliability data.
-* Interpret $B_n$ or $L_n$ life values in the context of product reliability.
-* Differentiate between different reliability measures.
 
 ## Reliability
 
