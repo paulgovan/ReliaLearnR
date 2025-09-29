@@ -165,7 +165,7 @@ quiz(caption = "Quiz: Duane Model",
 
 ## The Crow-AMSAA Model
 
-The Army Materiel Systems Analysis Activity model by Crow **(Crow-AMSAA)** takes failure behavior as a **Non-Homogeneous Poisson Process (NHPP)** governed by a power law, making the model particularly effective for systems undergoing reliability growth due to continuous improvements.
+The Army Materiel Systems Analysis Activity (AMSAA) model by Larry Crow **(i.e., Crow-AMSAA)** takes failure behavior as a **Non-Homogeneous Poisson Process (NHPP)** governed by a power law, making the model particularly effective for systems undergoing reliability growth due to continuous improvements.
 
 Specifically, the Crow-AMSAA Model is a plot of the cumulative number of failures vs cumulative time. 
 

@@ -97,9 +97,9 @@ quiz(caption = "Exercise: Availability",
 )
 ```
 
-## Mean Time to Repair (MTTR)
+## Mean Time to Repair
 
-The MTTR is a measure of maintainability and is the mean time to repair an item.
+The Mean Time to Repair (MTTR) is a measure of maintainability and is the mean time to repair an item.
 
 $$ MTTR = \sum_{i=1}^n RepairTime_i/RepairCount $$
 
@@ -124,15 +124,15 @@ quiz(caption = "Exercise: MTTR",
 )
 ```
 
-## Mean Time to Failure (MTTF)
+## Mean Time to Failure
 
-The MTTF is a measure of reliability for *non-repairable* items, meaning that once the item fails, it is not repaired, but replaced. The MTTF is the ratio of total time by the number of failures for a given item.
+The Mean Time to Failure (MTTF) is a measure of reliability for *non-repairable* items, meaning that once the item fails, it is not repaired, but replaced. The MTTF is the ratio of total time by the number of failures for a given item.
 
 $$ MTTF = Total Time/FailureCount $$
 
-## Mean Time Between Failures (MTBF)
+## Mean Time Between Failures
 
-MTBF is a measure of reliability for *repairable systems*, meaning that once the item fails, it is repaired and put back into service. In this way, the item can fail multiple times. The MTBF is the ratio of total time by the number of failures for a given item.
+Mean Time Between Failures (MTBF) is a measure of reliability for *repairable systems*, meaning that once the item fails, it is repaired and put back into service. In this way, the item can fail multiple times. The MTBF is the ratio of total time by the number of failures for a given item.
 
 The calculation is similar to the MTTF, just with a slightly different interpretation. 
 
