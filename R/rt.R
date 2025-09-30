@@ -1,3 +1,4 @@
+
 #' Launch the Reliability Testing Tutorial
 #'
 #' This function launches the Reliability Testing tutorial
@@ -10,5 +11,5 @@
 #'   rt()
 #' }
 rt <- function() {
-  learnr::run_tutorial('rt', package = 'WeibullR.learnr')
+  learnr::run_tutorial("rt", package = "ReliaLearnR")
 }

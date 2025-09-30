@@ -36,7 +36,7 @@ solution for learning reliability analysis using R [@R], a widely-used programmi
 language for statistical computing and data analysis. The primary objective of this
 project is to introduce fundamental concepts of reliability analysis while providing
 an open-source alternative for analyzing reliability data. The target audience for
-this project includes beginner practitioners and university students interested
+this project includes engineering students and professionals interested
 in learning the fundamentals of reliability analysis.
 
 # Description
@@ -58,7 +58,6 @@ including reliability, availability, and failure rate, Describing the significan
 of MTTR, MTTF, and MTBF in reliability engineering, calculating probability of failure 
 using given reliability data, interpreting $B_n$ or $L_n$ life values in the context 
 of product reliability, differentiating between different reliability measures. 
-The estimated duration of this module is about 1 hour.
 
 `lda()` provides an introduction to Life Data Analysis. 
 The learning objectives include describing the purpose of Weibull analysis in reliability 
@@ -66,8 +65,7 @@ engineering, differentiating between types of data censoring, including right-ce
 and interval-censored data, differentiating between different Weibull models (2-parameter 
 Weibull, 3-parameter Weibull, and Weibayes, applying Median Rank Regression (MRR) 
 and Maximum Likelihood Estimation (MLE) estimation methods to sample datasets, interpreting
-results using plotting methods, including probability plots and contour plots. The 
-estimated duration for this module is approximately 2 hours. 
+results using plotting methods, including probability plots and contour plots. 
 
 `rt()` provides an introduction to Reliability Testing. The 
 learning objectives include defining key reliability growth concepts, including 
@@ -78,8 +76,7 @@ of accelerated life testing, including the use of Arrhenius and Power Law Models
 conducting an accelerated life test with real-world datasets, utilizing R for analysis,
 analyzing plots that illustrate the relationships in accelerated life testing, identifying
 key patterns and data trends, and utilizing Arrhenius and Power Law models to evaluate 
-the impact of stress factors on product reliability. The estimated duration of this 
-module is about 2 hours.
+the impact of stress factors on product reliability. 
 
 The modules can also be accessed in a browser at 
 [paulgovan.shinyapps.io/RAMAnalysis/](https://paulgovan.shinyapps.io/RAMAnalysis/), 

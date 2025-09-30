@@ -1,3 +1,4 @@
+
 #' Launch the Life Data Analysis Tutorial
 #'
 #' This function launches an interactive tutorial for life data analysis.
@@ -11,5 +12,5 @@
 #'   lda()
 #' }
 lda <- function() {
-  learnr::run_tutorial('lda', package = 'WeibullR.learnr')
+  learnr::run_tutorial("lda", package = "ReliaLearnR")
 }

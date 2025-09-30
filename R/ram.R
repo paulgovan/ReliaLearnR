@@ -1,3 +1,4 @@
+
 #' Launch the RAM Analysis Tutorial
 #'
 #' This function launches an interactive tutorial on Reliability, Availability,
@@ -12,5 +13,5 @@
 #'   ram()
 #' }
 ram <- function() {
-  learnr::run_tutorial('ram', package = 'WeibullR.learnr')
+  learnr::run_tutorial("ram", package = "ReliaLearnR")
 }

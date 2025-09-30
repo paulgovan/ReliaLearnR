@@ -11,6 +11,8 @@ developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.re
 [![CRAN
 status](https://www.r-pkg.org/badges/version/ReliaLearnR)](https://CRAN.R-project.org/package=ReliaLearnR)
 [![R-CMD-check](https://github.com/paulgovan/ReliaLearnR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/paulgovan/ReliaLearnR/actions/workflows/R-CMD-check.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/paulgovan/ReliaLearnR/graph/badge.svg)](https://app.codecov.io/gh/paulgovan/ReliaLearnR)
 [![](http://cranlogs.r-pkg.org/badges/last-month/ReliaLearnR)](https://cran.r-project.org/package=ReliaLearnR)
 [![](http://cranlogs.r-pkg.org/badges/grand-total/ReliaLearnR)](https://cran.r-project.org/package=ReliaLearnR)
 [![](https://img.shields.io/badge/doi-10.32614/CRAN.package.ReliaLearnR-green.svg)](https://doi.org/10.32614/CRAN.package.ReliaLearnR)
@@ -42,17 +44,23 @@ Note: You may be prompted to update dependent packages before
 installing. To do this when prompted during installation type 1 (All) to
 update.
 
+## Prerequisites
+
+These modules are designed for engineering students and professionals
+interested in learning the fundamentals of reliability analysis. They
+assume a basic understanding of R and statistics. For a complete
+beginners’ guide to R, check out the resources at
+<https://education.rstudio.com/learn/beginner/>.
+
 ## Usage
 
 The package includes three interactive learning modules. To access them,
 load the package and call the respective function:
 
 - `ram()` - A quick reference for common Reliability, Availability, and
-  Maintainability concepts (estimated duration ~ 1 hour)
-- `lda()` - An introduction to Life Data Analysis (estimated duration ~2
-  hours)
-- `rt()`- An introduction to Reliability Testing (estimated duration ~ 2
-  hours)
+  Maintainability (RAM) concepts
+- `lda()` - An introduction to Life Data Analysis
+- `rt()`- An introduction to Reliability Testing
 
 The modules can also be accessed in a browser at
 [paulgovan.shinyapps.io/RAMAnalysis/](https://paulgovan.shinyapps.io/RAMAnalysis/),
@@ -70,6 +78,21 @@ These functions can be used independently of the learning modules:
 - `mttf()` - mean time to failure
 - `mtbf()` - mean time between failure
 - `fr()` - failure rate
+
+## Motivation
+
+This project is based on a reliability program at a major technology
+company. The original program helped many early-career professionals
+learn the fundamentals of reliability engineering. However, the program
+was proprietary, limiting accessibility and leading to outdated learning
+materials as software evolved. By providing an open-source alternative,
+this project aims to reach a broader audience and foster a community of
+collaboration.
+
+## Acknowledgements
+
+The author acknowledges the creators of the original Reliability Program
+that inspired this project.
 
 ## Code of Conduct
 

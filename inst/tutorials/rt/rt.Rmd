@@ -15,14 +15,6 @@ library(learnr)
 
 Welcome to the tutorial on **Reliability Testing**! In this tutorial, you will learn about different types of reliability tests and how to apply them. These models are commonly applied in industries like aerospace, automotive, and electronics, where improving product reliability over time is critical.
 
-## What is Reliability Testing?
-
-Reliability testing is a process to ensure that a product or system performs its intended functions under specified conditions over a defined period. For example, in the automotive industry, we may want to design a car that runs without breaking down for 5 to 10 years. 
-
-## Why is Reliability Testing important?
-
-Reliability testing helps organizations predict the future reliability of products, reduce failure rates, and lower costs associated with repairs and downtime. 
-
 ## Learning Objectives
 
 By the end of this tutorial, learners will be able to:
@@ -34,6 +26,14 @@ By the end of this tutorial, learners will be able to:
 * Conduct accelerated life tests with real-world datasets, utilizing R for analysis.
 * Interpret accelerated life testing plots to identify trends.
 * Analyze the impact of stress factors on product reliability using Arrhenius and Power Law models.
+
+## What is Reliability Testing?
+
+Reliability testing is a process to ensure that a product or system performs its intended functions under specified conditions over a defined period. For example, in the automotive industry, we may want to design a car that runs without breaking down for 5 to 10 years. 
+
+## Why is Reliability Testing important?
+
+Reliability testing helps organizations predict the future reliability of products, reduce failure rates, and lower costs associated with repairs and downtime. 
 
 ## Reliability Growth Analysis
 
@@ -165,7 +165,7 @@ quiz(caption = "Quiz: Duane Model",
 
 ## The Crow-AMSAA Model
 
-The Army Materiel Systems Analysis Activity model by Crow **(Crow-AMSAA)** takes failure behavior as a **Non-Homogeneous Poisson Process (NHPP)** governed by a power law, making the model particularly effective for systems undergoing reliability growth due to continuous improvements.
+The Army Materiel Systems Analysis Activity (AMSAA) model by Larry Crow **(i.e., Crow-AMSAA)** takes failure behavior as a **Non-Homogeneous Poisson Process (NHPP)** governed by a power law, making the model particularly effective for systems undergoing reliability growth due to continuous improvements.
 
 Specifically, the Crow-AMSAA Model is a plot of the cumulative number of failures vs cumulative time. 
 
