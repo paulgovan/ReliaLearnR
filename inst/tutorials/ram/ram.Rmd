@@ -43,9 +43,17 @@ That being said, all 3 terms are inter-related. A car that is not very reliable 
 Reliability is the probability that an item will not fail under defined conditions for a specified period.
 
 $$ Reliability = (1 - (Failed Time/Total Time))*100 $$
+Where Failed Time is the time that the item was not functioning, and Total Time is the total time that the item was in operation.
+
+Suppose an item ran for 5 years total and was failed for 10 of those days. The reliability of the item is: 
+
+$$ Reliability = (1 - (10/(5*365)))*100 = 94.5% $$
 Unreliability is the opposite of reliability, that is, the probability that an item will fail under defined conditions for a specified period. 
 
 $$ Unreliability = 1 - Reliability = (Failed Time/Total Time)*100 $$
+Take the previous example, the unreliability of the item is:
+
+$$ Unreliability = 1 - 0.945 = 0.055 = (10/(5*365))*100 = 5.5% $$
 
 ```{r quiz1, echo=FALSE}
 quiz(caption = "Exercise: Reliability",
@@ -73,8 +81,13 @@ quiz(caption = "Exercise: Reliability",
 Availability is the probability that an item will be available for service. Unavailable time includes failed time and scheduled maintenance.
 
 $$ Availability = (1 - (Unavailable Time/Total Time))*100 $$
+Where Unavailable Time is the time that the item was not available for service, and Total Time is the total time that the item was in operation.
 
 Unavailable time is different than standby time, where standby time is when the item is available for service, but is not being used. 
+
+Suppose an item ran for 5 years total, was failed for 10 days, and had scheduled maintenance for 15 days. The availability of the item is:
+
+$$ Availability = (1 - ((10+15)/(5*365)))*100 = 93.2% $$
 
 ```{r availability, echo=FALSE}
 quiz(caption = "Exercise: Availability",
@@ -102,6 +115,11 @@ quiz(caption = "Exercise: Availability",
 The Mean Time to Repair (MTTR) is a measure of maintainability and is the mean time to repair an item.
 
 $$ MTTR = \sum_{i=1}^n RepairTime_i/RepairCount $$
+Where $RepairTime_i$ is the time to repair for the *i*th repair, and $RepairCount$ is the total number of repairs.
+
+Suppose 100 items run for 5 years total. During that time, 5 failures occur with repair times in days of 5, 10, 15, 8, and 12. The MTTR is:
+
+$$ MTTR = (5+10+15+8+12)/5 = 10 days $$
 
 ```{r quiz3, echo=FALSE}
 quiz(caption = "Exercise: MTTR",
@@ -129,12 +147,20 @@ quiz(caption = "Exercise: MTTR",
 The Mean Time to Failure (MTTF) is a measure of reliability for *non-repairable* items, meaning that once the item fails, it is not repaired, but replaced. The MTTF is the ratio of total time by the number of failures for a given item.
 
 $$ MTTF = Total Time/FailureCount $$
+Where *Total Time* is the total time that the item was in operation, and *FailureCount* is the total number of failures.
 
+Suppose 100 items run for 5 years total. During that time, 5 failures occur. The MTTF is:
+
+$$ MTTF = (5*365)/5 = 365 years $$
 ## Mean Time Between Failures
 
 Mean Time Between Failures (MTBF) is a measure of reliability for *repairable systems*, meaning that once the item fails, it is repaired and put back into service. In this way, the item can fail multiple times. The MTBF is the ratio of total time by the number of failures for a given item.
 
 The calculation is similar to the MTTF, just with a slightly different interpretation. 
+
+Take an example where an item fails 5 times during a total time of 10,000 hours. The MTBF is:
+
+$$ MTBF = 10000/5 = 2000 hours $$
 
 ```{r quiz4, echo=FALSE}
 quiz(caption = "Exercise: MTTF and MTBF",
@@ -174,6 +200,15 @@ A key assumption of MTBF is that the failure rate is constant. Under this assump
 $$ \lambda = 1/MTBF $$
 Where $\lambda$ is the failure rate.
 
+The failure rate can also be calculated directly as the number of failures divided by the total operational time.
+
+$$ \lambda = FailureCount/Total Time $$
+Where *Total Time* is the total time that the item was in operation, and *FailureCount* is the total number of failures.
+
+Suppose 100 items run for 10 years total. During that time, 20 failures occur. The failure rate is:
+
+$$ \lambda = 20/(10*365) = 0.0055 \text{ failures per year} $$
+
 ## Probability of Failure
 
 Failures do not often occur at predictable times and usually occur randomly according to a probability distribution.
@@ -188,7 +223,11 @@ Where $\lambda$ is the failure rate.
 The cumulative probability of *survival* prior to time *t*, ***R(t)***, is the opposite of ***F(t)***, that is
 
 $$ R(t) = 1 - F(t) $$
+$$ R(t) = e^{-t\lambda} $$
 
+For example, suppose an item has a failure rate of 0.1 failures per year. The probability of survival at time 10 is:
+
+$$ R(10) = e^{-10*0.1} = 0.3679 = 36.79% $$
 
 ## $B_n$ or $L_n$ Life
 
@@ -197,8 +236,11 @@ The $B_n$ or $L_n$ life is the time at which *n* % of a population are expected 
 To calculate the $B_n$ life, we can solve for *t* in the cumulative probability function. For the exponential function, that is
 
 $$ t = -ln(1-F(t))/\lambda $$
+Where $\lambda$ is the failure rate.
 
-Where *F(t)* is analogous with *n* in this case.
+For example, suppose an item has a failure rate of 0.2 failures per year. The B10 life is:
+
+$$ B10 = -ln(1-0.1)/0.2 = 0.526 years $$
 
 ```{r quiz5, echo=FALSE}
 quiz(caption = "Exercise: Failure Rate, Probability of Failure, and Bn Life",
