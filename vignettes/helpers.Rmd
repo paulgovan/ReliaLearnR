@@ -1,0 +1,88 @@
+---
+title: "Helper Functions"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{helpers}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, include=FALSE}
+library(ReliaLearnR)
+```
+
+The `ReliaLearnR` package includes several helper functions to calculate common reliability metrics. These functions include:
+
+- `rel(failures, total_time)`: Calculates reliability given the number of failures and total time.
+- `avail(downtime, total_time)`: Calculates availability given the downtime and total time.
+- `mttf(downtime, total_time)`: Estimates the Mean Time To Failure.
+- `mtbf(failures, total_time)`: Estimates the Mean Time Between Failures.
+- `fr(failures, total_time)`: Estimates the failure rate.
+
+This vignette provides examples of how to use these functions.
+
+## Examples
+
+To calculate the reliability of an item that ran for 3 years total and was failed for 5 of those days:
+
+```{r echo=TRUE, results='asis'}
+result <- rel(5, 3 * 365)
+cat(result)
+```
+
+To calculate the availability of an item that ran 3 years total, was failed for 5 days, and had scheduled maintenance for 14 days:
+
+```{r echo=TRUE, results='asis'}
+result <- avail(5 + 14, 3 * 365)
+cat(result)
+```
+
+The MTTR can be estimated with the base function `mean`. The MTTR for 5 failures with repair times in days of 5, 10, 15, 8, and 12:
+
+```{r echo=TRUE, results='asis'}
+result <- mean(c(5, 10, 15, 8, 12))
+cat(result)
+```
+
+To estimate the MTTF for 1000 items that ran for 3 years total:
+
+```{r echo=TRUE, results='asis'}
+result <- mttf(5 + 14, 3 * 365)
+cat(result)
+```
+
+To estimate the MTBF for an item that failed 5 times over a total time of 45,000 hours:
+
+```{r echo=TRUE, results='asis'}
+result <- mtbf(5, 45000)
+cat(result)
+```
+
+To estimate the failure rate for 100 items that ran for 5000 hours and had 75 failures:
+
+```{r echo=TRUE, results='asis'}
+result <- fr(75, 100 * 5000)
+cat(result)
+```
+
+The Exponential failure probability can be estimated with the base function `pexp`. To estimate the probability of survival at time 5 for an item with a failure rate of 0.1:
+
+```{r echo=TRUE, results='asis'}
+result <- 1 - pexp(5, 0.1)
+cat(result)
+```
+
+The $B_n$ life for the Exponential distribution can be estimated with the base function `qexp`. To estimate the B10 life for an item with a failure rate of 0.1:
+
+```{r echo=TRUE, results='asis'}
+result <- qexp(0.1, 0.1)
+cat(result)
+```
+

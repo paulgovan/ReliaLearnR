@@ -11,6 +11,8 @@ developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.re
 [![CRAN
 status](https://www.r-pkg.org/badges/version/ReliaLearnR)](https://CRAN.R-project.org/package=ReliaLearnR)
 [![R-CMD-check](https://github.com/paulgovan/ReliaLearnR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/paulgovan/ReliaLearnR/actions/workflows/R-CMD-check.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/paulgovan/ReliaLearnR/graph/badge.svg)](https://app.codecov.io/gh/paulgovan/ReliaLearnR)
 [![](http://cranlogs.r-pkg.org/badges/last-month/ReliaLearnR)](https://cran.r-project.org/package=ReliaLearnR)
 [![](http://cranlogs.r-pkg.org/badges/grand-total/ReliaLearnR)](https://cran.r-project.org/package=ReliaLearnR)
 [![](https://img.shields.io/badge/doi-10.32614/CRAN.package.ReliaLearnR-green.svg)](https://doi.org/10.32614/CRAN.package.ReliaLearnR)
@@ -56,7 +58,7 @@ The package includes three interactive learning modules. To access them,
 load the package and call the respective function:
 
 - `ram()` - A quick reference for common Reliability, Availability, and
-  Maintainability concepts
+  Maintainability (RAM) concepts
 - `lda()` - An introduction to Life Data Analysis
 - `rt()`- An introduction to Reliability Testing
 
@@ -87,7 +89,7 @@ materials as software evolved. By providing an open-source alternative,
 this project aims to reach a broader audience and foster a community of
 collaboration.
 
-# Acknowledgements
+## Acknowledgements
 
 The author acknowledges the creators of the original Reliability Program
 that inspired this project.

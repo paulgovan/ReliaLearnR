@@ -1,3 +1,4 @@
+
 #' Launch the Life Data Analysis Tutorial
 #'
 #' This function launches an interactive tutorial for life data analysis.

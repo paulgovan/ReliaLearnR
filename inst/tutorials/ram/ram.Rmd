@@ -278,58 +278,6 @@ quiz(caption = "Exercise: Failure Rate, Probability of Failure, and Bn Life",
 )
 ```
 
-## Helper Functions
-
-This package has several helper functions for RAM calculations. 
-
-To calculate the reliability of an item that ran for 3 years total and was failed for 5 of those days:
-
-```{r echo=TRUE, eval=FALSE}
-rel(5, 3*365)
-```
-
-To calculate the availability of an item that ran 3 years total, was failed for 5 days, and had scheduled maintenance for 14 days:
-
-```{r echo=TRUE, eval=FALSE}
-avail(5+14, 3*365)
-```
-
-The MTTR can be estimated with the base function `mean`. The MTTR for 5 failures with repair times in days of 5, 10, 15, 8, and 12:
-
-```{r echo=TRUE, eval=FALSE}
-mean(c(5, 10, 15, 8, 12))
-```
-
-To estimate the MTTF for 1000 items that ran for 3 years total:
-
-```{r echo=TRUE, eval=FALSE}
-mttf(5+14, 3*365)
-```
-
-To estimate the MTBF for an item that failed 5 times over a total time of 45,000 hours:
-
-```{r echo=TRUE, eval=FALSE}
-mtbf(5, 45000)
-```
-
-To estimate the failure rate for 100 items that ran for 5000 hours and had 75 failures:
-
-```{r echo=TRUE, eval=FALSE}
-fr(75, 100*5000)
-```
-
-The Exponential failure probability can be estimated with the base function `pexp`. To estimate the probability of survival at time 5 for an item with a failure rate of 0.1:
-
-```{r echo=TRUE, eval=FALSE}
-1-pexp(5, 0.1)
-```
-
-The $B_n$ life for the Exponential distribution can be estimated with the base function `qexp`. To estimate the B10 life for an item with a failure rate of 0.1:
-
-```{r echo=TRUE, eval=FALSE}
-qexp(0.1, 0.1)
-```
-
 ## Summary
 
 Congratulations on completing the Reliability, Availability, and Maintainability (RAM) tutorial!
