@@ -53,7 +53,8 @@ The slope of the line on the plot indicates the rate of reliability growth:
 
 ### The Duane Model: Reliability Growth vs Deteriation
 
-Take the following example Duane Plot. Adjust the Beta value input to see the failure rate both decreasing and increasing.
+To illustrate the Duane Model, take the following example. Adjust the Beta value 
+input to see the failure rate both decreasing and increasing.
 
 ```{r echo=FALSE}
 numericInput("beta", label = h3("Beta Value:"), value = 1, min = 0, max = 5, step = 0.1, width = '50%') # Numeric input for beta value
@@ -77,6 +78,11 @@ output$duanePlot <- renderPlot({
   plot(log_x, log_y, type = "l", col = "blue", xlab = "Time", ylab = "Cumulative MTBF", main = mainTitle)
 })
 ```
+
+As you adjust the Beta value, observe how the slope of the line changes. When
+Beta is greater than 1, the slope is positive, indicating that the system is improving. 
+When Beta is less than 1, the slope is negative, indicating that the system is worsening. 
+When Beta equals 1, the slope is zero, indicating that the system is stable.
 
 ### The Duane Model Equation
 
@@ -177,7 +183,8 @@ Similar to the Duane Model, the shape of the model indicates the rate of reliabi
 
 ### The Crow-AMSAA Model: Reliability Growth vs Deteriation
 
-Take the following example Crow-AMSAA model. Adjust the Beta value input to see the failure rate both decreasing and increasing.
+To illustrate the Crow-AMSAA Model, take the following example. Adjust the Beta 
+value input to see the failure rate both decreasing and increasing.
 
 ```{r echo=FALSE}
 numericInput("beta", label = h3("Beta Value:"), value = 1, min = 0, max = 5, step = 0.1, width = '50%') # Numeric input for beta value
@@ -199,6 +206,11 @@ output$crowPlot <- renderPlot({
   plot(x, y, type = "l", col = "darkgreen", xlab = "Time", ylab = "Cumulative Failures", main = mainTitle)
 })
 ```
+
+As you adjust the Beta value, observe how the curvature of the line changes. When
+Beta is greater than 1, the line curves upward, indicating that the system is worsening. 
+When Beta is less than 1, the line curves downward, indicating that the system is improving. 
+When Beta equals 1, the line is linear, indicating that the system is stable.
 
 ### The Crow-AMSAA Model Equation:
 

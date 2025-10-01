@@ -61,10 +61,11 @@ plot(x,y, type = "l", col = "blue", xlab = "Variable", ylab = "Probability") # P
 
 ### The Weibull vs Normal
 
-The Weibull can *mimic* the normal and many others. Adjust the scale parameter in the slider below until the Weibull looks similar to the Normal above.
+The Weibull can *mimic* the normal and many others. To illustrate, adjust the scale 
+parameter in the slider until the Weibull below looks similar to the Normal above.
 
 ```{r, echo=FALSE}
-sliderInput("eta", "Eta:", min = 1, max = 10, value = 1, step = 0.1) # Slider for eta
+sliderInput("eta", "Eta:", min = 1, max = 10, value = 1, step = 0.5) # Slider for eta
 plotOutput("distPlot") # Plot output
 ```
 
@@ -78,22 +79,27 @@ output$distPlot <- renderPlot({
 ```
 
 <div id="filter-hint">
-**Hint:** Eta should be slightly larger than the mean of the normal distribution.
+**Hint:** Set Eta equal to 5 as a starting point.
 </div>
 
 ### The Cumulative Distribution Function
 
-***R(t)*** gives the cumulative probability of *survival* prior to time *t* while ***F(t)*** gives the cumulative probability of *failure* prior to time *t*
+The cumulative distribution function (CDF) describes the probability of survival 
+or failure prior to a certain time *t*. In this case, ***R(t)*** gives the cumulative 
+probability of *survival* prior to  time *t* while ***F(t)*** gives the cumulative 
+probability of *failure* prior to time *t*.
 
 $$ R(t) = 1 - F(t) = e^{-(t/\eta)^\beta} $$
 
-Where $\beta$ is the shape parameter. In life data analysis $\beta$ has a physical interpretation related to the failure rate. The failure rate is the rate at which failures occur over time.
+Where $\beta$ is the shape parameter. In life data analysis $\beta$ has a physical 
+interpretation related to the failure rate. The failure rate is the rate at which 
+failures occur over time.
 
 -   $\beta$ \< 1 - the failure rate is decreasing
 -   $\beta$ = 1 - the failure rate is constant
 -   $\beta$ \> 1 - the failure rate is increasing
 
-And $\eta$ is the scale parameter or the quantile at 63.2% probability
+And $\eta$ is the scale parameter or the quantile at 63.2% probability.
 
 ```{r quiz1, echo=FALSE}
 quiz(caption = "Quiz: The Weibull Parameters",
@@ -134,27 +140,36 @@ quiz(caption = "Quiz: The Weibull Parameters",
 
 ## The Weibull Parameters
 
-### Varying Beta
-Let's vary the parameters of the Weibull distribution to see these relationships graphically.  
-
-Varying Beta changes the **shape** of the cumulative distribution function. Use the slider below to adjust the shape of the Weibull. 
+### Beta
+ 
+Beta is the **shape** parameter of the Weibull distribution. Changing Beta changes 
+the **shape** of the cumulative distribution function. To illustrate, use the slider 
+below to adjust the shape of the Weibull. 
 
 ```{r, echo=FALSE}
-sliderInput("beta", "Beta:", min = 0.5, max = 3, value = 1) # Slider for beta
-plotOutput("cummPlot") # Plot output
+sliderInput("beta", "Beta:", min = 0.5, max = 5, value = 1, step = 0.5) # Slider for beta
+plotOutput("cumPlot") # Plot output
 ```
 
 ```{r, context="server"}
 # Plot the cumulative distribution function
-output$cummPlot <- renderPlot({
+output$cumPlot <- renderPlot({
   x <- seq(0, 50, by = .1)
-  plot(pweibull(x, shape = input$beta, scale = 10), col = "blue", type = "l", xlab = "Variable", ylab = "Cumulative Probability") 
+  plot(pweibull(x, shape = input$beta, scale = 10), col = "blue", type = "l", 
+       xlab = "Variable", ylab = "Cumulative Probability") 
 })
 ```
 
-### Varying Eta
+As you adjust Beta, notice how the shape of the Weibull changes. Increasing Beta 
+makes the curve steeper, indicating an increasing failure rate. Decreasing Beta 
+makes the curve less steep, indicating a decreasing failure rate.
 
-Varying Eta moves the Weibull distribution along the x-axis. Use the slider below to adjust the scale of the Weibull. 
+### Eta
+
+Eta is the **scale** parameter of the Weibull distribution. Changing Eta changes 
+the **scale** of the cumulative distribution function. To illustrate, use the slider 
+below to adjust the scale of the Weibull. 
+
 ```{r, echo=FALSE}
 sliderInput("eta2", "Eta:", min = 1, max = 20, value = 1) # Slider for eta
 plotOutput("cummPlot2") # Plot output
@@ -167,6 +182,10 @@ output$cummPlot2 <- renderPlot({
   plot(pweibull(x, shape = 1, scale = input$eta2), col = "red", type = "l", xlab = "Variable", ylab = "Cumulative Probability") 
 })
 ```
+
+As you adjust Eta, notice how the scale of the Weibull changes. Increasing Eta 
+shifts the curve to the right, indicating a longer lifespan. Decreasing Eta shifts the
+curve to the left, indicating a shorter lifespan. 
 
 ## WeibullR
 
