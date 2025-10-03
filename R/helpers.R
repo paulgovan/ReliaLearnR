@@ -1,3 +1,4 @@
+
 #' Reliability (1 - outage / total)
 #'
 #' Reliability is the probability that an item will perform its intended function
@@ -143,3 +144,4 @@ fr <- function(failures, totalTime) {
 
   return(total_failures / total_time)
 }
+
