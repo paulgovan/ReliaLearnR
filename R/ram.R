@@ -3,8 +3,7 @@
 #'
 #' This function launches an interactive tutorial on Reliability, Availability,
 #' and Maintainability (RAM) analysis.
-#' @import learnr
-#' @import WeibullR
+#' @importFrom learnr run_tutorial
 #' @export
 #' @seealso \url{https://paulgovan.github.io/ReliaLearnR/}
 #' @return This function does not return a value.

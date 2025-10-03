@@ -3,7 +3,8 @@
 #'
 #' This function launches an interactive tutorial for life data analysis.
 #'
-#' @import learnr WeibullR
+#' @importFrom learnr run_tutorial
+#' @import WeibullR
 #' @export
 #' @seealso \url{https://paulgovan.github.io/ReliaLearnR/}
 #' @return This function does not return a value.
