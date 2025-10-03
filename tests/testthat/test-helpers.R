@@ -1,4 +1,54 @@
 
+test_that("rel() errors on NA, non-numeric, negative, and zero totalTime", {
+  expect_error(rel(NA, 100), "NA values not allowed in inputs")
+  expect_error(rel(10, NA), "NA values not allowed in inputs")
+  expect_error(rel("a", 100), "\"outageTime\" must be numeric")
+  expect_error(rel(10, "b"), "\"totalTime\" must be numeric")
+  expect_error(rel(-1, 100), "times must be non-negative")
+  expect_error(rel(1, -100), "times must be non-negative")
+  expect_error(rel(1, 0), "sum\\(totalTime\\) is zero")
+})
+
+test_that("avail() errors on NA, non-numeric, negative, and zero totalTime", {
+  expect_error(avail(NA, 100), "NA values not allowed in inputs")
+  expect_error(avail(10, NA), "NA values not allowed in inputs")
+  expect_error(avail("a", 100), "\"unavailTime\" must be numeric")
+  expect_error(avail(10, "b"), "\"totalTime\" must be numeric")
+  expect_error(avail(-1, 100), "times must be non-negative")
+  expect_error(avail(1, -100), "times must be non-negative")
+  expect_error(avail(1, 0), "sum\\(totalTime\\) is zero")
+})
+
+test_that("mtbf() errors on NA, non-numeric, negative, and zero totalTime", {
+  expect_error(mtbf(NA, 100), "NA values not allowed in inputs")
+  expect_error(mtbf(1, NA), "NA values not allowed in inputs")
+  expect_error(mtbf("x", 100), "\"failures\" must be numeric")
+  expect_error(mtbf(1, "y"), "\"totalTime\" must be numeric")
+  expect_error(mtbf(-1, 100), "failures and times must be non-negative")
+  expect_error(mtbf(1, -100), "failures and times must be non-negative")
+  expect_error(mtbf(1, 0), "sum\\(totalTime\\) is zero")
+})
+
+test_that("mttf() errors on NA, non-numeric, negative, and zero totalTime", {
+  expect_error(mttf(NA, 100), "NA values not allowed in inputs")
+  expect_error(mttf(1, NA), "NA values not allowed in inputs")
+  expect_error(mttf("x", 100), "\"failures\" must be numeric")
+  expect_error(mttf(1, "y"), "\"totalTime\" must be numeric")
+  expect_error(mttf(-1, 100), "failures and times must be non-negative")
+  expect_error(mttf(1, -100), "failures and times must be non-negative")
+  expect_error(mttf(1, 0), "sum\\(totalTime\\) is zero")
+})
+
+test_that("fr() errors on NA, non-numeric, negative, and zero totalTime", {
+  expect_error(fr(NA, 100), "NA values not allowed in inputs")
+  expect_error(fr(1, NA), "NA values not allowed in inputs")
+  expect_error(fr("x", 100), "\"failures\" must be numeric")
+  expect_error(fr(1, "y"), "\"totalTime\" must be numeric")
+  expect_error(fr(-1, 100), "failures and times must be non-negative")
+  expect_error(fr(1, -100), "failures and times must be non-negative")
+  expect_error(fr(1, 0), "sum\\(totalTime\\) is zero")
+})
+
 test_that("rel() and avail() handle boundary cases correctly", {
   # outage = total -> reliability = 0
   expect_equal(rel(500, 500), 0)
