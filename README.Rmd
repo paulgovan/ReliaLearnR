@@ -104,11 +104,3 @@ this project.
 Please note that the ReliaLearnR project is released with a
 [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By contributing to
 this project, you agree to abide by its terms.
-
-## More resources
-
-[WeibullR.plotly](https://paulgovan.github.io/WeibullR.plotly/) is a
-package for building interactive Weibull models.
-
-[WeibullR.shiny](https://paulgovan.github.io/WeibullR.shiny/) is a web
-application for life data analysis.
