@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# ReliaLearnR
+# ReliaLearnR <a href="https://paulgovan.github.io/ReliaLearnR/"><img src="man/figures/logo.png" align="right" height="135" alt="ReliaLearnR website" /></a>
 
 <!-- badges: start -->
 
