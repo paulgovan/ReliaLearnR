@@ -13,7 +13,7 @@ library(learnr)
 
 ## Introduction
 
-Welcome to the tutorial on **Life Data Analysis**! In this tutorial, you will learn about the basics of life data analysis and how to apply it to various fields, such as the automotive industry.
+Welcome to the tutorial on **Life Data Analysis**! In this tutorial, you will learn about the basics of life data analysis and how to apply it to various fields, including automotive, aerospace, and many others.
 
 ## Learning Objectives
 
