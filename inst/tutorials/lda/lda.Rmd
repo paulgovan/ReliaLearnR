@@ -476,9 +476,7 @@ First, recreate the failure data from the first example of a machine that failed
 
 ```{r echo=TRUE}
 failures<-c(30, 49, 82, 90, 96)
-obj1<-wblr(failures) 
-obj1<-wblr.fit(obj1, col="red") 
-obj1<-wblr.conf(obj1, lwd=1) 
+obj1<-wblr.fit(wblr(failures), col="red")
 ```
 
 Next, recreate the failure and suspension data from the right censored example of a machine that failed at times 30, 49, 82, 90, and 96 with suspensions at times 100, 45, and 10.
@@ -486,7 +484,7 @@ Next, recreate the failure and suspension data from the right censored example o
 ```{r echo=TRUE}
 failures<-c(30, 49, 82, 90, 96)
 suspensions<-c(100, 45, 10)
-obj2<-wblr.conf(wblr.fit(wblr(failures, suspensions, col="purple"),),lwd=1)
+obj2<-wblr.fit(wblr(failures, suspensions, col="purple"))
 ```
 
 Finally, add the 2 `wblr` objects to a list and plot both objects in a single chart.
@@ -565,7 +563,7 @@ obj3 <- wblr.fit(wblr(dat3, col="orange"))
 plot.wblr(list(obj1, obj2, obj3), is.plot.legend = FALSE)
 ```
 
-Note how each failure mode has a different beta and eta. Failure mode A (blue) has a beta less than 1, which means the failure rate is decreasing. Failure mode B (red) has a beta of approximately 1, which indicates a constant failure rate. Failure mode C (orange) has a beta greater than 1, which means that the failure rate is increasing.
+Note how each failure mode has a different beta and eta. Failure mode A (blue) has a beta less than 1, which means the failure rate is decreasing. Failure mode B (red) has a beta greater than 1, which means that the failure rate is increasing. Failure mode C (orange) has a beta close to 1, which means that the failure rate is approximately constant.
 
 ## Contour Plots
 
