@@ -9,6 +9,8 @@ runtime: shiny_prerendered
 
 ```{r setup, include=FALSE}
 library(learnr)
+library(ReliaGrowR)
+library(WeibullR.ALT)
 ```
 
 ## Introduction
@@ -116,7 +118,7 @@ For this tutorial, we will use **ReliaGrowR**: an R package for Reliability Grow
 First, check if ReliaGrowR is installed in R and install if not.
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
-if(!(require(ReliaGrowR))){install.packages('ReliaGrowR')}
+pak::pkg_install("ReliaGrowR")
 ```
 
 As an example, suppose a manufacturer wants to analyze the reliability growth of a new product. The product has been tested over a period of time, and the manufacturer has collected data on the cumulative operating time and the number of failures that occurred during that time. The cumulative time and failure data are as follows: 
@@ -126,7 +128,7 @@ times <- c(100, 200, 300, 400, 500)
 failures <- c(1, 2, 1, 3, 2)
 ```
 
-We can use the `duane` function to fit the model and the `plot` function to plot the results:
+We can use the `duane` function with the cumulative time and failure data to fit a Duane model. Then we can use the `plot` function to visualize the results. The `main`, `xlab`, and `ylab` parameters are used to customize the plot title and axis labels.
 
 ```{r echo=TRUE}
 fit <- duane(times, failures)
@@ -357,7 +359,6 @@ The plot shows a Piecewise NHPP Model fit to the data, with change points automa
 
 **Accelerated Life Testing (ALT)** is a method used to estimate the life of a product or system under normal operating conditions by subjecting it to elevated stress levels in a controlled environment. The goal is to identify potential failure modes and predict how long the product will last under normal conditions without having to wait for failures to occur naturally over a longer time period.
 
-
 ### Accelerated Life Testing: Stress vs Life
 
 Suppose you are testing a product that is expected to last a long time under normal conditions. Waiting for it to fail naturally could take months or even years. Instead, you can use ALT to accelerate the testing process by applying higher stress levels, such as increased temperature, voltage, or pressure, to induce failures more quickly.
@@ -409,12 +410,12 @@ For this tutorial, we will use **WeibullR.ALT**, an extension of the WeibullR pa
 First, check if WeibullR.ALT is installed in R and install if not.
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
-if(!(require(WeibullR.ALT))){install.packages('WeibullR.ALT')}
+pak::pkg_install("WeibullR.ALT")
 ```
 
 To illustrate the Arrhenius Model, we will use the data set `MeekerData` that comes prepackaged with `WeibullR.ALT`. This data set contains time to failure data for carbon-film resistors tested at different temperature levels. The testing was conducted at 4 increasing temperature levels to accelerate the failure process. The temperature levels were 10, 40, 60, and 80 degrees Celsius.
 
-First, load the data set and view the first few samples.
+First, load the data set and use the `head` function to view the first few rows.
 
 ```{r}
 data <- MeekerData("table10")
@@ -423,7 +424,7 @@ head(data)
 
 The data set contains columns for the time to failure **time**, event type **event** (1 = failure, 0 = suspension), quantity of samples **qty** and temperature as the acceleration factor **TempC**. 
 
-Next, use the `alt.data` function to create a separate object for the data at each temperature level. 
+Next, use the `alt.data` function to create a separate object for the data at each temperature level. Each data set is created by subsetting the original data set for each temperature level and selecting only the relevant columns (time, event, qty). The `stress` parameter is set to the corresponding temperature level. The `which` function is used to filter the rows based on the temperature level.
 
 ```{r}
 data10C <- alt.data(data[which(data$TempC==10), 1:3], 
@@ -436,7 +437,7 @@ data80C <- alt.data(data[which(data$TempC==80), 1:3],
                     stress = data[which(data$TempC==80), 4][1])
 ```
 
-Then, use the `alt.make` function to fit an Arrhenius-Weibull model to the data and plot the results.
+Then, use the `alt.make` function to fit an Arrhenius-Weibull model to the data. Each data set is passed as a list to the `alt.make` function, along with the distribution type (`dist = "weibull"`), the acceleration model (`alt.model = "arrhenius"`), and the fitting method (`method.fit = "mle"`). The resulting object `arrobj` contains the fitted model.
 
 ```{r}
 arrobj <- alt.make(list(data10C, data40C, data60C, data80C), dist = "weibull",
@@ -445,7 +446,7 @@ arrobj <- alt.make(list(data10C, data40C, data60C, data80C), dist = "weibull",
 
 The plot shows an Arrhenius-Weibull model fit to the data. The different colors represent the different temperature levels. Starting with a temperature level of 40 degrees C on the right, the curves shift to the left as the temperature increases, indicating that higher temperatures lead to shorter life.
 
-Finally, calculate the AF at 80 degrees C using the Arrhenius Model. Assume that the Activation Energy is 0.7 eV.
+Finally, calculate the AF at 80 degrees C using the Arrhenius Model. Assume that the Activation Energy is 0.7 eV. The code below calculates the AF using the formula provided earlier, with \( T_{\text{use}} \) set to 10 degrees C (283K) and \( T_{\text{stress}} \) set to 80 degrees C (353K).
 
 ```{r, results='asis'}
 E_a <- 0.7
@@ -520,7 +521,7 @@ Where:
 
 To illustrate the Power Law Model, we will use the data set `NelsonData` that comes prepackaged with `WeibullR.ALT`. This data set contains time to failure data for electrical insulating fluids tested at different voltage stress levels. The testing was conducted at 7 increasing voltage levels to accelerate the failure process. 
 
-First, load the data set and view the class of data.
+First, load the data set and use the `class` function to view the structure of the data.
 
 ```{r results='asis'}
 data <- NelsonData("table3.1")
@@ -529,7 +530,7 @@ cat(class(data))
 
 The data is a list of time to failure data at 7 different voltage stress levels, 26KV, 28kV, 30kV, 32kV, 34kV, 36kV, and 38kV.
 
-Next, use the `alt.data` function to create a separate object for the data at each stess level. 
+Next, use the `alt.data` function to create a separate object for the data at each stess level. The `stress` parameter is set to the corresponding voltage level.
 
 ```{r}
 data26 <- alt.data(data$kV26, stress = 26)
@@ -541,7 +542,7 @@ data36 <- alt.data(data$kV36, stress = 36)
 data38 <- alt.data(data$kV38, stress = 38)
 ```
 
-Then, use the `alt.make` function to fit a Power-Weibull model to the data and plot the results.
+Then, use the `alt.make` function to fit a Power-Weibull model to the data and plot the results. Similar to the previous example, each data set is passed as a list to the `alt.make` function, along with the distribution type (`dist = "weibull"`) and the acceleration model (`alt.model = "power"`). The resulting object `pwrobj` contains the fitted model.
 
 ```{r}
 pwrobj <- alt.make(list(data26, data28, data30, data32, data34, data36, data38), 
@@ -618,7 +619,8 @@ A linear model is fit to the data, which shows patterns indicating how life chan
 * A **positive slope** (increasing life with increasing stress) is less common but indicates that life improves with higher stress.
 * A **flat slope** indicates that higher stress does not have an impact on life. 
 
-To fit a relationship plot to the Meeker data, first fit a linear model to the data and then plot the results.
+To fit a relationship plot to the Meeker data, first fit a linear model to the data using the `alt.fit` function and then plot the results using the `plot` function.
+
 ```{r}
 lnrobj <- alt.fit(prlobj)
 plot(lnrobj, suppress.dev.new = TRUE)
@@ -674,10 +676,6 @@ quiz(caption = "Quiz: Relationship Plots",
     allow_retry = TRUE
   )
 )
-```
-
-```{r rel2, echo=FALSE}
-
 ```
 
 ## Summary

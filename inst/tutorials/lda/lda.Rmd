@@ -9,6 +9,7 @@ runtime: shiny_prerendered
 
 ```{r setup, include=FALSE}
 library(learnr)
+library(WeibullR)
 ```
 
 ## Introduction
@@ -196,12 +197,12 @@ For this tutorial, we will use WeibullR: an R package for Weibull analysis.
 First, check if WeibullR is installed in R and install if not.
 
 ```{r echo=TRUE, message=FALSE}
-if(!(require(WeibullR))){install.packages('WeibullR')}
+pak::pkg_install("WeibullR")
 ```
 
 As an example, suppose a factory has 5 machines that fail at different times. The factory wants to understand the reliability of the machines over time and predict when future failures may occur. The factory collects the failure data and uses Weibull analysis to model the reliability of the machines. The failure times are 30, 49, 82, 90, and 96 respectively. 
 
-To run Weibull analysis in R, first create a vector with the failure data, then use the `MLEw2p` function to fit a Weibull to the data.
+To run Weibull analysis in R, first create a vector with the failure data, then use the `MLEw2p` function with the failure data to fit a Weibull to the data. The argument `bounds=TRUE` adds confidence bounds to the fit, and `show=TRUE` displays the results.
 
 ```{r echo=TRUE}
 failures<-c(30, 49, 82, 90, 96)
@@ -288,7 +289,7 @@ A number of units did not fail during the inspection period. These units are con
 suspensions<-data.frame(time=63.48, event=0, qty=73)
 ```
 
-To run the interval censored example in WeibullR, use the `wblr` function with the `interval` argument to specify the inspection data. Then use the `wblr.fit` and `wblr.conf` functions to fit the model and add confidence bounds. Finally, use the `plot` function to create the probability plot.
+To run the interval censored example in WeibullR, use the `wblr` function with the suspension data and the `interval` argument to specify the inspection data. Then use the `wblr.fit` function with the `method.fit="mle"` argument to fit the model using maximum likelihood estimation. Next, use the `wblr.conf` function with the `method.conf="fm"` argument to add confidence bounds using the Fisher matrix method. The `col` and `lty` arguments specify the color and line type of the fit and confidence bounds respectively. Use the `plot` function to create the probability plot.
 
 ```{r echo=TRUE, warning=FALSE}
 obj1<-wblr(suspensions, interval = inspection_data)
@@ -303,11 +304,11 @@ Instead of points, the interval censored data is shown as black horizontal lines
 
 Life data is often compiled into groups (i.e. a group of machines failed or survived at a certain time). 
 
-Notice how the previous example contained groups in the `qty` column. Let's look at the inspection data again. 
+Notice how the previous example contained groups in the `qty` column. Let's look at the inspection data again. The knitr::kable function below displays the inspection data in a table format, and the head function shows the first few rows of the data.
 
 ``` {r echo=TRUE}
 knitr::kable(
-  head(inspection_data, topn=10)
+  head(inspection_data)
 )
 ```
 
@@ -360,7 +361,7 @@ quiz(caption = "Quiz: Interval Censored Data",
 
 WeibullR includes functions for both methods, such as the `MRRw2p`, `MRRw3p` functions for MRR and the `MLEw2p`, `MLEw3p` functions for MLE.
 
-To illustrate the differences between MRR and MLE, let's rerun the right censored example and compare the MRR and MLE methods using the `wblr` function.
+To illustrate the differences between MRR and MLE, let's rerun the right censored example and compare the MRR and MLE methods using the `wblr` function. In the first step, fit the MRR and MLE models using the `wblr.fit` function with the `method.fit` argument set to "rr" for MRR and "mle" for MLE. Finally, use the `plot.wblr` function to create a multi-plot comparing both models.
 
 ```{r echo=TRUE}
 MRRfit <- wblr.fit(wblr(failures, suspensions, col="blue"), method.fit="rr")
@@ -400,10 +401,11 @@ A WeiBayes or 1P Weibull has a fixed $\beta$ or shape parameter based on *prior*
 
 Weibayes models are typically used when failure data is limited and/or other Weibull models do not fit the data well. 
 
-As an example, let's rerun the right censored example of a machine that failed at times 30, 49, 82, 90, and 96. In this case, the data is limited, so a WeiBayes model may be appropriate. First, recreate the failure and suspension data. Then fit the WeiBayes model while assuming a Beta of 2 and plot the results.
+As an example, let's rerun the right censored example of a machine that failed at times 30, 49, 82, 90, and 96. In this case, the data is limited, so a WeiBayes model may be appropriate. First, recreate the failure and suspension data. Then fit the WeiBayes model while assuming a Beta of 2 and plot the results. In the code below, the `method.fit` argument specifies the WeiBayes model, and the `weibayes.beta` argument specifies the fixed Beta value.
 
 ```{r echo=TRUE, warning=FALSE}
 failures<-c(30, 49, 82, 90, 96)
+suspensions<-c(100, 45, 10)
 obj <- wblr.fit(wblr(failures, suspensions, col="blue"), method.fit="weibayes", weibayes.beta=2)
 plot(obj)
 ```
@@ -415,7 +417,7 @@ Note that confidence bounds are not shown for the WeiBayes model. Confidence bou
 The 3P Weibull has an additional parameter *t~0~* to represent a failure free period (i.e. a machine cannot fail until after time *t~0~*). Often parts or machines must age, wear, fatigue, etc. before they can actually fail, and the 3P Weibull can model this behavior.
 
 $$ R(t) = 1 - F(t) = e^-((t-t~0~)/\eta)^\beta $$
-Here is an example from "The New Weibull Handbook" by Robert Abernethy (2004). This example consists of 25 failure times from a machine that has a failure free period. Let's run this example as a 3P Weibull. First, create the failure data. Then fit the 3P Weibull model and plot the results.
+Here is an example from "The New Weibull Handbook" by Robert Abernethy (2004). This example consists of 25 failure times from a machine that has a failure free period. Let's run this example as a 3P Weibull. First, create a vector of failure data. Then fit the 3P Weibull model and plot the results. The `dist="weibull3p"` argument specifies the 3P Weibull model.
 
 ```{r echo=TRUE}
 failures<-c(3.46623, 3.732711, 4.052996, 4.628703, 4.8157, 5.84517, 5.888313, 5.892967,
@@ -523,7 +525,7 @@ A part or a system may fail in different ways. A failure mode is a specific way 
 
 When competing failure modes are present, a basic Weibull model tends to fit the data poorly. This is because the basic Weibull assumes that all failures are due to a single failure mode. 
 
-To illustrate, let's simulate some data with 3 different failure modes, where each failure mode has a different beta and eta. 
+To illustrate, let's simulate some data with 3 different failure modes, where each failure mode has a different beta and eta. The data.frame below contains 120 observations, where 20 observations are failures and 100 observations are suspensions. The failure_mode column indicates the failure mode for each observation.
 
 ```{r echo=TRUE}
 set.seed(123)
@@ -543,7 +545,7 @@ plot(obj, col="darkgreen", is.plot.legend = FALSE)
 
 When the data is combined, the overall fit has a beta of approximately 1, which indicates random failures. However, we know that the data actually contains 3 different failure modes.
 
-Now let's create a separate data set for each failure mode.
+Now let's create a separate data set for each failure mode. The code below creates 3 copies of the original data set and sets the event column to 0 for all observations that do not belong to the respective failure mode.
 
 ```{r echo=TRUE}
 dat1 <- data
@@ -554,7 +556,7 @@ dat2$event[dat2$failure_mode != "B"] <- 0
 dat3$event[dat3$failure_mode != "C"] <- 0
 ```
 
-Finally, fit a `wblr` object for each failure mode and create a multi-plot.
+Finally, fit a `wblr` object for each failure mode and create a multi-plot. The `is.plot.legend=FALSE` argument removes the legend from the plot.
 
 ```{r echo=TRUE}
 obj1 <- wblr.fit(wblr(dat1, col="blue"))
@@ -569,7 +571,7 @@ Note how each failure mode has a different beta and eta. Failure mode A (blue) h
 
 Another way to compare Weibull models is with contour plots. A contour plot is a graphical representation of the relationship between the Weibull parameters Beta and Eta. 
  
-Once again, let's look at the first example of a machine that failed at times 30, 49, 82, 90, and 96. First, recreate the failure data. Then fit the Weibull model and build the contour plot at a probability level of 90%.
+Once again, let's look at the first example of a machine that failed at times 30, 49, 82, 90, and 96. First, recreate the failure data. Then fit the Weibull model and build the contour plot at a probability level of 90%. The `wblr.conf` function with the `method="lrb"` argument computes the likelihood ratio bounds for the contour plot, and the `plot_contour` function creates the contour plot. The `CL=0.9` argument specifies a probability level of 90%.
 
 ```{r echo=TRUE, results='hide'}
 failures<-c(30, 49, 82, 90, 96)
@@ -583,7 +585,7 @@ The Weibull contour plot shows the confidence region for the Weibull parameters 
 
 To compare multiple Weibull models, we can build contour plots for each model and overlay them on the same chart. If the models are similar, then the contours will overlap. If the models are different, then the contours will not overlap.
 
-To visualize this concept, let's revisit the previous competing failure mode example. First, recreate the failure data with 3 different failure modes. Then create a separate `wblr` object for each failure mode and build the contour plot for each model at a probability level of 90%.
+To visualize this concept, let's revisit the previous competing failure mode example. First, recreate the failure data with 3 different failure modes. Then create a separate `wblr` object for each failure mode and build the contour plot for each model at a probability level of 90%. The contours are then overlaid on the same chart.
 
 
 ```{r echo=TRUE, results='hide'}
