@@ -13,7 +13,7 @@ library(learnr)
 
 ## Introduction
 
-Welcome to the tutorial on **Reliability Testing**! In this tutorial, you will learn about different types of reliability tests and how to apply them. These models are commonly applied in industries like aerospace, automotive, and electronics, where improving product reliability over time is critical.
+Welcome to the tutorial on **Reliability Testing**! In this tutorial, we will explore key concepts and models used in reliability testing, including the Crow-AMSAA model, Duane model, and Accelerated Life Testing (ALT) methods such as the Arrhenius and Power Law models. These models help engineers and reliability professionals assess and improve the reliability of products and systems over time. 
 
 ## Learning Objectives
 
@@ -29,21 +29,25 @@ By the end of this tutorial, learners will be able to:
 
 ## What is Reliability Testing?
 
-Reliability testing is a process to ensure that a product or system performs its intended functions under specified conditions over a defined period. For example, in the automotive industry, we may want to design a car that runs without breaking down for 5 to 10 years. 
+Reliability testing is a process to ensure that a product or system performs its intended functions under specified conditions over a defined period. For example, in the manufacturing industry, we may want to design a machine that runs without breaking down for 5 to 10 years.
 
 ## Why is Reliability Testing important?
 
-Reliability testing helps organizations predict the future reliability of products, reduce failure rates, and lower costs associated with repairs and downtime. 
+Reliability testing is crucial for several reasons: 
+* It helps identify potential failure modes and weaknesses in a product or system.
+* It ensures that products meet quality and safety standards.
+* It enhances customer satisfaction by delivering reliable products.
+* It reduces costs associated with warranty claims, repairs, and downtime.
 
 ## Reliability Growth Analysis
 
-**Reliability Growth Analysis (RGA)** is a method to monitor and improve, or grow, the reliability of a product or system over time. Often the product is improved due to changes in the design throughout the testing period.
+**Reliability Growth Analysis (RGA)** is a method used to monitor and improve the reliability of a product or system over time. It involves analyzing failure data collected during testing phases to identify trends and patterns in reliability performance. 
 
 ## The Duane Model
 
-**The Duane model** provides a simple and graphical way to observe and analyze whether failure rates are improving as changes are made to a product or system. 
+**The Duane Model**, developed by Duane in 1964, is one of the earliest and most widely used models for reliability growth analysis. The model is particularly useful due to its simplicity and ease of interpretation. The Duane plot is a graphical representation that helps visualize whether failure rates are improving, stable, or worsening over time.
 
-Specifically, the Duane Model is a log-log plot of the cumulative Mean Time Between Failures (MTBF) vs cumulative time.
+Specifically, the Duane Model is a log-log plot of the cumulative Mean Time Between Failures (MTBF) vs cumulative time. 
 
 The slope of the line on the plot indicates the rate of reliability growth:
 
@@ -115,16 +119,21 @@ First, check if ReliaGrowR is installed in R and install if not.
 if(!(require(ReliaGrowR))){install.packages('ReliaGrowR')}
 ```
 
-Next, set up some cumulative time and failure data. Then use the `duane` function to fit a Duane Model to the data and the `plot` function to plot the results:
+As an example, suppose a manufacturer wants to analyze the reliability growth of a new product. The product has been tested over a period of time, and the manufacturer has collected data on the cumulative operating time and the number of failures that occurred during that time. The cumulative time and failure data are as follows: 
 
 ```{r echo=TRUE}
 times <- c(100, 200, 300, 400, 500)
 failures <- c(1, 2, 1, 3, 2)
+```
+
+We can use the `duane` function to fit the model and the `plot` function to plot the results:
+
+```{r echo=TRUE}
 fit <- duane(times, failures)
 plot(fit, main = "Duane Model Example", xlab = "Cumulative Time", ylab = "Cumulative MTBF")
 ```
 
-The plot shows a Duane Model fit to the data. The slope of the line indicates whether the system is improving, stable, or worsening.
+The plot shows a Duane Model fit to the data. The slope of the line indicates whether the system is improving, stable, or worsening. In this case, the slope is greater than 1, indicating that the system is improving over time.
 
 ```{r quiz1, echo=FALSE}
 quiz(caption = "Quiz: Duane Model",
@@ -171,9 +180,9 @@ quiz(caption = "Quiz: Duane Model",
 
 ## The Crow-AMSAA Model
 
-The Army Materiel Systems Analysis Activity (AMSAA) model by Larry Crow **(i.e., Crow-AMSAA)** takes failure behavior as a **Non-Homogeneous Poisson Process (NHPP)** governed by a power law, making the model particularly effective for systems undergoing reliability growth due to continuous improvements.
+The **Crow-AMSAA Model** is another widely used model for reliability growth analysis, developed by Larry Crow and the  Army Materiel Systems Analysis Activity (AMSAA) organization in the 1970s. This model is particularly useful for systems that undergo continuous improvements and modifications during their development and testing phases. The Crow-AMSAA model is based on the concept of a Non-Homogeneous Poisson Process (NHPP), which allows for the modeling of failure behavior that changes over time.
 
-Specifically, the Crow-AMSAA Model is a plot of the cumulative number of failures vs cumulative time. 
+Specifically, the Crow-AMSAA Model is a model of the cumulative number of failures vs cumulative time. 
 
 Similar to the Duane Model, the shape of the model indicates the rate of reliability growth:
 
@@ -183,7 +192,7 @@ Similar to the Duane Model, the shape of the model indicates the rate of reliabi
 
 ### The Crow-AMSAA Model: Reliability Growth vs Deteriation
 
-To illustrate the Crow-AMSAA Model, take the following example. Adjust the Beta 
+To illustrate the Crow-AMSAA model, take the following example. Adjust the Beta 
 value input to see the failure rate both decreasing and increasing.
 
 ```{r echo=FALSE}
@@ -231,19 +240,21 @@ Where:
 
 ### Crow-AMSAA with ReliaGrowR
 
-To run a Crow-AMSAA model with ReliaGrowR, first set up some cumulative time and failure data:
+As an example, suppose the same manufacturer from the Duane Model example also wants to analyze the reliability growth of a new product using the Crow-AMSAA model. The cumulative time and failure data are as follows:
+
 ```{r}
 times <- c(100, 200, 300, 400, 500)
 failures <- c(1, 2, 1, 3, 2)
 ```
 
-Then use the `rga` function to fit the model and the `plot` function to plot the results:
+To run a Crow-AMSAA model with ReliaGrowR, use the `rga` function to fit the model and the `plot` function to plot the results:
+
 ```{r}
 result <- rga(times, failures)
 plot(result, main = "Crow-AMSAA Model Example", xlab = "Cumulative Time", ylab = "Cumulative Failures")
 ```
 
-The plot shows a Crow-AMSAA Model fit to the data. The curvature of the line indicates whether the system is improving, stable, or worsening.
+The plot shows a Crow-AMSAA Model fit to the data. The curvature of the line indicates whether the system is improving, stable, or worsening. In this case, the slope is curving downward, indicating that the system is improving over time.
 
 ```{r quiz2, echo=FALSE}
 quiz(caption = "Quiz: Crow-AMSAA Model",
@@ -291,7 +302,7 @@ quiz(caption = "Quiz: Crow-AMSAA Model",
 
 ### The Piecewise NHPP Model
 
-**The Piecewise NHPP model** is an extension of the standard NHPP model that includes different segments or phases of time that follow separate failure distributions. This model is particularly useful when a system experiences changes in failure behavior over different development phases, such as the initial, interim and final phases of a development process.
+**The Piecewise NHPP model** is another extension of the Crow-AMSAA model that allows for different phases of reliability growth or deterioration. This model is particularly useful when a system undergoes significant changes in its failure behavior over time, such as during different stages of development or after major design changes.
 
 For a Piecewise NHPP model, the cumulative number of failures is modeled as a piecewise function, where each segment has its own parameters. Formally, for time t within phase i, the relationship between the cumulative number of failures and cumulative time is given by:
 
@@ -303,52 +314,57 @@ where \(N_i(t)\) is the cumulative number of failures by time \(t\) in phase \(i
 
 ### Example
 
-To run a Piecewise NHPP with ReliaGrowR, first, set up some cumulative time and failure data and specify a breakpoint:
+To illustrate the Piecewise NHPP model, take the following example. Suppose a manufacturer has tested a product over a period of time and collected data on the cumulative operating time and the number of failures that occurred during that time. At about time 500, a significant design change was made to the product, which is expected to impact its reliability. The cumulative time, failure data, and breakpoint are as follows:
+
 ```{r}
 times <- c(25, 55, 97, 146, 201, 268, 341, 423, 513, 609, 710, 820, 940, 1072, 1217)
 failures <- c(1, 1, 2, 4, 4, 1, 1, 2, 1, 4, 1, 1, 3, 3, 4)
 breaks <- 500
 ```
 
-The plot shows a Piecewise NHPP Model fit to the data, with a breakpoint at time 500. The breakpoint indicates a change in failure behavior, with different failure rates before and after the breakpoint.
+To run a Piecewise NHPP model with ReliaGrowR, use the `rga` function with `model_type` set to "Piecewise NHPP" and `breaks` set to the breakpoint.
 
-Then run the rga and plot the results:
 ```{r}
 result <- rga(times, failures, model_type = "Piecewise NHPP", breaks = breaks)
 plot(result, main = "Piecewise NHPP Model Example", xlab = "Cumulative Time", ylab = "Cumulative Failures")
 ```
 
+The plot shows a Piecewise NHPP Model fit to the data, with a breakpoint at time 500. The two segments of the model have different slopes, indicating that the failure behavior changed after the design change. The first segment has a higher slope, than the second segment, indicating that the failure rate decreased after the design change. 
+
 ### The Piecewise NHPP with Change Point Detection
 
-The **Piecewise NHPP with Change Point Detection** is an advanced model to identify changes in failure behavior and model system reliability. This method builds on the Piecewise NHPP model by introducing the concept of change points, which represent the time when the underlying failure behavior changes. Detection of change points involves statistical techniques that analyze failure data to automatically identify when the behavior changes, allowing for a more precise segmentation of the model into different failure distributions.
+The **Piecewise NHPP with Change Point Detection** is an advanced model that identifies change points in the failure data to automatically segment the data into different phases of reliability growth or deterioration. This approach is particularly useful when the exact timing of changes in failure behavior is unknown or when multiple changes may occur over times. 
 
 ### Example
 
-To run a Piecewise NHPP with Change Point Detection with ReliaGrowR, first, set up some cumulative time and failure data:
+To illustrate the Piecewise NHPP with Change Point Detection, take the previous example but without specifying a breakpoint. The cumulative time and failure data are as follows:
 
 ```{r}
 times <- c(25, 55, 97, 146, 201, 268, 341, 423, 513, 609, 710, 820, 940, 1072, 1217)
 failures <- c(1, 1, 2, 4, 4, 1, 1, 2, 1, 4, 1, 1, 3, 3, 4)
 ```
 
-Then run the rga and plot the results:
+To run a Piecewise NHPP model with Change Point Detection using ReliaGrowR, use the `rga` function with `model_type` set to "Piecewise NHPP" without specifying `breaks`.
 
 ```{r}
 result <- rga(times, failures, model_type = "Piecewise NHPP")
 plot(result, main = "Piecewise NHPP with Change Point Detection", xlab = "Cumulative Time", ylab = "Cumulative Failures")
 ```
 
-The plot shows a Piecewise NHPP Model fit to the data, with change points automatically detected. The change points indicate changes in failure behavior, with different failure rates in each segment.
+The plot shows a Piecewise NHPP Model fit to the data, with change points automatically detected. The change point is close to time 500, which is consistent with the design change made to the product. 
 
 ## Accelerated Life Testing
 
-**Accelerated Life Testing (ALT)** is a method to estimate the life of a product or system under normal operating conditions by subjecting it to accelerated stress levels in a controlled environment. The goal is to identify potential failure modes and predict how long the product will last under normal conditions without having to wait for failures to occur naturally over a longer time period.
+**Accelerated Life Testing (ALT)** is a method used to estimate the life of a product or system under normal operating conditions by subjecting it to elevated stress levels in a controlled environment. The goal is to identify potential failure modes and predict how long the product will last under normal conditions without having to wait for failures to occur naturally over a longer time period.
+
 
 ### Accelerated Life Testing: Stress vs Life
 
-Take a product that is designed to last 10,000 hours. Waiting for it to fail naturally could take months. With ALT, you might increase the operating temperature of the product, causing it to fail faster. 
+Suppose you are testing a product that is expected to last a long time under normal conditions. Waiting for it to fail naturally could take months or even years. Instead, you can use ALT to accelerate the testing process by applying higher stress levels, such as increased temperature, voltage, or pressure, to induce failures more quickly.
 
-The following plot shows the relationship between the acceleration or stress factor and the expected life of the product: as the acceleration factor increases, the expected life tends to decrease. Adjust the acceleration factor input to see this impact in action. 
+The relationship between stress and life is often modeled using an exponential function, where the life of the product decreases as the stress level increases. The rate of this decrease is determined by the Acceleration Factor (AF), which quantifies how much faster the product fails under elevated stress compared to normal conditions. 
+
+The plot below illustrates this concept. Adjsust the Acceleration Factor (AF) to see how it impacts the expected life of the product.
 
 ```{r echo=FALSE}
 sliderInput("af", label = h3("Acceleration Factor:"), value = 1, min = 1, max = 10, step = 0.1, width = '50%') # Slider input for acceleration factor
@@ -367,9 +383,11 @@ output$altPlot <- renderPlot({
 })
 ```
 
+In this plot, the blue curve represents the relationship between stress factor and expected life. The red dashed line indicates the expected life for the selected acceleration factor. As you increase the acceleration factor, the expected life decreases, demonstrating how elevated stress levels can significantly reduce the lifespan of a product.
+
 ## The Arrhenius Model
 
-The **Arrhenius Model** is widely used in ALT to model the effect of temperature on the rate of chemical reactions, which directly relates to the degradation or failure rate of materials.
+The **Arrhenius Model** is one of the most commonly used models in Accelerated Life Testing (ALT). It describes the relationship between temperature and the rate of chemical reactions, which can be directly related to the degradation or failure rate of materials. The model is based on the Arrhenius equation, which states that the rate of a chemical reaction increases exponentially with an increase in temperature.
 
 The Acceleration Factor (AF) for the Arrhenius model is given by:
 
@@ -382,7 +400,7 @@ Where:
 - \( T_{\text{use}} \) = Temperature at normal use condition in Kelvin
 - \( T_{\text{stress}} \) = Temperature at accelerated stress condition in Kelvin
 
-By fitting this model to test data, you can estimate the AF and predict product life under normal operating conditions.
+By using the Arrhenius model, you can determine how much faster a product will fail at an elevated temperature compared to its normal operating temperature. 
 
 ## WeibullR.ALT
 
@@ -394,14 +412,16 @@ First, check if WeibullR.ALT is installed in R and install if not.
 if(!(require(WeibullR.ALT))){install.packages('WeibullR.ALT')}
 ```
 
-For this example, we will use the data set `MeekerData` that comes prepackaged with `WeibullR.ALT`. First, load the data set and view the first few samples.
+To illustrate the Arrhenius Model, we will use the data set `MeekerData` that comes prepackaged with `WeibullR.ALT`. This data set contains time to failure data for carbon-film resistors tested at different temperature levels. The testing was conducted at 4 increasing temperature levels to accelerate the failure process. The temperature levels were 10, 40, 60, and 80 degrees Celsius.
+
+First, load the data set and view the first few samples.
 
 ```{r}
 data <- MeekerData("table10")
 head(data)
 ```
 
-The data set contains columns for the time to failure **time**, event type **event** (1 = failure, 0 = suspension), quantity of samples **qty** and temperature as the acceleration factor **TempC**. Testing was conducted at 4 different temperature levels, 10, 40, 60, and 80 degrees C. 
+The data set contains columns for the time to failure **time**, event type **event** (1 = failure, 0 = suspension), quantity of samples **qty** and temperature as the acceleration factor **TempC**. 
 
 Next, use the `alt.data` function to create a separate object for the data at each temperature level. 
 
@@ -435,6 +455,8 @@ T_stress <- 80 + 273
 AF <- exp(E_a / k * (1 / T_use - 1 / T_stress))
 cat(paste0("The Acceleration Factor at 80 degrees C is ", round(AF, 2)))
 ```
+
+The AF at 80 degrees C is approximately 300. This means that the resistors tested at 80 degrees C are expected to fail 300 times faster than those tested at 10 degrees C.
 
 ```{r quiz3, echo=FALSE}
 quiz(caption = "Quiz: Arrhenius Model",
@@ -496,7 +518,9 @@ Where:
 - \( S_{\text{use}} \) = Stress level during normal use conditions
 - \( n \) = Stress exponent, indicating the sensitivity of the failure mechanism to the applied stress
 
-For this example, we will use the data set `NelsonData` that comes prepackaged with `WeibullR.ALT`. First, load the data set and view the class of data.
+To illustrate the Power Law Model, we will use the data set `NelsonData` that comes prepackaged with `WeibullR.ALT`. This data set contains time to failure data for electrical insulating fluids tested at different voltage stress levels. The testing was conducted at 7 increasing voltage levels to accelerate the failure process. 
+
+First, load the data set and view the class of data.
 
 ```{r results='asis'}
 data <- NelsonData("table3.1")
@@ -517,7 +541,7 @@ data36 <- alt.data(data$kV36, stress = 36)
 data38 <- alt.data(data$kV38, stress = 38)
 ```
 
-Then, use the `alt.make` function to fit an Power-Weibull model to the data and plot the results.
+Then, use the `alt.make` function to fit a Power-Weibull model to the data and plot the results.
 
 ```{r}
 pwrobj <- alt.make(list(data26, data28, data30, data32, data34, data36, data38), 
@@ -570,7 +594,7 @@ This module does not include an example of the Eyring Model, but the `WeibullR.A
 
 ## Parallellization
 
-A common assumption in ALT is that the subset of data at each stress level have the same slope or shape factor. If each model subset has the same slope, then all models appear as parallel plots. 
+Parallelization is a technique used in ALT to simplify the analysis of data collected at multiple stress levels. By assuming that the shape factor (slope) of the life distribution is the same across all stress levels, the analysis can be streamlined, making it easier to interpret the results and draw conclusions about the relationship between stress and life.
 
 To fit a parallel model to the Meeker data, use the `alt.parallel` function.
 ```{r}
@@ -579,16 +603,16 @@ prlobj <- alt.parallel(arrobj)
 
 The plot shows a Parallel model fit to the data. All curves have the same slope, indicating that all subsets have the same shape factor.
 
-Similarly, a parallel model can be fitted to the Nelson data.
+Similarly, to fit a parllel model to the Nelson data, use the `alt.parallel` function.
 ```{r}
 expobj <- alt.parallel(pwrobj)
 ```
 
 ## Relationship Plots
 
-Another way to view the relationship between the stress factor and the life of a product is with a relationship plot. A relationship plot is a log-linear plot with the stress factor on the x-axis and the log of the unreliability (failure probability) on the y-axis.
+Another useful tool in ALT is the relationship plot. The relationship plot provides a visual representation of how the life of a product changes as the stress factor increases. A relationship plot is a log-linear plot with the stress factor on the x-axis and the log of the unreliability (failure probability) on the y-axis. 
 
-A linear model is fit to the data, which shows patterns indicating how life changes as stress increases. 
+A linear model is fit to the data, which shows patterns indicating how life changes as stress increases. The slope of the line provides insights into the relationship between stress and life:
 
 * A **negative slope** (decreasing life with increasing stress) indicates that higher stress leads to shorter life. 
 * A **positive slope** (increasing life with increasing stress) is less common but indicates that life improves with higher stress.
@@ -600,16 +624,16 @@ lnrobj <- alt.fit(prlobj)
 plot(lnrobj, suppress.dev.new = TRUE)
 ```
 
-The relationship plot shows a negative slope, indicating that higher temperature stress tends to lead to shorter life. Each line indicates a different probability of failure. For example, the P63.2 line indicates the stress vs life relationship for a 63.2% probability of failure. The P90 line indicates the stress vs life relationship for a 90% probability of failure.
+The relationship plot shows a negative slope, indicating that higher temperature stress tends to lead to shorter life. Each line indicates a different probability of failure. For example, the P63.2 line indicates the stress vs life relationship for a 63.2% probability of failure. The P90 line indicates the stress vs life relationship for a 90% probability of failure. 
 
-Similarly, a relationship plot can be fitted to the Nelson data.
+Similarly, to fit a relationship plot to the Nelson data, first fit a linear model to the data and then plot the results.
 
 ```{r}
 lnrobj2 <- alt.fit(expobj)
 plot(lnrobj2, suppress.dev.new = TRUE)
 ```
 
-Similarly, the relationship plot shows a negative slope, indicating that higher voltage stress tends to lead to shorter life.
+Similarly, the relationship plot shows a negative slope, indicating that higher voltage stress tends to lead to shorter life. 
 
 ```{r quiz5, echo=FALSE}
 quiz(caption = "Quiz: Relationship Plots",
@@ -662,11 +686,37 @@ Congratulations on completing the Reliability Testing tutorial!
 
 In this tutorial, we've introduced the concepts of Reliability Growth Analysis and Accelerated Life Testing. You have learned to calculate and visualize reliability using different types of models.
 
-### More resources
+### To Get Help
 
-[WeibullR.plotly](https://paulgovan.github.io/WeibullR.plotly/) is a package for building interactive Weibull models. 
+To get help with a specific function in ReliaGrowR, type a question mark before the function name.
 
-[WeibullR.shiny](https://paulgovan.github.io/WeibullR.shiny/) is a web application for life data analysis.
+```{r echo=TRUE, eval=FALSE}
+?rga
+```
+
+Similarly, to get help with a specific function in WeibullR.ALT, type:
+
+```{r echo=TRUE, eval=FALSE}
+?alt.make
+```
+
+For more help with the ReliaGrowR package, type:
+
+```{r echo=TRUE, eval=FALSE}
+help(package="ReliaGrowR")
+```
+
+And for more help with the WeibullR.ALT package, type:
+
+```{r echo=TRUE, eval=FALSE}
+help(package="WeibullR.ALT")
+```
+
+### Additional Resources
+
+- The ReliaGrowR package documentation: <https://cran.r-project.org/package=ReliaGrowR>
+- The WeibullR.ALT package documentation: <https://cran.r-project.org/package=WeibullR.ALT>
+- The WeibullR package documentation: <https://cran.r-project.org/package=WeibullR>
 
 ### References
 

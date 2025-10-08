@@ -636,6 +636,10 @@ For more help with the WeibullR package.
 help(package="WeibullR")
 ```
 
+### Additional Resources
+
+- The WeibullR package documentation: <https://cran.r-project.org/package=WeibullR>
+
 ### References
 
 - Abernethy, R.B. (2004) The New Weibull Handbook. Fifth Edition.

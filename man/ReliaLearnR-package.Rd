@@ -6,6 +6,8 @@
 \alias{ReliaLearnR-package}
 \title{ReliaLearnR: Learning Modules for Reliability Analysis}
 \description{
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
+
 Learning modules for reliability analysis including modules for Reliability, Availability, and Maintainability (RAM) Analysis, Life Data Analysis, and Reliability Testing.
 }
 \seealso{
