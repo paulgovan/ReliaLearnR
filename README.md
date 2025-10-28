@@ -47,10 +47,10 @@ update.
 ## Recommended Background
 
 These modules are designed for engineering students and professionals
-interested in learning the fundamentals of reliability analysis. A basic
-understanding of R and statistics is recommended. For a complete
-beginners’ guide to R, check out the resources at
-<https://education.rstudio.com/learn/beginner/>.
+interested in learning the fundamentals of reliability analysis. While
+no prior experience is required, a basic understanding of R and
+statistics is helpful. For a complete beginners’ guide to R, check out
+the resources at <https://education.rstudio.com/learn/beginner/>.
 
 ## Usage
 
@@ -70,8 +70,9 @@ and
 
 ![](https://github.com/paulgovan/ReliaLearnR/blob/master/inst/paper/ReliaLearnR.png?raw=true)<!-- -->
 
-Several helper functions for common RAM calculations are also included.
-These functions can be used independently of the learning modules:
+The package also includes several helper functions for common RAM
+calculations. These functions can be used independently of the learning
+modules:
 
 - `rel()` - reliability function
 - `avail()` - availability function

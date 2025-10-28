@@ -32,24 +32,40 @@ for these topics rely on proprietary software, which can be expensive and inacce
 to students and early-career professionals. 
 
 `ReliaLearnR` [@ReliaLearnR] addresses this gap by providing an open-source
-solution for learning reliability analysis using R [@R], a widely-used programming
+framework for learning reliability analysis using R [@R], a widely-used programming
 language for statistical computing and data analysis. The primary objective of this
 project is to introduce fundamental concepts of reliability analysis while providing
 an open-source alternative for analyzing reliability data. The target audience for
 this project includes engineering students and professionals interested
 in learning the fundamentals of reliability analysis.
 
-# Description
+# Design
 
-`ReliaLearnR` is written in R [@R] and utilizes `WeibullR` [@WeibullR], a 
-package for Life Data Analysis [@Weibull], `WeibullR.alt` [@WeibullRalt], a package
-for Accelerated Life Testing [@WeibullRalt], `ReliaGrowR` [@ReliaGrowR], a package
-for Reliability Growth Analysis [@ReliaGrowR], and `learnr` [@learnr], a framework for building 
-interactive learning modules.  
+`ReliaLearnR` is written in R [@R] and utilizes `WeibullR` [@WeibullR] for Life Data 
+Analysis [@Weibull], `WeibullR.alt` [@WeibullRalt] for Accelerated Life Testing [@WeibullRalt], 
+`ReliaGrowR` [@ReliaGrowR] for Reliability Growth Analysis, and `learnr` 
+[@learnr], a framework for building interactive learning modules.  
+
+The learning modules are designed to be interactive and engaging, with a
+focus on practical applications. Each module includes a mix of instructional content, 
+code examples, and exercises to reinforce learning. The modules are self-paced,
+allowing learners to progress at their own speed. 
+
+The original learning modules were provided in a series of workshops, where each 
+workshop covered a specific module over a 1-2 hour period. These workshops were 
+designed to be completed in a classroom setting with an instructor. The current version 
+of the modules has been adapted for self-paced learning, but they can still be used 
+in a classroom setting with an instructor. 
+
+To adopt the modules for classroom use, instructors can either access them 
+via the project website or install the package and use the functions directly. 
+Instructors can also modify the modules to fit their specific needs, as the source code is 
+available on the project repository. 
+
+# Usage
 
 The package includes three interactive learning modules, which can be run locally or
-hosted on a web server. Each module includes instructional content, code examples,
-and exercises to reinforce learning. Users can run the modules in any R environment 
+hosted on a web server. Users can run the modules in any R environment 
 by calling the `ram()`, `lda()`, or `rt()` functions.
 
 `ram()` is a quick reference for common Reliability, Availability, and Maintainability
@@ -85,7 +101,7 @@ and [paulgovan.shinyapps.io/ReliabilityTesting/](https://paulgovan.shinyapps.io/
 
 ![](https://github.com/paulgovan/ReliaLearnR/blob/master/inst/paper/ReliaLearnR.png?raw=true)<!-- -->
 
-Several helper functions for common RAM calculations are also included. These functions
+The package also includes several helper functions for common RAM calculations. These functions
 make it easy to apply the concepts covered in the RAM module.
 
 * `rel()` - reliability function
@@ -103,7 +119,8 @@ plots, and `ReliaShinR` [@ReliaShiny], a shiny [@shiny] web application for
 reliability analysis.
 
 Contributions are welcome from the community. Users can submit pull requests, 
-report issues, or suggest enhancements through the repository, which includes contributing guidelines.
+report issues, or suggest enhancements through the repository, which includes contributing 
+guidelines.
 
 # Motivation
 
