@@ -19,7 +19,7 @@ coverage](https://codecov.io/gh/paulgovan/ReliaLearnR/graph/badge.svg)](https://
 <!-- badges: end -->
 
 Welcome to **ReliaLearnR!** This package provides interactive learning
-modules for the fundamentals of reliability analysis. The modules are
+modules on the fundamentals of reliability analysis. The modules are
 built using the `learnr` package and cover topics such as life data
 analysis, reliability testing, and reliability, availability, and
 maintainability (RAM) concepts. The package also includes helper
