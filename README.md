@@ -19,11 +19,11 @@ coverage](https://codecov.io/gh/paulgovan/ReliaLearnR/graph/badge.svg)](https://
 <!-- badges: end -->
 
 Welcome to **ReliaLearnR!** This package provides interactive learning
-modules for beginners in reliability analysis. The modules are built
-using the `learnr` package and cover topics such as life data analysis,
-reliability testing, and reliability, availability, and maintainability
-(RAM) concepts. The package also includes helper functions for common
-RAM calculations.
+modules for the fundamentals of reliability analysis. The modules are
+built using the `learnr` package and cover topics such as life data
+analysis, reliability testing, and reliability, availability, and
+maintainability (RAM) concepts. The package also includes helper
+functions for common RAM calculations.
 
 ## Installation
 
@@ -41,21 +41,20 @@ pak::pak("paulgovan/ReliaLearnR")
 ```
 
 Note: You may be prompted to update dependent packages before
-installing. To do this when prompted during installation type 1 (All) to
-update.
+installing. To do so, type 1 (All) when prompted.
 
 ## Recommended Background
 
-`ReliaLearnR` is meant for engineering students and professionals who
-are interested in learning the fundamentals of reliability analysis.
-While no prior experience is required, a basic understanding of R and
+ReliaLearnR is designed for students and professionals who are
+interested in learning the fundamentals of reliability analysis. No
+prior experience is required, but a basic understanding of R and
 statistics is helpful. For a complete beginners’ guide to R, check out
 the resources at <https://education.rstudio.com/learn/beginner/>.
 
 ## Usage
 
-The package includes three interactive learning modules. To access them,
-load the package and call the respective function:
+The package includes three interactive learning modules. To launch the
+modules, load the package and call the respective function:
 
 - `ram()` - A quick reference for common Reliability, Availability, and
   Maintainability (RAM) concepts

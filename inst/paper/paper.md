@@ -36,7 +36,7 @@ framework for learning reliability analysis using R [@R], a widely-used programm
 language for statistical computing and data analysis. The primary objective of this
 project is to introduce fundamental concepts of reliability analysis while providing
 an open-source alternative for analyzing reliability data. The target audience for
-this project includes engineering students and professionals interested
+this project includes engineering students and professionals who are interested
 in learning the fundamentals of reliability analysis.
 
 # Design
