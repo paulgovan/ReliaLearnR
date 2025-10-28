@@ -20,7 +20,7 @@ Suggests:
     testthat (>= 3.0.0),
     WeibullR.plotly,
     WeibullR.shiny
-License: Apache License (>= 2)
+License: CC BY 4.0
 Encoding: UTF-8
 RoxygenNote: 7.3.3
 VignetteBuilder: knitr
