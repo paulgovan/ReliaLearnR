@@ -46,9 +46,9 @@ update.
 
 ## Recommended Background
 
-These modules are designed for engineering students and professionals
-interested in learning the fundamentals of reliability analysis. While
-no prior experience is required, a basic understanding of R and
+`ReliaLearnR` is meant for engineering students and professionals who
+are interested in learning the fundamentals of reliability analysis.
+While no prior experience is required, a basic understanding of R and
 statistics is helpful. For a complete beginners’ guide to R, check out
 the resources at <https://education.rstudio.com/learn/beginner/>.
 
@@ -80,6 +80,27 @@ modules:
 - `mtbf()` - mean time between failure
 - `fr()` - failure rate
 
+## Design
+
+The learning modules are designed to be interactive and engaging, with a
+focus on practical applications. Each module includes a mix of
+instructional content, code examples, and exercises to reinforce
+learning. The modules are self-paced, allowing learners to progress at
+their own speed.
+
+The original learning modules were provided in a series of workshops,
+where each workshop covered a specific module over a 1-2 hour period.
+These workshops were designed to be completed in a classroom setting
+with an instructor. The current version of the modules has been adapted
+for self-paced learning, but they can still be used in a classroom
+setting with an instructor.
+
+To adopt the modules for classroom use, instructors can either access
+them via the project website or install the package and use the
+functions directly. Instructors can also modify the modules to fit their
+specific needs, as the source code is available on the project
+repository.
+
 ## Motivation
 
 This project began as an effort to build upon a reliability program
@@ -96,11 +117,6 @@ framework for teaching reliability analysis. By leveraging this
 framework, this project aims to reach a broader audience, encourage
 collaboration, and ensure that learning resources can evolve as needs
 and priorities change.
-
-## Acknowledgements
-
-The author acknowledges the creators of the original Reliability Program
-that inspired this project.
 
 ## Code of Conduct
 
