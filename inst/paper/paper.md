@@ -41,7 +41,7 @@ in learning the fundamentals of reliability analysis.
 
 # Description
 
-`ReliaLearnR` is writtn in R [@R] and utilizes `WeibullR` [@WeibullR], a 
+`ReliaLearnR` is written in R [@R] and utilizes `WeibullR` [@WeibullR], a 
 package for Life Data Analysis [@Weibull], `WeibullR.alt` [@WeibullRalt], a package
 for Accelerated Life Testing [@WeibullRalt], `ReliaGrowR` [@ReliaGrowR], a package
 for Reliability Growth Analysis [@ReliaGrowR], and `learnr` [@learnr], a framework for building 
@@ -102,19 +102,22 @@ resources for users interest in learning more. These resources include
 plots, and `ReliaShinR` [@ReliaShiny], a shiny [@shiny] web application for 
 reliability analysis.
 
-This project is based on a reliability program at a major technology company. The
-original program helped many early-career professionals learn the fundamentals
-of reliability engineering. However, the program was proprietary, limiting accessibility
-and leading to outdated learning materials as software evolved. By providing an open-source 
-alternative, this project aims to reach a broader audience and foster a community 
-of collaboration. 
-
 Contributions are welcome from the community. Users can submit pull requests, 
-report issues, or suggest enhancements through the repository, which includes contributing guidelines. 
+report issues, or suggest enhancements through the repository, which includes contributing guidelines.
+
+# Motivation
+
+This project began as an effort to build upon a reliability program developed at 
+a major technology company. The original program proved valuable, helping many 
+early-career professionals grasp the core principles of reliability engineering.
+Over time, however, the proprietary nature meant that access was limited and the 
+materials did not keep pace with evolving priorities and needs. Recognizing this gap, 
+this project aims to reach a broader audience and foster a community 
+of collaboration. 
 
 # Acknowledgements
 
 The author acknowledges the creators of the original Reliability Program that inspired
-this project. 
+this project.
 
 # References

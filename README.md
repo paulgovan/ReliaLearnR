@@ -81,11 +81,12 @@ These functions can be used independently of the learning modules:
 
 ## Motivation
 
-This project is based on a reliability program at a major technology
-company. The original program helped many early-career professionals
-learn the fundamentals of reliability engineering. However, the program
-was proprietary, limiting accessibility and leading to outdated learning
-materials as software evolved. By providing an open-source alternative,
+This project began as an effort to build upon a reliability program
+developed at a major technology company. The original program proved
+valuable, helping many early-career professionals grasp the core
+principles of reliability engineering. Over time, however, the
+proprietary nature meant that access was limited and the materials did
+not keep pace with evolving priorities and needs. Recognizing this gap,
 this project aims to reach a broader audience and foster a community of
 collaboration.
 
