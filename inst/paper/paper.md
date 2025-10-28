@@ -108,12 +108,17 @@ report issues, or suggest enhancements through the repository, which includes co
 # Motivation
 
 This project began as an effort to build upon a reliability program developed at 
-a major technology company. The original program proved valuable, helping many 
-early-career professionals grasp the core principles of reliability engineering.
-Over time, however, the proprietary nature meant that access was limited and the 
-materials did not keep pace with evolving priorities and needs. Recognizing this gap, 
-this project aims to reach a broader audience and foster a community 
-of collaboration. 
+a major technology company. The original program proved to provide a strong foundation, 
+providing a structured learning opportunity that helped many early-career professionals 
+understand and apply the fundamental concepts of reliability engineering.
+Over time, however, the proprietary nature of the program limited accessibility 
+and adaptability. 
+
+Recognizing the importance of keeping reliability learning both relevant and accessible, 
+this project was initiated to create an open-source framework for teaching reliability 
+analysis. By leveraging this framework, this project aims to reach a broader audience, 
+encourage collaboration, and ensure that learning resources can evolve as needs and 
+priorities change.
 
 # Acknowledgements
 
