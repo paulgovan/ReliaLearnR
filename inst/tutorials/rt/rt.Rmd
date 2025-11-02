@@ -35,11 +35,12 @@ Reliability testing is a process to ensure that a product or system performs its
 
 ## Why is Reliability Testing important?
 
-Reliability testing is crucial for several reasons: 
-* It helps identify potential failure modes and weaknesses in a product or system.
-* It ensures that products meet quality and safety standards.
-* It enhances customer satisfaction by delivering reliable products.
-* It reduces costs associated with warranty claims, repairs, and downtime.
+Reliability testing is important for several reasons: 
+
+* Helps identify potential failure modes and weaknesses in a product or system.
+* Ensures that products meet quality and safety standards.
+* Enhances customer satisfaction by delivering reliable products.
+* Reduces costs associated with warranty claims, repairs, and downtime.
 
 ## Reliability Growth Analysis
 
@@ -49,7 +50,7 @@ Reliability testing is crucial for several reasons:
 
 **The Duane Model**, developed by Duane in 1964, is one of the earliest and most widely used models for reliability growth analysis. The model is particularly useful due to its simplicity and ease of interpretation. The Duane plot is a graphical representation that helps visualize whether failure rates are improving, stable, or worsening over time.
 
-Specifically, the Duane Model is a log-log plot of the cumulative Mean Time Between Failures (MTBF) vs cumulative time. 
+Specifically, the Duane Model is a log-log plot of the cumulative Mean Time Between Failures (MTBF) vs cumulative time, where the MTBF is calculated as the total operating time divided by the number of failures observed up to that time.
 
 The slope of the line on the plot indicates the rate of reliability growth:
 
@@ -359,7 +360,7 @@ The plot shows a Piecewise NHPP Model fit to the data, with change points automa
 
 **Accelerated Life Testing (ALT)** is a method used to estimate the life of a product or system under normal operating conditions by subjecting it to elevated stress levels in a controlled environment. The goal is to identify potential failure modes and predict how long the product will last under normal conditions without having to wait for failures to occur naturally over a longer time period.
 
-### Accelerated Life Testing: Stress vs Life
+### Acceleration Factor
 
 Suppose you are testing a product that is expected to last a long time under normal conditions. Waiting for it to fail naturally could take months or even years. Instead, you can use ALT to accelerate the testing process by applying higher stress levels, such as increased temperature, voltage, or pressure, to induce failures more quickly.
 
@@ -384,11 +385,11 @@ output$altPlot <- renderPlot({
 })
 ```
 
-In this plot, the blue curve represents the relationship between stress factor and expected life. The red dashed line indicates the expected life for the selected acceleration factor. As you increase the acceleration factor, the expected life decreases, demonstrating how elevated stress levels can significantly reduce the lifespan of a product.
+In this plot, the blue curve represents the relationship between the stress and the expected life. The red dashed line indicates the expected life for the selected acceleration factor. As you increase the acceleration factor, the expected life decreases, demonstrating how elevated stress levels can significantly reduce the lifespan of a product.
 
 ## The Arrhenius Model
 
-The **Arrhenius Model** is one of the most commonly used models in Accelerated Life Testing (ALT). It describes the relationship between temperature and the rate of chemical reactions, which can be directly related to the degradation or failure rate of materials. The model is based on the Arrhenius equation, which states that the rate of a chemical reaction increases exponentially with an increase in temperature.
+The **Arrhenius Model** is one of the most commonly used models in ALT. It describes the relationship between temperature and the rate of chemical reactions, which can be directly related to the degradation or failure rate of materials. The model is based on the Arrhenius equation, which states that the rate of a chemical reaction increases exponentially with an increase in temperature.
 
 The Acceleration Factor (AF) for the Arrhenius model is given by:
 
@@ -396,8 +397,8 @@ $$ AF = \exp\left(\frac{E_a}{k} \left( \frac{1}{T_{\text{use}}} - \frac{1}{T_{\t
 
 Where:
 
-- \( E_a \) = Activation energy in eV
-- \( k \) = Boltzmann constant (\( 8.617 \times 10^{-5} \, \text{eV/K} \))
+- \( E_a \) = Activation energy in electron volts (eV). The activation energy is a measure of the energy barrier that must be overcome for a chemical reaction to occur. Higher activation energies indicate that the reaction is more sensitive to temperature changes.
+- \( k \) = Boltzmann constant (\( 8.617 \times 10^{-5} \, \text{eV/K} \)). The Boltzmann constant relates the average kinetic energy of particles in a gas with the temperature of the gas.
 - \( T_{\text{use}} \) = Temperature at normal use condition in Kelvin
 - \( T_{\text{stress}} \) = Temperature at accelerated stress condition in Kelvin
 
@@ -422,7 +423,7 @@ data <- MeekerData("table10")
 head(data)
 ```
 
-The data set contains columns for the time to failure **time**, event type **event** (1 = failure, 0 = suspension), quantity of samples **qty** and temperature as the acceleration factor **TempC**. 
+The data set contains columns for the time to failure (time), event type (event) (1 = failure, 0 = suspension), quantity of samples (qty) and temperature as the acceleration factor (TempC). 
 
 Next, use the `alt.data` function to create a separate object for the data at each temperature level. Each data set is created by subsetting the original data set for each temperature level and selecting only the relevant columns (time, event, qty). The `stress` parameter is set to the corresponding temperature level. The `which` function is used to filter the rows based on the temperature level.
 
@@ -521,14 +522,13 @@ Where:
 
 To illustrate the Power Law Model, we will use the data set `NelsonData` that comes prepackaged with `WeibullR.ALT`. This data set contains time to failure data for electrical insulating fluids tested at different voltage stress levels. The testing was conducted at 7 increasing voltage levels to accelerate the failure process. 
 
-First, load the data set and use the `class` function to view the structure of the data.
+First, load the data set..
 
 ```{r results='asis'}
 data <- NelsonData("table3.1")
-cat(class(data))
 ```
 
-The data is a list of time to failure data at 7 different voltage stress levels, 26KV, 28kV, 30kV, 32kV, 34kV, 36kV, and 38kV.
+The data is a list of time to failure data at 7 different voltage stress levels, 26 kilovolts (KV), 28kV, 30kV, 32kV, 34kV, 36kV, and 38kV.
 
 Next, use the `alt.data` function to create a separate object for the data at each stess level. The `stress` parameter is set to the corresponding voltage level.
 

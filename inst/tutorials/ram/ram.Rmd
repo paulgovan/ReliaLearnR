@@ -40,23 +40,26 @@ These concepts are interrelated in the sense that a highly reliable item is like
 
 ## Reliability
 
-Reliability is the probability that an item will not fail under defined conditions for a specified period.
+Reliability is the probability that an item will not fail under defined conditions for a specified period. Specifically, reliability is defined as:
 
 $$ Reliability = (1 - (Failed Time/Total Time))*100 $$
 Where Failed Time is the time that the item was not functioning, and Total Time is the total time that the item was in operation.
 
-Suppose a motor ran for 5 years total and was failed for 10 of those days. The reliability of the motor is: 
+For example, suppose a motor ran for 5 years total and was failed for 10 of those days. The reliability of the motor is: 
 
 $$ Reliability = (1 - (10/(5*365)))*100 = 94.5% $$
-Unreliability is the opposite of reliability, that is, the probability that an item will fail under defined conditions for a specified period. 
+So, the motor has a reliability of 94.5% over the 5-year period.
+
+Unreliability is the opposite of reliability, that is, the probability that an item _will_ fail under defined conditions for a specified period. Unreliability is defined as:
 
 $$ Unreliability = 1 - Reliability = (Failed Time/Total Time)*100 $$
 Take the previous example, the unreliability of the motor is:
 
 $$ Unreliability = 1 - 0.945 = 0.055 = (10/(5*365))*100 = 5.5% $$
+The motor has an unreliability of 5.5% over the 5-year period.
 
 ```{r quiz1, echo=FALSE}
-quiz(caption = "Exercise: Reliability",
+quiz(caption = "Exercise: Reliability", 
   question("A machine has run for 3 years total and was failed for 5 of those days. What is the reliability of the machine?",
     answer("90%", message = "Not quite, try again."),
     answer("0.5%", message = "0.5% is the unreliability, not the reliability."),
@@ -78,7 +81,7 @@ quiz(caption = "Exercise: Reliability",
 
 ## Availability
 
-Availability is the probability that an item will be available for service. Unavailable time includes failed time and scheduled maintenance.
+Availability is the probability that an item will be available for service. Unavailable time includes failed time and scheduled maintenance. Specifically, availability is defined as:
 
 $$ Availability = (1 - (Unavailable Time/Total Time))*100 $$
 Where Unavailable Time is the time that the item was not available for service, and Total Time is the total time that the item was in operation.
@@ -88,6 +91,7 @@ Unavailable time is different than standby time, where standby time is when the 
 Suppose a motor ran for 5 years total, was failed for 10 days, and had scheduled maintenance for 15 days. The availability of the motor is:
 
 $$ Availability = (1 - ((10+15)/(5*365)))*100 = 93.2% $$
+So the motor has an availability of 93.2% over the 5-year period.
 
 ```{r availability, echo=FALSE}
 quiz(caption = "Exercise: Availability",
@@ -112,7 +116,7 @@ quiz(caption = "Exercise: Availability",
 
 ## Mean Time to Repair
 
-The Mean Time to Repair (MTTR) is a measure of maintainability and is the mean time to repair an item.
+The Mean Time to Repair (MTTR) is a measure of maintainability and is defined as the average time required to repair a failed item. The MTTR is the ratio of total repair time by the number of repairs for a given item.
 
 $$ MTTR = \sum_{i=1}^n RepairTime_i/RepairCount $$
 Where $RepairTime_i$ is the time to repair for the *i*th repair, and $RepairCount$ is the total number of repairs.
@@ -144,24 +148,26 @@ quiz(caption = "Exercise: MTTR",
 
 ## Mean Time to Failure
 
-The Mean Time to Failure (MTTF) is a measure of reliability for *non-repairable* items, meaning that once the item fails, it is not repaired, but replaced. The MTTF is the ratio of total time by the number of failures for a given item.
+The Mean Time to Failure (MTTF) is a measure of the reliability for *non-repairable* items, meaning that once the item fails, it is not repaired, but replaced. The MTTF is the ratio of total time by the number of failures for a given item.
 
 $$ MTTF = Total Time/FailureCount $$
 Where *Total Time* is the total time that the item was in operation, and *FailureCount* is the total number of failures.
 
-Suppose 100 motors run for 5 years total. During that time, 5 failures occur. The MTTF is:
+For example, suppose 100 motors run for 5 years total. During that time, 5 failures occur. The MTTF is:
 
-$$ MTTF = (5*365)/5 = 365 years $$
+$$ MTTF = (5*100)/5 = 100 years $$
+An MTTF of 100 years means that, on average, a single motor is expected to run for 100 years before failing. This may seem high, but remember that this is an average across all motors, and some motors may fail much sooner while others may last much longer. 
 
 ## Mean Time Between Failures
 
-Mean Time Between Failures (MTBF) is a measure of reliability for *repairable systems*, meaning that once the item fails, it is repaired and put back into service. In this way, the item can fail multiple times. The MTBF is the ratio of total time by the number of failures for a given item.
+Mean Time Between Failures (MTBF) is a measure of the reliability for *repairable systems*, meaning that once the item fails, it is repaired and put back into service. In this way, the item can fail multiple times. The MTBF is the ratio of total time by the number of failures for a given item.
 
 The calculation is similar to the MTTF, just with a slightly different interpretation. 
 
 Take an example where a motor fails 5 times during a total time of 10,000 hours. The MTBF is:
 
 $$ MTBF = 10000/5 = 2000 hours $$
+An MTBF of 2000 hours means that, on average, the motor is expected to run for 2000 hours between failures.
 
 ```{r quiz4, echo=FALSE}
 quiz(caption = "Exercise: MTTF and MTBF",
@@ -194,9 +200,7 @@ quiz(caption = "Exercise: MTTF and MTBF",
 
 ## Failure Rate
 
-The failure rate is the ratio of the number of failures by the total operational time for a given item and a specified period.
-
-A key assumption of MTBF is that the failure rate is constant. Under this assumption, the failure rate is the inverse of the MTBF.
+The failure rate is the ratio of the number of failures by the total operational time for a given item and a specified period. Since the MTBF is the ratio of total time by the number of failures, the failure rate is the inverse of the MTBF. Specifically, the failure rate is defined as:
 
 $$ \lambda = 1/MTBF $$
 Where $\lambda$ is the failure rate.
@@ -206,17 +210,18 @@ The failure rate can also be calculated directly as the number of failures divid
 $$ \lambda = FailureCount/Total Time $$
 Where *Total Time* is the total time that the item was in operation, and *FailureCount* is the total number of failures.
 
-Suppose 100 motors run for 10 years total. During that time, 20 failures occur. The failure rate is:
+A key assumption of MTBF is that the failure rate is constant, meaning that the item has the same probability of failing at any time during its operation. In practice, this is not always true, as items may have higher failure rates at the beginning or end of their life. However, for many items, the constant failure rate assumption is a reasonable approximation.
 
-$$ \lambda = 20/(10*365) = 0.0055 \text{ failures per year} $$
+To illustrate, suppose 100 motors run for 10 years total. During that time, 20 failures occur. The failure rate is:
+
+$$ \lambda = 20/(10*100) = 0.0055 \text{ failures per year} $$
+A failure rate of 0.0055 failures per year means that, on average, there are 0.0055 failures for every motor per year of operation.
 
 ## Probability of Failure
 
-Failures do not often occur at predictable times and usually occur randomly according to a probability distribution.
+Failures do not often occur at predictable times and often occur randomly according to a probability distribution. A common assumption is that failures occur according to a Poisson process, meaning that the number of failures in a given time period follows a Poisson distribution. When failures follow a Poisson process, the time between failures follows an Exponential distribution.
 
-When the failure rate is assumed constant, the Exponential distribution is common.
-
-In this case, the cumulative probability of *failure* prior to time *t*, ***F(t)***, is given as the following
+For an exponential distribution, the probability of failure prior to time *t* can be calculated using the cumulative distribution function (CDF) of the exponential distribution. Specifically, the cumulative probability of *failure* prior to time *t*, ***F(t)***, is given by:
 
 $$ F(t) = 1 - e^{-t\lambda} $$
 Where $\lambda$ is the failure rate.
@@ -229,19 +234,21 @@ $$ R(t) = e^{-t\lambda} $$
 For example, suppose a motor has a failure rate of 0.1 failures per year. The probability of survival at time 10 is:
 
 $$ R(10) = e^{-10*0.1} = 0.3679 = 36.79% $$
+So, there is a 36.79% chance that the motor will survive for 10 years without failing or a 63.21% chance that it will fail before 10 years.
 
 ## $B_n$ or $L_n$ Life
 
-The $B_n$ or $L_n$ life is the time at which *n* % of a population are expected to fail (or 1-*n* % are expected to survive). For example, the B10/L10 life is the time at which 10% of a population are expected to fail, B90/L90 is when 90% are expected to fail, and so on.
+The $B_n$ life is defined as the time at which *n* % of a population are expected to fail (or 1-*n* % are expected to survive). For example, the B10 life is the time at which 10% of a population are expected to fail, B90 is when 90% are expected to fail, and so on. Some industries use the term $L_n$ life instead of $B_n$ life, but they are the same concept.
 
-To calculate the $B_n$ life, we can solve for *t* in the cumulative probability function. For the exponential function, that is
+To calculate the $B_n$ life, we can solve for time *t* in the cumulative distribution function (CDF) of the exponential distribution. Specifically, we set ***F(t)*** equal to *n* % and solve for *t*.
+
 
 $$ t = -ln(1-F(t))/\lambda $$
-Where $\lambda$ is the failure rate.
 
 For example, suppose a factor motor has a failure rate of 0.2 failures per year. The B10 life is:
 
 $$ B10 = -ln(1-0.1)/0.2 = 0.526 years $$
+So at the B10 life of 0.526 years, 10% of the motors are expected to have failed.
 
 ```{r quiz5, echo=FALSE}
 quiz(caption = "Exercise: Failure Rate, Probability of Failure, and Bn Life",

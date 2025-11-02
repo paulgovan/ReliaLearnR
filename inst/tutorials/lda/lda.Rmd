@@ -34,25 +34,19 @@ Life data analysis is the study of how systems function over time. Life data hel
 
 Understanding life data analysis helps in predicting the lifespan and maintenance needs of various systems, thereby improving reliability and efficiency. By collecting and modeling life data, we can make predictions about how long machines will last or how long before they will need to be repaired or replaced. 
 
-## Weibull Analysis
+## Life Distributions
 
 ### The Weibull Distribution
 
-The Weibull distribution is a continuous probability distribution used in life data analysis and many other fields.
-
-Life data analysis is often referred to as Weibull analysis because the Weibull distribution is commonly used to model life data.
-
-While other distributions can be used to model life data, this tutorial focuses on the Weibull distribution because of its wide application.
+The Weibull distribution is a continuous probability distribution used in life data analysis and many other fields. Life data analysis is often referred to as Weibull analysis because the Weibull distribution is commonly used to model life data. While other distributions can be used to model life data, this tutorial focuses on the Weibull distribution because of its wide application.
 
 ### Why the Weibull Distribution?
 
-The Weibull is a **flexible** distribution that can fit many different types of data.
+The Weibull is a **flexible** distribution that can fit many different types of data. By adjusting the distribution parameters, the Weibull can mimic other distributions such as the normal, exponential, and log-normal distributions.
 
-### The Normal Distribution
+### Mimicking Other Distributions
 
-The normal distribution is another common distribution used in statistics.
-
-Take the following normal distribution with a mean of 5 and standard deviation of 1.5. 
+To illustrate, take the following normal distribution. The normal distribution is another common distribution used in statistics. The normal is symmetric and characterized by its mean and standard deviation.
 
 ```{r echo=FALSE}
 x <- seq(0, 10, by = .1) # Create a sequence of x values
@@ -60,22 +54,19 @@ y <- dnorm(x, mean = 5, sd = 1.5) # Calculate the normal density function
 plot(x,y, type = "l", col = "blue", xlab = "Variable", ylab = "Probability") # Plot the normal distribution
 ```
 
-### The Weibull vs Normal
-
-The Weibull can *mimic* the normal and many others. To illustrate, adjust the scale 
-parameter in the slider until the Weibull below looks similar to the Normal above.
+The Weibull can *mimic* the normal distribution by adjusting the shape and scale parameters. Adjust the scale parameter in the slider until the Weibull below looks similar to the Normal above.
 
 ```{r, echo=FALSE}
-sliderInput("eta", "Eta:", min = 1, max = 10, value = 1, step = 0.5) # Slider for eta
+sliderInput("eta", "Scale:", min = 1, max = 10, value = 1, step = 0.5) # Slider for eta
 plotOutput("distPlot") # Plot output
 ```
 
 ```{r, context="server"}
 # Plot the Weibull distribution
 output$distPlot <- renderPlot({
-  x <- seq(0, 10, by = .1)
-  y <- dweibull(x, shape = 3.67, scale = input$eta)
-  plot(x,y, type = "l", col = "red", xlab = "Variable", ylab = "Probability")
+  x <- seq(0, 10, by = .1) # Create a sequence of x values
+  y <- dweibull(x, shape = 3.67, scale = input$eta) # Calculate the Weibull density function
+  plot(x,y, type = "l", col = "red", xlab = "Variable", ylab = "Probability") # Plot the Weibull distribution
 })
 ```
 
@@ -83,24 +74,29 @@ output$distPlot <- renderPlot({
 **Hint:** Set Eta equal to 5 as a starting point.
 </div>
 
+By adjusting the scale parameter, the Weibull can closely resemble the normal distribution.
+
 ### The Cumulative Distribution Function
 
-The cumulative distribution function (CDF) describes the probability of survival 
-or failure prior to a certain time *t*. In this case, ***R(t)*** gives the cumulative 
-probability of *survival* prior to  time *t* while ***F(t)*** gives the cumulative 
-probability of *failure* prior to time *t*.
+In life data analysis, the cumulative distribution function (CDF) describes the probability of survival (or failure) prior to a certain time *t*. In other words, the CDF gives the probability that a unit will survive (or fail) up to time *t*.
+
+
+
+For the Weibull distribution, the CDF is given by:
 
 $$ R(t) = 1 - F(t) = e^{-(t/\eta)^\beta} $$
 
-Where $\beta$ is the shape parameter. In life data analysis $\beta$ has a physical 
-interpretation related to the failure rate. The failure rate is the rate at which 
-failures occur over time.
+Where *R(t)* is the cumulative probability of *survival* prior to  time *t*,  *F(t)* is the cumulative probability of *failure* prior to time *t*, $\beta$ is the shape parameter and $\eta$ is the scale parameter.
+
+Notice how *R(t)* and *F(t)* are complementary probabilities, meaning that they add up to 1. For example, if the probability of failure prior to time *t* is 30%, then the probability of survival prior to time *t* is 70%.
+
+For the Weibull distribution, $\beta$ has a physical interpretation related to the failure rate, or the rate at which failures occur over time.
 
 -   $\beta$ \< 1 - the failure rate is decreasing
 -   $\beta$ = 1 - the failure rate is constant
 -   $\beta$ \> 1 - the failure rate is increasing
 
-And $\eta$ is the scale parameter or the quantile at 63.2% probability.
+By estimating $\beta$ from life data, we can gain insights into the failure behavior of the system being analyzed.
 
 ```{r quiz1, echo=FALSE}
 quiz(caption = "Quiz: The Weibull Parameters",
@@ -155,9 +151,9 @@ plotOutput("cumPlot") # Plot output
 ```{r, context="server"}
 # Plot the cumulative distribution function
 output$cumPlot <- renderPlot({
-  x <- seq(0, 50, by = .1)
+  x <- seq(0, 50, by = .1) # Create a sequence of x values
   plot(pweibull(x, shape = input$beta, scale = 10), col = "blue", type = "l", 
-       xlab = "Variable", ylab = "Cumulative Probability") 
+       xlab = "Variable", ylab = "Cumulative Probability") # Plot the CDF
 })
 ```
 
@@ -179,8 +175,8 @@ plotOutput("cummPlot2") # Plot output
 ```{r, context="server"}
 # Plot the cumulative distribution function
 output$cummPlot2 <- renderPlot({
-  x <- seq(0, 50, by = .1)
-  plot(pweibull(x, shape = 1, scale = input$eta2), col = "red", type = "l", xlab = "Variable", ylab = "Cumulative Probability") 
+  x <- seq(0, 50, by = .1) # Create a sequence of x values
+  plot(pweibull(x, shape = 1, scale = input$eta2), col = "red", type = "l", xlab = "Variable", ylab = "Cumulative Probability") # Plot the CDF
 })
 ```
 
@@ -196,11 +192,11 @@ For this tutorial, we will use WeibullR: an R package for Weibull analysis.
 
 First, check if WeibullR is installed in R and install if not.
 
-```{r echo=TRUE, message=FALSE}
+```{r eval=FALSE}
 pak::pkg_install("WeibullR")
 ```
 
-As an example, suppose a factory has 5 machines that fail at different times. The factory wants to understand the reliability of the machines over time and predict when future failures may occur. The factory collects the failure data and uses Weibull analysis to model the reliability of the machines. The failure times are 30, 49, 82, 90, and 96 respectively. 
+As an example of Weibull analysis, suppose a factory has 5 machines that fail at different times. The factory wants to understand the reliability of the machines over time and predict when future failures may occur. The factory collects the failure data and uses Weibull analysis to model the reliability of the machines. The failure times are 30, 49, 82, 90, and 96 respectively. 
 
 To run Weibull analysis in R, first create a vector with the failure data, then use the `MLEw2p` function with the failure data to fit a Weibull to the data. The argument `bounds=TRUE` adds confidence bounds to the fit, and `show=TRUE` displays the results.
 
@@ -211,13 +207,13 @@ fit<-MLEw2p(failures, bounds=TRUE, show=TRUE)
 
 ### The Weibull Probability Plot
 
-The Weibull Probability Plot shows the time (or equivalent) on the horizontal axis and the unreliability on the vertical axis. In this case, unreliability is analogous to the cumulative probability of failure. We know from the cumulative distribution function that the opposite of the failure probability is the survival probability or reliability. For example, if the unreliability at time 50 is 20%, then the reliability at time 50 is 80%.
+The Weibull Probability Plot above shows the time (or equivalent) on the horizontal axis and the cumulative probability of failure or unreliability on the vertical axis. We know from the cumulative distribution function that the complement of the failure probability is the survival probability or reliability. For example, if the unreliability at time 50 is 20%, then the reliability at time 50 is 100%-20% = 80%.
 
-Note that the horizontal axis on a probability plot is log scale, and the vertical axis is log(log(1-p)) scale, where p=(i-0.3)/(n+4) and i is the rank of the observation. By using this scale, the resulting plot of the Weibull data appears linear.
+Note that the horizontal axis on a probability plot is log scale, and the vertical axis is log(log(1-p)) scale, where p is the cumulative probability of failure. By using this scale, the resulting plot of the Weibull data appears linear.
 
 ```{r quiz2, echo=FALSE}
 quiz(caption = "Quiz: Interpreting the Probability Plot",
-  question("What is the approximate unreliability at time 100?",
+  question("In the previous example, what is the approximate unreliability at time 100?",
     answer("20%", message = "20% is too low."),
     answer("80%", message = "80% is slightly too low."),
     answer("10%", message = "10% is the reliability, not the unreliability."),
@@ -225,7 +221,7 @@ quiz(caption = "Quiz: Interpreting the Probability Plot",
     random_answer_order = TRUE,
     allow_retry = TRUE
   ),
-  question("What is the approximate reliability at time 50?)",
+  question("In the previous example, what is the approximate reliability at time 50?)",
     answer("20%", correct = TRUE, message = "Correct! The reliability at time 50 is approximately 20%."),
     answer("80%", message = "80% is the unreliability, not the reliability."),
     answer("10%", message = "10% is slightly too low."),
@@ -233,7 +229,7 @@ quiz(caption = "Quiz: Interpreting the Probability Plot",
     random_answer_order = TRUE,
     allow_retry = TRUE
   ),
-  question("What is the approximate beta of the fit?",
+  question("In the previous example, what is the approximate beta of the fit?",
     answer("1.5", message = "1.5 is too low."),
     answer("3.5", message = "3.5 is slightly too high."),
     answer("0.5", message = "0.5 is too low."),
@@ -241,7 +237,7 @@ quiz(caption = "Quiz: Interpreting the Probability Plot",
     random_answer_order = TRUE,
     allow_retry = TRUE
   ),
-  question("What is the approximate eta of the fit?",
+  question("In the previous example, what is the approximate eta of the fit?",
     answer("77.81", correct = TRUE, message = "Correct! The eta of the fit is approximately 77.81."),
     answer("88.84", message = "88.84 is slightly too high."),
     answer("37.89", message = "37.89 is too low."),
@@ -254,13 +250,13 @@ quiz(caption = "Quiz: Interpreting the Probability Plot",
 
 ## Data Censoring
 
-In life data analysis, data is often **censored**. Censoring occurs when the exact time to failure is not known for all units.
+In life data analysis, data is often **censored**. Censoring occurs when the exact time to failure is not known for all units. There are several types of censoring, including right censoring and interval censoring.
 
 ### Right Censored Data
 
-Right censored data includes **suspensions** or units that have operated for a period of time without failure. 
+Right censored data includes **suspensions** or units that have operated for a period of time without failure. Suspensions are common in life data analysis because not all units fail during the analysis period.
 
-Now suppose that the factory has 3 additional machines that did not fail during the analysis period. The machines were suspended (i.e. removed from service) at times 100, 45, and 10 respectively.
+To illustrate right censored data, suppose that the factory in the previous example has 3 additional machines that did not fail during the analysis period. The machines were suspended (i.e. removed from service) at times 100, 45, and 10 respectively.
 
 To add suspensions to the previous example, create a vector with the suspension data and add it to the `MLEw2p` function.
 
@@ -269,11 +265,11 @@ suspensions<-c(100, 45, 10)
 fit<-MLEw2p(failures, suspensions, bounds=TRUE, show=TRUE)
 ```
 
-Note how the fit has changed after adding suspensions. The fit now has a lower beta and higher eta. 
+Note how the fit has changed slightly after adding suspensions. The fit now has a lower beta and higher eta. 
 
 ### Interval Censored Data
 
-Interval censored data is most commonly in the form of inspection data, where the failure occurred between two inspection times, the latest known working time (left entry), and the inspection time when the failure was detected (right entry). In this case, the exact failure times are unknown, but are known to have occurred within the intervals. 
+Interval censored data is data where the exact failure times are unknown, but are known to have occurred within certain intervals. An example of interval censored data is inspection data, where parts or machines are inspected periodically for failures. If a failure is detected during an inspection, the exact failure time is unknown, but it is known to have occurred between the last inspection time and the current inspection time.
 
 To illustrate interval censored data, let's look at an example from Silkworth, 2020. The data consists of part cracks detected during periodic inspections. The left and right columns represent the inspection intervals, and the qty column represents the number of cracks detected in each interval. 
 
@@ -298,13 +294,13 @@ obj1<-wblr.conf(obj1, method.conf="fm", lty=2)
 plot(obj1)
 ```
 
-Instead of points, the interval censored data is shown as black horizontal lines representing the intervals where failures occurred.
+Instead of points, the interval censored data is shown as black horizontal lines representing the intervals where failures occurred. The solid red line is the model fit and the red dashed lines are the confidence bounds.
 
 ### Grouped Data
 
-Life data is often compiled into groups (i.e. a group of machines failed or survived at a certain time). 
+Life data is often compiled into groups (i.e. a group of machines failed or survived at a certain time). For example, in the interval censored example above, the inspection data is grouped into intervals with multiple failures in each interval. Likewise, the suspensions are grouped into a single entry with 73 suspensions at the last inspection time.
 
-Notice how the previous example contained groups in the `qty` column. Let's look at the inspection data again. The knitr::kable function below displays the inspection data in a table format, and the head function shows the first few rows of the data.
+Let's look at the inspection data again. The knitr::kable function below displays the inspection data in a table format, and the head function shows the first few rows of the data.
 
 ``` {r echo=TRUE}
 knitr::kable(
@@ -353,15 +349,17 @@ quiz(caption = "Quiz: Interval Censored Data",
 
 ## Parameter Estimation Methods
 
+Parameter estimation methods are used to estimate the parameters of a probability distribution (e.g. Beta and Eta for the Weibull distribution) based on the observed data. The two most common methods are Maximum Likelihood Estimation (MLE) and Median Rank Regression (MRR).
+
 ### Maximum Likelihood vs Rank Regression
 
--   **Median Rank Regression (MRR)** is a least squares analysis based on minimizing the squared distance from the cumulative probability to the fitted model.
+-   **Median Rank Regression (MRR)** is based on estimating the parameters of the distribution by minimizing the sum of squared errors between the observed and predicted values. The MRR method is also known as the least squares method. 
 
--   **Maximum Likelihood Estimation (MLE)** is based on estimating the parameters of the distribution by maximizing the likelihood function of the observed data.
+-   **Maximum Likelihood Estimation (MLE)** is based on estimating the parameters of the distribution by maximizing the likelihood function. The MLE method finds the parameters that make the observed data most probable.
 
-WeibullR includes functions for both methods, such as the `MRRw2p`, `MRRw3p` functions for MRR and the `MLEw2p`, `MLEw3p` functions for MLE.
+This tutorial does not go into the mathematical details of MRR and MLE, but both methods are widely used in life data analysis. WeibullR includes functions for both methods, such as the `MRRw2p`, `MRRw3p` functions for MRR and the `MLEw2p`, `MLEw3p` functions for MLE.
 
-To illustrate the differences between MRR and MLE, let's rerun the right censored example and compare the MRR and MLE methods using the `wblr` function. In the first step, fit the MRR and MLE models using the `wblr.fit` function with the `method.fit` argument set to "rr" for MRR and "mle" for MLE. Finally, use the `plot.wblr` function to create a multi-plot comparing both models.
+Let's rerun the right censored example and compare the MRR and MLE methods using the `wblr` function. In the first step, fit the MRR and model using the `wblr.fit` function with the `method.fit` argument set to "rr" for MRR. In the second step, fit the MLE model using the `method.fit` argument set to "mle" for MLE. Finally, use the `plot.wblr` function to create a multi-plot comparing both models.
 
 ```{r echo=TRUE}
 MRRfit <- wblr.fit(wblr(failures, suspensions, col="blue"), method.fit="rr")
@@ -382,7 +380,7 @@ quiz(caption = "Quiz: MRR vs MLE",
     random_answer_order = TRUE,
     allow_retry = TRUE
   ),
-  question("Which fit has a slightly higher unreliability at time 100?",
+  question("In the previous example, which fit has a slightly higher unreliability at time 100?",
     answer("MRR", message = "The MRR fit has a slightly lower unreliability at time 100."),
     answer("MLE", correct = TRUE, message = "The MLE fit has a slightly higher unreliability at time 100."),
     answer("Both are the same", message = "The fits are slightly different at time 100."),
@@ -397,9 +395,7 @@ quiz(caption = "Quiz: MRR vs MLE",
 
 ### The WeiBayes Model
 
-A WeiBayes or 1P Weibull has a fixed $\beta$ or shape parameter based on *prior* knowledge or experience. In this case, $\beta$ is often taken from another Weibull model. 
-
-Weibayes models are typically used when failure data is limited and/or other Weibull models do not fit the data well. 
+A WeiBayes or one parameter (1P) Weibull has a fixed $\beta$ or shape parameter based on *prior* knowledge or experience. Weibayes is a Bayesian approach to Weibull analysis, where prior knowledge is combined with observed data to estimate the parameters of the Weibull distribution. Weibayes is useful when there is limited failure data or when the data does not fit a standard Weibull model well.
 
 As an example, let's rerun the right censored example of a machine that failed at times 30, 49, 82, 90, and 96. In this case, the data is limited, so a WeiBayes model may be appropriate. First, recreate the failure and suspension data. Then fit the WeiBayes model while assuming a Beta of 2 and plot the results. In the code below, the `method.fit` argument specifies the WeiBayes model, and the `weibayes.beta` argument specifies the fixed Beta value.
 
@@ -414,9 +410,11 @@ Note that confidence bounds are not shown for the WeiBayes model. Confidence bou
 
 ### The 3-Parameter Weibull Model
 
-The 3P Weibull has an additional parameter *t~0~* to represent a failure free period (i.e. a machine cannot fail until after time *t~0~*). Often parts or machines must age, wear, fatigue, etc. before they can actually fail, and the 3P Weibull can model this behavior.
+The 3P Weibull has an additional parameter *t~0~* to represent a failure free period. The failure free period is the time before which no failures can occur. Often parts or machines must age, wear, fatigue, etc. before they can actually fail, and the 3P Weibull can model this behavior. The cumulative distribution function for the 3P Weibull is given below:
 
 $$ R(t) = 1 - F(t) = e^-((t-t~0~)/\eta)^\beta $$
+Where *t~0~* is the failure free period, $\beta$ is the shape parameter, and $\eta$ is the scale parameter.
+
 Here is an example from "The New Weibull Handbook" by Robert Abernethy (2004). This example consists of 25 failure times from a machine that has a failure free period. Let's run this example as a 3P Weibull. First, create a vector of failure data. Then fit the 3P Weibull model and plot the results. The `dist="weibull3p"` argument specifies the 3P Weibull model.
 
 ```{r echo=TRUE}
@@ -472,7 +470,7 @@ quiz(caption = "Quiz: Other Weibull Models",
 
 ### Multi-Plots
 
-Multi-plots are useful for comparing multiple Weibull models on the same plot. To build a multi-plot in WeibullR, create multiple `wblr` objects and add them to a list. Then use the `plot.wblr` function to create the multi-plot.
+Multi-plots are useful for comparing multiple Weibull models on the same plot. In this way, you can easily see the differences between the models and how they fit the data. To build a multi-plot in WeibullR, create multiple `wblr` objects and add them to a list. Then use the `plot.wblr` function to create the multi-plot.
 
 First, recreate the failure data from the first example of a machine that failed at times 30, 49, 82, 90, and 96.
 
@@ -496,11 +494,11 @@ plot.wblr(list(obj1, obj2))
 ```
 
 The red model is the fit without suspensions and the purple model is the fit with suspensions. 
-Note how the fit with suspensions has a lower beta and higher eta.
+Note how the fit with suspensions has a slightly lower beta and higher eta.
 
 ```{r quiz6, echo=FALSE}
 quiz(caption = "Quiz: Multi-Plots",
-  question("What is the difference between obj1 and obj2 (select all that apply)?",
+  question("What is the difference between obj1 and obj2 in the previous example (select all that apply)?",
     answer("obj1 includes suspensions"),
     answer("obj1 has a fit with a lower beta"),
     answer("obj2 includes suspensions", correct=TRUE),
@@ -508,7 +506,7 @@ quiz(caption = "Quiz: Multi-Plots",
     random_answer_order = TRUE,
     allow_retry = TRUE
   ),
-  question("Which fit has a higher unreliability at time 100?",
+  question("In the previous example, which fit has a higher unreliability at time 100?",
     answer("obj2", message = "obj2 has a slightly lower unreliability at time 100."),
     answer("obj1", correct = TRUE, message = "Correct! obj1 has a slightly higher unreliability at time 100."),
     answer("Both are the same", message = "The fits are slightly different at time 100."),
@@ -530,9 +528,21 @@ To illustrate, let's simulate some data with 3 different failure modes, where ea
 ```{r echo=TRUE}
 set.seed(123)
 data <- data.frame(
-  time = c(rweibull(5, 0.5, 20), rweibull(10, 1, 10), rweibull(5, 2, 5), rweibull(100, 2, 10)),
-  event = c(rep(1, 20), rep(0, 100)),
-  failure_mode = c(rep("A", 5), rep("B", 10), rep("C", 5), rep("", 100))
+  time = c(
+    rweibull(5, 0.5, 20), # Simulate times for Failure Mode A
+    rweibull(10, 1, 10), # Simulate times for Failure Mode B
+    rweibull(5, 2, 5),  # Simulate times for Failure Mode C
+    rweibull(100, 2, 10) # Simulate times for Suspensions
+    ),
+  event = c(
+    rep(1, 20), # Label Failures
+    rep(0, 100) # Label Suspensions
+    ),
+  failure_mode = c(
+    rep("A", 5), # Label Failure Mode A
+    rep("B", 10), # Label Failure Mode B
+    rep("C", 5), # Label Failure Mode C
+    rep("", 100)) # No label for Suspensions
   )
 ```
 
@@ -585,14 +595,14 @@ The Weibull contour plot shows the confidence region for the Weibull parameters 
 
 To compare multiple Weibull models, we can build contour plots for each model and overlay them on the same chart. If the models are similar, then the contours will overlap. If the models are different, then the contours will not overlap.
 
-To visualize this concept, let's revisit the previous competing failure mode example. First, recreate the failure data with 3 different failure modes. Then create a separate `wblr` object for each failure mode and build the contour plot for each model at a probability level of 90%. The contours are then overlaid on the same chart.
+To visualize this concept, let's revisit the previous competing failure mode example. First, recreate the failure data with 3 different failure modes. Then create a separate `wblr` object for each failure mode and build the contour plot for each model at a probability level of 90%. The contours are then overlaid on the same chart. Note the use of the `xlim` argument to set the x-axis limits for better visualization.
 
 
 ```{r echo=TRUE, results='hide'}
 obj1 <- wblr.conf(wblr.fit(wblr(dat1, col="blue"), method="mle"), method="lrb")
 obj2 <- wblr.conf(wblr.fit(wblr(dat2, col="red"), method="mle"), method="lrb")
 obj3 <- wblr.conf(wblr.fit(wblr(dat3, col="orange"), method="mle"), method="lrb")
-plot_contour(list(obj1, obj2, obj3), CL=0.9)
+plot_contour(list(obj1, obj2, obj3), CL=0.9, xlim = c(1, 1500))
 ```
 
 The blue, red, and orange contours represent the 3 different failure modes. Note how the contours overlap, which indicates that the failure modes are not significantly different. If the contours did not overlap, then the failure modes would be significantly different.
