@@ -118,7 +118,7 @@ For this tutorial, we will use **ReliaGrowR**: an R package for Reliability Grow
 
 First, check if ReliaGrowR is installed in R and install if not.
 
-```{r echo=TRUE, message=FALSE, warning=FALSE}
+```{r eval=FALSE}
 pak::pkg_install("ReliaGrowR")
 ```
 
@@ -410,7 +410,7 @@ For this tutorial, we will use **WeibullR.ALT**, an extension of the WeibullR pa
 
 First, check if WeibullR.ALT is installed in R and install if not.
 
-```{r echo=TRUE, message=FALSE, warning=FALSE}
+```{r eval=FALSE}
 pak::pkg_install("WeibullR.ALT")
 ```
 

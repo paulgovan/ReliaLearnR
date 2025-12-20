@@ -1,10 +1,10 @@
 ## R CMD check results
 
-0 errors | 0 warnings | 0 notes
+0 errors | 0 warnings | 1 note
 
-## Reverse Dependencies
-
-We checked 2 reverse dependencies, comparing R CMD check results across CRAN and dev versions of this package.
-
- * We saw 0 new problems
- * We failed to check 0 packages
+Maintainer: ‘Paul Govan <paul.govan2@gmail.com>’
+  
+  New submission
+  
+* The package has been renamed from `WeibullR.learnr` to `ReliaLearnR` to better 
+reflect its broader focus on reliability engineering topics beyond just Weibull analysis.

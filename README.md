@@ -15,7 +15,6 @@ status](https://www.r-pkg.org/badges/version/ReliaLearnR)](https://CRAN.R-projec
 coverage](https://codecov.io/gh/paulgovan/ReliaLearnR/graph/badge.svg)](https://app.codecov.io/gh/paulgovan/ReliaLearnR)
 [![](http://cranlogs.r-pkg.org/badges/last-month/ReliaLearnR)](https://cran.r-project.org/package=ReliaLearnR)
 [![](http://cranlogs.r-pkg.org/badges/grand-total/ReliaLearnR)](https://cran.r-project.org/package=ReliaLearnR)
-[![](https://img.shields.io/badge/doi-10.32614/CRAN.package.ReliaLearnR-green.svg)](https://doi.org/10.32614/CRAN.package.ReliaLearnR)
 <!-- badges: end -->
 
 Welcome to **ReliaLearnR!** This package provides interactive learning
@@ -120,5 +119,6 @@ and priorities change.
 ## Code of Conduct
 
 Please note that the ReliaLearnR project is released with a [Contributor
-Code of Conduct](CODE_OF_CONDUCT.md). By contributing to this project,
-you agree to abide by its terms.
+Code of
+Conduct](https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html).
+By contributing to this project, you agree to abide by its terms.

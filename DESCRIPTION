@@ -1,7 +1,7 @@
 Package: ReliaLearnR
 Type: Package
 Title: Learning Modules for Reliability Analysis
-Version: 0.2.1
+Version: 0.3
 URL: https://paulgovan.github.io/ReliaLearnR/, https://github.com/paulgovan/ReliaLearnR
 BugReports: https://github.com/paulgovan/ReliaLearnR/issues
 Authors@R: person("Paul", "Govan", email = "paul.govan2@gmail.com", role = c("aut", "cre", "cph"), 
@@ -16,10 +16,10 @@ Imports:
 Suggests:
     knitr,
     mockery,
+    ReliaPlotR,
+    ReliaShiny,
     rmarkdown,
-    testthat (>= 3.0.0),
-    WeibullR.plotly,
-    WeibullR.shiny
+    testthat (>= 3.0.0)
 License: CC BY 4.0
 Encoding: UTF-8
 RoxygenNote: 7.3.3
