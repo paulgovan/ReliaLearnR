@@ -3,7 +3,7 @@ pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
   helpers: helpers.html
-last_built: 2025-12-20T03:23Z
+last_built: 2025-12-21T01:57Z
 urls:
   reference: https://paulgovan.github.io/ReliaLearnR/reference
   article: https://paulgovan.github.io/ReliaLearnR/articles
