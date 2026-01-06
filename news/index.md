@@ -2,6 +2,8 @@
 
 ## ReliaLearnR 0.3 (Formerly WeibullR.learnr)
 
+CRAN release: 2026-01-06
+
 ### Breaking Changes
 
 - The package has been renamed from `WeibullR.learnr` to `ReliaLearnR`
