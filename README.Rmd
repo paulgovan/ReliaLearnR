@@ -25,8 +25,8 @@ status](https://www.r-pkg.org/badges/version/ReliaLearnR)](https://CRAN.R-projec
 [![](http://cranlogs.r-pkg.org/badges/grand-total/ReliaLearnR)](https://cran.r-project.org/package=ReliaLearnR)
 <!-- badges: end -->
 
-Welcome to **ReliaLearnR!** This package provides interactive learning
-modules on the fundamentals of reliability analysis. The modules are built
+Welcome to **ReliaLearnR!** This package provides interactive learning modules on
+fundamental concepts in reliability analysis. The modules are built
 using the `learnr` package and cover topics such as life data analysis,
 reliability testing, and reliability, availability, and maintainability
 (RAM) concepts. The package also includes helper functions for common
