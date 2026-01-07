@@ -14,9 +14,9 @@ authors:
     orcid: 0000-0002-1821-8492
     affiliation: 1
 affiliations:
- - name: Senior Reliability Systems Engineer, Safety and Reliability, GE Aerospace
+ - name: Senior Reliability Engineer, Safety and Reliability, GE Aerospace
    index: 1
-date: 31 August 2025
+date: 7 January 2026
 bibliography: paper.bib
 
 ---
