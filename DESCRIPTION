@@ -1,7 +1,7 @@
 Package: ReliaLearnR
 Type: Package
 Title: Learning Modules for Reliability Analysis
-Version: 0.3
+Version: 0.3.1
 URL: https://paulgovan.github.io/ReliaLearnR/, https://github.com/paulgovan/ReliaLearnR
 BugReports: https://github.com/paulgovan/ReliaLearnR/issues
 Authors@R: person("Paul", "Govan", email = "paul.govan2@gmail.com", role = c("aut", "cre", "cph"), 
