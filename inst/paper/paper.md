@@ -113,9 +113,9 @@ make it easy to apply the concepts covered in the RAM module.
 The project documentation includes installation instructions for `ReliaLearnR`
 and the required dependencies, examples of running the programs, and references 
 to previous work used to build the modules. The documentation also references more
-resources for users interest in learning more. These resources include 
+resources for users interested in learning more. These resources include 
 `ReliaPlotR` [@ReliaPlotR], an R package for interactive reliability analysis
-plots, and `ReliaShinR` [@ReliaShiny], a shiny [@shiny] web application for 
+plots, and `ReliaShiny` [@ReliaShiny], a shiny [@shiny] web application for 
 reliability analysis.
 
 Contributions are welcome from the community. Users can submit pull requests, 
