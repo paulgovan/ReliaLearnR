@@ -139,7 +139,8 @@ priorities change.
 
 # Acknowledgements
 
-The author acknowledges the creators of the original Reliability Program that inspired
-this project.
+The author wishes to thank the creators of the original Reliability Program that inspired
+this project. Thanks also to the reviewers and JOSE editor for their valuable feedback
+and suggestions that helped improve this paper and overall project.
 
 # References
