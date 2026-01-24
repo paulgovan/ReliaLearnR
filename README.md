@@ -15,6 +15,7 @@ status](https://www.r-pkg.org/badges/version/ReliaLearnR)](https://CRAN.R-projec
 coverage](https://codecov.io/gh/paulgovan/ReliaLearnR/graph/badge.svg)](https://app.codecov.io/gh/paulgovan/ReliaLearnR)
 [![](http://cranlogs.r-pkg.org/badges/last-month/ReliaLearnR)](https://cran.r-project.org/package=ReliaLearnR)
 [![](http://cranlogs.r-pkg.org/badges/grand-total/ReliaLearnR)](https://cran.r-project.org/package=ReliaLearnR)
+[![DOI](https://jose.theoj.org/papers/10.21105/jose.00302/status.svg)](https://doi.org/10.21105/jose.00302)
 <!-- badges: end -->
 
 Welcome to **ReliaLearnR!** This package provides interactive learning

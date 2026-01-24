@@ -1,7 +1,21 @@
 citHeader("To cite ReliaLearnR in publications use:")
 
 bibentry(
-  bibtype = "Manual",
+  bibtype = "Article",
+  title = "ReliaLearnR: Learning Modules for Reliability Analysis",
+  author = "Paul Govan",
+  year = "2026",
+  journal = "Journal of Open Source Education",
+  publisher = "The Open Journal",
+  volume = "9",
+  number = "95",
+  pages = "302",
+  doi = "10.21105/jose.00302",
+  url = "https://doi.org/10.21105/jose.00302"
+)
+
+bibentry(
+  bibtype  = "Manual",
   title    = "ReliaLearnR: Learning Modules for Reliability Analysis",
   author   = "Paul Govan",
   year     = "2023",
