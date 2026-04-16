@@ -79,6 +79,19 @@ modules:
 - `mtbf()` - mean time between failure
 - `fr()` - failure rate
 
+``` r
+library(ReliaLearnR)
+#> 
+#> Attaching package: 'ReliaLearnR'
+#> The following object is masked from 'package:stats':
+#> 
+#>     rt
+rel(outageTime = 100, totalTime = 1000)   # item down 100 of 1000 hours → 0.9
+#> [1] 0.9
+fr(failures = 75, totalTime = 5000)        # 75 failures over 5000 hours → 0.015
+#> [1] 0.015
+```
+
 ## Design
 
 The learning modules are designed to be interactive and engaging, with a

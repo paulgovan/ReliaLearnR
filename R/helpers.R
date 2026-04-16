@@ -1,4 +1,16 @@
 
+# Internal validation helper used by all exported RAM functions.
+.validate_inputs <- function(x, y, x_name = "first argument", y_name = "second argument") {
+  if (anyNA(x) || anyNA(y)) stop("NA values not allowed in inputs")
+  if (!is.numeric(x)) stop(paste0('"', x_name, '" must be numeric'))
+  if (!is.numeric(y)) stop(paste0('"', y_name, '" must be numeric'))
+  if (any(x < 0) || any(y < 0)) stop("inputs must be non-negative")
+  if (length(x) == 0 || length(y) == 0) stop("inputs must not be empty vectors")
+  if (length(x) > 1 && length(y) > 1 && length(x) != length(y))
+    stop("inputs must have the same length or one must be a scalar")
+}
+
+
 #' Reliability (1 - outage / total)
 #'
 #' Reliability is the probability that an item will perform its intended function
@@ -13,10 +25,7 @@
 #' rel(c(10,20), c(500, 600))
 #' @export
 rel <- function(outageTime, totalTime) {
-  if (anyNA(outageTime) || anyNA(totalTime)) stop("NA values not allowed in inputs")
-  if (!is.numeric(outageTime)) stop("\"outageTime\" must be numeric")
-  if (!is.numeric(totalTime))  stop("\"totalTime\" must be numeric")
-  if (any(outageTime < 0) || any(totalTime < 0)) stop("times must be non-negative")
+  .validate_inputs(outageTime, totalTime, "outageTime", "totalTime")
 
   total <- sum(totalTime)
   if (total == 0) stop("sum(totalTime) is zero (cannot divide by zero)")
@@ -41,10 +50,7 @@ rel <- function(outageTime, totalTime) {
 #' avail(c(5,10), c(500,600))
 #' @export
 avail <- function(unavailTime, totalTime) {
-  if (anyNA(unavailTime) || anyNA(totalTime)) stop("NA values not allowed in inputs")
-  if (!is.numeric(unavailTime)) stop("\"unavailTime\" must be numeric")
-  if (!is.numeric(totalTime))  stop("\"totalTime\" must be numeric")
-  if (any(unavailTime < 0) || any(totalTime < 0)) stop("times must be non-negative")
+  .validate_inputs(unavailTime, totalTime, "unavailTime", "totalTime")
 
   total <- sum(totalTime)
   if (total == 0) stop("sum(totalTime) is zero (cannot divide by zero)")
@@ -68,10 +74,7 @@ avail <- function(unavailTime, totalTime) {
 #' mtbf(c(2,3), c(500,500))
 #' @export
 mtbf <- function(failures, totalTime) {
-  if (anyNA(failures) || anyNA(totalTime)) stop("NA values not allowed in inputs")
-  if (!is.numeric(failures)) stop("\"failures\" must be numeric")
-  if (!is.numeric(totalTime)) stop("\"totalTime\" must be numeric")
-  if (any(failures < 0) || any(totalTime < 0)) stop("failures and times must be non-negative")
+  .validate_inputs(failures, totalTime, "failures", "totalTime")
 
   total_failures <- sum(failures)
   total_time     <- sum(totalTime)
@@ -100,11 +103,7 @@ mtbf <- function(failures, totalTime) {
 #' mttf(c(2,3), c(500,500))
 #' @export
 mttf <- function(failures, totalTime) {
-  # same validation as mtbf
-  if (anyNA(failures) || anyNA(totalTime)) stop("NA values not allowed in inputs")
-  if (!is.numeric(failures)) stop("\"failures\" must be numeric")
-  if (!is.numeric(totalTime)) stop("\"totalTime\" must be numeric")
-  if (any(failures < 0) || any(totalTime < 0)) stop("failures and times must be non-negative")
+  .validate_inputs(failures, totalTime, "failures", "totalTime")
 
   total_failures <- sum(failures)
   total_time     <- sum(totalTime)
@@ -132,10 +131,7 @@ mttf <- function(failures, totalTime) {
 #' fr(c(10,5), c(1000,2000))
 #' @export
 fr <- function(failures, totalTime) {
-  if (anyNA(failures) || anyNA(totalTime)) stop("NA values not allowed in inputs")
-  if (!is.numeric(failures)) stop("\"failures\" must be numeric")
-  if (!is.numeric(totalTime)) stop("\"totalTime\" must be numeric")
-  if (any(failures < 0) || any(totalTime < 0)) stop("failures and times must be non-negative")
+  .validate_inputs(failures, totalTime, "failures", "totalTime")
 
   total_failures <- sum(failures)
   total_time     <- sum(totalTime)
@@ -144,4 +140,3 @@ fr <- function(failures, totalTime) {
 
   return(total_failures / total_time)
 }
-

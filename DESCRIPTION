@@ -8,8 +8,10 @@ Authors@R: person("Paul", "Govan", email = "paul.govan2@gmail.com", role = c("au
   comment = c(ORCID = "0000-0002-1821-8492"))
 Description: Learning modules for reliability analysis including modules for Reliability, 
   Availability, and Maintainability (RAM) Analysis, Life Data Analysis, and Reliability Testing.
+Depends:
+  R (>= 4.1.0)
 Imports:
-  learnr,
+  learnr (>= 0.11.0),
   ReliaGrowR,
   WeibullR,
   WeibullR.ALT

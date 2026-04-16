@@ -26,6 +26,7 @@ status](https://www.r-pkg.org/badges/version/ReliaLearnR)](https://CRAN.R-projec
 [![DOI](https://jose.theoj.org/papers/10.21105/jose.00302/status.svg)](https://doi.org/10.21105/jose.00302)
 <!-- badges: end -->
 
+
 Welcome to **ReliaLearnR!** This package provides interactive learning modules on
 fundamental concepts in reliability analysis. The modules are built
 using the `learnr` package and cover topics such as life data analysis,
@@ -85,6 +86,12 @@ functions can be used independently of the learning modules:
 -   `mttf()` - mean time to failure
 -   `mtbf()` - mean time between failure
 -   `fr()` - failure rate
+
+```{r}
+library(ReliaLearnR)
+rel(outageTime = 100, totalTime = 1000)   # item down 100 of 1000 hours → 0.9
+fr(failures = 75, totalTime = 5000)        # 75 failures over 5000 hours → 0.015
+```
 
 ## Design
 

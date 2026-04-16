@@ -58,7 +58,7 @@ The slope of the line on the plot indicates the rate of reliability growth:
 * A zero slope means there is no change in reliability (the system is stable).
 * A negative slope indicates that reliability is worsening (the failure rate is increasing).
 
-### The Duane Model: Reliability Growth vs Deteriation
+### The Duane Model: Reliability Growth vs Deterioration
 
 To illustrate the Duane Model, take the following example. Adjust the Beta value 
 input to see the failure rate both decreasing and increasing.
@@ -193,7 +193,7 @@ Similar to the Duane Model, the shape of the model indicates the rate of reliabi
 * A linear model means there is no change in reliability (the system is stable).
 * A model fit with upward curvature indicates that reliability is worsening (the failure rate is increasing).
 
-### The Crow-AMSAA Model: Reliability Growth vs Deteriation
+### The Crow-AMSAA Model: Reliability Growth vs Deterioration
 
 To illustrate the Crow-AMSAA model, take the following example. Adjust the Beta 
 value input to see the failure rate both decreasing and increasing.
@@ -366,7 +366,7 @@ Suppose you are testing a product that is expected to last a long time under nor
 
 The relationship between stress and life is often modeled using an exponential function, where the life of the product decreases as the stress level increases. The rate of this decrease is determined by the Acceleration Factor (AF), which quantifies how much faster the product fails under elevated stress compared to normal conditions. 
 
-The plot below illustrates this concept. Adjsust the Acceleration Factor (AF) to see how it impacts the expected life of the product.
+The plot below illustrates this concept. Adjust the Acceleration Factor (AF) to see how it impacts the expected life of the product.
 
 ```{r echo=FALSE}
 sliderInput("af", label = h3("Acceleration Factor:"), value = 1, min = 1, max = 10, step = 0.1, width = '50%') # Slider input for acceleration factor
@@ -593,7 +593,7 @@ Where:
 
 This module does not include an example of the Eyring Model, but the `WeibullR.ALT` package does support it. See the package documentation for more information.
 
-## Parallellization
+## Parallelization
 
 Parallelization is a technique used in ALT to simplify the analysis of data collected at multiple stress levels. By assuming that the shape factor (slope) of the life distribution is the same across all stress levels, the analysis can be streamlined, making it easier to interpret the results and draw conclusions about the relationship between stress and life.
 
@@ -604,7 +604,7 @@ prlobj <- alt.parallel(arrobj)
 
 The plot shows a Parallel model fit to the data. All curves have the same slope, indicating that all subsets have the same shape factor.
 
-Similarly, to fit a parllel model to the Nelson data, use the `alt.parallel` function.
+Similarly, to fit a parallel model to the Nelson data, use the `alt.parallel` function.
 ```{r}
 expobj <- alt.parallel(pwrobj)
 ```
@@ -642,7 +642,7 @@ quiz(caption = "Quiz: Relationship Plots",
   question("In the Arrhenius Weibull example, what is the approximate P63.2 time to failure at a stress level of 50?",
     answer("1000", message = "1000 is too low, try again."),
     answer("5,000", correct = TRUE, 
-           message = "The approximate P63.2 time to failure at a stress level of 40 is 5,000."),
+           message = "The approximate P63.2 time to failure at a stress level of 50 is 5,000."),
     answer("50,000", message = "50,000 is too high, try again."),
     answer("100,000", message = "100,000 is way too high, try again."),
     random_answer_order = TRUE,

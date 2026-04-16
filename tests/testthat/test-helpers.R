@@ -4,8 +4,8 @@ test_that("rel() errors on NA, non-numeric, negative, and zero totalTime", {
   expect_error(rel(10, NA), "NA values not allowed in inputs")
   expect_error(rel("a", 100), "\"outageTime\" must be numeric")
   expect_error(rel(10, "b"), "\"totalTime\" must be numeric")
-  expect_error(rel(-1, 100), "times must be non-negative")
-  expect_error(rel(1, -100), "times must be non-negative")
+  expect_error(rel(-1, 100), "inputs must be non-negative")
+  expect_error(rel(1, -100), "inputs must be non-negative")
   expect_error(rel(1, 0), "sum\\(totalTime\\) is zero")
 })
 
@@ -14,8 +14,8 @@ test_that("avail() errors on NA, non-numeric, negative, and zero totalTime", {
   expect_error(avail(10, NA), "NA values not allowed in inputs")
   expect_error(avail("a", 100), "\"unavailTime\" must be numeric")
   expect_error(avail(10, "b"), "\"totalTime\" must be numeric")
-  expect_error(avail(-1, 100), "times must be non-negative")
-  expect_error(avail(1, -100), "times must be non-negative")
+  expect_error(avail(-1, 100), "inputs must be non-negative")
+  expect_error(avail(1, -100), "inputs must be non-negative")
   expect_error(avail(1, 0), "sum\\(totalTime\\) is zero")
 })
 
@@ -24,8 +24,8 @@ test_that("mtbf() errors on NA, non-numeric, negative, and zero totalTime", {
   expect_error(mtbf(1, NA), "NA values not allowed in inputs")
   expect_error(mtbf("x", 100), "\"failures\" must be numeric")
   expect_error(mtbf(1, "y"), "\"totalTime\" must be numeric")
-  expect_error(mtbf(-1, 100), "failures and times must be non-negative")
-  expect_error(mtbf(1, -100), "failures and times must be non-negative")
+  expect_error(mtbf(-1, 100), "inputs must be non-negative")
+  expect_error(mtbf(1, -100), "inputs must be non-negative")
   expect_error(mtbf(1, 0), "sum\\(totalTime\\) is zero")
 })
 
@@ -34,8 +34,8 @@ test_that("mttf() errors on NA, non-numeric, negative, and zero totalTime", {
   expect_error(mttf(1, NA), "NA values not allowed in inputs")
   expect_error(mttf("x", 100), "\"failures\" must be numeric")
   expect_error(mttf(1, "y"), "\"totalTime\" must be numeric")
-  expect_error(mttf(-1, 100), "failures and times must be non-negative")
-  expect_error(mttf(1, -100), "failures and times must be non-negative")
+  expect_error(mttf(-1, 100), "inputs must be non-negative")
+  expect_error(mttf(1, -100), "inputs must be non-negative")
   expect_error(mttf(1, 0), "sum\\(totalTime\\) is zero")
 })
 
@@ -44,8 +44,8 @@ test_that("fr() errors on NA, non-numeric, negative, and zero totalTime", {
   expect_error(fr(1, NA), "NA values not allowed in inputs")
   expect_error(fr("x", 100), "\"failures\" must be numeric")
   expect_error(fr(1, "y"), "\"totalTime\" must be numeric")
-  expect_error(fr(-1, 100), "failures and times must be non-negative")
-  expect_error(fr(1, -100), "failures and times must be non-negative")
+  expect_error(fr(-1, 100), "inputs must be non-negative")
+  expect_error(fr(1, -100), "inputs must be non-negative")
   expect_error(fr(1, 0), "sum\\(totalTime\\) is zero")
 })
 
@@ -64,7 +64,7 @@ test_that("rel() and avail() error when totalTime sums to zero", {
   expect_error(rel(1, 0), "sum\\(totalTime\\) is zero")
   expect_error(avail(1, 0), "sum\\(totalTime\\) is zero")
   # also with vectors summing to zero
-  expect_error(rel(c(1,2), c(0, -2)), "times must be non-negative")
+  expect_error(rel(c(1,2), c(0, -2)), "inputs must be non-negative")
 })
 
 test_that("mtbf()/mttf() handle vector zero failures properly", {
@@ -85,4 +85,26 @@ test_that("all functions accept numeric vectors and collapse correctly", {
   expect_equal(mtbf(c(1,2), c(50,150)), 200 / 3)
   expect_equal(mttf(c(2,2), c(100,100)), 200 / 4)
   expect_equal(fr(c(1,2,3), c(10,10,20)), 6 / 40)
+})
+
+test_that("all functions reject empty vectors", {
+  expect_error(rel(numeric(0), 100),   "must not be empty")
+  expect_error(rel(100, numeric(0)),   "must not be empty")
+  expect_error(avail(numeric(0), 100), "must not be empty")
+  expect_error(mtbf(numeric(0), 100),  "must not be empty")
+  expect_error(mttf(numeric(0), 100),  "must not be empty")
+  expect_error(fr(numeric(0), 100),    "must not be empty")
+})
+
+test_that("all functions reject mismatched vector lengths", {
+  expect_error(rel(c(1,2,3), c(100,200)),   "same length")
+  expect_error(avail(c(1,2,3), c(100,200)), "same length")
+  expect_error(mtbf(c(1,2,3), c(100,200)),  "same length")
+  expect_error(mttf(c(1,2,3), c(100,200)),  "same length")
+  expect_error(fr(c(1,2,3), c(100,200)),    "same length")
+})
+
+test_that("scalar paired with vector is allowed", {
+  expect_no_error(rel(10, c(100, 200)))
+  expect_no_error(rel(c(10, 20), 1000))
 })

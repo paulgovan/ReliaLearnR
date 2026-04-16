@@ -8,7 +8,7 @@
   "codeRepository": "https://github.com/paulgovan/ReliaLearnR",
   "issueTracker": "https://github.com/paulgovan/ReliaLearnR/issues",
   "license": "Apache License 2",
-  "version": "0.2.1",
+  "version": "0.3.1",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",

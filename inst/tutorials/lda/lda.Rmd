@@ -233,7 +233,7 @@ quiz(caption = "Quiz: Interpreting the Probability Plot",
     answer("1.5", message = "1.5 is too low."),
     answer("3.5", message = "3.5 is slightly too high."),
     answer("0.5", message = "0.5 is too low."),
-    answer("3.2", correct = TRUE, message = "Correct! The beta of the fit is approximately 1.5."),
+    answer("3.2", correct = TRUE, message = "Correct! The beta of the fit is approximately 3.2."),
     random_answer_order = TRUE,
     allow_retry = TRUE
   ),
