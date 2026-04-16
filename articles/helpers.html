@@ -90,19 +90,19 @@ functions to calculate common reliability metrics. These functions
 include:</p>
 <ul>
 <li>
-<code>rel(failures, total_time)</code>: Calculates reliability given
-the number of failures and total time.</li>
+<code>rel(outageTime, totalTime)</code>: Calculates reliability
+given the outage time and total time.</li>
 <li>
-<code>avail(downtime, total_time)</code>: Calculates availability
-given the downtime and total time.</li>
+<code>avail(unavailTime, totalTime)</code>: Calculates availability
+given the unavailable time and total time.</li>
 <li>
-<code>mttf(downtime, total_time)</code>: Estimates the Mean Time To
+<code>mttf(failures, totalTime)</code>: Estimates the Mean Time To
 Failure.</li>
 <li>
-<code>mtbf(failures, total_time)</code>: Estimates the Mean Time
+<code>mtbf(failures, totalTime)</code>: Estimates the Mean Time
 Between Failures.</li>
 <li>
-<code>fr(failures, total_time)</code>: Estimates the failure
+<code>fr(failures, totalTime)</code>: Estimates the failure
 rate.</li>
 </ul>
 <p>This vignette provides examples of how to use these functions.</p>
@@ -128,11 +128,12 @@ The MTTR for 5 failures with repair times in days of 5, 10, 15, 8, and
 <code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">10</span>, <span class="fl">15</span>, <span class="fl">8</span>, <span class="fl">12</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span></code></pre></div>
 <p>10</p>
-<p>To estimate the MTTF for 1000 items that ran for 3 years total:</p>
+<p>To estimate the MTTF for an item that failed 5 times over a 3-year
+period:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mttf.html">mttf</a></span><span class="op">(</span><span class="fl">5</span> <span class="op">+</span> <span class="fl">14</span>, <span class="fl">3</span> <span class="op">*</span> <span class="fl">365</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mttf.html">mttf</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">3</span> <span class="op">*</span> <span class="fl">365</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span></code></pre></div>
-<p>57.63158</p>
+<p>219</p>
 <p>To estimate the MTBF for an item that failed 5 times over a total
 time of 45,000 hours:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">

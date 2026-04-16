@@ -127,6 +127,17 @@
 <li>
 <code><a href="reference/fr.html">fr()</a></code> - failure rate</li>
 </ul>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://paulgovan.github.io/ReliaLearnR/">ReliaLearnR</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'ReliaLearnR'</span></span>
+<span><span class="co">#&gt; The following object is masked from 'package:stats':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     rt</span></span>
+<span><span class="fu"><a href="reference/rel.html">rel</a></span><span class="op">(</span>outageTime <span class="op">=</span> <span class="fl">100</span>, totalTime <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span>   <span class="co"># item down 100 of 1000 hours → 0.9</span></span>
+<span><span class="co">#&gt; [1] 0.9</span></span>
+<span><span class="fu"><a href="reference/fr.html">fr</a></span><span class="op">(</span>failures <span class="op">=</span> <span class="fl">75</span>, totalTime <span class="op">=</span> <span class="fl">5000</span><span class="op">)</span>        <span class="co"># 75 failures over 5000 hours → 0.015</span></span>
+<span><span class="co">#&gt; [1] 0.015</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="design">Design<a class="anchor" aria-label="anchor" href="#design"></a>

@@ -3,14 +3,13 @@
 The `ReliaLearnR` package includes several helper functions to calculate
 common reliability metrics. These functions include:
 
-- `rel(failures, total_time)`: Calculates reliability given the number
-  of failures and total time.
-- `avail(downtime, total_time)`: Calculates availability given the
-  downtime and total time.
-- `mttf(downtime, total_time)`: Estimates the Mean Time To Failure.
-- `mtbf(failures, total_time)`: Estimates the Mean Time Between
-  Failures.
-- `fr(failures, total_time)`: Estimates the failure rate.
+- `rel(outageTime, totalTime)`: Calculates reliability given the outage
+  time and total time.
+- `avail(unavailTime, totalTime)`: Calculates availability given the
+  unavailable time and total time.
+- `mttf(failures, totalTime)`: Estimates the Mean Time To Failure.
+- `mtbf(failures, totalTime)`: Estimates the Mean Time Between Failures.
+- `fr(failures, totalTime)`: Estimates the failure rate.
 
 This vignette provides examples of how to use these functions.
 
@@ -46,14 +45,15 @@ cat(result)
 
 10
 
-To estimate the MTTF for 1000 items that ran for 3 years total:
+To estimate the MTTF for an item that failed 5 times over a 3-year
+period:
 
 ``` r
-result <- mttf(5 + 14, 3 * 365)
+result <- mttf(5, 3 * 365)
 cat(result)
 ```
 
-57.63158
+219
 
 To estimate the MTBF for an item that failed 5 times over a total time
 of 45,000 hours:
