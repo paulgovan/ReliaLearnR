@@ -6,6 +6,7 @@ with code in this repository.
 ## Development Commands
 
 ``` r
+
 # Document (regenerates man/ and NAMESPACE from roxygen2 tags)
 devtools::document()
 

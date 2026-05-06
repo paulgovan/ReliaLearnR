@@ -16,5 +16,7 @@
   Launch the RAM Analysis Tutorial
 - [`rel()`](https://paulgovan.github.io/ReliaLearnR/reference/rel.md) :
   Reliability (1 - outage / total)
+- [`rs()`](https://paulgovan.github.io/ReliaLearnR/reference/rs.md) :
+  Launch the Repairable Systems Analysis Tutorial
 - [`rt()`](https://paulgovan.github.io/ReliaLearnR/reference/rt.md) :
   Launch the Reliability Testing Tutorial

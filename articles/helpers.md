@@ -19,6 +19,7 @@ To calculate the reliability of an item that ran for 3 years total and
 was failed for 5 of those days:
 
 ``` r
+
 result <- rel(5, 3 * 365)
 cat(result)
 ```
@@ -29,6 +30,7 @@ To calculate the availability of an item that ran 3 years total, was
 failed for 5 days, and had scheduled maintenance for 14 days:
 
 ``` r
+
 result <- avail(5 + 14, 3 * 365)
 cat(result)
 ```
@@ -39,6 +41,7 @@ The MTTR can be estimated with the base function `mean`. The MTTR for 5
 failures with repair times in days of 5, 10, 15, 8, and 12:
 
 ``` r
+
 result <- mean(c(5, 10, 15, 8, 12))
 cat(result)
 ```
@@ -49,6 +52,7 @@ To estimate the MTTF for an item that failed 5 times over a 3-year
 period:
 
 ``` r
+
 result <- mttf(5, 3 * 365)
 cat(result)
 ```
@@ -59,6 +63,7 @@ To estimate the MTBF for an item that failed 5 times over a total time
 of 45,000 hours:
 
 ``` r
+
 result <- mtbf(5, 45000)
 cat(result)
 ```
@@ -69,6 +74,7 @@ To estimate the failure rate for 100 items that ran for 5000 hours and
 had 75 failures:
 
 ``` r
+
 result <- fr(75, 100 * 5000)
 cat(result)
 ```
@@ -80,17 +86,19 @@ function `pexp`. To estimate the probability of survival at time 5 for
 an item with a failure rate of 0.1:
 
 ``` r
+
 result <- 1 - pexp(5, 0.1)
 cat(result)
 ```
 
 0.6065307
 
-The $B_{n}$ life for the Exponential distribution can be estimated with
+The $`B_n`$ life for the Exponential distribution can be estimated with
 the base function `qexp`. To estimate the B10 life for an item with a
 failure rate of 0.1:
 
 ``` r
+
 result <- qexp(0.1, 0.1)
 cat(result)
 ```

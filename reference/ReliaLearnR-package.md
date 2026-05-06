@@ -2,7 +2,7 @@
 
 Learning modules for reliability analysis including modules for
 Reliability, Availability, and Maintainability (RAM) Analysis, Life Data
-Analysis, and Reliability Testing.
+Analysis, Reliability Testing, and Repairable Systems Analysis.
 
 ## See also
 

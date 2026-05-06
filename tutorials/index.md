@@ -6,3 +6,5 @@
   Analysis](https://paulgovan.github.io/ReliaLearnR/tutorials/lda.md)
 - [An Introduction to Reliability
   Testing](https://paulgovan.github.io/ReliaLearnR/tutorials/rt.md)
+- [An Introduction to Repairable Systems
+  Analysis](https://paulgovan.github.io/ReliaLearnR/tutorials/rs.md)
