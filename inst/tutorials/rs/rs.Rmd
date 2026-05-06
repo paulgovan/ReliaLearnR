@@ -1,0 +1,597 @@
+---
+title: "Repairable Systems Analysis"
+output:
+  learnr::tutorial:
+    progressive: true
+    allow_skip: true
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(ReliaGrowR)
+```
+
+## Introduction
+
+Welcome to the tutorial on **Repairable Systems Analysis**! In this tutorial, we will explore models and methods used to analyze systems that are repaired and returned to service after each failure. These methods are widely used in fleet management, industrial maintenance, and infrastructure planning.
+
+Unlike life data analysis, which focuses on the time to first failure of a non-repairable component,  repairable systems analysis models the entire history of recurring failures on a single system or fleet. The goal is to characterize the failure process, detect trends, and predict future failure behavior.
+
+## Learning Objectives
+
+By the end of this tutorial, you will be able to:
+
+* Define the distinction between repairable and non-repairable systems.
+* Explain the Homogeneous Poisson Process (HPP) and Non-Homogeneous Poisson Process (NHPP) as failure process models.
+* Describe the Power Law Process and its parameters.
+* Fit and interpret the Crow-AMSAA model using `nhpp()` from ReliaGrowR.
+* Apply the Piecewise NHPP model to detect changes in failure behavior.
+* Compute fleet-level exposure using `exposure()` from ReliaGrowR.
+* Estimate the Mean Cumulative Function (MCF) using `mcf()` from ReliaGrowR.
+* Interpret model parameters to characterize deterioration, stability, or improvement.
+* Use R to predict future failure counts and recurrence rates.
+
+## Repairable vs Non-Repairable Systems
+
+Before applying any model, it is essential to classify the system correctly.
+
+A **non-repairable system** is discarded or replaced with a new, statistically identical unit after each failure. The unit of analysis is the *time to first failure*, and Weibull analysis applies. Examples include ball bearings, fuses, and light bulbs.
+
+A **repairable system** is restored to operating condition after each failure and continues accumulating operating time. The unit of analysis is the *sequence of inter-failure times* or cumulative failure counts over the system's life. Examples include diesel generators, industrial pumps, and aircraft engines.
+
+Two idealized repair assumptions are common:
+
+* **Perfect repair** ("as-good-as-new"): The system is restored to the same condition as a new unit. This is modeled by a renewal process.
+* **Minimal repair** ("as-bad-as-old"): The system is restored to the same condition it was in just before the failure — the failure is fixed, but nothing else changes. This is modeled by a Non-Homogeneous Poisson Process (NHPP).
+
+Most field maintenance data is best described by the minimal repair assumption, making NHPP the standard framework for repairable systems analysis.
+
+The recurrence rate (intensity function) $\rho(t)$ describes the instantaneous rate of failure occurrence at time $t$:
+
+$$\rho(t) = \frac{dE[N(t)]}{dt}$$
+
+where $E[N(t)]$ is the expected cumulative number of failures by time $t$.
+
+## Failure Processes: HPP and NHPP
+
+### Homogeneous Poisson Process (HPP)
+
+The **Homogeneous Poisson Process** assumes a *constant* failure rate $\lambda$ throughout the system's life:
+
+$$E[N(t)] = \lambda t \qquad \rho(t) = \lambda$$
+
+The mean time between failures is simply $\text{MTBF} = 1/\lambda$. The HPP is appropriate when failures occur at random, with no trend toward improvement or deterioration.
+
+### Non-Homogeneous Poisson Process (NHPP)
+
+The **Non-Homogeneous Poisson Process** allows the intensity function to change with time:
+
+$$E[N(t)] = \Lambda(t) \qquad \rho(t) = \frac{d\Lambda(t)}{dt}$$
+
+When $\rho(t)$ increases with time the system is deteriorating; when it decreases the system is improving. The Power Law Process is the most widely used NHPP for repairable systems.
+
+Use the controls below to explore how the shape of the NHPP intensity function changes with the beta parameter, compared to a constant HPP rate.
+
+```{r echo=FALSE}
+sliderInput("lambda_hpp", label = h3("HPP Rate (λ):"),
+            value = 0.05, min = 0.01, max = 0.20, step = 0.01, width = "50%")
+numericInput("beta_nhpp", label = h3("NHPP Beta (β):"),
+             value = 0.8, min = 0.1, max = 3.0, step = 0.1, width = "50%")
+plotOutput("processPlot")
+```
+
+```{r context="server"}
+output$processPlot <- renderPlot({
+  t <- seq(1, 100, by = 1)
+  hpp_intensity <- rep(input$lambda_hpp, length(t))
+  nhpp_intensity <- 0.01 * input$beta_nhpp * t^(input$beta_nhpp - 1)
+  ylim_max <- max(c(hpp_intensity, nhpp_intensity)) * 1.2
+  plot(t, hpp_intensity, type = "l", col = "blue", lwd = 2,
+       ylim = c(0, ylim_max),
+       xlab = "Time", ylab = "Intensity ρ(t)",
+       main = "HPP vs NHPP Intensity Function")
+  lines(t, nhpp_intensity, col = "red", lwd = 2)
+  legend("topright",
+         legend = c(paste0("HPP (constant λ = ", input$lambda_hpp, ")"),
+                    paste0("NHPP Power Law (β = ", input$beta_nhpp, ")")),
+         col = c("blue", "red"), lwd = 2)
+})
+```
+
+When $\beta < 1$ the NHPP intensity decreases over time (improving system). When $\beta = 1$ the NHPP reduces to the HPP (constant rate). When $\beta > 1$ the intensity increases (aging or deteriorating system).
+
+## The Power Law Process
+
+The **Power Law Process** is an NHPP whose mean value function (expected cumulative failures) follows a power law:
+
+$$E[N(t)] = \lambda t^{\beta}$$
+
+The corresponding intensity function is:
+
+$$\rho(t) = \lambda \beta t^{\beta - 1}$$
+
+**Parameter interpretation:**
+
+* $\lambda > 0$ — scale parameter; governs the overall magnitude of the failure rate.
+* $\beta$ — shape parameter:
+  * $\beta < 1$: failure intensity is decreasing (system improving).
+  * $\beta = 1$: constant intensity, equivalent to HPP.
+  * $\beta > 1$: failure intensity is increasing (system deteriorating or aging).
+
+The **instantaneous MTBF** at time $t$ is the reciprocal of the intensity:
+
+$$\text{MTBF}(t) = \frac{1}{\rho(t)} = \frac{1}{\lambda \beta t^{\beta - 1}}$$
+
+Given $n$ failures observed at times $t_1 < t_2 < \cdots < t_n$ over a total operating time $T$, the maximum likelihood estimates are:
+
+$$\hat{\beta} = \frac{n}{\displaystyle\sum_{i=1}^{n} \ln(T/t_i)} \qquad \hat{\lambda} = \frac{n}{T^{\hat{\beta}}}$$
+
+```{r quiz1, echo=FALSE}
+quiz(caption = "Quiz: Failure Processes and the Power Law",
+  question("A repairable system is observed to have an increasing failure rate over time. Which model is most appropriate?",
+    answer("Homogeneous Poisson Process (HPP)",
+           message = "HPP assumes a constant failure rate and cannot capture increasing trends."),
+    answer("NHPP Power Law with β > 1", correct = TRUE,
+           message = "An NHPP with β > 1 produces an increasing intensity function, consistent with a deteriorating system."),
+    answer("NHPP Power Law with β < 1",
+           message = "β < 1 indicates a decreasing failure rate (improving system), not an increasing one."),
+    answer("Weibull life data analysis",
+           message = "Weibull analysis applies to time-to-first-failure data on non-repairable components, not to recurring failures on a repairable system."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("In the Power Law Process, what does the scale parameter λ control?",
+    answer("Whether the failure rate is increasing or decreasing",
+           message = "The direction of the trend is controlled by β, not λ."),
+    answer("The overall magnitude (rate) of failures", correct = TRUE,
+           message = "λ scales the overall rate of occurrence; β controls whether the rate is increasing, constant, or decreasing."),
+    answer("The time between the first and second failure only",
+           message = "λ influences the expected number of failures over any interval, not just the first."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("For a Power Law Process with β = 1.0, what is the equivalent model?",
+    answer("Weibull distribution with shape parameter 1",
+           message = "That describes an exponential life distribution for a single component. When β = 1 the Power Law process becomes a constant-rate recurrent failure process."),
+    answer("Homogeneous Poisson Process (HPP)", correct = TRUE,
+           message = "When β = 1 the intensity ρ(t) = λ is constant, which is exactly an HPP."),
+    answer("Piecewise NHPP with one segment",
+           message = "A single-segment Piecewise NHPP with β = 1 would equal HPP, but the standard way to say this is simply HPP."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  )
+)
+```
+
+## NHPP Analysis
+
+The `nhpp()` function fits the Power Law Process (Crow-AMSAA model) to cumulative failure data by maximum likelihood, returning estimates of $\lambda$ and $\beta$. The fitted mean value function is plotted against cumulative time:
+
+$$E[N(t)] = \hat{\lambda}\, t^{\hat{\beta}}$$
+
+A curve that bends downward (concave) on a cumulative failures vs. time plot indicates $\hat{\beta} < 1$ — the failure rate is falling. A curve that bends upward (convex) indicates $\hat{\beta} > 1$ — the failure rate is rising.
+
+The `nhpp()` function accepts:
+
+* `time` — a numeric vector of cumulative event times.
+* `event` — an optional numeric vector of event counts at each time (if `NULL`, each time is treated as a single event).
+
+The following data represent failure records from a fleet of industrial pumps recorded at 10 inspection intervals.
+
+```{r echo=TRUE}
+times    <- c(500, 1200, 2100, 3300, 4800, 6500, 8400, 10500, 12800, 15000)
+failures <- c(3, 4, 4, 5, 4, 3, 3, 3, 2, 2)
+
+fit <- nhpp(time = times, event = failures)
+plot(fit,
+     main = "Crow-AMSAA Model: Industrial Pump Fleet",
+     xlab = "Cumulative Operating Hours",
+     ylab = "Cumulative Failures")
+```
+
+The fitted curve shape directly reveals the failure trend: a concave curve ($\hat{\beta} < 1$) means each successive failure takes longer to arrive — the system is improving.
+
+```{r quiz2, echo=FALSE}
+quiz(caption = "Quiz: NHPP Analysis",
+  question("In a Crow-AMSAA plot, what does a curve that bends downward (concave shape) indicate?",
+    answer("The failure rate is increasing over time",
+           message = "A concave curve means failures accumulate more slowly as time passes — the rate is decreasing, not increasing."),
+    answer("The failure rate is constant",
+           message = "A straight line on the cumulative failures plot would indicate a constant rate (HPP), not a concave curve."),
+    answer("The failure rate is decreasing over time", correct = TRUE,
+           message = "A concave (downward-bending) cumulative failures curve means β < 1: each successive failure takes longer to arrive, so the system is improving."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("For the pump fleet example, which statement best characterizes the system based on the nhpp() fit?",
+    answer("The pumps are deteriorating — failures are becoming more frequent",
+           message = "If the fitted curve bends downward (concave), the rate is actually decreasing, not increasing."),
+    answer("The pumps show a perfectly constant failure rate (HPP)",
+           message = "A straight cumulative failures line would indicate HPP. The concave shape indicates a trend."),
+    answer("The pumps show a decreasing failure rate — the fleet appears to be in a favorable operating regime", correct = TRUE,
+           message = "The concave curve and β < 1 indicate the failure rate is falling, consistent with stable or improving operational conditions."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("In nhpp(), what does the event argument represent when fitting interval-aggregated data?",
+    answer("The failure times of individual events",
+           message = "Individual failure times can be passed via the time argument with event = NULL. The event argument accepts counts per interval."),
+    answer("The number of failures observed in each time interval", correct = TRUE,
+           message = "When event is provided, nhpp() treats each entry in time as the end of an interval and the corresponding entry in event as the failure count for that interval."),
+    answer("A binary indicator of whether the system was censored",
+           message = "Censoring indicators are used by mcf() and exposure(). In nhpp(), event holds failure counts per interval."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  )
+)
+```
+
+## Piecewise NHPP
+
+Sometimes a system's failure behavior changes at a specific point in its operating life, for example after a major overhaul, a design modification, or a change in operating environment. The **Piecewise NHPP** model fits a separate Power Law to each segment of the time axis, separated by one or more **breakpoints** $\tau$:
+
+$$E[N(t)] = \begin{cases} \lambda_1 t^{\beta_1} & 0 < t \leq \tau \\ E[N(\tau)] + \lambda_2 (t - \tau)^{\beta_2} & t > \tau \end{cases}$$
+
+Each segment has its own $\lambda_i$ and $\beta_i$, allowing the model to capture, for example, a deteriorating early period followed by improvement after an overhaul.
+
+Pass a known breakpoint time as the `breaks` argument to `nhpp()`. The function will fit a separate Power Law to each segment.
+
+```{r echo=TRUE}
+# Extended pump data: fleet underwent a major overhaul at hour 8000
+times2    <- c(500, 1200, 2100, 3300, 4800, 6500, 8400, 9200, 10100, 11300,
+               12800, 14500, 16400, 18500, 20800)
+failures2 <- c(3, 4, 4, 5, 6, 6, 5, 3, 3, 2, 2, 2, 2, 1, 1)
+
+fit_pw <- nhpp(time = times2, event = failures2, breaks = 8000, method = "LS")
+plot(fit_pw,
+     main = "Piecewise NHPP: Fleet Overhaul at Hour 8000",
+     xlab = "Cumulative Operating Hours",
+     ylab = "Cumulative Failures")
+```
+
+The first segment (before the estimated breakpoint) has a steeper slope ($\hat{\beta}_1 > 1$, increasing failure rate), while the second segment (post-overhaul) shows a flatter or downward-bending curve, confirming the overhaul was effective in reducing the failure rate.
+
+Note that the `breaks` argument serves as an *initial estimate* for the breakpoint location. The `segmented` algorithm optimizes the breakpoint position from the data, so the fitted breakpoint in the plot may differ slightly from the value passed to `breaks`. In the example above, the fitted breakpoint is estimated near hour 9,820, close to the known overhaul time of 8,000.
+
+```{r quiz3, echo=FALSE}
+quiz(caption = "Quiz: Piecewise NHPP",
+  question("What is the primary reason to use a Piecewise NHPP model instead of a single Crow-AMSAA model?",
+    answer("The Piecewise model always produces a better statistical fit",
+           message = "A more complex model fits observed data better by definition, but is only appropriate when a genuine structural change in the failure process exists."),
+    answer("To account for a known or suspected change in the failure behavior at one or more points in time", correct = TRUE,
+           message = "The Piecewise NHPP is most appropriate when a real event (overhaul, design change, operational change) is believed to have altered the failure intensity."),
+    answer("Because the standard Crow-AMSAA model cannot handle more than 10 data points",
+           message = "The standard Crow-AMSAA model handles any number of data points. The Piecewise model is chosen based on physical knowledge, not data volume."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("In the pump fleet example, the post-overhaul segment shows a lower failure rate than the pre-overhaul segment. What does this suggest?",
+    answer("The overhaul made the system worse",
+           message = "A lower failure rate after the overhaul indicates improvement, not deterioration."),
+    answer("The overhaul had no measurable effect on the failure process",
+           message = "If the second-segment β were identical to the first, the overhaul had no effect. A lower intensity in the second segment is evidence of improvement."),
+    answer("The overhaul was effective in reducing the failure rate", correct = TRUE,
+           message = "A lower β or decreasing intensity in the post-overhaul segment is evidence that the maintenance intervention improved the system's failure behavior."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("In nhpp(), what role does the breaks argument play for piecewise Power Law fitting?",
+    answer("It fixes the breakpoint at exactly that time value",
+           message = "breaks provides an initial estimate to the segmented algorithm, which then optimizes the breakpoint position from the data. The fitted breakpoint may differ from the value passed."),
+    answer("It provides an initial estimate of the breakpoint; the algorithm optimizes its position from the data", correct = TRUE,
+           message = "nhpp() passes breaks to segmented::segmented() as a starting value. The algorithm finds the maximum-likelihood breakpoint location, which may shift from the initial estimate."),
+    answer("It has no effect — nhpp() always uses a single Power Law",
+           message = "Providing breaks triggers piecewise fitting. Without breaks, a single Power Law is fit."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  )
+)
+```
+
+## Exposure Analysis
+
+When analyzing a *fleet* of systems rather than a single system, individual units enter and leave observation at different times. **Exposure** is the total operating time accumulated across all systems that are currently at risk. It answers the question: "How much system-time has been observed at each point in calendar time?"
+
+The `exposure()` function computes:
+
+* **Cumulative exposure** — total system-time at risk up to each event time.
+* **Number of systems at risk** — how many units were under observation at each event time.
+* **Event rate** — cumulative events divided by cumulative exposure, providing a fleet-wide failure rate estimate.
+
+The function accepts per-event records with three columns:
+
+* `id` — system identifier.
+* `time` — cumulative event or end-of-observation time for that system.
+* `event` — 1 for a failure event, 0 for censoring (end of observation without a failure).
+
+The dataset below records individual failure events for a fleet of five industrial pumps, each observed for 3,000 hours.
+
+```{r echo=TRUE}
+pump_data <- data.frame(
+  id    = c(1, 1, 1,  2, 2, 2,  3, 3,  4, 4, 4, 4,  5, 5),
+  time  = c(310, 850, 1620,  420, 1050, 2100,  580, 1890,  240, 710, 1380, 2400,  530, 1740),
+  event = c(1, 1, 1,  1, 1, 1,  1, 1,  1, 1, 1, 1,  1, 1)
+)
+```
+
+```{r echo=TRUE}
+exp_result <- exposure(id = pump_data$id, time = pump_data$time,
+                       event = pump_data$event)
+plot(exp_result)
+```
+
+The exposure plot shows how the total observed system-time accumulates across the fleet. The event rate curve reveals whether the fleet-wide failure rate is increasing, stable, or decreasing over time.
+
+```{r quiz4, echo=FALSE}
+quiz(caption = "Quiz: Exposure Analysis",
+  question("What does 'exposure' represent in a fleet-level repairable systems analysis?",
+    answer("The total number of failures observed across all systems",
+           message = "That is the cumulative event count. Exposure measures observation time, not event counts."),
+    answer("The total operating time accumulated across all systems currently under observation", correct = TRUE,
+           message = "Exposure is the sum of operating time contributed by each system still in the risk set. It is used to normalize event counts into event rates."),
+    answer("The probability that any one system fails before a given time",
+           message = "That describes a reliability function, not exposure. Exposure is a time-at-risk quantity."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("In the exposure() function, what does event = 0 indicate for a record?",
+    answer("The system experienced a failure at that time",
+           message = "event = 1 marks a failure. event = 0 marks the end of observation without a failure."),
+    answer("The system's observation ended without a failure at that time (censoring)", correct = TRUE,
+           message = "event = 0 is a censoring indicator: the system was removed from observation at that time, contributing exposure up to that point but no failure event."),
+    answer("The system was not yet in service at that time",
+           message = "Systems not yet in service simply have no records before their entry time. event = 0 marks an observation end."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("Why is it important to account for exposure when comparing failure rates across systems with different observation periods?",
+    answer("Systems observed longer always have higher failure rates",
+           message = "Longer observation periods produce more total failures, but the rate (failures per unit time) may be identical."),
+    answer("Without normalizing by exposure, a system observed for twice as long will appear to have twice as many failures even if its underlying rate is the same", correct = TRUE,
+           message = "Exposure provides the denominator for the event rate. Without it, raw failure counts confound the length of observation with the underlying failure intensity."),
+    answer("Exposure only matters for non-repairable systems",
+           message = "Exposure is especially important for repairable systems analyzed at the fleet level, where units have different observation windows."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  )
+)
+```
+
+## Mean Cumulative Function
+
+The **Mean Cumulative Function (MCF)** is a non-parametric estimate of the expected cumulative number of failures per system as a function of time. It is the repairable-systems analogue of the Kaplan-Meier estimator in survival analysis: it makes no distributional assumptions about the failure process and can accommodate systems with different observation periods.
+
+The MCF at time $t$ is estimated using the Nelson-Aalen estimator:
+
+$$\hat{M}(t) = \sum_{t_j \leq t} \frac{d_j}{n_j}$$
+
+where $d_j$ is the number of failures at time $t_j$ and $n_j$ is the number of systems still under observation at $t_j$. The MCF provides a visual summary of the recurrence trend without requiring a parametric model.
+
+The `mcf()` function accepts the same per-event data format as `exposure()`. Passing `end_time` ensures that systems remaining under observation beyond their last failure are correctly kept in the risk set.
+
+```{r echo=TRUE}
+end_times <- c("1" = 3000, "2" = 3000, "3" = 3000, "4" = 3000, "5" = 3000)
+
+mcf_result <- mcf(id = pump_data$id, time = pump_data$time,
+                  event = pump_data$event,
+                  end_time = end_times)
+plot(mcf_result,
+     main = "Mean Cumulative Function: Industrial Pump Fleet",
+     xlab = "Operating Hours",
+     ylab = "Expected Cumulative Failures per System")
+```
+
+The slope of the MCF curve reveals the recurrence trend: a steepening slope indicates an increasing failure rate; a flattening slope indicates improvement. Confidence bounds (shown by default) reflect uncertainty in the estimate.
+
+```{r quiz5, echo=FALSE}
+quiz(caption = "Quiz: Mean Cumulative Function",
+  question("What does the MCF estimate for a fleet of repairable systems?",
+    answer("The probability that a randomly selected system survives to time t",
+           message = "That is the reliability function, used in life data analysis. The MCF estimates cumulative expected failures, not survival probability."),
+    answer("The expected cumulative number of failures per system as a function of time", correct = TRUE,
+           message = "The MCF tracks how many failures, on average, a system is expected to have accumulated by each point in time, accounting for systems that enter or leave observation at different times."),
+    answer("The total number of failures across the entire fleet up to time t",
+           message = "That is the cumulative event count. The MCF normalizes by the risk set to give a per-system estimate."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("Why should end_time be provided to mcf() when systems were observed beyond their last event?",
+    answer("It makes the MCF plot smoother",
+           message = "end_time affects the risk set, not the smoothness of the curve."),
+    answer("Without end_time, systems with no late events are assumed to have left observation at their last failure, causing the MCF to overestimate the recurrence rate", correct = TRUE,
+           message = "If end_time is omitted, mcf() infers observation end from the last recorded time per system. A system observed but failure-free after hour 2000 would be dropped from the risk set too early, inflating the estimated rate."),
+    answer("end_time is only needed when some systems have more failures than others",
+           message = "end_time is needed whenever systems were observed beyond their last recorded failure, regardless of the total failure count."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("If the MCF curve has a steepening slope over time, what does this indicate about the fleet?",
+    answer("The fleet's failure rate is decreasing — systems are improving",
+           message = "A steepening slope means the curve is climbing more steeply, indicating more failures per unit time — an increasing rate."),
+    answer("The fleet's failure rate is increasing — systems may be deteriorating or aging", correct = TRUE,
+           message = "A steepening MCF slope means each additional unit of time is associated with more expected failures, consistent with a deteriorating or aging fleet."),
+    answer("The MCF has reached a steady-state plateau",
+           message = "A plateau would indicate a decreasing or near-zero failure rate. A steepening slope is the opposite."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  )
+)
+```
+
+## Interpreting Results and Repair Effectiveness
+
+### Reading the Beta Parameter
+
+The estimated $\hat{\beta}$ from any Power Law fit gives immediate operational insight:
+
+| $\hat{\beta}$ | Interpretation | Typical cause |
+|:---:|---|---|
+| $< 1$ | Failure rate decreasing | Effective maintenance, infant mortality resolved, improving conditions |
+| $= 1$ | Constant failure rate | Random external shocks dominate, stable operating regime |
+| $> 1$ | Failure rate increasing | Wear-out, accumulating damage, aging components, deteriorating environment |
+
+### Cumulative vs Instantaneous MTBF
+
+Two distinct MTBF metrics arise in repairable systems analysis:
+
+* **Cumulative MTBF**: total operating time divided by total number of failures — a historical average.
+* **Instantaneous MTBF**: the expected time to the *next* failure if the system continues from its current state.
+
+$$\text{Instantaneous MTBF}(t) = \frac{1}{\hat{\lambda}\,\hat{\beta}\,t^{\hat{\beta}-1}}$$
+
+For $\hat{\beta} > 1$ the instantaneous MTBF falls *below* the cumulative average at late times. The system's near-term reliability is worse than its history suggests.
+
+### Predicting Future Failures
+
+The expected number of additional failures from current time $T$ to a future time $T + \Delta t$ is:
+
+$$E[\Delta N] = \hat{\lambda}\,(T + \Delta t)^{\hat{\beta}} - \hat{\lambda}\,T^{\hat{\beta}}$$
+
+Use the controls below to explore how the forecast changes with model parameters and horizon.
+
+```{r echo=FALSE}
+numericInput("current_t",  label = h3("Current cumulative time (hours):"),
+             value = 15000, min = 1000, max = 100000, step = 1000, width = "50%")
+numericInput("future_t",   label = h3("Forecast horizon (additional hours):"),
+             value = 2000, min = 100, max = 20000, step = 100, width = "50%")
+numericInput("beta_pred",  label = h3("Beta (β) from model fit:"),
+             value = 0.85, min = 0.1, max = 3.0, step = 0.05, width = "50%")
+numericInput("lambda_pred", label = h3("Lambda (λ) from model fit:"),
+             value = 0.0003, min = 0.00001, max = 0.01, step = 0.00001, width = "50%")
+plotOutput("forecastPlot")
+```
+
+```{r context="server"}
+output$forecastPlot <- renderPlot({
+  T0   <- input$current_t
+  dT   <- input$future_t
+  beta <- input$beta_pred
+  lam  <- input$lambda_pred
+  t_seq <- seq(T0, T0 + dT, length.out = 200)
+  expected_add <- lam * t_seq^beta - lam * T0^beta
+  plot(t_seq - T0, expected_add, type = "l", col = "darkred", lwd = 2,
+       xlab = "Additional Operating Hours",
+       ylab = "Expected Additional Failures",
+       main = paste0("Failure Forecast from Hour ", T0))
+  grid()
+})
+```
+
+```{r quiz6, echo=FALSE}
+quiz(caption = "Quiz: Interpreting Results",
+  question("A repairable system has a fitted Power Law model with β = 1.35. What is the most likely operational implication?",
+    answer("The failure rate is decreasing — repairs are effective",
+           message = "β > 1 means the failure rate is increasing, not decreasing."),
+    answer("The system has a constant failure rate — no trend is evident",
+           message = "β = 1 would indicate a constant rate. β = 1.35 indicates an increasing trend."),
+    answer("The failure rate is increasing — wear-out or aging may be occurring", correct = TRUE,
+           message = "β > 1 means ρ(t) is increasing with time. This is characteristic of aging or wear-out and may indicate the system is approaching a major overhaul threshold."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("What is the difference between cumulative MTBF and instantaneous MTBF for a repairable system?",
+    answer("They are the same quantity calculated two different ways",
+           message = "They are equal only when β = 1 (HPP). For any other β they diverge over time."),
+    answer("Cumulative MTBF is a historical average over all observed failures; instantaneous MTBF reflects the current failure rate at a specific point in time", correct = TRUE,
+           message = "Cumulative MTBF = T / N(T). Instantaneous MTBF = 1/ρ(t) and changes with time when β ≠ 1. For β > 1, instantaneous MTBF is lower than the cumulative average at late times."),
+    answer("Instantaneous MTBF is always larger than cumulative MTBF",
+           message = "For β > 1 (aging) the instantaneous MTBF is actually smaller than the cumulative average at late times."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("A fleet has been operating for 10,000 cumulative hours with a Power Law fit of λ = 0.0002 and β = 1.1. What is the expected number of additional failures in the next 1,000 hours?",
+    answer("Approximately 1",
+           message = "Try computing: 0.0002 × (11000^1.1 − 10000^1.1). The result is higher than 1."),
+    answer("Approximately 3", correct = TRUE,
+           message = "E[ΔN] = 0.0002 × (11000^1.1 − 10000^1.1) ≈ 3. With β slightly above 1 the failure rate is above its historical average."),
+    answer("Approximately 10",
+           message = "10 is too high. With β = 1.1 the rate is only modestly above the historical average."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  )
+)
+```
+
+## Summary
+
+Congratulations on completing the Repairable Systems Analysis tutorial! You have learned how to:
+
+* Distinguish repairable from non-repairable systems and select the appropriate analytical framework.
+* Apply the HPP and NHPP as models for recurrent failure data.
+* Interpret the Power Law Process parameters $\lambda$ and $\beta$ to characterize system failure trends.
+* Use `nhpp()` to fit and plot the Crow-AMSAA model.
+* Use `nhpp()` with `breaks` to model systems with structural changes in failure behavior.
+* Use `exposure()` to compute fleet-level operating time at risk and event rates.
+* Use `mcf()` to non-parametrically estimate the expected cumulative failures per system.
+* Forecast future failure counts using the fitted Power Law model.
+
+```{r quiz7, echo=FALSE}
+quiz(caption = "Quiz: Repairable Systems — Review",
+  question("Which of the following datasets is most appropriate for Repairable Systems Analysis using the Power Law Process?",
+    answer("Times to first failure for 50 identical ball bearings",
+           message = "Times to first failure on non-repairable components is the domain of Life Data Analysis (Weibull), not repairable systems analysis."),
+    answer("Cumulative failure counts recorded at regular intervals for a fleet of diesel generators over 5 years", correct = TRUE,
+           message = "Recurring failures on systems that are repaired and returned to service is exactly the domain of repairable systems analysis."),
+    answer("Failure probabilities derived from a reliability block diagram",
+           message = "Reliability block diagrams describe system-level reliability from component reliabilities — a RAM analysis topic, not a recurrent failure model."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("Which ReliaGrowR function fits the Crow-AMSAA (Power Law) model to recurrent failure data?",
+    answer("duane()", message = "duane() fits the Duane graphical model and is not the primary parametric fitting function in ReliaGrowR."),
+    answer("nhpp()", correct = TRUE, message = "nhpp() fits the Power Law NHPP (Crow-AMSAA) model and, when breaks is provided, a piecewise segmented model."),
+    answer("alt.data()", message = "alt.data() is from WeibullR.ALT and is used for Accelerated Life Testing data preparation, not repairable systems analysis."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("A system with β = 0.72 from a Power Law fit is scheduled for a major overhaul at 20,000 hours. Based on the model alone, what does the trend suggest about the urgency of the overhaul?",
+    answer("The overhaul is urgently needed — β < 1 means the system is deteriorating rapidly",
+           message = "β < 1 indicates a decreasing failure rate (improving system), not deterioration."),
+    answer("The failure rate is already decreasing, so the overhaul may be less urgently indicated by trend alone", correct = TRUE,
+           message = "β < 1 indicates an already-improving system. The model suggests the current trend is favorable, which is relevant information for the maintenance decision."),
+    answer("The model cannot say anything about the value of a scheduled overhaul",
+           message = "The model directly characterizes the failure trend. A decreasing failure rate (β < 1) is directly relevant to maintenance scheduling decisions."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  )
+)
+```
+
+### To Get Help
+
+```{r echo=TRUE, eval=FALSE}
+?nhpp
+```
+
+```{r echo=TRUE, eval=FALSE}
+?exposure
+```
+
+```{r echo=TRUE, eval=FALSE}
+?mcf
+```
+
+```{r echo=TRUE, eval=FALSE}
+help(package = "ReliaGrowR")
+```
+
+### Additional Resources
+
+* ReliaGrowR package documentation: <https://cran.r-project.org/package=ReliaGrowR>
+* ReliaSoft — Recurrent Event Data Analysis: <https://www.reliawiki.org/index.php/Repairable_Systems_Analysis>
+* Crow (1975) technical report: <https://apps.dtic.mil/sti/citations/ADA020296>
+
+### References
+
+* Aden-Buie G, Schloerke B, Allaire J, Rossell Hayes A (2023). *learnr: Interactive Tutorials for R*. <https://rstudio.github.io/learnr/>
+
+* Ascher H, Feingold H (1984). *Repairable Systems Reliability*. Marcel Dekker, New York.
+
+* Crow, Larry H. (1975). Reliability Analysis for Complex, Repairable Systems. *Army Material Systems Analysis Activity*, 40. <https://apps.dtic.mil/sti/citations/ADA020296>
+
+* Govan P (2024). *ReliaGrowR: Reliability Growth Analysis*. R package. <https://cran.r-project.org/package=ReliaGrowR>
+
+* Guo H, Mettas A, Sarakakis G, Niu P (2010). Piecewise NHPP models with maximum likelihood estimation for repairable systems. *2010 Proceedings — Annual Reliability and Maintainability Symposium (RAMS)*, 1–7. <https://doi.org/10.1109/RAMS.2010.5448029>
+
+* Meeker W. Q., Escobar L. A. (1998). *Statistical Methods for Reliability Data*. Wiley-Interscience, New York.

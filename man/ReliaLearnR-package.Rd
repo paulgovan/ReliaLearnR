@@ -8,7 +8,7 @@
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-Learning modules for reliability analysis including modules for Reliability, Availability, and Maintainability (RAM) Analysis, Life Data Analysis, and Reliability Testing.
+Learning modules for reliability analysis including modules for Reliability, Availability, and Maintainability (RAM) Analysis, Life Data Analysis, Reliability Testing, and Repairable Systems Analysis.
 }
 \seealso{
 Useful links:

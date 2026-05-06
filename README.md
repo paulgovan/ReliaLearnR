@@ -21,9 +21,9 @@ coverage](https://codecov.io/gh/paulgovan/ReliaLearnR/graph/badge.svg)](https://
 Welcome to **ReliaLearnR!** This package provides interactive learning
 modules on fundamental concepts in reliability analysis. The modules are
 built using the `learnr` package and cover topics such as life data
-analysis, reliability testing, and reliability, availability, and
-maintainability (RAM) concepts. The package also includes helper
-functions for common RAM calculations.
+analysis, reliability testing, repairable systems analysis, and
+reliability, availability, and maintainability (RAM) concepts. The
+package also includes helper functions for common RAM calculations.
 
 ## Installation
 
@@ -53,19 +53,21 @@ the resources at <https://education.rstudio.com/learn/beginner/>.
 
 ## Usage
 
-The package includes three interactive learning modules. To launch the
+The package includes four interactive learning modules. To launch the
 modules, load the package and call the respective function:
 
 - `ram()` - A quick reference for common Reliability, Availability, and
   Maintainability (RAM) concepts
 - `lda()` - An introduction to Life Data Analysis
-- `rt()`- An introduction to Reliability Testing
+- `rt()` - An introduction to Reliability Testing
+- `rs()` - An introduction to Repairable Systems Analysis
 
 The modules can also be accessed in a browser at
 [paulgovan.shinyapps.io/RAMAnalysis/](https://paulgovan.shinyapps.io/RAMAnalysis/),
 [paulgovan.shinyapps.io/LifeDataAnalysis/](https://paulgovan.shinyapps.io/LifeDataAnalysis/)
 and
-[paulgovan.shinyapps.io/ReliabilityTesting/](https://paulgovan.shinyapps.io/ReliabilityTesting/).
+[paulgovan.shinyapps.io/ReliabilityTesting/](https://paulgovan.shinyapps.io/ReliabilityTesting/),
+[govan.shinyapps.io/RepairableSystems/](https://govan.shinyapps.io/RepairableSystems/)
 
 ![](https://github.com/paulgovan/ReliaLearnR/blob/master/inst/paper/ReliaLearnR.png?raw=true)<!-- -->
 
@@ -78,19 +80,6 @@ modules:
 - `mttf()` - mean time to failure
 - `mtbf()` - mean time between failure
 - `fr()` - failure rate
-
-``` r
-library(ReliaLearnR)
-#> 
-#> Attaching package: 'ReliaLearnR'
-#> The following object is masked from 'package:stats':
-#> 
-#>     rt
-rel(outageTime = 100, totalTime = 1000)   # item down 100 of 1000 hours → 0.9
-#> [1] 0.9
-fr(failures = 75, totalTime = 5000)        # 75 failures over 5000 hours → 0.015
-#> [1] 0.015
-```
 
 ## Design
 

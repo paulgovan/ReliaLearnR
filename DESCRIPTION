@@ -6,8 +6,9 @@ URL: https://paulgovan.github.io/ReliaLearnR/, https://github.com/paulgovan/Reli
 BugReports: https://github.com/paulgovan/ReliaLearnR/issues
 Authors@R: person("Paul", "Govan", email = "paul.govan2@gmail.com", role = c("aut", "cre", "cph"), 
   comment = c(ORCID = "0000-0002-1821-8492"))
-Description: Learning modules for reliability analysis including modules for Reliability, 
-  Availability, and Maintainability (RAM) Analysis, Life Data Analysis, and Reliability Testing.
+Description: Learning modules for reliability analysis including modules for Reliability,
+  Availability, and Maintainability (RAM) Analysis, Life Data Analysis, Reliability Testing,
+  and Repairable Systems Analysis.
 Depends:
   R (>= 4.1.0)
 Imports:
