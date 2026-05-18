@@ -383,7 +383,7 @@ B10  # ~2.1 years
 
 ## From Exponential to Weibull
 
-The exponential model assumes a **constant** failure rate throughout an item's life. This is appropriate for electronic components that fail at random, but many mechanical components have failure rates that change over time — increasing as they wear out, or decreasing as early defects are screened out.
+The exponential model assumes a **constant** failure rate throughout an item's life. This is appropriate for electronic components that fail at random, but many mechanical components have failure rates that change over time, increasing as they wear out, or decreasing as early defects are screened out.
 
 The **Weibull distribution** generalizes the exponential by adding a shape parameter $\beta$:
 

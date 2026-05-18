@@ -1,5 +1,5 @@
 ---
-title: "Reliability Block Diagrams and System Reliability"
+title: "Reliability Block Diagrams"
 output:
   learnr::tutorial:
     progressive: true
@@ -13,7 +13,7 @@ library(learnr)
 
 ## Introduction
 
-Welcome to the tutorial on **Reliability Block Diagrams (RBDs) and System Reliability**! In the RAM module, you learned to calculate reliability metrics for individual components. This tutorial extends those concepts to *systems* — collections of components whose arrangement determines whether the system succeeds or fails.
+Welcome to the tutorial on **Reliability Block Diagrams (RBDs)** and System Reliability! In the RAM module, you learned to calculate reliability metrics for individual components. This tutorial extends those concepts to *systems*, collections of components whose arrangement determines whether the system succeeds or fails.
 
 RBDs are a graphical tool for modeling how component reliabilities combine to produce system-level reliability. They are widely used in reliability engineering to analyze designs, identify vulnerabilities, and evaluate the benefit of redundancy.
 
@@ -32,7 +32,7 @@ By the end of this module, learners will be able to:
 A **Reliability Block Diagram** represents each component in a system as a block with a known reliability value. The blocks are connected by lines that show how the components relate to each other functionally:
 
 * A **path** from left (input) to right (output) through functioning blocks represents a working system.
-* The RBD is *not* a wiring diagram — it shows logical dependencies, not physical connections.
+* The RBD is *not* a wiring diagram. It shows logical dependencies, not physical connections.
 
 For example, a pump system that requires a motor, a pump, and a valve all to function would be drawn as three blocks in series. A backup generator that can substitute for a primary generator would appear as two blocks in parallel.
 
@@ -43,7 +43,7 @@ RBDs directly connect to the RAM metrics you already know:
 
 ## Series Systems
 
-In a **series** system, *all* components must function for the system to function. This is the most common configuration — think of a chain where every link must hold.
+In a **series** system, *all* components must function for the system to function. This is the most common configuration, think of a chain where every link must hold.
 
 $$R_{sys} = R_1 \times R_2 \times \cdots \times R_n = \prod_{i=1}^{n} R_i$$
 
@@ -62,7 +62,7 @@ R_series <- R_motor * R_pump * R_valve
 R_series
 ```
 
-The system reliability is approximately 83.8% — lower than any individual component.
+The system reliability is approximately 83.8%, lower than any individual component.
 
 ```{r quiz1, echo=FALSE}
 quiz(caption = "Quiz: Series Systems",
@@ -129,7 +129,7 @@ R_parallel <- 1 - (1 - R_primary) * (1 - R_standby)
 R_parallel
 ```
 
-The parallel system reliability is 98.5% — much higher than either generator alone.
+The parallel system reliability is 98.5%, much higher than either generator alone.
 
 Use the slider to explore how the number of redundant components affects system reliability.
 
@@ -204,7 +204,7 @@ R_parallel  # ~0.9983
 
 ## Mixed Systems
 
-Most real systems combine series and parallel blocks. To analyze a **mixed** system, decompose it into subsystems and apply series and parallel rules step by step — working from the innermost blocks outward.
+Most real systems combine series and parallel blocks. To analyze a **mixed** system, decompose it into subsystems and apply series and parallel rules step by step, working from the innermost blocks outward.
 
 ### Example
 
@@ -390,8 +390,8 @@ While an RBD asks "What must work for the system to succeed?", a fault tree asks
 
 A fault tree uses logic gates to combine failure events:
 
-* **AND gate** ($\land$): the top event occurs only if *all* input events occur simultaneously. This corresponds to **parallel** components in an RBD — all must fail to cause system failure.
-* **OR gate** ($\lor$): the top event occurs if *any* input event occurs. This corresponds to **series** components in an RBD — any single failure causes system failure.
+* **AND gate** ($\land$): the top event occurs only if *all* input events occur simultaneously. This corresponds to **parallel** components in an RBD, all must fail to cause system failure.
+* **OR gate** ($\lor$): the top event occurs if *any* input event occurs. This corresponds to **series** components in an RBD, any single failure causes system failure.
 
 ### RBD — Fault Tree Duality
 
@@ -500,10 +500,6 @@ Congratulations on completing the Reliability Block Diagrams and System Reliabil
 * **k-out-of-n**: `1 - pbinom(k-1, n, 1-p)` for voting / load-sharing systems.
 * **Series MTTF**: $1/\sum\lambda_i$; **Parallel MTTF** of $n$ identical units: $(1/\lambda)\sum_{i=1}^{n}(1/i)$.
 * **FTA duality**: series RBD ↔ OR gate; parallel RBD ↔ AND gate.
-
-### Additional Resources
-
-* ReliaSoft — Reliability Block Diagrams: <https://www.reliawiki.org/index.php/Reliability_Block_Diagram>
 
 ### References
 
