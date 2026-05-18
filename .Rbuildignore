@@ -21,3 +21,8 @@
 ^codecov\.yml$
 ^\.positai$
 ^\.claude$
+^CLAUDE\.md$
+^inst/tutorials/lda/rsconnect$
+^inst/tutorials/rt/rsconnect$
+^inst/tutorials/rs/rsconnect$
+^ReliaLearnR/inst/tutorials/rt/rsconnect$
