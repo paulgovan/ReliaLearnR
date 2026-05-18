@@ -9,6 +9,7 @@ runtime: shiny_prerendered
 
 ```{r setup, include=FALSE}
 library(learnr)
+library(DiagrammeR)
 ```
 
 ## Introduction
@@ -52,6 +53,23 @@ $$R_{sys} = R_1 \times R_2 \times \cdots \times R_n = \prod_{i=1}^{n} R_i$$
 ### Example
 
 A water pumping system requires three components to all be operational: a motor (R = 0.95), a pump (R = 0.90), and a control valve (R = 0.98).
+
+```{r rbd-series, echo=FALSE}
+grViz("
+digraph series {
+  rankdir = LR
+  graph [bgcolor = transparent]
+  node [shape = rectangle, style = filled, fillcolor = '#AED6F1',
+        fontname = 'sans-serif', fontsize = 12, margin = '0.2,0.1']
+  edge [arrowsize = 0.8]
+  I [shape = point, width = 0.15, fillcolor = black]
+  A [label = 'Motor\nR = 0.95']
+  B [label = 'Pump\nR = 0.90']
+  C [label = 'Valve\nR = 0.98']
+  O [shape = point, width = 0.15, fillcolor = black]
+  I -> A -> B -> C -> O
+}
+")
 
 ```{r echo=TRUE}
 R_motor <- 0.95
@@ -120,6 +138,23 @@ $$R_{sys} = 1 - \prod_{i=1}^{n}(1 - R_i)$$
 ### Example
 
 A backup power system has a primary generator (R = 0.90) and a standby generator (R = 0.85). Either one alone keeps the system running.
+
+```{r rbd-parallel, echo=FALSE}
+grViz("
+digraph parallel {
+  rankdir = LR
+  graph [bgcolor = transparent]
+  node [shape = rectangle, style = filled, fillcolor = '#A9DFBF',
+        fontname = 'sans-serif', fontsize = 12, margin = '0.2,0.1']
+  edge [arrowsize = 0.8]
+  I [shape = point, width = 0.15, fillcolor = black]
+  A [label = 'Generator 1\nR = 0.90']
+  B [label = 'Generator 2\nR = 0.85']
+  O [shape = point, width = 0.15, fillcolor = black]
+  I -> A -> O
+  I -> B -> O
+}
+")
 
 ```{r echo=TRUE}
 R_primary <- 0.90
@@ -206,6 +241,42 @@ R_parallel  # ~0.9983
 
 Most real systems combine series and parallel blocks. To analyze a **mixed** system, decompose it into subsystems and apply series and parallel rules step by step, working from the innermost blocks outward.
 
+Use the selector below to compare how the topology changes across the three core configurations.
+
+```{r echo=FALSE}
+selectInput("topology", "Select topology:",
+            choices = c("Series", "Parallel", "Mixed"), selected = "Mixed")
+DiagrammeROutput("topologyDiagram")
+```
+
+```{r context="server"}
+output$topologyDiagram <- renderGrViz({
+  if (input$topology == "Series") {
+    grViz("digraph { rankdir=LR; graph [bgcolor=transparent]
+      node [shape=rectangle, style=filled, fillcolor='#AED6F1', fontname='sans-serif', fontsize=12]
+      I [shape=point, width=0.15, fillcolor=black]
+      A [label='Component A\nR=0.95']; B [label='Component B\nR=0.90']; C [label='Component C\nR=0.97']
+      O [shape=point, width=0.15, fillcolor=black]
+      I->A->B->C->O }")
+  } else if (input$topology == "Parallel") {
+    grViz("digraph { rankdir=LR; graph [bgcolor=transparent]
+      node [shape=rectangle, style=filled, fillcolor='#A9DFBF', fontname='sans-serif', fontsize=12]
+      I [shape=point, width=0.15, fillcolor=black]
+      A [label='Component A\nR=0.95']; B [label='Component B\nR=0.90']
+      O [shape=point, width=0.15, fillcolor=black]
+      I->A->O; I->B->O }")
+  } else {
+    grViz("digraph { rankdir=LR; graph [bgcolor=transparent]
+      node [shape=rectangle, style=filled, fillcolor='#F9E79F', fontname='sans-serif', fontsize=12]
+      I [shape=point, width=0.15, fillcolor=black]
+      S [label='Sensor\nR=0.95']; T [label='Transmitter\nR=0.97']
+      A1 [label='Actuator 1\nR=0.90']; A2 [label='Actuator 2\nR=0.90']
+      O [shape=point, width=0.15, fillcolor=black]
+      I->S->T->A1->O; T->A2->O }")
+  }
+})
+```
+
 ### Example
 
 A safety system has:
@@ -267,6 +338,28 @@ $$R_{k/n} = \sum_{i=k}^{n} \binom{n}{i} p^i (1-p)^{n-i} = 1 - \text{pbinom}(k-1,
 ### Example
 
 A flight control system uses 3 redundant computers. At least 2 of the 3 must agree for the system to function safely (a 2-out-of-3 voter). Each computer has reliability R = 0.99.
+
+```{r rbd-koon, echo=FALSE}
+grViz("
+digraph koon {
+  rankdir = LR
+  graph [bgcolor = transparent]
+  node [shape = rectangle, style = filled, fillcolor = '#D7BDE2',
+        fontname = 'sans-serif', fontsize = 12, margin = '0.2,0.1']
+  edge [arrowsize = 0.8]
+  I  [shape = point, width = 0.15, fillcolor = black]
+  C1 [label = 'Computer 1\nR = 0.99']
+  C2 [label = 'Computer 2\nR = 0.99']
+  C3 [label = 'Computer 3\nR = 0.99']
+  V  [label = 'Voter\n(2-of-3)', shape = diamond, fillcolor = '#F1948A', fontsize = 11]
+  O  [shape = point, width = 0.15, fillcolor = black]
+  I -> C1 -> V
+  I -> C2 -> V
+  I -> C3 -> V
+  V -> O
+}
+")
+```
 
 ```{r echo=TRUE}
 n <- 3      # total components
@@ -403,6 +496,26 @@ Every RBD has a corresponding fault tree and vice versa:
 | Parallel (any can work) | AND gate (all must fail for system failure) |
 
 This duality means the two tools provide complementary views of the same system. RBDs are better for computing reliability; fault trees are better for tracing failure causes and identifying critical combinations.
+
+The fault tree below illustrates a simple two-component system: the top event (system failure) occurs if *either* component fails — an OR gate, which corresponds to a series RBD.
+
+```{r rbd-fta, echo=FALSE}
+grViz("
+digraph fta {
+  rankdir = TB
+  graph [bgcolor = transparent]
+  node [fontname = 'sans-serif', fontsize = 12, style = filled]
+  edge [arrowsize = 0.8]
+  Top [label = 'System\nFailure',  shape = rectangle, fillcolor = '#E74C3C', fontcolor = white]
+  OR  [label = 'OR Gate',          shape = diamond,   fillcolor = '#F39C12']
+  F1  [label = 'Component A\nFails', shape = ellipse, fillcolor = '#AED6F1']
+  F2  [label = 'Component B\nFails', shape = ellipse, fillcolor = '#AED6F1']
+  Top -> OR
+  OR  -> F1
+  OR  -> F2
+}
+")
+```
 
 For complex fault trees, the R package `FaultTree` on CRAN provides tools for building and analyzing fault tree models programmatically.
 

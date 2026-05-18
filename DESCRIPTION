@@ -17,6 +17,7 @@ Imports:
   WeibullR,
   WeibullR.ALT
 Suggests:
+    DiagrammeR,
     knitr,
     mockery,
     ReliaPlotR,
