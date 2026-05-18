@@ -14,6 +14,8 @@
   : Mean Time To Failure (MTTF)
 - [`ram()`](https://paulgovan.github.io/ReliaLearnR/reference/ram.md) :
   Launch the RAM Analysis Tutorial
+- [`rbd()`](https://paulgovan.github.io/ReliaLearnR/reference/rbd.md) :
+  Launch the Reliability Block Diagram Tutorial
 - [`rel()`](https://paulgovan.github.io/ReliaLearnR/reference/rel.md) :
   Reliability (1 - outage / total)
 - [`rs()`](https://paulgovan.github.io/ReliaLearnR/reference/rs.md) :
