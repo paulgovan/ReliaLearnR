@@ -248,6 +248,25 @@ quiz(caption = "Quiz: Interpreting the Probability Plot",
 )
 ```
 
+### Exercise: Fit a Weibull Distribution
+
+A batch of industrial pumps failed at the following times (hours): 120, 205, 310, 445, 590, 780. Use `MLEw2p()` to fit a 2-parameter Weibull distribution and display the probability plot.
+
+```{r ex-lda1, exercise=TRUE}
+failures <- c(120, 205, 310, 445, 590, 780)
+
+```
+
+```{r ex-lda1-hint}
+# Use MLEw2p() with show=TRUE to plot the result
+# MLEw2p(failures, show = TRUE)
+```
+
+```{r ex-lda1-solution}
+failures <- c(120, 205, 310, 445, 590, 780)
+fit <- MLEw2p(failures, show = TRUE)
+```
+
 ## Data Censoring
 
 In life data analysis, data is often **censored**. Censoring occurs when the exact time to failure is not known for all units. There are several types of censoring, including right censoring and interval censoring.
@@ -265,7 +284,28 @@ suspensions<-c(100, 45, 10)
 fit<-MLEw2p(failures, suspensions, bounds=TRUE, show=TRUE)
 ```
 
-Note how the fit has changed slightly after adding suspensions. The fit now has a lower beta and higher eta. 
+Note how the fit has changed slightly after adding suspensions. The fit now has a lower beta and higher eta.
+
+### Exercise: Right-Censored Fit
+
+Four compressors failed at times 50, 85, 130, and 200 hours. Two additional units were removed from service (suspended) at 250 hours each without failing. Fit a Weibull model using `MLEw2p()` with suspensions.
+
+```{r ex-lda2, exercise=TRUE}
+failures <- c(50, 85, 130, 200)
+suspensions <- c(250, 250)
+
+```
+
+```{r ex-lda2-hint}
+# Pass both failures and suspensions to MLEw2p()
+# MLEw2p(failures, suspensions, show = TRUE)
+```
+
+```{r ex-lda2-solution}
+failures <- c(50, 85, 130, 200)
+suspensions <- c(250, 250)
+fit <- MLEw2p(failures, suspensions, show = TRUE)
+```
 
 ### Interval Censored Data
 
@@ -389,6 +429,68 @@ quiz(caption = "Quiz: MRR vs MLE",
     allow_retry = TRUE
   )
 )
+```
+
+## Goodness of Fit
+
+After fitting a Weibull model, it is important to assess how well the distribution fits the data. The **Anderson-Darling (AD) statistic** is a widely used goodness-of-fit metric in life data analysis.
+
+The AD statistic measures the distance between the fitted cumulative distribution function (CDF) and the empirical distribution of the data. A **lower AD value** indicates a closer fit between the model and the data. WeibullR automatically computes and displays the AD statistic in the legend of every probability plot.
+
+As an informal rule of thumb:
+
+| AD Value | Interpretation |
+|----------|---------------|
+| < 0.3    | Good fit       |
+| 0.3 – 0.6 | Acceptable fit |
+| > 0.6    | Poor fit       |
+
+The AD statistic is also useful for **comparing fitting methods**. For example, fitting the same data with both MRR and MLE allows you to select the method that produces a lower AD — that is, the better-fitting model for your data.
+
+```{r quiz-gof, echo=FALSE}
+quiz(caption = "Quiz: Goodness of Fit",
+  question("What does a lower Anderson-Darling statistic indicate?",
+    answer("The fitted distribution more closely matches the data", correct = TRUE,
+           message = "Correct! AD measures the distance between the fitted CDF and the empirical data — lower is better."),
+    answer("The fitted distribution has a higher beta", message = "Beta is a shape parameter and is unrelated to the AD statistic."),
+    answer("The data has fewer censored observations", message = "Censoring affects the dataset, not the goodness-of-fit metric directly."),
+    answer("The sample size is larger", message = "Sample size affects statistical power, not the AD value itself."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("You fit the same failure dataset with both MRR and MLE. The MRR fit has AD = 0.42 and the MLE fit has AD = 0.18. Which fit is preferred?",
+    answer("MLE, because it has a lower AD statistic", correct = TRUE,
+           message = "Correct! The lower AD for MLE means it more closely follows the empirical distribution of the data."),
+    answer("MRR, because it has a higher AD statistic", message = "A higher AD means a worse fit, not a better one."),
+    answer("They are equivalent — both are below 0.6", message = "Although both may be acceptable, the MLE fit with AD = 0.18 is meaningfully closer to the data."),
+    answer("Cannot be determined without knowing beta and eta", message = "The AD statistic directly summarizes fit quality; no additional parameters are needed to compare."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  )
+)
+```
+
+### Exercise: Compare MRR and MLE Goodness of Fit
+
+Fit the following failure data using both MRR and MLE methods and compare their Anderson-Darling statistics on a combined probability plot.
+
+```{r ex-lda-gof, exercise=TRUE}
+failures <- c(15, 28, 44, 61, 83, 110, 145)
+
+```
+
+```{r ex-lda-gof-hint}
+# Create two wblr objects with different fitting methods, then plot them together
+# obj_mrr <- wblr.conf(wblr.fit(wblr(failures, col = "blue"), method.fit = "rr"), method.conf = "fm", lty = 2)
+# obj_mle <- wblr.conf(wblr.fit(wblr(failures, col = "red"),  method.fit = "mle"), method.conf = "fm", lty = 2)
+# plot.wblr(list(obj_mrr, obj_mle))
+```
+
+```{r ex-lda-gof-solution}
+failures <- c(15, 28, 44, 61, 83, 110, 145)
+obj_mrr <- wblr.conf(wblr.fit(wblr(failures, col = "blue"), method.fit = "rr"),  method.conf = "fm", lty = 2)
+obj_mle <- wblr.conf(wblr.fit(wblr(failures, col = "red"),  method.fit = "mle"), method.conf = "fm", lty = 2)
+plot.wblr(list(obj_mrr, obj_mle))
 ```
 
 ## Other Weibull Models

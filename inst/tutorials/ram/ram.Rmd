@@ -1,6 +1,6 @@
 ---
 title: "Reliability, Availability, and Maintainability (RAM)"
-output: 
+output:
   learnr::tutorial:
     progressive: true
     allow_skip: true
@@ -9,6 +9,7 @@ runtime: shiny_prerendered
 
 ```{r setup, include=FALSE}
 library(learnr)
+library(WeibullR)
 library(WeibullR.learnr)
 ```
 
@@ -25,6 +26,7 @@ By the end of this module, learners will be able to:
 * Calculate probability of failure using given reliability data.
 * Interpret $B_n$ or $L_n$ life values in the context of product reliability.
 * Differentiate between different reliability measures.
+* Compute system reliability for series and parallel configurations.
 
 ## What is RAM?
 
@@ -45,7 +47,7 @@ Reliability is the probability that an item will not fail under defined conditio
 $$ Reliability = (1 - (Failed Time/Total Time))*100 $$
 Where Failed Time is the time that the item was not functioning, and Total Time is the total time that the item was in operation.
 
-For example, suppose a motor ran for 5 years total and was failed for 10 of those days. The reliability of the motor is: 
+For example, suppose a motor ran for 5 years total and was failed for 10 of those days. The reliability of the motor is:
 
 $$ Reliability = (1 - (10/(5*365)))*100 = 94.5% $$
 So, the motor has a reliability of 94.5% over the 5-year period.
@@ -59,7 +61,7 @@ $$ Unreliability = 1 - 0.945 = 0.055 = (10/(5*365))*100 = 5.5% $$
 The motor has an unreliability of 5.5% over the 5-year period.
 
 ```{r quiz1, echo=FALSE}
-quiz(caption = "Exercise: Reliability", 
+quiz(caption = "Exercise: Reliability",
   question("A machine has run for 3 years total and was failed for 5 of those days. What is the reliability of the machine?",
     answer("90%", message = "Not quite, try again."),
     answer("0.5%", message = "0.5% is the unreliability, not the reliability."),
@@ -86,7 +88,7 @@ Availability is the probability that an item will be available for service. Unav
 $$ Availability = (1 - (Unavailable Time/Total Time))*100 $$
 Where Unavailable Time is the time that the item was not available for service, and Total Time is the total time that the item was in operation.
 
-Unavailable time is different than standby time, where standby time is when the item is available for service, but is not being used. 
+Unavailable time is different than standby time, where standby time is when the item is available for service, but is not being used.
 
 Suppose a motor ran for 5 years total, was failed for 10 days, and had scheduled maintenance for 15 days. The availability of the motor is:
 
@@ -156,13 +158,13 @@ Where *Total Time* is the total time that the item was in operation, and *Failur
 For example, suppose 100 motors run for 5 years total. During that time, 5 failures occur. The MTTF is:
 
 $$ MTTF = (5*100)/5 = 100 years $$
-An MTTF of 100 years means that, on average, a single motor is expected to run for 100 years before failing. This may seem high, but remember that this is an average across all motors, and some motors may fail much sooner while others may last much longer. 
+An MTTF of 100 years means that, on average, a single motor is expected to run for 100 years before failing. This may seem high, but remember that this is an average across all motors, and some motors may fail much sooner while others may last much longer.
 
 ## Mean Time Between Failures
 
 Mean Time Between Failures (MTBF) is a measure of the reliability for *repairable systems*, meaning that once the item fails, it is repaired and put back into service. In this way, the item can fail multiple times. The MTBF is the ratio of total time by the number of failures for a given item.
 
-The calculation is similar to the MTTF, just with a slightly different interpretation. 
+The calculation is similar to the MTTF, just with a slightly different interpretation.
 
 Take an example where a motor fails 5 times during a total time of 10,000 hours. The MTBF is:
 
@@ -196,6 +198,31 @@ quiz(caption = "Exercise: MTTF and MTBF",
     allow_retry = TRUE
   )
 )
+```
+
+Calculate the MTBF for the following scenario.
+
+```{r ex-mtbf, exercise=TRUE}
+# A fleet of 50 generators runs for 8 years total.
+# During that time, 20 failures occur.
+# Calculate the MTBF in years.
+fleet_size <- 50
+years      <- 8
+failures   <- 20
+
+```
+
+```{r ex-mtbf-hint}
+# MTBF = Total Time / Failure Count
+# Total time = fleet_size * years
+```
+
+```{r ex-mtbf-solution}
+fleet_size <- 50
+years      <- 8
+failures   <- 20
+MTBF <- (fleet_size * years) / failures
+MTBF  # 20 years
 ```
 
 ## Failure Rate
@@ -235,6 +262,55 @@ For example, suppose a motor has a failure rate of 0.1 failures per year. The pr
 
 $$ R(10) = e^{-10*0.1} = 0.3679 = 36.79% $$
 So, there is a 36.79% chance that the motor will survive for 10 years without failing or a 63.21% chance that it will fail before 10 years.
+
+## Exploring the Reliability Function
+
+The shape of the reliability curve $R(t) = e^{-\lambda t}$ depends entirely on the failure rate $\lambda$. Use the slider below to explore how different failure rates affect reliability over time.
+
+```{r echo=FALSE}
+sliderInput("lambda_slider", "Failure Rate (λ):", min = 0.01, max = 1.0, value = 0.1, step = 0.01)
+plotOutput("reliabilityPlot")
+```
+
+```{r context="server"}
+output$reliabilityPlot <- renderPlot({
+  t <- seq(0, 30, by = 0.1)
+  R <- exp(-input$lambda_slider * t)
+  MTBF_t <- 1 / input$lambda_slider
+  plot(t, R, type = "l", col = "blue", lwd = 2,
+       xlab = "Time", ylab = "Reliability R(t)",
+       main = paste0("Exponential Reliability (λ = ", input$lambda_slider,
+                     ", MTBF = ", round(MTBF_t, 1), ")"),
+       ylim = c(0, 1))
+  abline(v = MTBF_t, col = "red", lty = 2)
+  abline(h = exp(-1), col = "red", lty = 2)
+  legend("topright", legend = c("R(t) = exp(-λt)", "t = MTBF  →  R = 36.8%"),
+         col = c("blue", "red"), lty = c(1, 2))
+})
+```
+
+As you increase $\lambda$, the curve drops more steeply. Note that at $t = MTBF = 1/\lambda$, the reliability is always exactly $e^{-1} \approx 36.8\%$, regardless of the failure rate. This is a universal property of the exponential distribution.
+
+Calculate the probability of survival in this exercise.
+
+```{r ex-reliability, exercise=TRUE}
+# A pump has a failure rate of 0.05 failures per year.
+# Calculate the probability of survival at t = 10 years.
+lambda <- 0.05
+t      <- 10
+
+```
+
+```{r ex-reliability-hint}
+# R(t) = exp(-lambda * t)
+```
+
+```{r ex-reliability-solution}
+lambda <- 0.05
+t      <- 10
+R <- exp(-lambda * t)
+R  # ~0.607 (60.7% survival probability)
+```
 
 ## $B_n$ or $L_n$ Life
 
@@ -286,11 +362,180 @@ quiz(caption = "Exercise: Failure Rate, Probability of Failure, and Bn Life",
 )
 ```
 
+Now calculate the B10 life in R.
+
+```{r ex-bn-life, exercise=TRUE}
+# A component has a failure rate of 0.05 failures per year.
+# Calculate the B10 life (time at which 10% of components have failed).
+lambda <- 0.05
+
+```
+
+```{r ex-bn-life-hint}
+# Solve F(t) = 0.10 for t:  t = -log(1 - 0.10) / lambda
+```
+
+```{r ex-bn-life-solution}
+lambda <- 0.05
+B10 <- -log(1 - 0.10) / lambda
+B10  # ~2.1 years
+```
+
+## From Exponential to Weibull
+
+The exponential model assumes a **constant** failure rate throughout an item's life. This is appropriate for electronic components that fail at random, but many mechanical components have failure rates that change over time — increasing as they wear out, or decreasing as early defects are screened out.
+
+The **Weibull distribution** generalizes the exponential by adding a shape parameter $\beta$:
+
+$$ R(t) = e^{-(t/\eta)^\beta} $$
+
+When $\beta = 1$, the Weibull reduces exactly to the exponential with $\lambda = 1/\eta$. Everything covered in this tutorial applies as a special case.
+
+| $\beta$ | Failure rate | Typical cause |
+|:---:|---|---|
+| $< 1$ | Decreasing | Infant mortality (early defects eliminated) |
+| $= 1$ | Constant | Random failures — exponential model applies |
+| $> 1$ | Increasing | Wear-out (fatigue, corrosion, aging) |
+
+The `WeibullR` package fits Weibull models to failure data. Here the same motor failure scenario is fit with a 2-parameter Weibull:
+
+```{r echo=TRUE}
+failures <- c(500, 820, 1100, 1350, 1590)
+fit <- MLEw2p(failures, show = TRUE)
+```
+
+A $\beta$ close to 1 is consistent with the exponential (random failures); higher values indicate wear-out. The **Life Data Analysis** module covers Weibull analysis in full depth.
+
+## System Reliability
+
+So far we have focused on a single component. Real systems combine many components, and the system reliability depends on how those components are arranged.
+
+### Series Systems
+
+In a **series** configuration, every component must function for the system to function. The system reliability is the product of individual component reliabilities:
+
+$$ R_{sys} = R_1 \times R_2 \times \cdots \times R_n $$
+
+Three pumps in series, each with 90% reliability:
+
+```{r echo=TRUE}
+R_components <- c(0.90, 0.90, 0.90)
+R_series <- prod(R_components)
+R_series  # 72.9%
+```
+
+The series system is *less* reliable than any individual component. Adding more components in series always reduces system reliability.
+
+### Parallel Systems
+
+In a **parallel** configuration, only one component needs to function — this is **redundancy**. The system fails only when *all* components fail:
+
+$$ R_{sys} = 1 - (1-R_1)(1-R_2) \cdots (1-R_n) $$
+
+The same three pumps in parallel:
+
+```{r echo=TRUE}
+R_parallel <- 1 - prod(1 - R_components)
+R_parallel  # 99.9%
+```
+
+Redundancy dramatically improves system reliability. Use the slider below to explore how the number of redundant components affects system reliability.
+
+```{r echo=FALSE}
+sliderInput("n_parallel", "Number of parallel components:", min = 1, max = 8, value = 2, step = 1)
+numericInput("R_each", "Individual component reliability:", value = 0.9, min = 0.5, max = 0.999, step = 0.01)
+plotOutput("systemPlot")
+```
+
+```{r context="server"}
+output$systemPlot <- renderPlot({
+  n_vals <- 1:10
+  R_c    <- input$R_each
+  R_par  <- 1 - (1 - R_c)^n_vals
+  R_sel  <- 1 - (1 - R_c)^input$n_parallel
+  plot(n_vals, R_par, type = "b", col = "steelblue", lwd = 2, pch = 19,
+       xlab = "Number of parallel components",
+       ylab = "System Reliability",
+       main = "Redundancy and System Reliability",
+       ylim = c(0, 1))
+  points(input$n_parallel, R_sel, col = "red", pch = 19, cex = 2.5)
+  abline(h = R_c, col = "gray50", lty = 2)
+  legend("bottomright",
+         legend = c("System reliability", paste0("n = ", input$n_parallel),
+                    paste0("Single component (", R_c, ")")),
+         col = c("steelblue", "red", "gray50"), lty = c(1, NA, 2),
+         pch = c(19, 19, NA))
+})
+```
+
+```{r quiz-system, echo=FALSE}
+quiz(caption = "Exercise: System Reliability",
+  question("Three components each have 80% reliability. What is the reliability of a series system?",
+    answer("80%", message = "That is a single component's reliability."),
+    answer("51.2%", correct = TRUE,
+           message = "Correct! R_sys = 0.8 × 0.8 × 0.8 = 0.512 = 51.2%."),
+    answer("93.6%", message = "93.6% would be the parallel system reliability."),
+    answer("100%", message = "System reliability is always ≤ the weakest component."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("Two identical components each have 70% reliability. What is the reliability of a parallel system?",
+    answer("49%", message = "49% = 0.7 × 0.7 is the series reliability."),
+    answer("91%", correct = TRUE,
+           message = "Correct! R_sys = 1 − (1−0.7)² = 1 − 0.09 = 0.91."),
+    answer("70%", message = "That is a single component's reliability."),
+    answer("140%", message = "Reliability cannot exceed 100%."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("A system has two components in series: component A with R = 0.95 and component B with R = 0.80. What is the system reliability?",
+    answer("0.95", message = "That is only component A's reliability."),
+    answer("0.80", message = "That is only component B's reliability."),
+    answer("0.76", correct = TRUE,
+           message = "Correct! R_sys = 0.95 × 0.80 = 0.76."),
+    answer("0.99", message = "That would be a parallel configuration."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  )
+)
+```
+
+Calculate series and parallel system reliability in R.
+
+```{r ex-system, exercise=TRUE}
+# Four components each have reliability R = 0.85.
+# 1. Calculate the reliability of a series system.
+# 2. Calculate the reliability of a parallel system.
+R_comp <- 0.85
+
+```
+
+```{r ex-system-hint}
+# Series:   R_sys = prod(R_components)
+# Parallel: R_sys = 1 - prod(1 - R_components)
+```
+
+```{r ex-system-solution}
+R_comp <- rep(0.85, 4)
+R_series   <- prod(R_comp)
+R_parallel <- 1 - prod(1 - R_comp)
+R_series    # ~0.522 (52.2%)
+R_parallel  # ~0.9995 (99.95%)
+```
+
 ## Summary
 
 Congratulations on completing the Reliability, Availability, and Maintainability (RAM) tutorial!
 
-In this tutorial, we've introduced the concepts of Reliability, Availability, and Maintainability. You have learned to calculate reliability using different assumptions and explored the importance of these concepts in system design.
+In this tutorial, we introduced the concepts of Reliability, Availability, and Maintainability. You learned to calculate key reliability metrics, explored the exponential reliability model interactively, computed series and parallel system reliability, and saw how the Weibull distribution generalizes the exponential model.
+
+**Key takeaways:**
+
+* $R(t) = e^{-\lambda t}$ — exponential reliability under a constant failure rate.
+* $MTBF = 1/\lambda$ — at $t = MTBF$, reliability is always 36.8%.
+* Series systems: $R_{sys} = \prod R_i$ — reliability *decreases* with more components.
+* Parallel systems: $R_{sys} = 1 - \prod(1-R_i)$ — redundancy *increases* reliability.
+* When $\beta \neq 1$, use the Weibull distribution (see the Life Data Analysis module).
 
 ## References
 
@@ -298,3 +543,4 @@ In this tutorial, we've introduced the concepts of Reliability, Availability, an
 
 - Aden-Buie G, Schloerke B, Allaire J, Rossell Hayes A (2023). learnr: Interactive Tutorials for R. https://rstudio.github.io/learnr/, https://github.com/rstudio/learnr.
 
+- Silkworth D, Symynck J (2022). *WeibullR: Weibull Analysis for Reliability Engineering*. R package version 1.2.1, <https://CRAN.R-project.org/package=WeibullR>.

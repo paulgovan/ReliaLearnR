@@ -181,6 +181,30 @@ quiz(caption = "Quiz: Duane Model",
 )
 ```
 
+### Exercise: Fit a Duane Model
+
+A new system was tested and the following cumulative failure counts were recorded at each cumulative test time. Fit a Duane model using `duane()` and plot the result.
+
+```{r ex-rt1, exercise=TRUE}
+times    <- c(200, 450, 750, 1100, 1500, 2000)
+failures <- c(3, 2, 2, 1, 1, 1)
+
+```
+
+```{r ex-rt1-hint}
+# Use duane() with cumulative times and per-interval failure counts, then plot
+# fit <- duane(time = times, event = failures)
+# plot(fit)
+```
+
+```{r ex-rt1-solution}
+times    <- c(200, 450, 750, 1100, 1500, 2000)
+failures <- c(3, 2, 2, 1, 1, 1)
+fit <- duane(time = times, event = failures)
+plot(fit, main = "Duane Reliability Growth Plot",
+     xlab = "Cumulative Test Time", ylab = "Cumulative Failures")
+```
+
 ## The Crow-AMSAA Model
 
 The **Crow-AMSAA Model** is another widely used model for reliability growth analysis, developed by Larry Crow and the  Army Materiel Systems Analysis Activity (AMSAA) organization in the 1970s. This model is particularly useful for systems that undergo continuous improvements and modifications during their development and testing phases. The Crow-AMSAA model is based on the concept of a Non-Homogeneous Poisson Process (NHPP), which allows for the modeling of failure behavior that changes over time.
@@ -301,6 +325,30 @@ quiz(caption = "Quiz: Crow-AMSAA Model",
     allow_retry = TRUE
   )
 )
+```
+
+### Exercise: Fit a Crow-AMSAA Model
+
+A development test recorded the following cumulative failure counts at cumulative test times. Use `rga()` with `model_type = "Crow-AMSAA"` to fit the model and plot the result.
+
+```{r ex-rt2, exercise=TRUE}
+times    <- c(50, 120, 220, 360, 530, 740, 1000)
+failures <- c(4, 3, 3, 2, 2, 1, 1)
+
+```
+
+```{r ex-rt2-hint}
+# Use rga() with model_type = "Crow-AMSAA", then plot
+# fit <- rga(time = times, event = failures, model_type = "Crow-AMSAA")
+# plot(fit)
+```
+
+```{r ex-rt2-solution}
+times    <- c(50, 120, 220, 360, 530, 740, 1000)
+failures <- c(4, 3, 3, 2, 2, 1, 1)
+fit <- rga(time = times, event = failures, model_type = "Crow-AMSAA")
+plot(fit, main = "Crow-AMSAA Reliability Growth",
+     xlab = "Cumulative Test Time", ylab = "Cumulative Failures")
 ```
 
 ### The Piecewise NHPP Model
@@ -504,6 +552,31 @@ quiz(caption = "Quiz: Arrhenius Model",
     allow_retry = TRUE
   )
 )
+```
+
+### Exercise: Compute an Arrhenius Acceleration Factor
+
+A component is tested at 85°C to accelerate failures. The use temperature is 25°C. The activation energy for the failure mechanism is 0.65 eV. Compute the Acceleration Factor using the Arrhenius model.
+
+```{r ex-rt3, exercise=TRUE}
+E_a      <- 0.65        # activation energy (eV)
+k        <- 8.617e-5    # Boltzmann's constant (eV/K)
+T_use    <- 25 + 273.15 # use temperature in Kelvin
+T_stress <- 85 + 273.15 # stress temperature in Kelvin
+
+```
+
+```{r ex-rt3-hint}
+# AF = exp((E_a / k) * (1/T_use - 1/T_stress))
+```
+
+```{r ex-rt3-solution}
+E_a      <- 0.65
+k        <- 8.617e-5
+T_use    <- 25 + 273.15
+T_stress <- 85 + 273.15
+AF <- exp((E_a / k) * (1 / T_use - 1 / T_stress))
+cat("Acceleration Factor:", round(AF, 1), "\n")
 ```
 
 ## The Power Law Model

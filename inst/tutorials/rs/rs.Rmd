@@ -227,6 +227,30 @@ quiz(caption = "Quiz: NHPP Analysis",
 )
 ```
 
+### Exercise: Fit a Crow-AMSAA Model
+
+A compressor fleet recorded cumulative operating hours and failure counts below. Use `nhpp()` with `method = "LS"` to fit a Power Law model and plot the result.
+
+```{r ex-rs1, exercise=TRUE}
+times    <- c(1000, 2500, 4000, 5500, 8000)
+failures <- c(2, 3, 4, 5, 5)
+
+```
+
+```{r ex-rs1-hint}
+# Pass time and event to nhpp(), then plot the result
+# fit <- nhpp(time = times, event = failures, method = "LS")
+# plot(fit)
+```
+
+```{r ex-rs1-solution}
+times    <- c(1000, 2500, 4000, 5500, 8000)
+failures <- c(2, 3, 4, 5, 5)
+fit <- nhpp(time = times, event = failures, method = "LS")
+plot(fit, main = "Crow-AMSAA: Compressor Fleet",
+     xlab = "Cumulative Hours", ylab = "Cumulative Failures")
+```
+
 ## Piecewise NHPP
 
 Sometimes a system's failure behavior changes at a specific point in its operating life, for example after a major overhaul, a design modification, or a change in operating environment. The **Piecewise NHPP** model fits a separate Power Law to each segment of the time axis, separated by one or more **breakpoints** $\tau$:
@@ -419,6 +443,33 @@ quiz(caption = "Quiz: Mean Cumulative Function",
 )
 ```
 
+### Exercise: Mean Cumulative Function
+
+Three systems were observed with the following failure times (hours). Each system was observed until hour 2000. Compute and plot the MCF using `mcf()`.
+
+```{r ex-rs2, exercise=TRUE}
+id    <- c(rep("1", 3), rep("2", 4), rep("3", 2))
+time  <- c(400, 900, 1500,   300, 700, 1200, 1800,   600, 1400)
+event <- rep(1, 9)
+end_times <- c("1" = 2000, "2" = 2000, "3" = 2000)
+
+```
+
+```{r ex-rs2-hint}
+# Use mcf() with the id, time, event, and end_time arguments, then plot
+# fit <- mcf(id = id, time = time, event = event, end_time = end_times)
+# plot(fit)
+```
+
+```{r ex-rs2-solution}
+id    <- c(rep("1", 3), rep("2", 4), rep("3", 2))
+time  <- c(400, 900, 1500,   300, 700, 1200, 1800,   600, 1400)
+event <- rep(1, 9)
+end_times <- c("1" = 2000, "2" = 2000, "3" = 2000)
+fit <- mcf(id = id, time = time, event = event, end_time = end_times)
+plot(fit, main = "Mean Cumulative Function", xlab = "Time (hours)", ylab = "MCF")
+```
+
 ## Interpreting Results and Repair Effectiveness
 
 ### Reading the Beta Parameter
@@ -511,6 +562,31 @@ quiz(caption = "Quiz: Interpreting Results",
     allow_retry = TRUE
   )
 )
+```
+
+### Exercise: Predict Future Failures
+
+A system has been operating for 5,000 cumulative hours. A Power Law fit yielded λ = 0.0005 and β = 1.2. Calculate the expected number of additional failures in the next 1,000 hours (from hour 5,000 to hour 6,000).
+
+```{r ex-rs3, exercise=TRUE}
+lambda    <- 0.0005
+beta      <- 1.2
+T_current <- 5000
+T_future  <- 6000
+
+```
+
+```{r ex-rs3-hint}
+# E[ΔN] = lambda * T_future^beta - lambda * T_current^beta
+```
+
+```{r ex-rs3-solution}
+lambda    <- 0.0005
+beta      <- 1.2
+T_current <- 5000
+T_future  <- 6000
+expected_failures <- lambda * T_future^beta - lambda * T_current^beta
+cat("Expected additional failures:", round(expected_failures, 2), "\n")
 ```
 
 ## Summary

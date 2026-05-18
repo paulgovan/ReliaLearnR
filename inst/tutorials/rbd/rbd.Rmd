@@ -1,0 +1,516 @@
+---
+title: "Reliability Block Diagrams and System Reliability"
+output:
+  learnr::tutorial:
+    progressive: true
+    allow_skip: true
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+```
+
+## Introduction
+
+Welcome to the tutorial on **Reliability Block Diagrams (RBDs) and System Reliability**! In the RAM module, you learned to calculate reliability metrics for individual components. This tutorial extends those concepts to *systems* — collections of components whose arrangement determines whether the system succeeds or fails.
+
+RBDs are a graphical tool for modeling how component reliabilities combine to produce system-level reliability. They are widely used in reliability engineering to analyze designs, identify vulnerabilities, and evaluate the benefit of redundancy.
+
+## Learning Objectives
+
+By the end of this module, learners will be able to:
+
+* Define reliability block diagrams and relate them to physical systems.
+* Compute system reliability for series, parallel, and mixed configurations.
+* Interpret k-out-of-n (voting) systems and calculate their reliability.
+* Describe the relationship between RBDs and Fault Tree Analysis.
+* Apply RBD calculations to a realistic multi-component system.
+
+## What is a Reliability Block Diagram?
+
+A **Reliability Block Diagram** represents each component in a system as a block with a known reliability value. The blocks are connected by lines that show how the components relate to each other functionally:
+
+* A **path** from left (input) to right (output) through functioning blocks represents a working system.
+* The RBD is *not* a wiring diagram — it shows logical dependencies, not physical connections.
+
+For example, a pump system that requires a motor, a pump, and a valve all to function would be drawn as three blocks in series. A backup generator that can substitute for a primary generator would appear as two blocks in parallel.
+
+RBDs directly connect to the RAM metrics you already know:
+
+* Each block has a reliability $R_i(t) = e^{-\lambda_i t}$ (exponential model) or a Weibull $R_i(t)$ (see the Life Data Analysis module).
+* The system reliability is derived from the block reliabilities using the formulas in this tutorial.
+
+## Series Systems
+
+In a **series** system, *all* components must function for the system to function. This is the most common configuration — think of a chain where every link must hold.
+
+$$R_{sys} = R_1 \times R_2 \times \cdots \times R_n = \prod_{i=1}^{n} R_i$$
+
+**Key insight**: A series system is *always less reliable* than its weakest component. Adding more components in series can only reduce system reliability.
+
+### Example
+
+A water pumping system requires three components to all be operational: a motor (R = 0.95), a pump (R = 0.90), and a control valve (R = 0.98).
+
+```{r echo=TRUE}
+R_motor <- 0.95
+R_pump  <- 0.90
+R_valve <- 0.98
+
+R_series <- R_motor * R_pump * R_valve
+R_series
+```
+
+The system reliability is approximately 83.8% — lower than any individual component.
+
+```{r quiz1, echo=FALSE}
+quiz(caption = "Quiz: Series Systems",
+  question("Four components in series have reliabilities 0.99, 0.97, 0.95, and 0.93. What is the system reliability?",
+    answer("0.99", message = "That is only the most reliable component."),
+    answer("0.846", correct = TRUE,
+           message = "Correct! R_sys = 0.99 × 0.97 × 0.95 × 0.93 ≈ 0.846."),
+    answer("0.960", message = "That is the average, not the product."),
+    answer("1.00", message = "System reliability is always ≤ the weakest component."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("In a series system, which component has the greatest influence on system reliability?",
+    answer("The most reliable component",
+           message = "The weakest component limits the system, not the strongest."),
+    answer("The least reliable component", correct = TRUE,
+           message = "Correct! The least reliable component is the bottleneck — improving it gives the largest gain in system reliability."),
+    answer("The component with the lowest failure rate",
+           message = "The component with the lowest failure rate is the most reliable one — but in a series system it is the least reliable component that constrains the system."),
+    answer("All components equally",
+           message = "In a series system, the least reliable component has a disproportionate effect on system reliability."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  )
+)
+```
+
+Calculate series reliability yourself.
+
+```{r ex-series, exercise=TRUE}
+# A conveyor belt system has 5 components in series.
+# Component reliabilities: 0.98, 0.96, 0.99, 0.94, 0.97
+# Calculate the system reliability.
+
+```
+
+```{r ex-series-hint}
+# R_sys <- prod(c(0.98, 0.96, 0.99, 0.94, 0.97))
+```
+
+```{r ex-series-solution}
+R_components <- c(0.98, 0.96, 0.99, 0.94, 0.97)
+R_series <- prod(R_components)
+R_series  # ~0.845
+```
+
+## Parallel Systems
+
+In a **parallel** system, only *one* component needs to function for the system to succeed. The system fails only if *all* components fail simultaneously. This is called **active redundancy**.
+
+$$R_{sys} = 1 - \prod_{i=1}^{n}(1 - R_i)$$
+
+**Key insight**: Adding parallel components always increases system reliability. Redundancy is a powerful tool for critical systems.
+
+### Example
+
+A backup power system has a primary generator (R = 0.90) and a standby generator (R = 0.85). Either one alone keeps the system running.
+
+```{r echo=TRUE}
+R_primary <- 0.90
+R_standby <- 0.85
+
+R_parallel <- 1 - (1 - R_primary) * (1 - R_standby)
+R_parallel
+```
+
+The parallel system reliability is 98.5% — much higher than either generator alone.
+
+Use the slider to explore how the number of redundant components affects system reliability.
+
+```{r echo=FALSE}
+sliderInput("n_comp", "Number of parallel components:", min = 1, max = 8, value = 2, step = 1)
+numericInput("R_ind", "Individual component reliability:", value = 0.90, min = 0.50, max = 0.999, step = 0.01)
+plotOutput("parallelPlot")
+```
+
+```{r context="server"}
+output$parallelPlot <- renderPlot({
+  n_vals <- 1:10
+  Rc     <- input$R_ind
+  R_par  <- 1 - (1 - Rc)^n_vals
+  R_sel  <- 1 - (1 - Rc)^input$n_comp
+  plot(n_vals, R_par, type = "b", col = "steelblue", lwd = 2, pch = 19,
+       xlab = "Number of redundant components",
+       ylab = "System Reliability",
+       main = "Parallel System Reliability vs. Redundancy",
+       ylim = c(0, 1))
+  points(input$n_comp, R_sel, col = "red", pch = 19, cex = 2.5)
+  abline(h = Rc, col = "gray50", lty = 2)
+  legend("bottomright",
+         legend = c("System reliability", paste0("n = ", input$n_comp),
+                    paste0("Single component (", Rc, ")")),
+         col = c("steelblue", "red", "gray50"),
+         lty = c(1, NA, 2), pch = c(19, 19, NA))
+})
+```
+
+```{r quiz2, echo=FALSE}
+quiz(caption = "Quiz: Parallel Systems",
+  question("Two components each have reliability 0.80. What is the reliability of a parallel system?",
+    answer("0.80", message = "That is a single component's reliability."),
+    answer("0.64", message = "0.64 = 0.8 × 0.8 is the series reliability."),
+    answer("0.96", correct = TRUE,
+           message = "Correct! R_sys = 1 − (1−0.80)² = 1 − 0.04 = 0.96."),
+    answer("1.60", message = "Reliability cannot exceed 1."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("Adding a third identical component (R = 0.80) in parallel to the previous two-component system gives a system reliability of approximately:",
+    answer("0.992", correct = TRUE,
+           message = "Correct! R_sys = 1 − (1−0.80)³ = 1 − 0.008 = 0.992."),
+    answer("0.96", message = "That is the two-component parallel reliability."),
+    answer("0.80", message = "That is a single component's reliability."),
+    answer("0.512", message = "0.512 = 0.8³ is three components in series, not parallel."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  )
+)
+```
+
+Calculate parallel reliability yourself.
+
+```{r ex-parallel, exercise=TRUE}
+# A critical pump station has 3 pumps in parallel.
+# Each pump has reliability 0.88.
+# What is the system reliability?
+
+```
+
+```{r ex-parallel-hint}
+# R_sys <- 1 - prod(1 - c(0.88, 0.88, 0.88))
+```
+
+```{r ex-parallel-solution}
+R_components <- c(0.88, 0.88, 0.88)
+R_parallel <- 1 - prod(1 - R_components)
+R_parallel  # ~0.9983
+```
+
+## Mixed Systems
+
+Most real systems combine series and parallel blocks. To analyze a **mixed** system, decompose it into subsystems and apply series and parallel rules step by step — working from the innermost blocks outward.
+
+### Example
+
+A safety system has:
+
+* **Subsystem A**: a sensor (R = 0.95) and a transmitter (R = 0.97) in **series**.
+* **Subsystem B**: two redundant actuators (each R = 0.90) in **parallel**.
+* Subsystems A and B are in **series** (both must work).
+
+```{r echo=TRUE}
+# Subsystem A (series)
+R_A <- 0.95 * 0.97
+R_A
+
+# Subsystem B (parallel)
+R_B <- 1 - (1 - 0.90) * (1 - 0.90)
+R_B
+
+# Overall system (A and B in series)
+R_system <- R_A * R_B
+R_system
+```
+
+```{r quiz3, echo=FALSE}
+quiz(caption = "Quiz: Mixed Systems",
+  question("A system has two subsystems in series. Subsystem 1 has two components in parallel (each R = 0.85); Subsystem 2 is a single component with R = 0.92. What is the system reliability?",
+    answer("0.85 × 0.92 = 0.782", message = "That ignores the parallel redundancy in Subsystem 1."),
+    answer("[1 − (1−0.85)²] × 0.92 ≈ 0.899", correct = TRUE,
+           message = "Correct! R_sub1 = 1 − 0.15² = 0.9775, then R_sys = 0.9775 × 0.92 ≈ 0.899."),
+    answer("0.85 + 0.92 = 1.77", message = "Reliabilities cannot be added like this."),
+    answer("0.92", message = "That ignores Subsystem 1 entirely."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("To analyze a complex mixed RBD, the recommended approach is to:",
+    answer("Average all component reliabilities",
+           message = "Averaging does not account for the series/parallel topology."),
+    answer("Decompose into series and parallel subsystems, then apply the formulas step by step", correct = TRUE,
+           message = "Correct! Work from the innermost blocks outward, replacing each parallel or series group with its equivalent single-block reliability."),
+    answer("Use only the reliability of the most critical component",
+           message = "This would ignore the contributions of all other components."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  )
+)
+```
+
+## k-out-of-n Systems
+
+A **k-out-of-n** system succeeds if at least *k* of its *n* identical components function. This generalizes series (k = n) and parallel (k = 1):
+
+* **k = n**: all must work → series.
+* **k = 1**: at least one works → parallel.
+* **1 < k < n**: voting or load-sharing systems.
+
+The reliability of a k-out-of-n system with identical components (each with reliability *p*) follows the binomial distribution:
+
+$$R_{k/n} = \sum_{i=k}^{n} \binom{n}{i} p^i (1-p)^{n-i} = 1 - \text{pbinom}(k-1, n, 1-p)$$
+
+### Example
+
+A flight control system uses 3 redundant computers. At least 2 of the 3 must agree for the system to function safely (a 2-out-of-3 voter). Each computer has reliability R = 0.99.
+
+```{r echo=TRUE}
+n <- 3      # total components
+k <- 2      # minimum required
+p <- 0.99   # individual reliability
+
+R_voting <- 1 - pbinom(k - 1, n, 1 - p)
+R_voting
+```
+
+The 2-out-of-3 system has reliability 0.9997.
+
+```{r quiz4, echo=FALSE}
+quiz(caption = "Quiz: k-out-of-n Systems",
+  question("A 2-out-of-4 system has 4 identical components each with R = 0.90. What R function computes its reliability?",
+    answer("1 - pbinom(1, 4, 0.10)", correct = TRUE,
+           message = "Correct! k=2, n=4, failure probability = 1−0.90 = 0.10. Use pbinom(k−1, n, 1−p) = pbinom(1, 4, 0.10)."),
+    answer("pbinom(2, 4, 0.90)",
+           message = "This gives P(X ≤ 2 successes), not the probability that at least 2 succeed."),
+    answer("1 - pbinom(2, 4, 0.90)",
+           message = "The third argument should be the failure probability (1−p), not p."),
+    answer("prod(rep(0.90, 4))",
+           message = "That formula gives the series reliability (all 4 must work), not 2-out-of-4."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("How does a 1-out-of-n system relate to a parallel system?",
+    answer("They are different — a 1-out-of-n system requires only the first component to work",
+           message = "A 1-out-of-n system requires at least one of any n components to work, which is exactly a parallel configuration."),
+    answer("They are equivalent — both require only one component to function", correct = TRUE,
+           message = "Correct! When k = 1, the k-out-of-n formula reduces to the parallel reliability formula."),
+    answer("A 1-out-of-n system is less reliable than a parallel system",
+           message = "They are the same configuration."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  )
+)
+```
+
+Calculate k-out-of-n reliability in R.
+
+```{r ex-koon, exercise=TRUE}
+# A 3-out-of-5 redundant sensor array.
+# Each sensor has reliability p = 0.95.
+# Calculate the system reliability.
+n <- 5
+k <- 3
+p <- 0.95
+
+```
+
+```{r ex-koon-hint}
+# R_sys <- 1 - pbinom(k - 1, n, 1 - p)
+```
+
+```{r ex-koon-solution}
+n <- 5
+k <- 3
+p <- 0.95
+R_sys <- 1 - pbinom(k - 1, n, 1 - p)
+R_sys  # ~0.9988
+```
+
+## System MTTF
+
+For a **series** system of components with constant failure rates (exponential distribution), the system failure rate is the sum of component failure rates:
+
+$$\lambda_{sys} = \sum_{i=1}^{n} \lambda_i \qquad MTTF_{sys} = \frac{1}{\lambda_{sys}}$$
+
+For $n$ identical parallel components each with failure rate $\lambda$:
+
+$$MTTF_{parallel} = \frac{1}{\lambda}\left(1 + \frac{1}{2} + \frac{1}{3} + \cdots + \frac{1}{n}\right)$$
+
+### Example
+
+Two pumps in parallel, each with $\lambda = 0.01$ failures/hour:
+
+```{r echo=TRUE}
+lambda <- 0.01
+
+MTTF_single   <- 1 / lambda
+MTTF_parallel <- (1 / lambda) * (1 + 1/2)
+
+MTTF_single    # 100 hours
+MTTF_parallel  # 150 hours — 50% longer with one spare
+```
+
+```{r quiz5, echo=FALSE}
+quiz(caption = "Quiz: System MTTF",
+  question("Three components in series have failure rates 0.02, 0.03, and 0.05 failures/hour. What is the system MTTF?",
+    answer("10 hours", correct = TRUE,
+           message = "Correct! λ_sys = 0.02 + 0.03 + 0.05 = 0.10, so MTTF = 1/0.10 = 10 hours."),
+    answer("16.7 hours", message = "That is 1/0.06 — you may have missed one failure rate."),
+    answer("100 hours", message = "100 hours is the MTTF of a single component with λ = 0.01."),
+    answer("0.1 hours", message = "0.1 is the system failure rate, not the MTTF."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("Compared to a single component, the MTTF of two identical components in parallel is:",
+    answer("Twice as large",
+           message = "Not quite. For two identical parallel components, MTTF_parallel = (3/2) × MTTF_single — a 50% increase."),
+    answer("1.5 times as large", correct = TRUE,
+           message = "Correct! MTTF_parallel = (1/λ)(1 + 1/2) = 1.5 × MTTF_single."),
+    answer("The same",
+           message = "Redundancy always increases MTTF."),
+    answer("Three times as large",
+           message = "Three times applies to three identical parallel components using the harmonic series formula."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  )
+)
+```
+
+## Introduction to Fault Tree Analysis
+
+**Fault Tree Analysis (FTA)** is a top-down approach to reliability analysis that starts with an undesirable system event (the **top event**) and works backward to identify the combinations of component failures that could cause it.
+
+While an RBD asks "What must work for the system to succeed?", a fault tree asks "What can cause the system to fail?"
+
+### Gates
+
+A fault tree uses logic gates to combine failure events:
+
+* **AND gate** ($\land$): the top event occurs only if *all* input events occur simultaneously. This corresponds to **parallel** components in an RBD — all must fail to cause system failure.
+* **OR gate** ($\lor$): the top event occurs if *any* input event occurs. This corresponds to **series** components in an RBD — any single failure causes system failure.
+
+### RBD — Fault Tree Duality
+
+Every RBD has a corresponding fault tree and vice versa:
+
+| RBD configuration | Fault tree gate for system failure |
+|:---:|:---:|
+| Series (all must work) | OR gate (any failure causes system failure) |
+| Parallel (any can work) | AND gate (all must fail for system failure) |
+
+This duality means the two tools provide complementary views of the same system. RBDs are better for computing reliability; fault trees are better for tracing failure causes and identifying critical combinations.
+
+For complex fault trees, the R package `FaultTree` on CRAN provides tools for building and analyzing fault tree models programmatically.
+
+```{r quiz6, echo=FALSE}
+quiz(caption = "Quiz: Fault Tree Analysis",
+  question("A fault tree has an AND gate combining two component failures. This corresponds to which RBD configuration?",
+    answer("Series — both components in series",
+           message = "A series RBD means any single failure causes system failure, which maps to an OR gate in a fault tree."),
+    answer("Parallel — both components in parallel", correct = TRUE,
+           message = "Correct! An AND gate means the system fails only if both components fail — exactly the parallel (redundant) RBD configuration."),
+    answer("k-out-of-n with k = 2",
+           message = "A 2-out-of-n system is more complex than a simple AND/OR gate."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  ),
+  question("Which statement best distinguishes FTA from RBD?",
+    answer("FTA models reliability; RBD models failure modes",
+           message = "It is the other way around — FTA is failure-oriented and RBD is success-oriented."),
+    answer("RBD models what must succeed for the system to work; FTA traces what can cause the system to fail", correct = TRUE,
+           message = "Correct! RBDs are success-space models; fault trees are failure-space models. They are logically dual and provide complementary views."),
+    answer("RBD applies only to series systems; FTA applies to parallel systems",
+           message = "Both methods apply to any system topology."),
+    random_answer_order = TRUE,
+    allow_retry = TRUE
+  )
+)
+```
+
+## Case Study: Industrial Cooling System
+
+Let's apply everything to a realistic example. An industrial cooling system has the following architecture:
+
+1. **Water supply subsystem**: two pumps in parallel (each R = 0.92), followed by a filter in series (R = 0.99).
+2. **Control subsystem**: a primary controller (R = 0.97) and a backup controller in parallel (R = 0.95).
+3. The water supply and control subsystems must both work (series at system level).
+
+```{r echo=TRUE}
+# Step 1 — Water supply subsystem
+R_pump_parallel <- 1 - (1 - 0.92)^2
+R_water <- R_pump_parallel * 0.99
+R_water
+
+# Step 2 — Control subsystem
+R_control <- 1 - (1 - 0.97) * (1 - 0.95)
+R_control
+
+# Step 3 — Overall system (both subsystems in series)
+R_system <- R_water * R_control
+R_system
+```
+
+Now explore what happens if the filter is upgraded.
+
+```{r ex-casestudy, exercise=TRUE}
+# Modify the case study: the filter is upgraded to R = 0.999.
+# Recalculate the system reliability with the improved filter.
+R_pump1  <- 0.92
+R_pump2  <- 0.92
+R_filter <- 0.999   # upgraded from 0.99
+R_ctrl1  <- 0.97
+R_ctrl2  <- 0.95
+
+```
+
+```{r ex-casestudy-hint}
+# R_pump_parallel <- 1 - (1 - R_pump1) * (1 - R_pump2)
+# R_water  <- R_pump_parallel * R_filter
+# R_control <- 1 - (1 - R_ctrl1) * (1 - R_ctrl2)
+# R_system <- R_water * R_control
+```
+
+```{r ex-casestudy-solution}
+R_pump1  <- 0.92
+R_pump2  <- 0.92
+R_filter <- 0.999
+R_ctrl1  <- 0.97
+R_ctrl2  <- 0.95
+
+R_pump_parallel <- 1 - (1 - R_pump1) * (1 - R_pump2)
+R_water   <- R_pump_parallel * R_filter
+R_control <- 1 - (1 - R_ctrl1) * (1 - R_ctrl2)
+R_system  <- R_water * R_control
+R_system  # ~0.985
+```
+
+## Summary
+
+Congratulations on completing the Reliability Block Diagrams and System Reliability tutorial!
+
+**Key takeaways:**
+
+* **Series**: $R_{sys} = \prod R_i$ — every component must work; reliability decreases with more components.
+* **Parallel**: $R_{sys} = 1 - \prod(1-R_i)$ — redundancy; only one component needs to work.
+* **Mixed**: decompose into subsystems, apply formulas step by step.
+* **k-out-of-n**: `1 - pbinom(k-1, n, 1-p)` for voting / load-sharing systems.
+* **Series MTTF**: $1/\sum\lambda_i$; **Parallel MTTF** of $n$ identical units: $(1/\lambda)\sum_{i=1}^{n}(1/i)$.
+* **FTA duality**: series RBD ↔ OR gate; parallel RBD ↔ AND gate.
+
+### Additional Resources
+
+* ReliaSoft — Reliability Block Diagrams: <https://www.reliawiki.org/index.php/Reliability_Block_Diagram>
+
+### References
+
+- Abernethy, R.B. (2004) The New Weibull Handbook. Fifth Edition.
+
+- Aden-Buie G, Schloerke B, Allaire J, Rossell Hayes A (2023). learnr: Interactive Tutorials for R. https://rstudio.github.io/learnr/, https://github.com/rstudio/learnr.
+
+- Billinton R, Allan R (1992). *Reliability Evaluation of Engineering Systems*. Second Edition. Plenum Press, New York.
+
+- Vesely W, Goldberg F, Roberts N, Haasl D (1981). *Fault Tree Handbook*. US Nuclear Regulatory Commission, NUREG-0492.
