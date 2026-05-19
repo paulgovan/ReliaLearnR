@@ -48,6 +48,7 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-tutorials" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Tutorials</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-tutorials">
 <li><a class="dropdown-item" href="tutorials/ram.html">Reliability, Availability, and Maintainability (RAM)</a></li>
+    <li><a class="dropdown-item" href="tutorials/rbd.html">Reliability Block Diagrams</a></li>
     <li><a class="dropdown-item" href="tutorials/lda.html">An Introduction to Life Data Analysis</a></li>
     <li><a class="dropdown-item" href="tutorials/rt.html">An Introduction to Reliability Testing</a></li>
     <li><a class="dropdown-item" href="tutorials/rs.html">An Introduction to Repairable Systems Analysis</a></li>
@@ -83,7 +84,7 @@
 </div>
 <!-- badges: start -->
 
-<p>Welcome to <strong>ReliaLearnR!</strong> This package provides interactive learning modules on fundamental concepts in reliability analysis. The modules are built using the <code>learnr</code> package and cover topics such as life data analysis, reliability testing, repairable systems analysis, and reliability, availability, and maintainability (RAM) concepts. The package also includes helper functions for common RAM calculations.</p>
+<p>Welcome to <strong>ReliaLearnR!</strong> This package provides interactive learning modules on fundamental concepts in reliability analysis. The modules are built using the <code>learnr</code> package and cover topics such as life data analysis, reliability testing, repairable systems analysis, reliability block diagrams, and reliability, availability, and maintainability (RAM) concepts. The package also includes helper functions for common RAM calculations.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -104,10 +105,12 @@
 <div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
 </h2>
-<p>The package includes four interactive learning modules. To launch the modules, load the package and call the respective function:</p>
+<p>The package includes five interactive learning modules. To launch the modules, load the package and call the respective function:</p>
 <ul>
 <li>
 <code><a href="reference/ram.html">ram()</a></code> - A quick reference for common Reliability, Availability, and Maintainability (RAM) concepts</li>
+<li>
+<code><a href="reference/rbd.html">rbd()</a></code> - An introduction to Reliability Block Diagrams</li>
 <li>
 <code><a href="reference/lda.html">lda()</a></code> - An introduction to Life Data Analysis</li>
 <li>
@@ -115,7 +118,7 @@
 <li>
 <code><a href="reference/rs.html">rs()</a></code> - An introduction to Repairable Systems Analysis</li>
 </ul>
-<p>The modules can also be accessed in a browser at <a href="https://paulgovan.shinyapps.io/RAMAnalysis/" class="external-link">paulgovan.shinyapps.io/RAMAnalysis/</a>, <a href="https://paulgovan.shinyapps.io/LifeDataAnalysis/" class="external-link">paulgovan.shinyapps.io/LifeDataAnalysis/</a> and <a href="https://paulgovan.shinyapps.io/ReliabilityTesting/" class="external-link">paulgovan.shinyapps.io/ReliabilityTesting/</a>, <a href="https://govan.shinyapps.io/RepairableSystems/" class="external-link">govan.shinyapps.io/RepairableSystems/</a></p>
+<p>The modules can also be accessed in a browser at <a href="https://paulgovan.shinyapps.io/RAMAnalysis/" class="external-link">paulgovan.shinyapps.io/RAMAnalysis/</a>, <a href="https://govan.shinyapps.io/ReliabilityBlocks/" class="external-link">govan.shinyapps.io/ReliabilityBlocks/</a> <a href="https://paulgovan.shinyapps.io/LifeDataAnalysis/" class="external-link">paulgovan.shinyapps.io/LifeDataAnalysis/</a> and <a href="https://paulgovan.shinyapps.io/ReliabilityTesting/" class="external-link">paulgovan.shinyapps.io/ReliabilityTesting/</a>, <a href="https://govan.shinyapps.io/RepairableSystems/" class="external-link">govan.shinyapps.io/RepairableSystems/</a></p>
 <p><img src="https://github.com/paulgovan/ReliaLearnR/blob/master/inst/paper/ReliaLearnR.png?raw=true"><!-- --></p>
 <p>The package also includes several helper functions for common RAM calculations. These functions can be used independently of the learning modules:</p>
 <ul>
