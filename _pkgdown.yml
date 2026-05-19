@@ -9,6 +9,9 @@ tutorials:
 - name: ram
   title: Reliability, Availability, and Maintainability (RAM)
   url: https://paulgovan.shinyapps.io/RAMAnalysis/
+- name: rbd
+  title: Reliability Block Diagrams
+  url: https://govan.shinyapps.io/ReliabilityBlocks/
 - name: lda
   title: An Introduction to Life Data Analysis
   url: https://paulgovan.shinyapps.io/LifeDataAnalysis/

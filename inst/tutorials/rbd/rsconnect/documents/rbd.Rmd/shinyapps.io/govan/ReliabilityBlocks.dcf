@@ -1,0 +1,13 @@
+name: ReliabilityBlocks
+title: ReliabilityBlocks
+username: govan
+account: govan
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 17388447
+bundleId: 12015015
+url: https://govan.shinyapps.io/ReliabilityBlocks/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: rbd.html

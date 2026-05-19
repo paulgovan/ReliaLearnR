@@ -21,9 +21,10 @@ coverage](https://codecov.io/gh/paulgovan/ReliaLearnR/graph/badge.svg)](https://
 Welcome to **ReliaLearnR!** This package provides interactive learning
 modules on fundamental concepts in reliability analysis. The modules are
 built using the `learnr` package and cover topics such as life data
-analysis, reliability testing, repairable systems analysis, and
-reliability, availability, and maintainability (RAM) concepts. The
-package also includes helper functions for common RAM calculations.
+analysis, reliability testing, repairable systems analysis, reliability
+block diagrams, and reliability, availability, and maintainability (RAM)
+concepts. The package also includes helper functions for common RAM
+calculations.
 
 ## Installation
 
@@ -53,17 +54,19 @@ the resources at <https://education.rstudio.com/learn/beginner/>.
 
 ## Usage
 
-The package includes four interactive learning modules. To launch the
+The package includes five interactive learning modules. To launch the
 modules, load the package and call the respective function:
 
 - `ram()` - A quick reference for common Reliability, Availability, and
   Maintainability (RAM) concepts
+- `rbd()` - An introduction to Reliability Block Diagrams
 - `lda()` - An introduction to Life Data Analysis
 - `rt()` - An introduction to Reliability Testing
 - `rs()` - An introduction to Repairable Systems Analysis
 
 The modules can also be accessed in a browser at
 [paulgovan.shinyapps.io/RAMAnalysis/](https://paulgovan.shinyapps.io/RAMAnalysis/),
+[govan.shinyapps.io/ReliabilityBlocks/](https://govan.shinyapps.io/ReliabilityBlocks/)
 [paulgovan.shinyapps.io/LifeDataAnalysis/](https://paulgovan.shinyapps.io/LifeDataAnalysis/)
 and
 [paulgovan.shinyapps.io/ReliabilityTesting/](https://paulgovan.shinyapps.io/ReliabilityTesting/),
