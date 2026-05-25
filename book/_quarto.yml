@@ -46,6 +46,8 @@ format:
     number-sections: true
     cover-image: cover.png
 
+prefer-html: true
+
 execute:
   echo: true
   warning: false
