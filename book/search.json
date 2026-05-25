@@ -1,0 +1,1032 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Reliability Analysis with R: A Companion Guide",
+    "section": "",
+    "text": "Preface\nThis book is a companion reference guide to the ReliaLearnR interactive learning modules. Where the tutorials offer hands-on practice with immediate feedback and interactive widgets, this book provides readable, searchable, printable chapters that cover the same material in a narrative format — plus two additional chapters on the wider ReliaLearnR ecosystem.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#how-to-use-this-book-and-the-tutorials-together",
+    "href": "index.html#how-to-use-this-book-and-the-tutorials-together",
+    "title": "Reliability Analysis with R: A Companion Guide",
+    "section": "How to Use This Book and the Tutorials Together",
+    "text": "How to Use This Book and the Tutorials Together\nThe interactive tutorials and this book cover the same core content but serve different purposes:\n\n\n\nFeature\nInteractive Tutorials\nThis Book\n\n\n\n\nInstant code feedback\nYes\nNo\n\n\nQuiz questions\nYes\nReview questions\n\n\nInteractive sliders\nYes\nStatic equivalents\n\n\nSearchable / printable\nNo\nYes\n\n\nCopy-paste code\nLimited\nFull\n\n\nEcosystem chapters (ReliaPlotR, ReliaShiny)\nNo\nYes\n\n\n\nRecommended workflow: Read a chapter here first to understand the concepts and see the code, then open the corresponding tutorial to practice. The chapter order mirrors the tutorial progression.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#the-relialearnr-ecosystem",
+    "href": "index.html#the-relialearnr-ecosystem",
+    "title": "Reliability Analysis with R: A Companion Guide",
+    "section": "The ReliaLearnR Ecosystem",
+    "text": "The ReliaLearnR Ecosystem\nReliaLearnR is one part of a broader suite of R packages for reliability analysis:\n\n\n\nPackage\nRole\n\n\n\n\nReliaLearnR\nInteractive learning modules\n\n\nWeibullR\nWeibull life data analysis\n\n\nReliaGrowR\nReliability growth and repairable systems\n\n\nWeibullR.ALT\nAccelerated life testing\n\n\nReliaPlotR\nInteractive reliability plots\n\n\nReliaShiny\nWeb-based reliability analysis app",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#installation",
+    "href": "index.html#installation",
+    "title": "Reliability Analysis with R: A Companion Guide",
+    "section": "Installation",
+    "text": "Installation\nInstall the core packages needed to run the code in this book:\n\ninstall.packages(c(\n  \"ReliaLearnR\",\n  \"WeibullR\",\n  \"ReliaGrowR\",\n  \"WeibullR.ALT\",\n  \"DiagrammeR\",\n  \"ReliaPlotR\",\n  \"ReliaShiny\"\n))",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#chapter-overview",
+    "href": "index.html#chapter-overview",
+    "title": "Reliability Analysis with R: A Companion Guide",
+    "section": "Chapter Overview",
+    "text": "Chapter Overview\n\nRAM — Foundational reliability, availability, and maintainability metrics.\nReliability Block Diagrams — Series, parallel, mixed, and k-out-of-n systems.\nLife Data Analysis — Weibull distribution, censoring, MRR vs MLE, and contour plots.\nReliability Testing — Reliability growth models and accelerated life testing.\nRepairable Systems — Power Law Process, MCF, and fleet-level analysis.\nInteractive Plots with ReliaPlotR — Publishable interactive reliability charts.\nWeb-Based Analysis with ReliaShiny — Point-and-click reliability analysis.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#about-the-author",
+    "href": "index.html#about-the-author",
+    "title": "Reliability Analysis with R: A Companion Guide",
+    "section": "About the Author",
+    "text": "About the Author\nPaul Govan is the author of ReliaLearnR, ReliaGrowR, ReliaPlotR, and ReliaShiny. He can be reached at paul.govan2@gmail.com.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "01-ram.html",
+    "href": "01-ram.html",
+    "title": "1  Reliability, Availability, and Maintainability (RAM)",
+    "section": "",
+    "text": "1.1 Introduction\nReliability, Availability, and Maintainability (RAM) are the foundational metrics of reliability engineering. They describe how well a system performs its intended function, how often it is usable, and how quickly it can be restored when it fails. This chapter introduces these concepts and builds toward calculating probability of failure, \\(B_n\\) life, and system-level reliability.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Reliability, Availability, and Maintainability (RAM)</span>"
+    ]
+  },
+  {
+    "objectID": "01-ram.html#learning-objectives",
+    "href": "01-ram.html#learning-objectives",
+    "title": "1  Reliability, Availability, and Maintainability (RAM)",
+    "section": "1.2 Learning Objectives",
+    "text": "1.2 Learning Objectives\nBy the end of this chapter, you will be able to:\n\nDefine key reliability metrics: reliability, availability, and failure rate.\nDescribe the significance of MTTR, MTTF, and MTBF.\nCalculate probability of failure using reliability data.\nInterpret \\(B_n\\) (or \\(L_n\\)) life values.\nExplain the bathtub curve and identify which failure region a component occupies given its \\(\\beta\\) value.\nCompute system reliability for series and parallel configurations.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Reliability, Availability, and Maintainability (RAM)</span>"
+    ]
+  },
+  {
+    "objectID": "01-ram.html#what-is-ram",
+    "href": "01-ram.html#what-is-ram",
+    "title": "1  Reliability, Availability, and Maintainability (RAM)",
+    "section": "1.3 What is RAM?",
+    "text": "1.3 What is RAM?\nReliability: The ability of an item to perform its intended function without failure over a specified period.\nAvailability: The proportion of time an item is in a functioning condition.\nMaintainability: The ease and speed with which an item can be restored to operational status after a failure.\nThese three concepts are interrelated: a highly reliable item will be available more often, and an item that is easy to maintain can be restored to service quickly, further improving availability.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Reliability, Availability, and Maintainability (RAM)</span>"
+    ]
+  },
+  {
+    "objectID": "01-ram.html#reliability",
+    "href": "01-ram.html#reliability",
+    "title": "1  Reliability, Availability, and Maintainability (RAM)",
+    "section": "1.4 Reliability",
+    "text": "1.4 Reliability\nReliability is the probability that an item will not fail under defined conditions for a specified period:\n\\[\\text{Reliability} = \\left(1 - \\frac{\\text{Failed Time}}{\\text{Total Time}}\\right) \\times 100\\]\nExample: A motor ran for 5 years total and was failed for 10 of those days.\n\\[\\text{Reliability} = \\left(1 - \\frac{10}{5 \\times 365}\\right) \\times 100 = 94.5\\%\\]\nUnreliability is the complement:\n\\[\\text{Unreliability} = 1 - \\text{Reliability} = \\frac{\\text{Failed Time}}{\\text{Total Time}} \\times 100\\]\nThe ReliaLearnR package includes helper functions for these calculations:\n\nlibrary(ReliaLearnR)\n\n# Motor: 5 years total, 10 days failed\nrel(outageTime = 10, totalTime = 5 * 365)\n\n[1] 0.9945205\n\n\n\n\n\n\n\n\nTipReview\n\n\n\nA machine ran for 3 years total and was failed for 5 of those days. What are the reliability and unreliability?\n\n\nAnswer\n\nReliability = \\((1 - 5/(3 \\times 365)) \\times 100 = 99.5\\%\\). Unreliability = \\(0.5\\%\\).",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Reliability, Availability, and Maintainability (RAM)</span>"
+    ]
+  },
+  {
+    "objectID": "01-ram.html#availability",
+    "href": "01-ram.html#availability",
+    "title": "1  Reliability, Availability, and Maintainability (RAM)",
+    "section": "1.5 Availability",
+    "text": "1.5 Availability\nAvailability accounts for both failed time and scheduled maintenance — any time the item is unavailable for service:\n\\[\\text{Availability} = \\left(1 - \\frac{\\text{Unavailable Time}}{\\text{Total Time}}\\right) \\times 100\\]\nExample: A motor ran for 5 years, was failed for 10 days, and had 15 days of scheduled maintenance.\n\\[\\text{Availability} = \\left(1 - \\frac{10 + 15}{5 \\times 365}\\right) \\times 100 = 93.2\\%\\]\n\n# Motor: 5 years, 10 days failed + 15 days maintenance = 25 unavailable\navail(unavailTime = 25, totalTime = 5 * 365)\n\n[1] 0.9863014\n\n\nNote: standby time (available but not in use) does not count as unavailable time.\n\n\n\n\n\n\nTipReview\n\n\n\nWhat is the difference between reliability and availability?\n\n\nAnswer\n\nAvailability includes scheduled maintenance downtime; reliability does not. Availability \\(\\leq\\) Reliability (all failed time reduces both, but only availability is also reduced by planned maintenance).",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Reliability, Availability, and Maintainability (RAM)</span>"
+    ]
+  },
+  {
+    "objectID": "01-ram.html#mean-time-to-repair-mttr",
+    "href": "01-ram.html#mean-time-to-repair-mttr",
+    "title": "1  Reliability, Availability, and Maintainability (RAM)",
+    "section": "1.6 Mean Time to Repair (MTTR)",
+    "text": "1.6 Mean Time to Repair (MTTR)\nMTTR measures maintainability — the average time required to repair a failed item:\n\\[\\text{MTTR} = \\frac{\\sum_{i=1}^{n} \\text{RepairTime}_i}{\\text{RepairCount}}\\]\nExample: 5 failures with repair times of 5, 10, 15, 8, and 12 days.\n\\[\\text{MTTR} = \\frac{5 + 10 + 15 + 8 + 12}{5} = 10 \\text{ days}\\]",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Reliability, Availability, and Maintainability (RAM)</span>"
+    ]
+  },
+  {
+    "objectID": "01-ram.html#mean-time-to-failure-mttf",
+    "href": "01-ram.html#mean-time-to-failure-mttf",
+    "title": "1  Reliability, Availability, and Maintainability (RAM)",
+    "section": "1.7 Mean Time to Failure (MTTF)",
+    "text": "1.7 Mean Time to Failure (MTTF)\nMTTF is a reliability measure for non-repairable items. Once the item fails, it is replaced rather than repaired.\n\\[\\text{MTTF} = \\frac{\\text{Total Time}}{\\text{FailureCount}}\\]\nExample: 100 motors run for 5 years total; 5 failures occur.\n\\[\\text{MTTF} = \\frac{5 \\times 100}{5} = 100 \\text{ years}\\]\n\nmttf(failures = 5, totalTime = 5 * 100)\n\n[1] 100",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Reliability, Availability, and Maintainability (RAM)</span>"
+    ]
+  },
+  {
+    "objectID": "01-ram.html#mean-time-between-failures-mtbf",
+    "href": "01-ram.html#mean-time-between-failures-mtbf",
+    "title": "1  Reliability, Availability, and Maintainability (RAM)",
+    "section": "1.8 Mean Time Between Failures (MTBF)",
+    "text": "1.8 Mean Time Between Failures (MTBF)\nMTBF is the reliability measure for repairable systems, where the item is restored to service after each failure.\n\\[\\text{MTBF} = \\frac{\\text{Total Time}}{\\text{FailureCount}}\\]\nThe formula is identical to MTTF, but the interpretation differs: MTBF is the average time between successive failures on the same system.\nExample: A motor fails 5 times during 10,000 total operating hours.\n\\[\\text{MTBF} = \\frac{10{,}000}{5} = 2{,}000 \\text{ hours}\\]\n\nmtbf(failures = 5, totalTime = 10000)\n\n[1] 2000\n\n\n\n\n\n\n\n\nNoteTry It\n\n\n\nA fleet of 50 generators runs for 8 years. During that time, 20 failures occur. Calculate the MTBF in years.\n\nfleet_size &lt;- 50\nyears      &lt;- 8\nfailures   &lt;- 20\n# Calculate MTBF = (fleet_size * years) / failures\n\n\n\nSolution\n\n\nfleet_size &lt;- 50\nyears      &lt;- 8\nfailures   &lt;- 20\nMTBF &lt;- (fleet_size * years) / failures\nMTBF  # 20 years\n\n[1] 20\n\n\n\n\n\n\n\n\n\n\n\nTipReview\n\n\n\nWhat is the difference between MTTF and MTBF?\n\n\nAnswer\n\nMTTF is for non-repairable items (replaced after failure); MTBF is for repairable systems (restored to service after failure). Both use the same formula, but MTBF represents the average time between successive failures of the same system.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Reliability, Availability, and Maintainability (RAM)</span>"
+    ]
+  },
+  {
+    "objectID": "01-ram.html#failure-rate",
+    "href": "01-ram.html#failure-rate",
+    "title": "1  Reliability, Availability, and Maintainability (RAM)",
+    "section": "1.9 Failure Rate",
+    "text": "1.9 Failure Rate\nThe failure rate \\(\\lambda\\) is the inverse of MTBF:\n\\[\\lambda = \\frac{1}{\\text{MTBF}} = \\frac{\\text{FailureCount}}{\\text{Total Time}}\\]\nA key assumption of MTBF is a constant failure rate throughout the item’s life. While this is not always true in practice, it is a reasonable approximation for many systems during their useful life period.\nExample: 100 motors run for 10 years; 20 failures occur.\n\\[\\lambda = \\frac{20}{10 \\times 100} = 0.02 \\text{ failures per year}\\]\n\nfr(failures = 20, totalTime = 10 * 100)\n\n[1] 0.02",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Reliability, Availability, and Maintainability (RAM)</span>"
+    ]
+  },
+  {
+    "objectID": "01-ram.html#probability-of-failure",
+    "href": "01-ram.html#probability-of-failure",
+    "title": "1  Reliability, Availability, and Maintainability (RAM)",
+    "section": "1.10 Probability of Failure",
+    "text": "1.10 Probability of Failure\nUnder the constant failure rate assumption, failure times follow an exponential distribution. The cumulative probability of failure prior to time \\(t\\) is:\n\\[F(t) = 1 - e^{-\\lambda t}\\]\nAnd the cumulative probability of survival (reliability function) is:\n\\[R(t) = 1 - F(t) = e^{-\\lambda t}\\]\nExample: A motor has a failure rate of 0.1 failures/year. Probability of surviving 10 years:\n\\[R(10) = e^{-10 \\times 0.1} = e^{-1} \\approx 36.8\\%\\]\n\nlambda &lt;- 0.1\nt      &lt;- 10\nR &lt;- exp(-lambda * t)\nR\n\n[1] 0.3678794\n\n\n\nThe Reliability Curve\nThe shape of \\(R(t) = e^{-\\lambda t}\\) depends entirely on \\(\\lambda\\). Below are curves for three different failure rates:\n\nt &lt;- seq(0, 30, by = 0.1)\n\nplot(t, exp(-0.05 * t), type = \"l\", col = \"blue\", lwd = 2,\n     xlab = \"Time\", ylab = \"Reliability R(t)\",\n     main = \"Exponential Reliability for Different Failure Rates\",\n     ylim = c(0, 1))\nlines(t, exp(-0.1 * t),  col = \"red\",    lwd = 2)\nlines(t, exp(-0.3 * t),  col = \"darkgreen\", lwd = 2)\nabline(h = exp(-1), col = \"gray50\", lty = 2)\nlegend(\"topright\",\n       legend = c(\"λ = 0.05 (MTBF = 20)\", \"λ = 0.10 (MTBF = 10)\", \"λ = 0.30 (MTBF = 3.3)\",\n                  \"R = 36.8% at t = MTBF\"),\n       col = c(\"blue\", \"red\", \"darkgreen\", \"gray50\"),\n       lty = c(1, 1, 1, 2), lwd = 2)\n\n\n\n\n\n\n\n\nNote that at \\(t = \\text{MTBF} = 1/\\lambda\\), reliability is always \\(e^{-1} \\approx 36.8\\%\\) regardless of \\(\\lambda\\). This is a universal property of the exponential distribution.\n\n\n\n\n\n\nNoteTry It\n\n\n\nA pump has a failure rate of 0.05 failures/year. Calculate the probability of survival at \\(t = 10\\) years.\n\nlambda &lt;- 0.05\nt      &lt;- 10\n# R(t) = exp(-lambda * t)\n\n\n\nSolution\n\n\nlambda &lt;- 0.05\nt      &lt;- 10\nR &lt;- exp(-lambda * t)\nR  # ~0.607 (60.7% survival)\n\n[1] 0.6065307",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Reliability, Availability, and Maintainability (RAM)</span>"
+    ]
+  },
+  {
+    "objectID": "01-ram.html#b_n-or-l_n-life",
+    "href": "01-ram.html#b_n-or-l_n-life",
+    "title": "1  Reliability, Availability, and Maintainability (RAM)",
+    "section": "1.11 \\(B_n\\) or \\(L_n\\) Life",
+    "text": "1.11 \\(B_n\\) or \\(L_n\\) Life\nThe \\(B_n\\) life is the time at which \\(n\\)% of a population is expected to have failed. Some industries use \\(L_n\\) instead, but the concept is identical.\nTo find \\(B_n\\), set \\(F(t) = n/100\\) and solve for \\(t\\):\n\\[B_n = -\\frac{\\ln(1 - n/100)}{\\lambda}\\]\nExample: Motor with \\(\\lambda = 0.2\\) failures/year. B10 life:\n\\[B_{10} = -\\frac{\\ln(1 - 0.1)}{0.2} = 0.526 \\text{ years}\\]\n\nlambda &lt;- 0.2\nB10 &lt;- -log(1 - 0.10) / lambda\nB10  # 0.526 years\n\n[1] 0.5268026\n\n\n\n\n\n\n\n\nNoteTry It\n\n\n\nA component has a failure rate of 0.05 failures/year. Calculate the B10 life.\n\nlambda &lt;- 0.05\n# B10 = -log(1 - 0.10) / lambda\n\n\n\nSolution\n\n\nlambda &lt;- 0.05\nB10 &lt;- -log(1 - 0.10) / lambda\nB10  # ~2.1 years\n\n[1] 2.10721\n\n\n\n\n\n\n\n\n\n\n\nTipReview\n\n\n\nWhat is the relationship between failure rate and MTBF?\n\n\nAnswer\n\nFailure rate is the inverse of MTBF: \\(\\lambda = 1/\\text{MTBF}\\), and \\(\\text{MTBF} = 1/\\lambda\\).",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Reliability, Availability, and Maintainability (RAM)</span>"
+    ]
+  },
+  {
+    "objectID": "01-ram.html#from-exponential-to-weibull",
+    "href": "01-ram.html#from-exponential-to-weibull",
+    "title": "1  Reliability, Availability, and Maintainability (RAM)",
+    "section": "1.12 From Exponential to Weibull",
+    "text": "1.12 From Exponential to Weibull\nThe exponential model assumes a constant failure rate. This is appropriate for electronic components that fail at random, but many mechanical components have failure rates that change over time.\nThe Weibull distribution (Abernethy 2004) generalizes the exponential by adding a shape parameter \\(\\beta\\):\n\\[R(t) = e^{-(t/\\eta)^\\beta}\\]\n\n\n\n\\(\\beta\\)\nFailure rate\nTypical cause\n\n\n\n\n\\(&lt; 1\\)\nDecreasing\nInfant mortality\n\n\n\\(= 1\\)\nConstant\nRandom failures — exponential applies\n\n\n\\(&gt; 1\\)\nIncreasing\nWear-out (fatigue, corrosion, aging)\n\n\n\nWhen \\(\\beta = 1\\), the Weibull reduces to the exponential with \\(\\lambda = 1/\\eta\\).",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Reliability, Availability, and Maintainability (RAM)</span>"
+    ]
+  },
+  {
+    "objectID": "01-ram.html#the-bathtub-curve",
+    "href": "01-ram.html#the-bathtub-curve",
+    "title": "1  Reliability, Availability, and Maintainability (RAM)",
+    "section": "1.13 The Bathtub Curve",
+    "text": "1.13 The Bathtub Curve\nThe failure rate of a population of items over its lifetime traces a characteristic shape known as the bathtub curve — named for its distinctive U-profile. Rather than drawing it as a stylized cartoon, we can build it analytically by compositing the three Weibull failure modes:\n\\[h(t) = \\underbrace{h_{\\text{infant}}(t)}_{\\beta &lt; 1} \\;+\\; \\underbrace{h_{\\text{random}}(t)}_{\\beta = 1} \\;+\\; \\underbrace{h_{\\text{wear-out}}(t)}_{\\beta &gt; 1}\\]\nwhere the Weibull hazard rate is \\(h(t) = (\\beta/\\eta)(t/\\eta)^{\\beta-1}\\). Each term represents a physically distinct failure mechanism — the bathtub shape is not assumed; it emerges from their sum.\n\nt &lt;- seq(0.01, 15, by = 0.01)\n\n# Three Weibull hazard rate components\nh_infant  &lt;- function(t, b = 0.4, e = 2)  (b/e) * (t/e)^(b-1)   # infant mortality\nh_random  &lt;- function(t, b = 1.0, e = 5)  (b/e) * (t/e)^(b-1)   # random failures\nh_wearout &lt;- function(t, b = 3.5, e = 10) (b/e) * (t/e)^(b-1)   # wear-out\n\nh_total &lt;- h_infant(t) + h_random(t) + h_wearout(t)\n\nplot(t, h_total, type = \"l\", col = \"black\", lwd = 3,\n     xlab = \"Time\", ylab = \"Failure Rate h(t)\",\n     main = \"The Bathtub Curve: Three Composited Failure Modes\",\n     ylim = c(0, max(h_total) * 1.1))\nlines(t, h_infant(t),  col = \"blue\",      lwd = 2, lty = 2)\nlines(t, h_random(t),  col = \"red\",       lwd = 2, lty = 2)\nlines(t, h_wearout(t), col = \"darkgreen\", lwd = 2, lty = 2)\n\nabline(v = c(2.5, 9), col = \"gray60\", lty = 3)\ntext(1.25,  max(h_total) * 0.85, \"Infant\\nMortality\",    col = \"blue\",      cex = 0.85)\ntext(5.75,  max(h_total) * 0.55, \"Useful Life\\n(Random)\", col = \"red\",       cex = 0.85)\ntext(12.25, max(h_total) * 0.85, \"Wear-out\",              col = \"darkgreen\", cex = 0.85)\n\nlegend(\"top\", inset = 0.02,\n       legend = c(\"Total h(t)\", \"Infant (β = 0.4)\", \"Random (β = 1)\", \"Wear-out (β = 3.5)\"),\n       col = c(\"black\", \"blue\", \"red\", \"darkgreen\"), lwd = c(3, 2, 2, 2), lty = c(1, 2, 2, 2))\n\n\n\n\n\n\n\n\nEach region maps to a distinct engineering strategy:\n\nInfant mortality (\\(\\beta &lt; 1\\)): manufacturing defects, assembly errors, material flaws. Mitigated by burn-in testing — running units briefly before shipment to screen out defective items.\nUseful life (\\(\\beta \\approx 1\\)): random external shocks, load spikes, operator error. The constant failure rate means failures are unrelated to age; mitigated by redundancy.\nWear-out (\\(\\beta &gt; 1\\)): fatigue, corrosion, material aging. Mitigated by preventive replacement scheduled before the B₅ or B₁₀ life is reached.\n\n\n\n\n\n\n\nTipReview\n\n\n\nA pump has \\(\\beta = 2.8\\). Which region of the bathtub curve does it occupy, and what maintenance strategy is most appropriate?\n\n\nAnswer\n\n\\(\\beta &gt; 1\\) places it in the wear-out region. The failure rate is increasing with age, so a time-based preventive replacement strategy — replacing the pump before it reaches its B₅ or B₁₀ life — is most appropriate.\n\n\n\nThe bathtub curve is a population-level concept: individual units fail at random times, but the aggregate failure rate of a large fleet traces this shape. Fitting a separate Weibull to each failure mode is covered in Chapter 3.\nThe WeibullR package (Silkworth and Symynck 2022) provides functions for Weibull fitting in R.\n\nlibrary(WeibullR)\n\nfailures &lt;- c(500, 820, 1100, 1350, 1590)\nfit &lt;- MLEw2p(failures, show = TRUE)\n\n\n\n\n\n\n\n\nA \\(\\beta\\) close to 1 indicates random failures consistent with the exponential model. Higher values indicate wear-out behavior. The Life Data Analysis chapter covers Weibull analysis in depth.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Reliability, Availability, and Maintainability (RAM)</span>"
+    ]
+  },
+  {
+    "objectID": "01-ram.html#system-reliability",
+    "href": "01-ram.html#system-reliability",
+    "title": "1  Reliability, Availability, and Maintainability (RAM)",
+    "section": "1.14 System Reliability",
+    "text": "1.14 System Reliability\nReal systems combine many components. System reliability depends on how those components are arranged.\n\nSeries Systems\nIn a series configuration, every component must function for the system to function:\n\\[R_{\\text{sys}} = R_1 \\times R_2 \\times \\cdots \\times R_n = \\prod_{i=1}^{n} R_i\\]\nA series system is always less reliable than its weakest component.\n\nR_components &lt;- c(0.90, 0.90, 0.90)\nR_series &lt;- prod(R_components)\nR_series  # 72.9%\n\n[1] 0.729\n\n\n\n\nParallel Systems\nIn a parallel configuration, only one component needs to function — redundancy. The system fails only when all components fail:\n\\[R_{\\text{sys}} = 1 - (1 - R_1)(1 - R_2) \\cdots (1 - R_n)\\]\n\nR_parallel &lt;- 1 - prod(1 - R_components)\nR_parallel  # 99.9%\n\n[1] 0.999\n\n\nThe effect of redundancy increases dramatically with the number of parallel components:\n\nn_vals &lt;- 1:8\nR_c    &lt;- 0.90\nR_par  &lt;- 1 - (1 - R_c)^n_vals\n\nplot(n_vals, R_par, type = \"b\", col = \"steelblue\", lwd = 2, pch = 19,\n     xlab = \"Number of parallel components\",\n     ylab = \"System Reliability\",\n     main = \"Effect of Redundancy on System Reliability (R_component = 0.90)\",\n     ylim = c(0, 1))\nabline(h = R_c, col = \"gray50\", lty = 2)\nlegend(\"bottomright\",\n       legend = c(\"System reliability\", \"Single component (0.90)\"),\n       col = c(\"steelblue\", \"gray50\"), lty = c(1, 2), pch = c(19, NA), lwd = 2)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNoteTry It\n\n\n\nFour components each have reliability R = 0.85. Calculate the series and parallel system reliability.\n\nR_comp &lt;- 0.85\n# Series:   R_sys = prod(R_components)\n# Parallel: R_sys = 1 - prod(1 - R_components)\n\n\n\nSolution\n\n\nR_comp &lt;- rep(0.85, 4)\nR_series   &lt;- prod(R_comp)\nR_parallel &lt;- 1 - prod(1 - R_comp)\nR_series    # ~0.522 (52.2%)\n\n[1] 0.5220062\n\nR_parallel  # ~0.9995 (99.95%)\n\n[1] 0.9994937\n\n\n\n\n\n\n\n\n\n\n\nTipReview\n\n\n\nThree components each have 80% reliability. What is the series system reliability?\n\n\nAnswer\n\n\\(R_{\\text{sys}} = 0.8 \\times 0.8 \\times 0.8 = 0.512 = 51.2\\%\\)",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Reliability, Availability, and Maintainability (RAM)</span>"
+    ]
+  },
+  {
+    "objectID": "01-ram.html#summary",
+    "href": "01-ram.html#summary",
+    "title": "1  Reliability, Availability, and Maintainability (RAM)",
+    "section": "1.15 Summary",
+    "text": "1.15 Summary\nKey takeaways:\n\n\\(R(t) = e^{-\\lambda t}\\) — exponential reliability under a constant failure rate.\nAt \\(t = \\text{MTBF} = 1/\\lambda\\), reliability is always 36.8%.\nMTTF is for non-repairable items; MTBF is for repairable systems.\nSeries systems: \\(R_{\\text{sys}} = \\prod R_i\\) — reliability decreases with more components.\nParallel systems: \\(R_{\\text{sys}} = 1 - \\prod(1 - R_i)\\) — redundancy increases reliability.\nWhen \\(\\beta \\neq 1\\), use the Weibull distribution (see Chapter 3).\n\n\n\n\n\n\n\nAbernethy, Robert B. 2004. The New Weibull Handbook. 5th ed. R.B. Abernethy.\n\n\nSilkworth, David, and Jurgen Symynck. 2022. WeibullR: Weibull Analysis for Reliability Engineering. https://doi.org/10.32614/CRAN.package.WeibullR.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Reliability, Availability, and Maintainability (RAM)</span>"
+    ]
+  },
+  {
+    "objectID": "02-rbd.html",
+    "href": "02-rbd.html",
+    "title": "2  Reliability Block Diagrams",
+    "section": "",
+    "text": "2.1 Introduction\nIn Chapter 1, you learned to calculate reliability metrics for individual components. This chapter extends those concepts to systems — collections of components whose arrangement determines whether the system succeeds or fails.\nA Reliability Block Diagram (RBD) is a graphical tool for modeling how component reliabilities combine to produce system-level reliability. RBDs are widely used in reliability engineering to analyze designs, identify vulnerabilities, and evaluate the benefit of redundancy (Billinton and Allan 1992).",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Reliability Block Diagrams</span>"
+    ]
+  },
+  {
+    "objectID": "02-rbd.html#learning-objectives",
+    "href": "02-rbd.html#learning-objectives",
+    "title": "2  Reliability Block Diagrams",
+    "section": "2.2 Learning Objectives",
+    "text": "2.2 Learning Objectives\nBy the end of this chapter, you will be able to:\n\nDefine reliability block diagrams and relate them to physical systems.\nCompute system reliability for series, parallel, and mixed configurations.\nInterpret k-out-of-n (voting) systems and calculate their reliability.\nDescribe the relationship between RBDs and Fault Tree Analysis.\nApply RBD calculations to a realistic multi-component system.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Reliability Block Diagrams</span>"
+    ]
+  },
+  {
+    "objectID": "02-rbd.html#what-is-a-reliability-block-diagram",
+    "href": "02-rbd.html#what-is-a-reliability-block-diagram",
+    "title": "2  Reliability Block Diagrams",
+    "section": "2.3 What is a Reliability Block Diagram?",
+    "text": "2.3 What is a Reliability Block Diagram?\nAn RBD represents each component as a block with a known reliability value. Blocks are connected by lines showing logical dependencies — not physical connections. A path from left (input) to right (output) through functioning blocks represents a working system.\nEach block has a reliability \\(R_i(t)\\) derived from the exponential model (Chapter 1) or a Weibull fit (Chapter 3).\n\nlibrary(DiagrammeR)",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Reliability Block Diagrams</span>"
+    ]
+  },
+  {
+    "objectID": "02-rbd.html#series-systems",
+    "href": "02-rbd.html#series-systems",
+    "title": "2  Reliability Block Diagrams",
+    "section": "2.4 Series Systems",
+    "text": "2.4 Series Systems\nIn a series system, all components must function for the system to succeed:\n\\[R_{\\text{sys}} = R_1 \\times R_2 \\times \\cdots \\times R_n = \\prod_{i=1}^{n} R_i\\]\nA series system is always less reliable than its weakest component. Adding more components in series can only reduce system reliability.\n\nExample: Water Pumping System\nA pumping system requires a motor (R = 0.95), a pump (R = 0.90), and a control valve (R = 0.98) to all be operational.\n\ngrViz(\"\ndigraph series {\n  rankdir = LR\n  graph [bgcolor = transparent]\n  node [shape = rectangle, style = filled, fillcolor = '#AED6F1',\n        fontname = 'sans-serif', fontsize = 12, margin = '0.2,0.1']\n  edge [arrowsize = 0.8]\n  I [shape = point, width = 0.15, fillcolor = black]\n  A [label = 'Motor\\nR = 0.95']\n  B [label = 'Pump\\nR = 0.90']\n  C [label = 'Valve\\nR = 0.98']\n  O [shape = point, width = 0.15, fillcolor = black]\n  I -&gt; A -&gt; B -&gt; C -&gt; O\n}\n\")\n\n\n\n\n\n\nR_motor &lt;- 0.95\nR_pump  &lt;- 0.90\nR_valve &lt;- 0.98\n\nR_series &lt;- R_motor * R_pump * R_valve\nR_series  # ~0.838\n\n[1] 0.8379\n\n\nThe system reliability is approximately 83.8%, lower than any individual component.\n\n\n\n\n\n\nNoteTry It\n\n\n\nA conveyor belt system has 5 components in series with reliabilities 0.98, 0.96, 0.99, 0.94, and 0.97. Calculate the system reliability.\n\nR_components &lt;- c(0.98, 0.96, 0.99, 0.94, 0.97)\n# R_series &lt;- prod(R_components)\n\n\n\nSolution\n\n\nR_components &lt;- c(0.98, 0.96, 0.99, 0.94, 0.97)\nR_series &lt;- prod(R_components)\nR_series  # ~0.845\n\n[1] 0.8492432\n\n\n\n\n\n\n\n\n\n\n\nTipReview\n\n\n\nIn a series system, which component has the greatest influence on system reliability?\n\n\nAnswer\n\nThe least reliable component. It is the bottleneck — improving it produces the largest gain in system reliability.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Reliability Block Diagrams</span>"
+    ]
+  },
+  {
+    "objectID": "02-rbd.html#parallel-systems",
+    "href": "02-rbd.html#parallel-systems",
+    "title": "2  Reliability Block Diagrams",
+    "section": "2.5 Parallel Systems",
+    "text": "2.5 Parallel Systems\nIn a parallel system, only one component needs to function — active redundancy. The system fails only if all components fail simultaneously:\n\\[R_{\\text{sys}} = 1 - \\prod_{i=1}^{n}(1 - R_i)\\]\nAdding parallel components always increases system reliability.\n\nExample: Backup Power System\nA primary generator (R = 0.90) and a standby generator (R = 0.85) — either alone keeps the system running.\n\ngrViz(\"\ndigraph parallel {\n  rankdir = LR\n  graph [bgcolor = transparent]\n  node [shape = rectangle, style = filled, fillcolor = '#A9DFBF',\n        fontname = 'sans-serif', fontsize = 12, margin = '0.2,0.1']\n  edge [arrowsize = 0.8]\n  I [shape = point, width = 0.15, fillcolor = black]\n  A [label = 'Generator 1\\nR = 0.90']\n  B [label = 'Generator 2\\nR = 0.85']\n  O [shape = point, width = 0.15, fillcolor = black]\n  I -&gt; A -&gt; O\n  I -&gt; B -&gt; O\n}\n\")\n\n\n\n\n\n\nR_primary &lt;- 0.90\nR_standby &lt;- 0.85\n\nR_parallel &lt;- 1 - (1 - R_primary) * (1 - R_standby)\nR_parallel  # 0.985\n\n[1] 0.985\n\n\nThe parallel system reliability is 98.5%, much higher than either generator alone.\nThe benefit of redundancy grows with each additional component:\n\nn_vals &lt;- 1:8\nRc     &lt;- 0.90\nR_par  &lt;- 1 - (1 - Rc)^n_vals\n\nplot(n_vals, R_par, type = \"b\", col = \"steelblue\", lwd = 2, pch = 19,\n     xlab = \"Number of redundant components\",\n     ylab = \"System Reliability\",\n     main = \"Parallel System Reliability vs. Redundancy (R_component = 0.90)\",\n     ylim = c(0, 1))\nabline(h = Rc, col = \"gray50\", lty = 2)\nlegend(\"bottomright\",\n       legend = c(\"System reliability\", \"Single component (0.90)\"),\n       col = c(\"steelblue\", \"gray50\"), lty = c(1, 2), pch = c(19, NA), lwd = 2)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNoteTry It\n\n\n\nA critical pump station has 3 pumps in parallel. Each pump has reliability 0.88. What is the system reliability?\n\nR_components &lt;- c(0.88, 0.88, 0.88)\n# R_parallel &lt;- 1 - prod(1 - R_components)\n\n\n\nSolution\n\n\nR_components &lt;- c(0.88, 0.88, 0.88)\nR_parallel &lt;- 1 - prod(1 - R_components)\nR_parallel  # ~0.9983\n\n[1] 0.998272",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Reliability Block Diagrams</span>"
+    ]
+  },
+  {
+    "objectID": "02-rbd.html#mixed-systems",
+    "href": "02-rbd.html#mixed-systems",
+    "title": "2  Reliability Block Diagrams",
+    "section": "2.6 Mixed Systems",
+    "text": "2.6 Mixed Systems\nMost real systems combine series and parallel blocks. To analyze a mixed system, decompose it into subsystems and apply series and parallel rules step by step, working from the innermost blocks outward.\n\nExample: Safety System\n\nSubsystem A: a sensor (R = 0.95) and a transmitter (R = 0.97) in series.\nSubsystem B: two redundant actuators (each R = 0.90) in parallel.\nSubsystems A and B in series (both must work).\n\n\ngrViz(\"\ndigraph mixed {\n  rankdir = LR\n  graph [bgcolor = transparent]\n  node [shape = rectangle, style = filled, fillcolor = '#F9E79F',\n        fontname = 'sans-serif', fontsize = 12, margin = '0.2,0.1']\n  edge [arrowsize = 0.8]\n  I [shape = point, width = 0.15, fillcolor = black]\n  S [label = 'Sensor\\nR = 0.95']\n  T [label = 'Transmitter\\nR = 0.97']\n  A1 [label = 'Actuator 1\\nR = 0.90']\n  A2 [label = 'Actuator 2\\nR = 0.90']\n  O [shape = point, width = 0.15, fillcolor = black]\n  I -&gt; S -&gt; T -&gt; A1 -&gt; O\n  T -&gt; A2 -&gt; O\n}\n\")\n\n\n\n\n\n\n# Subsystem A (series)\nR_A &lt;- 0.95 * 0.97\nR_A\n\n[1] 0.9215\n\n# Subsystem B (parallel)\nR_B &lt;- 1 - (1 - 0.90) * (1 - 0.90)\nR_B\n\n[1] 0.99\n\n# Overall system (A and B in series)\nR_system &lt;- R_A * R_B\nR_system\n\n[1] 0.912285\n\n\n\n\n\n\n\n\nTipReview\n\n\n\nA system has two subsystems in series. Subsystem 1 has two components in parallel (each R = 0.85); Subsystem 2 is a single component with R = 0.92. What is the system reliability?\n\n\nAnswer\n\n\\(R_{\\text{sub1}} = 1 - (1 - 0.85)^2 = 0.9775\\). \\(R_{\\text{sys}} = 0.9775 \\times 0.92 \\approx 0.899\\).",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Reliability Block Diagrams</span>"
+    ]
+  },
+  {
+    "objectID": "02-rbd.html#k-out-of-n-systems",
+    "href": "02-rbd.html#k-out-of-n-systems",
+    "title": "2  Reliability Block Diagrams",
+    "section": "2.7 k-out-of-n Systems",
+    "text": "2.7 k-out-of-n Systems\nA k-out-of-n system succeeds if at least \\(k\\) of its \\(n\\) identical components function:\n\n\\(k = n\\): all must work → series.\n\\(k = 1\\): at least one works → parallel.\n\\(1 &lt; k &lt; n\\): voting or load-sharing system.\n\nThe reliability of a k-out-of-n system (identical components, each with reliability \\(p\\)) follows the binomial distribution:\n\\[R_{k/n} = \\sum_{i=k}^{n} \\binom{n}{i} p^i (1-p)^{n-i} = 1 - \\text{pbinom}(k-1,\\, n,\\, 1-p)\\]\n\nExample: Flight Control Computers\nA 2-out-of-3 voter: at least 2 of 3 computers must agree. Each computer has R = 0.99.\n\ngrViz(\"\ndigraph koon {\n  rankdir = LR\n  graph [bgcolor = transparent]\n  node [shape = rectangle, style = filled, fillcolor = '#D7BDE2',\n        fontname = 'sans-serif', fontsize = 12, margin = '0.2,0.1']\n  edge [arrowsize = 0.8]\n  I  [shape = point, width = 0.15, fillcolor = black]\n  C1 [label = 'Computer 1\\nR = 0.99']\n  C2 [label = 'Computer 2\\nR = 0.99']\n  C3 [label = 'Computer 3\\nR = 0.99']\n  V  [label = 'Voter\\n(2-of-3)', shape = diamond, fillcolor = '#F1948A', fontsize = 11]\n  O  [shape = point, width = 0.15, fillcolor = black]\n  I -&gt; C1 -&gt; V\n  I -&gt; C2 -&gt; V\n  I -&gt; C3 -&gt; V\n  V -&gt; O\n}\n\")\n\n\n\n\n\n\nn &lt;- 3      # total components\nk &lt;- 2      # minimum required\np &lt;- 0.99   # individual reliability\n\nR_voting &lt;- 1 - pbinom(k - 1, n, 1 - p)\nR_voting  # 0.9997\n\n[1] 0.000298\n\n\n\n\n\n\n\n\nNoteTry It\n\n\n\nA 3-out-of-5 redundant sensor array. Each sensor has reliability p = 0.95. Calculate the system reliability.\n\nn &lt;- 5\nk &lt;- 3\np &lt;- 0.95\n# R_sys &lt;- 1 - pbinom(k - 1, n, 1 - p)\n\n\n\nSolution\n\n\nn &lt;- 5\nk &lt;- 3\np &lt;- 0.95\nR_sys &lt;- 1 - pbinom(k - 1, n, 1 - p)\nR_sys  # ~0.9988\n\n[1] 0.001158125",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Reliability Block Diagrams</span>"
+    ]
+  },
+  {
+    "objectID": "02-rbd.html#system-mttf",
+    "href": "02-rbd.html#system-mttf",
+    "title": "2  Reliability Block Diagrams",
+    "section": "2.8 System MTTF",
+    "text": "2.8 System MTTF\nFor a series system of components with constant failure rates, the system failure rate equals the sum of component failure rates:\n\\[\\lambda_{\\text{sys}} = \\sum_{i=1}^{n} \\lambda_i \\qquad \\text{MTTF}_{\\text{sys}} = \\frac{1}{\\lambda_{\\text{sys}}}\\]\nFor \\(n\\) identical parallel components each with failure rate \\(\\lambda\\):\n\\[\\text{MTTF}_{\\text{parallel}} = \\frac{1}{\\lambda}\\left(1 + \\frac{1}{2} + \\frac{1}{3} + \\cdots + \\frac{1}{n}\\right)\\]\n\nExample: Two Pumps in Parallel\n\nlambda &lt;- 0.01  # failures per hour\n\nMTTF_single   &lt;- 1 / lambda\nMTTF_parallel &lt;- (1 / lambda) * (1 + 1/2)\n\nMTTF_single    # 100 hours\n\n[1] 100\n\nMTTF_parallel  # 150 hours — 50% longer with one spare\n\n[1] 150\n\n\n\n\n\n\n\n\nTipReview\n\n\n\nThree components in series have failure rates 0.02, 0.03, and 0.05 failures/hour. What is the system MTTF?\n\n\nAnswer\n\n\\(\\lambda_{\\text{sys}} = 0.02 + 0.03 + 0.05 = 0.10\\), so \\(\\text{MTTF} = 1/0.10 = 10\\) hours.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Reliability Block Diagrams</span>"
+    ]
+  },
+  {
+    "objectID": "02-rbd.html#common-cause-failure",
+    "href": "02-rbd.html#common-cause-failure",
+    "title": "2  Reliability Block Diagrams",
+    "section": "2.9 Common Cause Failure",
+    "text": "2.9 Common Cause Failure\nAll the analyses above assume that component failures are statistically independent — if Component A fails, it tells us nothing about Component B’s probability of failing. In practice, this assumption can break down.\nCommon Cause Failure (CCF) occurs when a single event simultaneously causes multiple components to fail. Typical sources include:\n\nA shared environment (vibration, temperature, contamination) that degrades all components together\nA common design flaw or manufacturing batch defect\nA maintenance error that affects multiple redundant units at once\n\nCCF is especially dangerous because redundancy does not protect against it: if both pumps in a parallel system can be destroyed by the same flooding event, adding a third pump does not help.\n\nThe Beta-Factor Model\nThe simplest CCF model splits each component’s total failure rate \\(\\lambda\\) into two parts:\n\\[\\lambda_{\\text{ind}} = (1 - \\beta_{\\text{CCF}}) \\cdot \\lambda \\qquad \\text{(independent failures)}\\] \\[\\lambda_{\\text{CCF}} = \\beta_{\\text{CCF}} \\cdot \\lambda \\qquad \\text{(common-cause failures)}\\]\nThe beta-factor \\(\\beta_{\\text{CCF}}\\) is the fraction of failures attributable to common causes. Typical values range from 0.01 (1%) for well-separated, dissimilar components to 0.20 (20%) for closely coupled identical units.\nSystem reliability for a two-component parallel system with CCF:\n\\[R_{\\text{sys}} = \\underbrace{\\left[1 - (1 - R_{\\text{ind}})^2\\right]}_{\\text{parallel, independent part}} \\times \\underbrace{e^{-\\lambda_{\\text{CCF}} \\, t}}_{\\text{common-cause part}}\\]\n\nlambda &lt;- 0.001   # total component failure rate (per hour)\nt      &lt;- 1000    # mission time (hours)\n\nbeta_vals &lt;- c(0, 0.05, 0.10, 0.20)\n\nresults &lt;- sapply(beta_vals, function(b) {\n  R_ind &lt;- exp(-(1 - b) * lambda * t)   # independent reliability\n  R_ccf &lt;- exp(-b * lambda * t)         # common-cause reliability\n  R_sys &lt;- (1 - (1 - R_ind)^2) * R_ccf\n  round(R_sys, 4)\n})\n\ndata.frame(beta_CCF = beta_vals, R_system = results)\n\n  beta_CCF R_system\n1     0.00   0.6004\n2     0.05   0.5935\n3     0.10   0.5862\n4     0.20   0.5705\n\n\nEven a modest \\(\\beta_{\\text{CCF}} = 0.10\\) visibly reduces the system reliability that redundancy would otherwise provide.\n\n\n\n\n\n\nTipReview\n\n\n\nWhy doesn’t adding more parallel components help when \\(\\beta_{\\text{CCF}}\\) is large?\n\n\nAnswer\n\nWhen \\(\\beta_{\\text{CCF}}\\) is large, a significant fraction of failures are common cause — they simultaneously affect all components regardless of how many there are. Adding more identical, coupled components may even increase the common-cause failure rate if they share the same environment or design flaw. Effective mitigation requires diversity (different designs, manufacturers, or locations) rather than simple redundancy.\n\n\n\nCCF data and beta-factor values for different equipment types are tabulated in IEC 61508 (functional safety) and MIL-HDBK-217F (electronic reliability). For nuclear applications, the NUREG/CR-5497 handbook provides detailed CCF databases.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Reliability Block Diagrams</span>"
+    ]
+  },
+  {
+    "objectID": "02-rbd.html#introduction-to-fault-tree-analysis",
+    "href": "02-rbd.html#introduction-to-fault-tree-analysis",
+    "title": "2  Reliability Block Diagrams",
+    "section": "2.10 Introduction to Fault Tree Analysis",
+    "text": "2.10 Introduction to Fault Tree Analysis\nFault Tree Analysis (FTA) (Vesely et al. 1981) is a top-down approach that starts with an undesirable event (the top event) and works backward to identify combinations of component failures that could cause it.\nWhile an RBD asks “What must work for the system to succeed?”, a fault tree asks “What can cause the system to fail?”\n\nGates\n\nAND gate: top event occurs only if all inputs occur — corresponds to parallel RBD components (all must fail).\nOR gate: top event occurs if any input occurs — corresponds to series RBD components (any failure causes system failure).\n\n\n\nRBD—Fault Tree Duality\n\n\n\n\n\n\n\nRBD configuration\nFault tree gate for system failure\n\n\n\n\nSeries (all must work)\nOR gate (any failure causes system failure)\n\n\nParallel (any can work)\nAND gate (all must fail for system failure)\n\n\n\n\ngrViz(\"\ndigraph fta {\n  rankdir = TB\n  graph [bgcolor = transparent]\n  node [fontname = 'sans-serif', fontsize = 12, style = filled]\n  edge [arrowsize = 0.8]\n  Top [label = 'System\\nFailure',  shape = rectangle, fillcolor = '#E74C3C', fontcolor = white]\n  OR  [label = 'OR Gate',          shape = diamond,   fillcolor = '#F39C12']\n  F1  [label = 'Component A\\nFails', shape = ellipse, fillcolor = '#AED6F1']\n  F2  [label = 'Component B\\nFails', shape = ellipse, fillcolor = '#AED6F1']\n  Top -&gt; OR\n  OR  -&gt; F1\n  OR  -&gt; F2\n}\n\")\n\n\n\n\n\nThis OR gate corresponds to a two-component series RBD: any single failure causes system failure. For complex fault trees, the R package FaultTree on CRAN provides computational support.\n\n\n\n\n\n\nTipReview\n\n\n\nA fault tree has an AND gate combining two component failures. Which RBD configuration does this correspond to?\n\n\nAnswer\n\nParallel — an AND gate means the system fails only if both components fail simultaneously, which is exactly the parallel (redundant) configuration.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Reliability Block Diagrams</span>"
+    ]
+  },
+  {
+    "objectID": "02-rbd.html#case-study-industrial-cooling-system",
+    "href": "02-rbd.html#case-study-industrial-cooling-system",
+    "title": "2  Reliability Block Diagrams",
+    "section": "2.11 Case Study: Industrial Cooling System",
+    "text": "2.11 Case Study: Industrial Cooling System\nAn industrial cooling system has the following architecture:\n\nWater supply subsystem: two pumps in parallel (each R = 0.92), followed by a filter in series (R = 0.99).\nControl subsystem: a primary controller (R = 0.97) and a backup controller in parallel (R = 0.95).\nBoth subsystems must work (series at system level).\n\n\n# Step 1 — Water supply subsystem\nR_pump_parallel &lt;- 1 - (1 - 0.92)^2\nR_water &lt;- R_pump_parallel * 0.99\nR_water\n\n[1] 0.983664\n\n# Step 2 — Control subsystem\nR_control &lt;- 1 - (1 - 0.97) * (1 - 0.95)\nR_control\n\n[1] 0.9985\n\n# Step 3 — Overall system (both subsystems in series)\nR_system &lt;- R_water * R_control\nR_system\n\n[1] 0.9821885\n\n\n\n\n\n\n\n\nNoteTry It\n\n\n\nModify the case study: the filter is upgraded to R = 0.999. Recalculate the system reliability.\n\nR_pump1  &lt;- 0.92\nR_pump2  &lt;- 0.92\nR_filter &lt;- 0.999   # upgraded from 0.99\nR_ctrl1  &lt;- 0.97\nR_ctrl2  &lt;- 0.95\n\n\n\nSolution\n\n\nR_pump1  &lt;- 0.92\nR_pump2  &lt;- 0.92\nR_filter &lt;- 0.999\nR_ctrl1  &lt;- 0.97\nR_ctrl2  &lt;- 0.95\n\nR_pump_parallel &lt;- 1 - (1 - R_pump1) * (1 - R_pump2)\nR_water   &lt;- R_pump_parallel * R_filter\nR_control &lt;- 1 - (1 - R_ctrl1) * (1 - R_ctrl2)\nR_system  &lt;- R_water * R_control\nR_system  # ~0.985\n\n[1] 0.9911175",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Reliability Block Diagrams</span>"
+    ]
+  },
+  {
+    "objectID": "02-rbd.html#summary",
+    "href": "02-rbd.html#summary",
+    "title": "2  Reliability Block Diagrams",
+    "section": "2.12 Summary",
+    "text": "2.12 Summary\nKey takeaways:\n\nSeries: \\(R_{\\text{sys}} = \\prod R_i\\) — every component must work; reliability decreases with more components.\nParallel: \\(R_{\\text{sys}} = 1 - \\prod(1-R_i)\\) — redundancy; only one component needs to work.\nMixed: decompose into subsystems, apply formulas step by step.\nk-out-of-n: 1 - pbinom(k-1, n, 1-p) for voting/load-sharing systems.\nSeries MTTF: \\(1/\\sum\\lambda_i\\); Parallel MTTF: \\((1/\\lambda)\\sum_{i=1}^{n}(1/i)\\).\nFTA duality: series RBD ↔︎ OR gate; parallel RBD ↔︎ AND gate.\n\n\n\n\n\n\n\nBillinton, Roy, and Ronald N. Allan. 1992. Reliability Evaluation of Engineering Systems. 2nd ed. Plenum Press.\n\n\nVesely, W., F. Goldberg, N. Roberts, and D. Haasl. 1981. Fault Tree Handbook. NUREG-0492. US Nuclear Regulatory Commission.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Reliability Block Diagrams</span>"
+    ]
+  },
+  {
+    "objectID": "03-lda.html",
+    "href": "03-lda.html",
+    "title": "3  Life Data Analysis",
+    "section": "",
+    "text": "3.1 Introduction\nLife Data Analysis is the study of how systems function over time. Life data tells us how long a system will last, when it will likely fail, and how often it will need maintenance. In reliability engineering it is often called Weibull analysis because the Weibull distribution is the dominant model (Abernethy 2004).",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Life Data Analysis</span>"
+    ]
+  },
+  {
+    "objectID": "03-lda.html#learning-objectives",
+    "href": "03-lda.html#learning-objectives",
+    "title": "3  Life Data Analysis",
+    "section": "3.2 Learning Objectives",
+    "text": "3.2 Learning Objectives\nBy the end of this chapter, you will be able to:\n\nDescribe the purpose of Weibull analysis in reliability engineering.\nDifferentiate between types of data censoring: right-censored and interval-censored.\nDifferentiate between Weibull models: 2-parameter, 3-parameter, and Weibayes.\nApply Median Rank Regression (MRR) and Maximum Likelihood Estimation (MLE).\nCompare Weibull and lognormal fits using goodness-of-fit statistics.\nDetermine how many failures are needed for reliable Weibull estimates.\nInterpret results using probability plots and contour plots.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Life Data Analysis</span>"
+    ]
+  },
+  {
+    "objectID": "03-lda.html#life-distributions",
+    "href": "03-lda.html#life-distributions",
+    "title": "3  Life Data Analysis",
+    "section": "3.3 Life Distributions",
+    "text": "3.3 Life Distributions\n\nThe Weibull Distribution\nThe Weibull distribution is a flexible continuous probability distribution widely used in life data analysis. Its flexibility comes from a shape parameter \\(\\beta\\) that allows it to mimic the normal, exponential, and log-normal distributions.\n\n\nThe Cumulative Distribution Function\nThe Weibull reliability (survival) function is:\n\\[R(t) = 1 - F(t) = e^{-(t/\\eta)^\\beta}\\]\nwhere \\(R(t)\\) is the cumulative probability of survival prior to time \\(t\\), \\(\\beta\\) is the shape parameter, and \\(\\eta\\) is the scale parameter.\nThe shape parameter \\(\\beta\\) has a direct physical interpretation:\n\n\n\n\\(\\beta\\)\nFailure rate\nTypical cause\n\n\n\n\n\\(&lt; 1\\)\nDecreasing\nInfant mortality\n\n\n\\(= 1\\)\nConstant\nRandom failures (exponential)\n\n\n\\(&gt; 1\\)\nIncreasing\nWear-out (fatigue, corrosion, aging)\n\n\n\n\nt    &lt;- seq(0, 50, by = 0.1)\netas &lt;- 10\n\n# Plot CDFs for three values of beta\nplot(t, pweibull(t, shape = 0.5, scale = etas), type = \"l\", col = \"blue\",  lwd = 2,\n     xlab = \"Time\", ylab = \"Cumulative Probability F(t)\",\n     main = \"Weibull CDF for Different Shape Parameters (η = 10)\",\n     ylim = c(0, 1))\nlines(t, pweibull(t, shape = 1.0, scale = etas), col = \"red\",       lwd = 2)\nlines(t, pweibull(t, shape = 3.0, scale = etas), col = \"darkgreen\", lwd = 2)\nlegend(\"topleft\",\n       legend = c(\"β = 0.5 (decreasing rate)\", \"β = 1.0 (constant rate)\",\n                  \"β = 3.0 (increasing rate)\"),\n       col = c(\"blue\", \"red\", \"darkgreen\"), lwd = 2)\n\n\n\n\n\n\n\n\nKey property: at \\(t = \\eta\\), \\(F(\\eta) = 1 - e^{-1} \\approx 63.2\\%\\) for any value of \\(\\beta\\). This is why \\(\\eta\\) is called the characteristic life.\n\n\n\n\n\n\nTipReview\n\n\n\nWhich value of \\(\\beta\\) indicates an increasing failure rate?\n\n\nAnswer\n\n\\(\\beta &gt; 1\\). A shape parameter greater than 1 indicates a wear-out failure mode where the failure rate increases over time.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Life Data Analysis</span>"
+    ]
+  },
+  {
+    "objectID": "03-lda.html#weibullr",
+    "href": "03-lda.html#weibullr",
+    "title": "3  Life Data Analysis",
+    "section": "3.4 WeibullR",
+    "text": "3.4 WeibullR\nThe WeibullR package (Silkworth and Symynck 2022; Silkworth 2020) is the primary R tool for Weibull analysis.\n\nGetting Started\n\ninstall.packages(\"WeibullR\")\n\n\nlibrary(WeibullR)\n\n\n\nFitting a Weibull Model\nA factory has 5 machines that failed at times 30, 49, 82, 90, and 96. Use MLEw2p() to fit a 2-parameter Weibull model using Maximum Likelihood Estimation and display the probability plot.\n\nfailures &lt;- c(30, 49, 82, 90, 96)\nfit &lt;- MLEw2p(failures, bounds = TRUE, show = TRUE)\n\n\n\n\n\n\n\n\n\n\nReading the Probability Plot\nThe Weibull probability plot shows time on the horizontal axis (log scale) and cumulative unreliability \\(F(t)\\) on the vertical axis (log-log scale). This double-log transformation linearizes Weibull data — the result is a straight line when the Weibull model fits.\n\nRead off \\(F(t)\\) at any time to get the probability of failure by that time.\nReliability at time \\(t\\) is \\(R(t) = 1 - F(t)\\).\n\\(\\beta\\) (shape) and \\(\\eta\\) (scale) are shown in the legend.\n\n\n\n\n\n\n\nNoteTry It\n\n\n\nA batch of industrial pumps failed at times (hours): 120, 205, 310, 445, 590, 780. Use MLEw2p() to fit a 2-parameter Weibull model.\n\nfailures &lt;- c(120, 205, 310, 445, 590, 780)\n# fit &lt;- MLEw2p(failures, show = TRUE)\n\n\n\nSolution\n\n\nfailures &lt;- c(120, 205, 310, 445, 590, 780)\nfit &lt;- MLEw2p(failures, show = TRUE)",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Life Data Analysis</span>"
+    ]
+  },
+  {
+    "objectID": "03-lda.html#data-censoring",
+    "href": "03-lda.html#data-censoring",
+    "title": "3  Life Data Analysis",
+    "section": "3.5 Data Censoring",
+    "text": "3.5 Data Censoring\nIn life data analysis, data is often censored — the exact time to failure is not known for all units.\n\nRight-Censored Data (Suspensions)\nRight censoring occurs when a unit has operated for a period of time without failing (a suspension). The unit was removed from service before failing.\n\nfailures    &lt;- c(30, 49, 82, 90, 96)\nsuspensions &lt;- c(100, 45, 10)\nfit &lt;- MLEw2p(failures, suspensions, bounds = TRUE, show = TRUE)\n\n\n\n\n\n\n\n\nAdding suspensions changes the fit: the model accounts for units that survived longer, adjusting \\(\\beta\\) and \\(\\eta\\) accordingly.\n\n\n\n\n\n\nNoteTry It\n\n\n\nFour compressors failed at 50, 85, 130, and 200 hours. Two additional units were removed at 250 hours without failing. Fit a Weibull model with suspensions.\n\nfailures    &lt;- c(50, 85, 130, 200)\nsuspensions &lt;- c(250, 250)\n# fit &lt;- MLEw2p(failures, suspensions, show = TRUE)\n\n\n\nSolution\n\n\nfailures    &lt;- c(50, 85, 130, 200)\nsuspensions &lt;- c(250, 250)\nfit &lt;- MLEw2p(failures, suspensions, show = TRUE)\n\n\n\n\n\n\n\n\n\n\n\n\n\nInterval-Censored Data\nInterval censoring occurs when failures are only detected during periodic inspections — the exact failure time is unknown, but it is known to have occurred within an interval.\n\ninspection_data &lt;- data.frame(\n  left  = c(0, 6.12, 19.92, 29.64, 35.4, 39.72, 45.32, 52.32),\n  right = c(6.12, 19.92, 29.64, 35.4, 39.72, 45.32, 52.32, 63.48),\n  qty   = c(5, 16, 12, 18, 18, 2, 6, 17)\n)\nsuspensions &lt;- data.frame(time = 63.48, event = 0, qty = 73)\n\nobj1 &lt;- wblr(suspensions, interval = inspection_data)\nobj1 &lt;- wblr.fit(obj1, method.fit = \"mle\", col = \"red\")\nobj1 &lt;- wblr.conf(obj1, method.conf = \"fm\", lty = 2)\nplot(obj1)\n\n\n\n\n\n\n\n\nBlack horizontal lines represent the inspection intervals; the solid red line is the model fit; dashed red lines are confidence bounds.\n\n\nGrouped Data\nLife data is often collected in groups. The qty column in the inspection data above indicates how many units failed in each interval — 5 failed between time 0 and 6.12, 16 between 6.12 and 19.92, and so on.\n\n\n\n\n\n\nTipReview\n\n\n\nIn the interval-censored example above, how many total failures occurred?\n\n\nAnswer\n\n\\(5 + 16 + 12 + 18 + 18 + 2 + 6 + 17 = 94\\) failures. The 73 suspensions were units that did not fail by the last inspection time (63.48). Total units in the dataset: \\(94 + 73 = 167\\).",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Life Data Analysis</span>"
+    ]
+  },
+  {
+    "objectID": "03-lda.html#parameter-estimation-methods",
+    "href": "03-lda.html#parameter-estimation-methods",
+    "title": "3  Life Data Analysis",
+    "section": "3.6 Parameter Estimation Methods",
+    "text": "3.6 Parameter Estimation Methods\n\nMRR vs MLE\nMedian Rank Regression (MRR) estimates parameters by minimizing the sum of squared errors between observed and predicted values (least squares).\nMaximum Likelihood Estimation (MLE) finds the parameters that make the observed data most probable — it maximizes the likelihood function.\nComparing both methods on the same data:\n\nfailures    &lt;- c(30, 49, 82, 90, 96)\nsuspensions &lt;- c(100, 45, 10)\n\nMRRfit &lt;- wblr.fit(wblr(failures, suspensions, col = \"blue\"), method.fit = \"rr\")\nMLEfit &lt;- wblr.fit(wblr(failures, suspensions, col = \"red\"),  method.fit = \"mle\")\nplot.wblr(list(MRRfit, MLEfit))\n\n\n\n\n\n\n\n\nBoth methods fit the same data. Slight differences in \\(\\beta\\) and \\(\\eta\\) are visible — the better fit can be determined objectively using the Anderson-Darling statistic.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Life Data Analysis</span>"
+    ]
+  },
+  {
+    "objectID": "03-lda.html#goodness-of-fit",
+    "href": "03-lda.html#goodness-of-fit",
+    "title": "3  Life Data Analysis",
+    "section": "3.7 Goodness of Fit",
+    "text": "3.7 Goodness of Fit\nThe Anderson-Darling (AD) statistic measures how closely the fitted CDF matches the empirical distribution. A lower AD value indicates a better fit:\n\n\n\nAD Value\nInterpretation\n\n\n\n\n&lt; 0.3\nGood fit\n\n\n0.3 – 0.6\nAcceptable fit\n\n\n&gt; 0.6\nPoor fit\n\n\n\nWeibullR displays the AD statistic in the plot legend. Use it to compare fitting methods or distributions.\n\n\n\n\n\n\nNoteTry It\n\n\n\nFit the following failure data with both MRR and MLE, then compare their AD statistics on a combined probability plot.\n\nfailures &lt;- c(15, 28, 44, 61, 83, 110, 145)\n\n\n\nSolution\n\n\nfailures &lt;- c(15, 28, 44, 61, 83, 110, 145)\nobj_mrr &lt;- wblr.fit(wblr(failures, col = \"blue\"), method.fit = \"rr\")\nobj_mle &lt;- wblr.fit(wblr(failures, col = \"red\"),  method.fit = \"mle\")\nplot.wblr(list(obj_mrr, obj_mle))",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Life Data Analysis</span>"
+    ]
+  },
+  {
+    "objectID": "03-lda.html#choosing-a-distribution",
+    "href": "03-lda.html#choosing-a-distribution",
+    "title": "3  Life Data Analysis",
+    "section": "3.8 Choosing a Distribution",
+    "text": "3.8 Choosing a Distribution\nThe Weibull distribution is the default in reliability engineering, but it is not always the best fit. The lognormal distribution often fits failure data driven by fatigue crack growth, corrosion, or cumulative damage — mechanisms where the logarithm of time-to-failure is normally distributed.\n\n\n\n\n\n\n\nDistribution\nWhen it tends to fit best\n\n\n\n\nWeibull\nWear-out, mechanical fatigue, early-life failures\n\n\nLognormal\nCorrosion, fatigue crack propagation, electronic degradation\n\n\n\nwblr.fit() supports both via the dist argument. The goodness-of-fit metric in the plot legend (\\(r^2\\) for rank regression) is the tiebreaker — higher \\(r^2\\) indicates a better fit:\n\nfailures    &lt;- c(30, 49, 82, 90, 96)\nsuspensions &lt;- c(100, 45, 10)\n\nobj_wb &lt;- wblr.fit(wblr(failures, suspensions, col = \"blue\"),\n                   method.fit = \"rr\")\nobj_ln &lt;- wblr.fit(wblr(failures, suspensions, col = \"red\"),\n                   method.fit = \"rr\", dist = \"lognormal\")\n\nplot.wblr(list(obj_wb, obj_ln),\n          main = \"Weibull vs. Lognormal: Goodness-of-Fit Comparison\")\n\n\n\n\n\n\n\n\nFor this dataset, Weibull achieves \\(r^2 \\approx 0.953\\) vs. lognormal at \\(r^2 \\approx 0.914\\) — Weibull fits better. The choice should be driven by the data, not by habit.\n\n\n\n\n\n\nNoteTry It\n\n\n\nFit the 3-parameter Weibull failure dataset below with both Weibull and lognormal distributions. Which fits better?\n\nfailures_3p &lt;- c(3.47, 3.73, 4.05, 4.63, 4.82, 5.85, 5.89, 5.89,\n                 8.17, 10.03, 10.06, 10.50, 11.11, 11.87, 12.21)\n# obj_wb &lt;- wblr.fit(wblr(failures_3p, col = \"blue\"), method.fit = \"rr\")\n# obj_ln &lt;- wblr.fit(wblr(failures_3p, col = \"red\"),  method.fit = \"rr\", dist = \"lognormal\")\n# plot.wblr(list(obj_wb, obj_ln))\n\n\n\nSolution\n\n\nfailures_3p &lt;- c(3.47, 3.73, 4.05, 4.63, 4.82, 5.85, 5.89, 5.89,\n                 8.17, 10.03, 10.06, 10.50, 11.11, 11.87, 12.21)\nobj_wb &lt;- wblr.fit(wblr(failures_3p, col = \"blue\"), method.fit = \"rr\")\nobj_ln &lt;- wblr.fit(wblr(failures_3p, col = \"red\"),  method.fit = \"rr\", dist = \"lognormal\")\nplot.wblr(list(obj_wb, obj_ln),\n          main = \"Weibull vs. Lognormal\")\n\n\n\n\n\n\n\n\nCompare the \\(r^2\\) values in the legend. For this dataset the lognormal often achieves a slightly higher \\(r^2\\), suggesting cumulative-damage behavior — the logarithm of time-to-failure is approximately normally distributed.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Life Data Analysis</span>"
+    ]
+  },
+  {
+    "objectID": "03-lda.html#sample-size-considerations",
+    "href": "03-lda.html#sample-size-considerations",
+    "title": "3  Life Data Analysis",
+    "section": "3.9 Sample Size Considerations",
+    "text": "3.9 Sample Size Considerations\nWeibull parameter estimates are most reliable when based on at least 10–15 observed failures. With fewer failures, uncertainty grows substantially: confidence bounds widen, \\(r^2\\) loses discriminating power, and estimated \\(\\beta\\) and \\(\\eta\\) can deviate significantly from the true values.\nThe following code simulates datasets of different sizes from the same Weibull (\\(\\beta = 2\\), \\(\\eta = 100\\)) and fits each — showing how confidence bounds tighten as sample size increases:\n\nset.seed(42)\neta_true &lt;- 100; beta_true &lt;- 2\n\npar(mfrow = c(1, 3))\nfor (n in c(5, 15, 30)) {\n  f   &lt;- sort(rweibull(n, shape = beta_true, scale = eta_true))\n  obj &lt;- wblr.conf(wblr.fit(wblr(f, col = \"blue\"), method.fit = \"mle\"),\n                   method.conf = \"fm\")\n  plot(obj, main = paste0(n, \" failures\"))\n}\n\n\n\n\n\n\n\npar(mfrow = c(1, 1))\n\nWith only 5 failures the confidence bounds span most of the probability axis. At 30 failures they are narrow enough for confident decision-making.\nPractical guidance:\n\n\n\n\n\n\n\nFailures observed\nGuidance\n\n\n\n\n\\(&lt; 5\\)\nEstimates unreliable; use Weibayes (fix \\(\\beta\\) from prior knowledge)\n\n\n5–10\nUsable with caution; widen safety margins\n\n\n10–20\nAcceptable for most engineering decisions\n\n\n\\(&gt; 20\\)\nReliable estimates; confidence bounds are tight\n\n\n\nWhen fewer than 5 failures are available, the Weibayes model (next section) provides a structured way to incorporate prior knowledge about \\(\\beta\\).",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Life Data Analysis</span>"
+    ]
+  },
+  {
+    "objectID": "03-lda.html#other-weibull-models",
+    "href": "03-lda.html#other-weibull-models",
+    "title": "3  Life Data Analysis",
+    "section": "3.10 Other Weibull Models",
+    "text": "3.10 Other Weibull Models\n\nThe Weibayes Model\nA Weibayes (one-parameter Weibull) has a fixed \\(\\beta\\) based on prior knowledge or experience. This is appropriate when failure data are scarce.\n\nfailures    &lt;- c(30, 49, 82, 90, 96)\nsuspensions &lt;- c(100, 45, 10)\n\nobj &lt;- wblr.fit(wblr(failures, suspensions, col = \"blue\"),\n                method.fit = \"weibayes\", weibayes.beta = 2)\nplot(obj)\n\n\n\n\n\n\n\n\nConfidence bounds are not shown for Weibayes because \\(\\beta\\) is fixed by assumption.\n\n\nThe 3-Parameter Weibull\nThe 3-parameter Weibull adds a failure-free period \\(t_0\\) — the time before which no failures can occur:\n\\[R(t) = e^{-((t - t_0)/\\eta)^\\beta}\\]\nThis is appropriate for components that must age, wear, or fatigue before they can fail.\n\nfailures_3p &lt;- c(3.46623, 3.732711, 4.052996, 4.628703, 4.8157, 5.84517, 5.888313, 5.892967,\n                 8.168362, 10.02799, 10.06062, 10.49785, 11.11493, 11.87369, 12.21122, 12.51854,\n                 12.91357, 18.04246, 18.20712, 19.57305, 21.20873, 30.03917, 34.88001, 36.87355,\n                 53.91168)\n\nfit_3p &lt;- wblr.conf(wblr.fit(wblr(failures_3p), dist = \"weibull3p\"), col = \"darkgreen\")\nplot(fit_3p)\n\n\n\n\n\n\n\n\nThe failure-free period is approximately 3.3 time units — visible as the curve flattening at low probabilities.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Life Data Analysis</span>"
+    ]
+  },
+  {
+    "objectID": "03-lda.html#multi-plots",
+    "href": "03-lda.html#multi-plots",
+    "title": "3  Life Data Analysis",
+    "section": "3.11 Multi-Plots",
+    "text": "3.11 Multi-Plots\nMulti-plots overlay multiple Weibull fits on one chart, making comparisons easy.\n\nfailures    &lt;- c(30, 49, 82, 90, 96)\nsuspensions &lt;- c(100, 45, 10)\n\nobj1 &lt;- wblr.fit(wblr(failures),             col = \"red\")\nobj2 &lt;- wblr.fit(wblr(failures, suspensions), col = \"purple\")\n\nplot.wblr(list(obj1, obj2))\n\n\n\n\n\n\n\n\nThe red model (without suspensions) has a higher beta and lower eta than the purple model (with suspensions). Adding suspensions shifts the fitted distribution to account for units that survived longer than the observed failures.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Life Data Analysis</span>"
+    ]
+  },
+  {
+    "objectID": "03-lda.html#competing-failure-modes",
+    "href": "03-lda.html#competing-failure-modes",
+    "title": "3  Life Data Analysis",
+    "section": "3.12 Competing Failure Modes",
+    "text": "3.12 Competing Failure Modes\nWhen a component can fail in several distinct ways (corrosion, fatigue, overload), fitting a single Weibull to the combined data produces a poor fit because each mode has its own distribution.\nThe approach: fit a separate Weibull to each failure mode, treating failures from other modes as suspensions.\n\nset.seed(123)\ndata &lt;- data.frame(\n  time = c(\n    rweibull(5,   0.5, 20),   # Failure Mode A\n    rweibull(10,  1,   10),   # Failure Mode B\n    rweibull(5,   2,    5),   # Failure Mode C\n    rweibull(100, 2,   10)    # Suspensions\n  ),\n  event = c(rep(1, 20), rep(0, 100)),\n  failure_mode = c(rep(\"A\", 5), rep(\"B\", 10), rep(\"C\", 5), rep(\"\", 100))\n)\n\n# Separate dataset per failure mode (others treated as suspensions)\ndat1 &lt;- dat2 &lt;- dat3 &lt;- data\ndat1$event[dat1$failure_mode != \"A\"] &lt;- 0\ndat2$event[dat2$failure_mode != \"B\"] &lt;- 0\ndat3$event[dat3$failure_mode != \"C\"] &lt;- 0\n\nobj1 &lt;- wblr.fit(wblr(dat1, col = \"blue\"))\nobj2 &lt;- wblr.fit(wblr(dat2, col = \"red\"))\nobj3 &lt;- wblr.fit(wblr(dat3, col = \"orange\"))\nplot.wblr(list(obj1, obj2, obj3), is.plot.legend = FALSE)\n\n\n\n\n\n\n\n\nEach failure mode has a distinct \\(\\beta\\): Mode A (\\(\\beta &lt; 1\\), decreasing rate — infant mortality), Mode B (\\(\\beta \\approx 1\\), random), Mode C (\\(\\beta &gt; 1\\), wear-out).",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Life Data Analysis</span>"
+    ]
+  },
+  {
+    "objectID": "03-lda.html#contour-plots",
+    "href": "03-lda.html#contour-plots",
+    "title": "3  Life Data Analysis",
+    "section": "3.13 Contour Plots",
+    "text": "3.13 Contour Plots\nA contour plot shows the joint confidence region for \\(\\beta\\) and \\(\\eta\\). Overlapping contours indicate that two distributions are not significantly different at the chosen confidence level.\n\nfailures &lt;- c(30, 49, 82, 90, 96)\nobj &lt;- wblr.conf(wblr.fit(wblr(failures, col = \"blue\"), method.fit = \"mle\"), method.conf = \"lrb\")\nplot_contour(obj, CL = 0.9)\n\n\n\n\n\n\n\n\n\nComparing Contour Plots\n\nobj1 &lt;- wblr.conf(wblr.fit(wblr(dat1, col = \"blue\"),   method.fit = \"mle\"), method.conf = \"lrb\")\nobj2 &lt;- wblr.conf(wblr.fit(wblr(dat2, col = \"red\"),    method.fit = \"mle\"), method.conf = \"lrb\")\nobj3 &lt;- wblr.conf(wblr.fit(wblr(dat3, col = \"orange\"), method.fit = \"mle\"), method.conf = \"lrb\")\nplot_contour(list(obj1, obj2, obj3), CL = 0.9, xlim = c(1, 1500))\n\n\n\n\n\n\n\n\nOverlapping contours at 90% confidence level indicate that the three failure modes are not statistically distinguishable at this confidence level.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Life Data Analysis</span>"
+    ]
+  },
+  {
+    "objectID": "03-lda.html#summary",
+    "href": "03-lda.html#summary",
+    "title": "3  Life Data Analysis",
+    "section": "3.14 Summary",
+    "text": "3.14 Summary\nKey takeaways:\n\nThe Weibull CDF: \\(R(t) = e^{-(t/\\eta)^\\beta}\\).\n\\(\\beta &lt; 1\\): decreasing rate (infant mortality); \\(\\beta = 1\\): constant (exponential); \\(\\beta &gt; 1\\): increasing (wear-out).\nAt \\(t = \\eta\\): \\(F(\\eta) = 63.2\\%\\) for any \\(\\beta\\).\nSuspensions are units that did not fail — always include them in the analysis.\nMRR and MLE often give slightly different fits — use the AD statistic to choose.\nWeibayes is appropriate for scarce data with prior knowledge of \\(\\beta\\).\n3-parameter Weibull handles failure-free periods.\nMulti-plots and contour plots are powerful tools for comparing distributions.\n\n\n\n\n\n\n\nAbernethy, Robert B. 2004. The New Weibull Handbook. 5th ed. R.B. Abernethy.\n\n\nSilkworth, David. 2020. “WeibullR: An r Package for Weibull Analysis for Reliability Engineers.” 10th International Symposium on Data Science and Its Applications (ISDSA2019), 43–53. https://doi.org/10.35566/isdsa2019c3.\n\n\nSilkworth, David, and Jurgen Symynck. 2022. WeibullR: Weibull Analysis for Reliability Engineering. https://doi.org/10.32614/CRAN.package.WeibullR.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Life Data Analysis</span>"
+    ]
+  },
+  {
+    "objectID": "04-rt.html",
+    "href": "04-rt.html",
+    "title": "4  Reliability Growth Analysis",
+    "section": "",
+    "text": "4.1 Introduction\nReliability Growth Analysis (RGA) monitors and improves reliability over time by analyzing failure data collected during testing. It identifies trends in the failure rate, confirming whether corrective actions are having the intended effect.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Reliability Growth Analysis</span>"
+    ]
+  },
+  {
+    "objectID": "04-rt.html#learning-objectives",
+    "href": "04-rt.html#learning-objectives",
+    "title": "4  Reliability Growth Analysis",
+    "section": "4.2 Learning Objectives",
+    "text": "4.2 Learning Objectives\nBy the end of this chapter, you will be able to:\n\nDefine key reliability growth concepts: Crow-AMSAA and Duane models.\nUse rdt() to plan a reliability demonstration test (required test time and sample size).\nFit reliability growth models using R.\nApply the Crow-AMSAA model to assess reliability growth.\nUse piecewise NHPP models to detect design changes during testing.\nForecast future failures from a fitted growth model using predict_rga().\nInterpret reliability growth plots and make decisions from the results.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Reliability Growth Analysis</span>"
+    ]
+  },
+  {
+    "objectID": "04-rt.html#reliability-growth-analysis",
+    "href": "04-rt.html#reliability-growth-analysis",
+    "title": "4  Reliability Growth Analysis",
+    "section": "4.3 Reliability Growth Analysis",
+    "text": "4.3 Reliability Growth Analysis\nThe ReliaGrowR package (Govan 2024) provides functions for reliability growth analysis in R.\n\nlibrary(ReliaGrowR)",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Reliability Growth Analysis</span>"
+    ]
+  },
+  {
+    "objectID": "04-rt.html#test-planning",
+    "href": "04-rt.html#test-planning",
+    "title": "4  Reliability Growth Analysis",
+    "section": "4.4 Test Planning",
+    "text": "4.4 Test Planning\nBefore analyzing test data, it helps to answer two design questions: How long must we test? and How many failures should we expect? ReliaGrowR provides tools for both.\n\nReliability Demonstration Tests — rdt()\nA Reliability Demonstration Test (RDT) is a pass/fail test designed to demonstrate that a product meets a reliability target at a specified confidence level. rdt() calculates the required test time given the sample size (or vice versa).\n\n# How long must we test 10 units to demonstrate R(1000 hrs) &gt;= 0.90\n# at 80% confidence? Assume Weibull shape beta = 2, zero allowable failures.\nplan &lt;- rdt(\n  target       = 0.90,   # target reliability\n  mission_time = 1000,   # mission time (hours)\n  conf_level   = 0.80,   # confidence level\n  beta         = 2,      # assumed Weibull shape parameter\n  n            = 10,     # number of test units\n  f            = 0       # allowable failures\n)\nprint(plan)\n\nReliability Demonstration Test (RDT) Plan\n-----------------------------------------\nDistribution:  Weibull \nWeibull Shape Parameter (Beta):  2 \nAllowed Failures (f):  0 \nTarget Reliability:  0.9 \nMission Time:  1000 \nInput Sample Size (n):  10 \nRequired Test Time (T):  1235.94 \n\n\nEach unit must be tested for approximately 1,236 hours without failure. If the test passes, we have demonstrated \\(R(1000) \\geq 0.90\\) with 80% confidence.\n\n\n\n\n\n\nNoteTry It\n\n\n\nCompare the required test time for sample sizes of 5, 10, and 20 units (keep all other parameters the same). What is the trade-off?\n\n# Vary n to see the effect on required test time\nfor (n in c(5, 10, 20)) {\n  # plan &lt;- rdt(target = 0.90, mission_time = 1000, conf_level = 0.80,\n  #             beta = 2, n = n, f = 0)\n  # print(plan)\n}\n\n\n\nSolution\n\n\nfor (n in c(5, 10, 20)) {\n  plan &lt;- rdt(target = 0.90, mission_time = 1000, conf_level = 0.80,\n              beta = 2, n = n, f = 0)\n  print(plan)\n}\n\nReliability Demonstration Test (RDT) Plan\n-----------------------------------------\nDistribution:  Weibull \nWeibull Shape Parameter (Beta):  2 \nAllowed Failures (f):  0 \nTarget Reliability:  0.9 \nMission Time:  1000 \nInput Sample Size (n):  5 \nRequired Test Time (T):  1747.89 \nReliability Demonstration Test (RDT) Plan\n-----------------------------------------\nDistribution:  Weibull \nWeibull Shape Parameter (Beta):  2 \nAllowed Failures (f):  0 \nTarget Reliability:  0.9 \nMission Time:  1000 \nInput Sample Size (n):  10 \nRequired Test Time (T):  1235.94 \nReliability Demonstration Test (RDT) Plan\n-----------------------------------------\nDistribution:  Weibull \nWeibull Shape Parameter (Beta):  2 \nAllowed Failures (f):  0 \nTarget Reliability:  0.9 \nMission Time:  1000 \nInput Sample Size (n):  20 \nRequired Test Time (T):  873.94 \n\n\nMore test units means shorter required test time per unit — but total test effort (n × T) stays roughly constant. Larger fleets reduce calendar time at the cost of more physical units.\n\n\n\n\n\nForecasting Growth — predict_rga()\nOnce a growth test is underway, predict_rga() projects cumulative failures beyond the current endpoint — useful for deciding whether to continue testing or whether a reliability target will be met by a program deadline.\n\ntimes    &lt;- c(100, 200, 300, 400, 500)\nfailures &lt;- c(1, 2, 1, 3, 2)\n\nfit  &lt;- rga(times, failures)\npred &lt;- predict_rga(fit, times = seq(500, 1000, by = 100))\nprint(pred)\n\nReliability Growth Forecast (Crow-AMSAA) \n----------------------------------------- \n Time Cum.Failures Lower (95%) Upper (95%)\n  500          3.9         3.2         4.6\n  600          4.5         3.7         5.3\n  700          5.0         4.2         6.1\n  800          5.6         4.6         6.8\n  900          6.2         5.0         7.6\n 1000          6.7         5.4         8.3\n\n\nThe lower and upper bounds reflect the uncertainty in the Crow-AMSAA parameter estimates. A narrow interval indicates the growth trend is well characterized; a wide interval suggests more test time is needed.\n\n\n\n\n\n\nTipReview\n\n\n\nThe fitted Crow-AMSAA model gives \\(\\hat{\\beta} = 0.72\\). Is the system still improving at time 1,000?\n\n\nAnswer\n\nYes — \\(\\beta &lt; 1\\) means the cumulative failure rate is decreasing (the growth curve is concave), so reliability is still improving at time 1,000. Testing should continue until \\(\\beta\\) stabilizes near the growth target.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Reliability Growth Analysis</span>"
+    ]
+  },
+  {
+    "objectID": "04-rt.html#the-duane-model",
+    "href": "04-rt.html#the-duane-model",
+    "title": "4  Reliability Growth Analysis",
+    "section": "4.5 The Duane Model",
+    "text": "4.5 The Duane Model\nThe Duane Model (Duane 1964) is one of the earliest and most widely used models for reliability growth. It is a log-log plot of cumulative MTBF vs cumulative time, where the MTBF is the total operating time divided by the number of failures up to that time.\n\\[\\text{CMTBF}(t) = K \\cdot t^{\\beta - 1}\\]\nThe slope of the line on the log-log plot indicates the rate of reliability growth:\n\n\n\nSlope (\\(\\beta\\))\nMeaning\n\n\n\n\n\\(&gt; 1\\)\nReliability improving (failure rate decreasing)\n\n\n\\(= 1\\)\nNo change (stable)\n\n\n\\(&lt; 1\\)\nReliability worsening (failure rate increasing)\n\n\n\nPlotting the Duane model for three beta values:\n\nt &lt;- seq(1, 100, by = 0.1)\n\n# Three scenarios\nplot(log(t), log(0.1 * t^(1.5 - 1)), type = \"l\", col = \"blue\", lwd = 2,\n     xlab = \"log(Cumulative Time)\", ylab = \"log(Cumulative MTBF)\",\n     main = \"Duane Plot: Three Reliability Growth Scenarios\",\n     ylim = c(-4, 1))\nlines(log(t), log(0.1 * t^(1.0 - 1)), col = \"red\",       lwd = 2)\nlines(log(t), log(0.1 * t^(0.6 - 1)), col = \"darkgreen\", lwd = 2)\nlegend(\"topleft\",\n       legend = c(\"β = 1.5 (improving)\", \"β = 1.0 (stable)\", \"β = 0.6 (worsening)\"),\n       col = c(\"blue\", \"red\", \"darkgreen\"), lwd = 2)\n\n\n\n\n\n\n\n\n\nFitting with ReliaGrowR\n\ntimes    &lt;- c(100, 200, 300, 400, 500)\nfailures &lt;- c(1, 2, 1, 3, 2)\n\nfit &lt;- duane(times, failures)\nplot(fit, main = \"Duane Model Example\",\n     xlab = \"Cumulative Time\", ylab = \"Cumulative MTBF\")\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNoteTry It\n\n\n\nA new system was tested and the following cumulative failure counts were recorded. Fit a Duane model and plot the result.\n\ntimes    &lt;- c(200, 450, 750, 1100, 1500, 2000)\nfailures &lt;- c(3, 2, 2, 1, 1, 1)\n# fit &lt;- duane(times, failures)\n# plot(fit)\n\n\n\nSolution\n\n\ntimes    &lt;- c(200, 450, 750, 1100, 1500, 2000)\nfailures &lt;- c(3, 2, 2, 1, 1, 1)\nfit &lt;- duane(times, failures)\nplot(fit, main = \"Duane Reliability Growth Plot\",\n     xlab = \"Cumulative Test Time\", ylab = \"Cumulative MTBF\")\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTipReview\n\n\n\nWhat does a Duane plot with a slope greater than 1 indicate?\n\n\nAnswer\n\nThe system’s reliability is improving — the failure rate is decreasing over time.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Reliability Growth Analysis</span>"
+    ]
+  },
+  {
+    "objectID": "04-rt.html#the-crow-amsaa-model",
+    "href": "04-rt.html#the-crow-amsaa-model",
+    "title": "4  Reliability Growth Analysis",
+    "section": "4.6 The Crow-AMSAA Model",
+    "text": "4.6 The Crow-AMSAA Model\nThe Crow-AMSAA Model (Crow 1975) models cumulative failures vs cumulative time using a Non-Homogeneous Poisson Process (NHPP):\n\\[N(t) = \\lambda_0 \\cdot t^{\\beta}\\]\nThe shape parameter \\(\\beta\\) interpretation:\n\n\n\n\\(\\beta\\)\nMeaning\n\n\n\n\n\\(&gt; 1\\)\nFailures increasing (reliability worsening)\n\n\n\\(= 1\\)\nConstant rate (stable)\n\n\n\\(&lt; 1\\)\nFailures decreasing (reliability improving)\n\n\n\nNote: The Crow-AMSAA \\(\\beta\\) interpretation is reversed compared to the Duane model — because the Duane plots MTBF (higher is better), while Crow-AMSAA plots cumulative failures (lower slope is better).\n\nt &lt;- seq(0.1, 100, by = 0.1)\n\n# Three beta scenarios for cumulative failures\nplot(t, 0.5 * t^0.6, type = \"l\", col = \"blue\", lwd = 2,\n     xlab = \"Cumulative Time\", ylab = \"Cumulative Failures\",\n     main = \"Crow-AMSAA: Three Reliability Scenarios\",\n     ylim = c(0, 20))\nlines(t, 0.5 * t^1.0, col = \"red\",       lwd = 2)\nlines(t, 0.5 * t^1.5, col = \"darkgreen\", lwd = 2)\nlegend(\"topleft\",\n       legend = c(\"β = 0.6 (improving)\", \"β = 1.0 (stable)\", \"β = 1.5 (worsening)\"),\n       col = c(\"blue\", \"red\", \"darkgreen\"), lwd = 2)\n\n\n\n\n\n\n\n\n\nFitting with ReliaGrowR\n\nresult &lt;- rga(times, failures)\nplot(result, main = \"Crow-AMSAA Model Example\",\n     xlab = \"Cumulative Time\", ylab = \"Cumulative Failures\")\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNoteTry It\n\n\n\nA development test recorded these cumulative failure counts. Use rga() with model_type = \"Crow-AMSAA\" to fit the model.\n\ntimes    &lt;- c(50, 120, 220, 360, 530, 740, 1000)\nfailures &lt;- c(4, 3, 3, 2, 2, 1, 1)\n# fit &lt;- rga(times, failures, model_type = \"Crow-AMSAA\")\n# plot(fit)\n\n\n\nSolution\n\n\ntimes    &lt;- c(50, 120, 220, 360, 530, 740, 1000)\nfailures &lt;- c(4, 3, 3, 2, 2, 1, 1)\nfit &lt;- rga(times, failures, model_type = \"Crow-AMSAA\")\nplot(fit, main = \"Crow-AMSAA Reliability Growth\",\n     xlab = \"Cumulative Test Time\", ylab = \"Cumulative Failures\")\n\n\n\n\n\n\n\n\n\n\n\n\n\nThe Piecewise NHPP Model\nThe Piecewise NHPP fits a separate Power Law to each segment of the time axis, separated by breakpoints. This is useful when a design change occurs during testing.\n\\[N_i(t) = N(t_{i-1}) + \\lambda_i (t - t_{i-1})^{\\beta_i}, \\quad t_{i-1} &lt; t \\leq t_i\\]\n\ntimes    &lt;- c(25, 55, 97, 146, 201, 268, 341, 423, 513, 609, 710, 820, 940, 1072, 1217)\nfailures &lt;- c(1, 1, 2, 4, 4, 1, 1, 2, 1, 4, 1, 1, 3, 3, 4)\nbreaks   &lt;- 500\n\nresult &lt;- rga(times, failures, model_type = \"Piecewise NHPP\", breaks = breaks)\nplot(result, main = \"Piecewise NHPP Model\",\n     xlab = \"Cumulative Time\", ylab = \"Cumulative Failures\")\n\n\n\n\n\n\n\n\nThe two segments have different slopes — the first segment (pre-change) has a higher slope than the second (post-change), confirming the design change reduced the failure rate.\n\n\nChange Point Detection\nWithout a known breakpoint, rga() can detect the change point automatically:\n\nresult_auto &lt;- rga(times, failures, model_type = \"Piecewise NHPP\")\nplot(result_auto, main = \"Piecewise NHPP with Change Point Detection\",\n     xlab = \"Cumulative Time\", ylab = \"Cumulative Failures\")\n\n\n\n\n\n\n\n\nThe automatically detected change point is near time 500, consistent with the known design change.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Reliability Growth Analysis</span>"
+    ]
+  },
+  {
+    "objectID": "04-rt.html#summary",
+    "href": "04-rt.html#summary",
+    "title": "4  Reliability Growth Analysis",
+    "section": "4.7 Summary",
+    "text": "4.7 Summary\nKey takeaways:\n\nDuane model: log-log of MTBF vs time; positive slope (\\(\\beta &gt; 1\\)) = improving.\nCrow-AMSAA: log of cumulative failures vs time; concave downward = improving (\\(\\beta &lt; 1\\)).\nPiecewise NHPP: fits multiple segments; use when a known change occurs during testing.\nFor accelerated life testing (Arrhenius, Power Law, relationship plots), see Chapter 5.\n\n\n\n\n\n\n\nCrow, Larry H. 1975. Reliability Analysis for Complex, Repairable Systems. Army Material Systems Analysis Activity. https://apps.dtic.mil/sti/citations/ADA020296.\n\n\nDuane, J. T. 1964. “Learning Curve Approach to Reliability Monitoring.” IEEE Transactions on Aerospace 2: 563–66. https://doi.org/10.1109/TA.1964.4319640.\n\n\nGovan, Paul. 2024. ReliaGrowR: Reliability Growth Analysis. https://doi.org/10.32614/CRAN.package.ReliaGrowR.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Reliability Growth Analysis</span>"
+    ]
+  },
+  {
+    "objectID": "05-alt.html",
+    "href": "05-alt.html",
+    "title": "5  Accelerated Life Testing",
+    "section": "",
+    "text": "5.1 Introduction\nAccelerated Life Testing (ALT) (Meeker and Escobar 1998; Nelson 1990) subjects products to elevated stress levels — temperature, voltage, mechanical load, humidity — to induce failures more quickly than would occur under normal operating conditions. The acceleration relationship is then used to translate accelerated-test results into normal-use life predictions.\nThis approach is essential when products are designed for long service lives (years or decades), making it impractical to wait for failures at use conditions. ALT compresses that time by running tests at higher stress, then mathematically projecting back to the use environment.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Accelerated Life Testing</span>"
+    ]
+  },
+  {
+    "objectID": "05-alt.html#learning-objectives",
+    "href": "05-alt.html#learning-objectives",
+    "title": "5  Accelerated Life Testing",
+    "section": "5.2 Learning Objectives",
+    "text": "5.2 Learning Objectives\nBy the end of this chapter, you will be able to:\n\nExplain the purpose of accelerated life testing and the role of the Acceleration Factor.\nApply the Arrhenius model for temperature-accelerated tests.\nApply the Power Law model for non-thermal stress acceleration.\nFit ALT models using the WeibullR.ALT package.\nInterpret probability plots and relationship plots from ALT analyses.\nUse parallelization to constrain the shape parameter across stress levels.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Accelerated Life Testing</span>"
+    ]
+  },
+  {
+    "objectID": "05-alt.html#the-acceleration-factor",
+    "href": "05-alt.html#the-acceleration-factor",
+    "title": "5  Accelerated Life Testing",
+    "section": "5.3 The Acceleration Factor",
+    "text": "5.3 The Acceleration Factor\nThe Acceleration Factor (AF) quantifies how much faster a product fails under elevated stress compared to use conditions:\n\\[\\text{Life at use conditions} = AF \\times \\text{Life at stress conditions}\\]\nThe impact of AF on expected test life:\n\nlibrary(WeibullR.ALT)\n\n\nAF_vals &lt;- seq(1, 10, by = 0.1)\nlife_normal &lt;- 10000  # assumed normal-use life\n\nplot(AF_vals, life_normal / AF_vals, type = \"l\", col = \"blue\", lwd = 2,\n     xlab = \"Acceleration Factor (AF)\",\n     ylab = \"Expected Life at Stress Conditions\",\n     main = \"Effect of Acceleration Factor on Test Life\")\nabline(h = life_normal / c(2, 5, 10), col = \"gray70\", lty = 2)\n\n\n\n\n\n\n\n\nAn AF of 5 means the product fails five times faster under test stress — a 10,000-hour life in the field becomes a 2,000-hour test.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Accelerated Life Testing</span>"
+    ]
+  },
+  {
+    "objectID": "05-alt.html#the-arrhenius-model",
+    "href": "05-alt.html#the-arrhenius-model",
+    "title": "5  Accelerated Life Testing",
+    "section": "5.4 The Arrhenius Model",
+    "text": "5.4 The Arrhenius Model\nThe Arrhenius Model describes the relationship between temperature and reaction rate, which maps directly to material degradation and failure:\n\\[AF = \\exp\\left(\\frac{E_a}{k}\\left(\\frac{1}{T_{\\text{use}}} - \\frac{1}{T_{\\text{stress}}}\\right)\\right)\\]\nWhere: - \\(E_a\\) = activation energy in eV (electron volts) - \\(k\\) = Boltzmann constant (\\(8.617 \\times 10^{-5}\\) eV/K) - \\(T_{\\text{use}}\\), \\(T_{\\text{stress}}\\) = temperatures in Kelvin\nHigher activation energies mean the failure mechanism is more sensitive to temperature.\n\nWeibullR.ALT: Arrhenius-Lognormal Example\nThe WeibullR.ALT package (Silkworth 2022) extends WeibullR with ALT models. Data: Class B insulation tested at three oven temperatures (170, 190, 220°C), from Nelson (1990) Table 4.1.\n\nt41    &lt;- NelsonData(\"table4.1\")\nset170 &lt;- alt.data(t41$C170f, s = t41$C170s, stress = 170)\nset190 &lt;- alt.data(t41$C190f, s = t41$C190s, stress = 190)\nset220 &lt;- alt.data(t41$C220f, s = t41$C220s, stress = 220)\n\narrobj &lt;- alt.make(list(set170, set190, set220),\n                   dist = \"lognormal\", alt.model = \"arrhenius\",\n                   method.fit = \"mle\", view_dist_fits = FALSE)\n\nThe fitted curves shift left as temperature increases — higher temperature leads to shorter life.\nCalculating the AF at 220°C vs 170°C with \\(E_a = 1.0\\) eV:\n\nE_a      &lt;- 1.0\nk        &lt;- 8.617e-5\nT_use    &lt;- 170 + 273  # 443 K\nT_stress &lt;- 220 + 273  # 493 K\n\nAF &lt;- exp(E_a / k * (1 / T_use - 1 / T_stress))\ncat(\"Acceleration Factor at 220°C vs 170°C:\", round(AF, 1), \"\\n\")\n\nAcceleration Factor at 220°C vs 170°C: 14.3 \n\n\nAt 220°C the insulation degrades several times faster than at 170°C.\n\n\n\n\n\n\nNoteTry It\n\n\n\nA component is tested at 85°C to accelerate failures. The use temperature is 25°C. The activation energy is 0.65 eV. Compute the AF.\n\nE_a      &lt;- 0.65\nk        &lt;- 8.617e-5\nT_use    &lt;- 25 + 273.15\nT_stress &lt;- 85 + 273.15\n# AF = exp((E_a / k) * (1/T_use - 1/T_stress))\n\n\n\nSolution\n\n\nE_a      &lt;- 0.65\nk        &lt;- 8.617e-5\nT_use    &lt;- 25 + 273.15\nT_stress &lt;- 85 + 273.15\nAF &lt;- exp((E_a / k) * (1 / T_use - 1 / T_stress))\ncat(\"Acceleration Factor:\", round(AF, 1), \"\\n\")\n\nAcceleration Factor: 69.3",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Accelerated Life Testing</span>"
+    ]
+  },
+  {
+    "objectID": "05-alt.html#the-power-law-model",
+    "href": "05-alt.html#the-power-law-model",
+    "title": "5  Accelerated Life Testing",
+    "section": "5.5 The Power Law Model",
+    "text": "5.5 The Power Law Model\nThe Power Law Model describes how a product’s life is affected by non-thermal stresses (voltage, mechanical load, pressure):\n\\[AF = \\left(\\frac{S_{\\text{stress}}}{S_{\\text{use}}}\\right)^{n}\\]\nWhere \\(n\\) is the stress exponent — the sensitivity of the failure mechanism to the applied stress.\n\nWeibullR.ALT: Power Law Example\nData: electrical insulating fluids tested at 7 voltage levels (26–38 kV).\n\ndata_nelson &lt;- NelsonData(\"table3.1\")\n\ndata26 &lt;- alt.data(data_nelson$kV26, stress = 26)\ndata28 &lt;- alt.data(data_nelson$kV28, stress = 28)\ndata30 &lt;- alt.data(data_nelson$kV30, stress = 30)\ndata32 &lt;- alt.data(data_nelson$kV32, stress = 32)\ndata34 &lt;- alt.data(data_nelson$kV34, stress = 34)\ndata36 &lt;- alt.data(data_nelson$kV36, stress = 36)\ndata38 &lt;- alt.data(data_nelson$kV38, stress = 38)\n\npwrobj &lt;- alt.make(list(data26, data28, data30, data32, data34, data36, data38),\n                   dist = \"weibull\", alt.model = \"power\")\n\n\n\n\n\n\n\n\nCurves shift left as voltage increases — higher voltage stress leads to shorter life.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Accelerated Life Testing</span>"
+    ]
+  },
+  {
+    "objectID": "05-alt.html#multiple-stress-factors",
+    "href": "05-alt.html#multiple-stress-factors",
+    "title": "5  Accelerated Life Testing",
+    "section": "5.6 Multiple Stress Factors",
+    "text": "5.6 Multiple Stress Factors\nThe Eyring Model extends the Arrhenius approach to account for multiple stress factors (temperature, voltage, humidity):\n\\[\\text{Life}(S) = A \\cdot \\exp\\left(\\frac{B}{S} + C \\cdot S\\right)\\]\nThe WeibullR.ALT package supports the Eyring model via alt.make(..., alt.model = \"eyring\"). See the package documentation for examples.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Accelerated Life Testing</span>"
+    ]
+  },
+  {
+    "objectID": "05-alt.html#parallelization",
+    "href": "05-alt.html#parallelization",
+    "title": "5  Accelerated Life Testing",
+    "section": "5.7 Parallelization",
+    "text": "5.7 Parallelization\nParallelization constrains the shape parameter (slope) to be equal across all stress levels, simplifying the analysis:\n\nprlobj &lt;- alt.parallel(arrobj)\n\n\n\n\n\n\n\nexpobj &lt;- alt.parallel(pwrobj)\n\n\n\n\n\n\n\n\nWith parallel slopes, the relationship between stress and life can be characterized by a single line (the relationship plot).",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Accelerated Life Testing</span>"
+    ]
+  },
+  {
+    "objectID": "05-alt.html#relationship-plots",
+    "href": "05-alt.html#relationship-plots",
+    "title": "5  Accelerated Life Testing",
+    "section": "5.8 Relationship Plots",
+    "text": "5.8 Relationship Plots\nThe relationship plot shows how life changes as stress increases (log-linear, stress on x-axis, log-life on y-axis). The slope characterizes the sensitivity of life to stress:\n\nNegative slope: higher stress → shorter life (typical).\nFlat slope: stress has little effect.\nPositive slope: higher stress → longer life (rare).\n\n\nlnrobj &lt;- alt.fit(prlobj)\nplot(lnrobj, suppress.dev.new = TRUE)\n\n\n\n\n\n\n\n\nEach line corresponds to a different probability of failure (e.g., P10 = 10% failure probability, P63.2 = 63.2% failure probability = characteristic life).\n\nlnrobj2 &lt;- alt.fit(expobj)\nplot(lnrobj2, suppress.dev.new = TRUE)\n\n\n\n\n\n\n\n\nBoth relationship plots confirm a negative slope — higher stress leads to shorter life in both datasets.\n\n\n\n\n\n\nTipReview\n\n\n\nWhat does a negative slope in a relationship plot indicate?\n\n\nAnswer\n\nHigher stress leads to shorter life. This is the typical finding in ALT — stress accelerates the failure mechanism.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Accelerated Life Testing</span>"
+    ]
+  },
+  {
+    "objectID": "05-alt.html#summary",
+    "href": "05-alt.html#summary",
+    "title": "5  Accelerated Life Testing",
+    "section": "5.9 Summary",
+    "text": "5.9 Summary\nKey takeaways:\n\nAcceleration Factor: \\(\\text{Life}_{\\text{use}} = AF \\times \\text{Life}_{\\text{stress}}\\).\nArrhenius: temperature-based acceleration; \\(AF = \\exp(E_a/k \\cdot (1/T_{\\text{use}} - 1/T_{\\text{stress}}))\\).\nPower Law: non-thermal stress acceleration; \\(AF = (S_{\\text{stress}}/S_{\\text{use}})^n\\).\nParallelization: constrains slope to be equal across stress levels; required before fitting the relationship.\nRelationship plots: visualize life vs stress; negative slope = higher stress → shorter life.\nUse alt.data() → alt.make() → alt.parallel() → alt.fit() for the full workflow.\n\n\n\n\n\n\n\nMeeker, William Q., and Luis A. Escobar. 1998. Statistical Methods for Reliability Data. Wiley-Interscience.\n\n\nNelson, Wayne. 1990. Accelerated Testing. Wiley-Interscience.\n\n\nSilkworth, David. 2022. WeibullR.ALT: Accelerated Life Testing Using ’WeibullR’. https://doi.org/10.32614/CRAN.package.WeibullR.ALT.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Accelerated Life Testing</span>"
+    ]
+  },
+  {
+    "objectID": "06-rs.html",
+    "href": "06-rs.html",
+    "title": "6  Repairable Systems Analysis",
+    "section": "",
+    "text": "6.1 Introduction\nUnlike life data analysis (Chapter 3), which focuses on the time to first failure of non-repairable components, Repairable Systems Analysis (Ascher and Feingold 1984; Meeker and Escobar 1998) models the entire sequence of recurring failures on a single system or fleet. This chapter covers the foundational theory and the ReliaGrowR tools for fitting models, computing fleet-level exposure, and estimating the Mean Cumulative Function.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Repairable Systems Analysis</span>"
+    ]
+  },
+  {
+    "objectID": "06-rs.html#learning-objectives",
+    "href": "06-rs.html#learning-objectives",
+    "title": "6  Repairable Systems Analysis",
+    "section": "6.2 Learning Objectives",
+    "text": "6.2 Learning Objectives\nBy the end of this chapter, you will be able to:\n\nDefine the distinction between repairable and non-repairable systems.\nExplain the Homogeneous Poisson Process (HPP) and Non-Homogeneous Poisson Process (NHPP).\nDescribe the Power Law Process and its parameters.\nFit and interpret the Crow-AMSAA model using nhpp() from ReliaGrowR.\nApply the Piecewise NHPP model to detect changes in failure behavior.\nCompute fleet-level exposure using exposure().\nEstimate the Mean Cumulative Function (MCF) using mcf().\nForecast future failure counts from a fitted Power Law model.\n\nThe ReliaGrowR package (Govan 2024) provides functions for repairable systems analysis in R.\n\nlibrary(ReliaGrowR)",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Repairable Systems Analysis</span>"
+    ]
+  },
+  {
+    "objectID": "06-rs.html#repairable-vs-non-repairable-systems",
+    "href": "06-rs.html#repairable-vs-non-repairable-systems",
+    "title": "6  Repairable Systems Analysis",
+    "section": "6.3 Repairable vs Non-Repairable Systems",
+    "text": "6.3 Repairable vs Non-Repairable Systems\nA non-repairable system is discarded after failure and replaced with a new, statistically identical unit. The unit of analysis is the time to first failure. Weibull analysis applies.\nA repairable system is restored to service after each failure and continues accumulating operating time. The unit of analysis is the sequence of inter-failure times or cumulative failure counts over the system’s life.\nTwo repair assumptions are common:\n\n\n\n\n\n\n\n\nRepair type\nDescription\nModel\n\n\n\n\nPerfect repair\nAs-good-as-new after each repair\nRenewal process\n\n\nMinimal repair\nAs-bad-as-old — failure fixed, nothing else changed\nNHPP\n\n\n\nMost field maintenance data best fits the minimal repair assumption, making NHPP the standard framework.\nThe recurrence rate (intensity function) \\(\\rho(t)\\) is the instantaneous rate of failure occurrence at time \\(t\\):\n\\[\\rho(t) = \\frac{d\\,E[N(t)]}{dt}\\]",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Repairable Systems Analysis</span>"
+    ]
+  },
+  {
+    "objectID": "06-rs.html#failure-processes-hpp-and-nhpp",
+    "href": "06-rs.html#failure-processes-hpp-and-nhpp",
+    "title": "6  Repairable Systems Analysis",
+    "section": "6.4 Failure Processes: HPP and NHPP",
+    "text": "6.4 Failure Processes: HPP and NHPP\n\nHomogeneous Poisson Process (HPP)\nThe HPP assumes a constant failure rate \\(\\lambda\\) throughout the system’s life:\n\\[E[N(t)] = \\lambda t \\qquad \\rho(t) = \\lambda \\qquad \\text{MTBF} = 1/\\lambda\\]\nThe HPP is appropriate when failures occur at random with no trend.\n\n\nNon-Homogeneous Poisson Process (NHPP)\nThe NHPP allows the intensity function to change with time:\n\\[\\rho(t) = \\frac{d\\Lambda(t)}{dt}\\]\nWhen \\(\\rho(t)\\) increases, the system is deteriorating; when it decreases, the system is improving.\n\nt &lt;- seq(1, 100, by = 1)\n\n# HPP (constant rate)\nhpp_intensity  &lt;- rep(0.05, length(t))\n\n# NHPP Power Law scenarios\nnhpp_improving  &lt;- 0.01 * 0.7 * t^(0.7 - 1)   # beta = 0.7\nnhpp_stable     &lt;- 0.05 * 1.0 * t^(1.0 - 1)   # beta = 1.0\nnhpp_worsening  &lt;- 0.002 * 1.5 * t^(1.5 - 1)  # beta = 1.5\n\nylim_max &lt;- max(c(hpp_intensity, nhpp_improving, nhpp_stable, nhpp_worsening)) * 1.1\n\nplot(t, nhpp_improving, type = \"l\", col = \"blue\", lwd = 2,\n     ylim = c(0, ylim_max),\n     xlab = \"Time\", ylab = \"Intensity ρ(t)\",\n     main = \"NHPP Power Law Intensity Functions\")\nlines(t, nhpp_stable,    col = \"red\",       lwd = 2)\nlines(t, nhpp_worsening, col = \"darkgreen\", lwd = 2)\nabline(h = 0.05, col = \"gray50\", lwd = 2, lty = 2)\nlegend(\"topright\",\n       legend = c(\"β = 0.7 (improving)\", \"β = 1.0 (stable / HPP)\",\n                  \"β = 1.5 (worsening)\", \"HPP reference λ = 0.05\"),\n       col = c(\"blue\", \"red\", \"darkgreen\", \"gray50\"),\n       lwd = 2, lty = c(1, 1, 1, 2))",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Repairable Systems Analysis</span>"
+    ]
+  },
+  {
+    "objectID": "06-rs.html#the-power-law-process",
+    "href": "06-rs.html#the-power-law-process",
+    "title": "6  Repairable Systems Analysis",
+    "section": "6.5 The Power Law Process",
+    "text": "6.5 The Power Law Process\nThe Power Law Process is the most widely used NHPP for repairable systems:\n\\[E[N(t)] = \\lambda t^{\\beta} \\qquad \\rho(t) = \\lambda \\beta t^{\\beta-1}\\]\nParameter interpretation:\n\n\\(\\lambda &gt; 0\\) — scale parameter; overall magnitude of the failure rate.\n\\(\\beta &lt; 1\\): decreasing intensity (system improving).\n\\(\\beta = 1\\): constant intensity = HPP.\n\\(\\beta &gt; 1\\): increasing intensity (system deteriorating).\n\nThe instantaneous MTBF at time \\(t\\):\n\\[\\text{MTBF}(t) = \\frac{1}{\\rho(t)} = \\frac{1}{\\lambda\\beta\\,t^{\\beta-1}}\\]\nMaximum likelihood estimates given \\(n\\) failures at times \\(t_1 &lt; \\cdots &lt; t_n\\) over total time \\(T\\):\n\\[\\hat{\\beta} = \\frac{n}{\\displaystyle\\sum_{i=1}^{n} \\ln(T/t_i)} \\qquad \\hat{\\lambda} = \\frac{n}{T^{\\hat{\\beta}}}\\]\n\n\n\n\n\n\nTipReview\n\n\n\nA repairable system is observed to have an increasing failure rate over time. Which model is most appropriate?\n\n\nAnswer\n\nNHPP Power Law with \\(\\beta &gt; 1\\). An increasing intensity function is characteristic of a deteriorating system. HPP (constant rate) cannot capture this trend.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Repairable Systems Analysis</span>"
+    ]
+  },
+  {
+    "objectID": "06-rs.html#nhpp-analysis-with-nhpp",
+    "href": "06-rs.html#nhpp-analysis-with-nhpp",
+    "title": "6  Repairable Systems Analysis",
+    "section": "6.6 NHPP Analysis with nhpp()",
+    "text": "6.6 NHPP Analysis with nhpp()\nThe nhpp() function fits the Power Law Process (Crow-AMSAA model) (Crow 1975) to cumulative failure data by maximum likelihood, returning estimates of \\(\\lambda\\) and \\(\\beta\\).\nA curve that bends downward (concave) indicates \\(\\hat{\\beta} &lt; 1\\) — improving system. Upward bending (convex) indicates \\(\\hat{\\beta} &gt; 1\\) — deteriorating system.\n\ntimes    &lt;- c(500, 1200, 2100, 3300, 4800, 6500, 8400, 10500, 12800, 15000)\nfailures &lt;- c(3, 4, 4, 5, 4, 3, 3, 3, 2, 2)\n\nfit &lt;- nhpp(time = times, event = failures)\nplot(fit,\n     main = \"Crow-AMSAA Model: Industrial Pump Fleet\",\n     xlab = \"Cumulative Operating Hours\",\n     ylab = \"Cumulative Failures\")\n\n\n\n\n\n\n\n\nThe concave curve and \\(\\hat{\\beta} &lt; 1\\) indicate the pump fleet’s failure rate is decreasing — a favorable operating regime.\n\n\n\n\n\n\nNoteTry It\n\n\n\nA compressor fleet recorded these cumulative operating hours and failure counts. Fit a Power Law model using nhpp() with method = \"LS\".\n\ntimes    &lt;- c(1000, 2500, 4000, 5500, 8000)\nfailures &lt;- c(2, 3, 4, 5, 5)\n# fit &lt;- nhpp(time = times, event = failures, method = \"LS\")\n# plot(fit)\n\n\n\nSolution\n\n\ntimes    &lt;- c(1000, 2500, 4000, 5500, 8000)\nfailures &lt;- c(2, 3, 4, 5, 5)\nfit &lt;- nhpp(time = times, event = failures, method = \"LS\")\nplot(fit, main = \"Crow-AMSAA: Compressor Fleet\",\n     xlab = \"Cumulative Hours\", ylab = \"Cumulative Failures\")",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Repairable Systems Analysis</span>"
+    ]
+  },
+  {
+    "objectID": "06-rs.html#piecewise-nhpp",
+    "href": "06-rs.html#piecewise-nhpp",
+    "title": "6  Repairable Systems Analysis",
+    "section": "6.7 Piecewise NHPP",
+    "text": "6.7 Piecewise NHPP\nThe Piecewise NHPP (Guo et al. 2010) fits a separate Power Law to each segment of the time axis, allowing for structural changes in failure behavior (overhauls, design modifications, operational changes):\n\\[E[N(t)] = \\begin{cases} \\lambda_1 t^{\\beta_1} & 0 &lt; t \\leq \\tau \\\\ E[N(\\tau)] + \\lambda_2(t-\\tau)^{\\beta_2} & t &gt; \\tau \\end{cases}\\]\nPass a breakpoint estimate via the breaks argument. The segmented algorithm then optimizes the breakpoint location from the data.\n\ntimes2    &lt;- c(500, 1200, 2100, 3300, 4800, 6500, 8400, 9200, 10100, 11300,\n               12800, 14500, 16400, 18500, 20800)\nfailures2 &lt;- c(3, 4, 4, 5, 6, 6, 5, 3, 3, 2, 2, 2, 2, 1, 1)\n\nfit_pw &lt;- nhpp(time = times2, event = failures2, breaks = 8000, method = \"LS\")\nplot(fit_pw,\n     main = \"Piecewise NHPP: Fleet Overhaul at Hour 8000\",\n     xlab = \"Cumulative Operating Hours\",\n     ylab = \"Cumulative Failures\")\n\n\n\n\n\n\n\n\nThe first segment (pre-overhaul, steeper slope) gives way to a flatter or downward-bending second segment, confirming the overhaul reduced the failure rate. The fitted breakpoint may differ slightly from the input value — here it is estimated near hour 9,820.\n\n\n\n\n\n\nTipReview\n\n\n\nWhat is the primary reason to use a Piecewise NHPP instead of a single Crow-AMSAA model?\n\n\nAnswer\n\nTo account for a known or suspected structural change in the failure process (overhaul, design change, operational change). A piecewise model fits each segment independently, capturing the change in failure behavior.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Repairable Systems Analysis</span>"
+    ]
+  },
+  {
+    "objectID": "06-rs.html#exposure-analysis",
+    "href": "06-rs.html#exposure-analysis",
+    "title": "6  Repairable Systems Analysis",
+    "section": "6.8 Exposure Analysis",
+    "text": "6.8 Exposure Analysis\nWhen analyzing a fleet, individual units enter and leave observation at different times. Exposure is the total operating time accumulated across all units currently at risk.\nThe exposure() function computes: - Cumulative exposure — total system-time at risk up to each event time. - Number at risk — how many units were under observation at each time. - Event rate — cumulative events divided by cumulative exposure.\n\npump_data &lt;- data.frame(\n  id    = c(1, 1, 1,  2, 2, 2,  3, 3,  4, 4, 4, 4,  5, 5),\n  time  = c(310, 850, 1620,  420, 1050, 2100,  580, 1890,  240, 710, 1380, 2400,  530, 1740),\n  event = c(1, 1, 1,   1, 1, 1,   1, 1,   1, 1, 1, 1,   1, 1)\n)\n\nexp_result &lt;- exposure(id = pump_data$id, time = pump_data$time,\n                       event = pump_data$event)\nplot(exp_result)\n\n\n\n\n\n\n\n\nThe exposure plot shows how total observed system-time accumulates and how the fleet-wide event rate behaves over time.\n\n\n\n\n\n\nTipReview\n\n\n\nWhy is it important to account for exposure when comparing failure rates across systems with different observation periods?\n\n\nAnswer\n\nWithout normalizing by exposure, a system observed for twice as long will appear to have twice as many failures even if its underlying rate is identical. Exposure provides the denominator — failures per unit time — so rates can be compared fairly.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Repairable Systems Analysis</span>"
+    ]
+  },
+  {
+    "objectID": "06-rs.html#mean-cumulative-function",
+    "href": "06-rs.html#mean-cumulative-function",
+    "title": "6  Repairable Systems Analysis",
+    "section": "6.9 Mean Cumulative Function",
+    "text": "6.9 Mean Cumulative Function\nThe Mean Cumulative Function (MCF) is a non-parametric estimate of the expected cumulative number of failures per system as a function of time. It makes no distributional assumptions and handles systems with different observation periods.\nThe Nelson-Aalen estimator:\n\\[\\hat{M}(t) = \\sum_{t_j \\leq t} \\frac{d_j}{n_j}\\]\nwhere \\(d_j\\) is the number of failures at time \\(t_j\\) and \\(n_j\\) is the number of systems at risk at \\(t_j\\).\nPass end_time to mcf() when systems were observed beyond their last recorded failure — otherwise the risk set is deflated too early, inflating the rate estimate.\n\nend_times  &lt;- c(\"1\" = 3000, \"2\" = 3000, \"3\" = 3000, \"4\" = 3000, \"5\" = 3000)\n\nmcf_result &lt;- mcf(id = pump_data$id, time = pump_data$time,\n                  event = pump_data$event,\n                  end_time = end_times)\nplot(mcf_result,\n     main = \"Mean Cumulative Function: Industrial Pump Fleet\",\n     xlab = \"Operating Hours\",\n     ylab = \"Expected Cumulative Failures per System\")\n\n\n\n\n\n\n\n\nThe slope of the MCF reveals the recurrence trend: steepening = increasing failure rate; flattening = improving.\n\n\n\n\n\n\nNoteTry It\n\n\n\nThree systems were observed with the following failure times. Each was observed until hour 2000. Compute and plot the MCF.\n\nid    &lt;- c(rep(\"1\", 3), rep(\"2\", 4), rep(\"3\", 2))\ntime  &lt;- c(400, 900, 1500,   300, 700, 1200, 1800,   600, 1400)\nevent &lt;- rep(1, 9)\nend_times2 &lt;- c(\"1\" = 2000, \"2\" = 2000, \"3\" = 2000)\n# fit &lt;- mcf(id, time, event, end_time = end_times2)\n# plot(fit)\n\n\n\nSolution\n\n\nid    &lt;- c(rep(\"1\", 3), rep(\"2\", 4), rep(\"3\", 2))\ntime  &lt;- c(400, 900, 1500,   300, 700, 1200, 1800,   600, 1400)\nevent &lt;- rep(1, 9)\nend_times2 &lt;- c(\"1\" = 2000, \"2\" = 2000, \"3\" = 2000)\nfit &lt;- mcf(id = id, time = time, event = event, end_time = end_times2)\nplot(fit, main = \"MCF Example\", xlab = \"Time (hours)\", ylab = \"MCF\")",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Repairable Systems Analysis</span>"
+    ]
+  },
+  {
+    "objectID": "06-rs.html#interpreting-results-and-predicting-future-failures",
+    "href": "06-rs.html#interpreting-results-and-predicting-future-failures",
+    "title": "6  Repairable Systems Analysis",
+    "section": "6.10 Interpreting Results and Predicting Future Failures",
+    "text": "6.10 Interpreting Results and Predicting Future Failures\n\nReading \\(\\hat{\\beta}\\)\n\n\n\n\n\n\n\n\n\\(\\hat{\\beta}\\)\nInterpretation\nTypical cause\n\n\n\n\n\\(&lt; 1\\)\nDecreasing failure rate\nEffective maintenance, infant mortality resolved\n\n\n\\(= 1\\)\nConstant failure rate\nRandom external shocks\n\n\n\\(&gt; 1\\)\nIncreasing failure rate\nWear-out, accumulating damage, aging\n\n\n\n\n\nCumulative vs Instantaneous MTBF\n\nCumulative MTBF = \\(T / N(T)\\) — historical average over all observed failures.\nInstantaneous MTBF at time \\(t\\) = \\(1/\\rho(t) = 1/(\\hat{\\lambda}\\hat{\\beta}\\,t^{\\hat{\\beta}-1})\\) — expected time to the next failure.\n\nFor \\(\\hat{\\beta} &gt; 1\\) (aging system), the instantaneous MTBF falls below the cumulative average at late times — the system’s near-term reliability is worse than its history suggests.\n\n\nPredicting Future Failures\nExpected additional failures from current time \\(T\\) to a future time \\(T + \\Delta t\\):\n\\[E[\\Delta N] = \\hat{\\lambda}(T + \\Delta t)^{\\hat{\\beta}} - \\hat{\\lambda}\\, T^{\\hat{\\beta}}\\]\n\nlambda    &lt;- 0.0003\nbeta      &lt;- 0.85\nT_current &lt;- 15000\nT_future  &lt;- 17000\n\nexpected_add &lt;- lambda * T_future^beta - lambda * T_current^beta\ncat(\"Expected additional failures:\", round(expected_add, 2), \"\\n\")\n\nExpected additional failures: 0.12 \n\n\n\n\n\n\n\n\nNoteTry It\n\n\n\nA system has been operating for 5,000 hours. A Power Law fit yielded \\(\\lambda = 0.0005\\) and \\(\\beta = 1.2\\). Calculate the expected additional failures in the next 1,000 hours.\n\nlambda    &lt;- 0.0005\nbeta      &lt;- 1.2\nT_current &lt;- 5000\nT_future  &lt;- 6000\n# E[ΔN] = lambda * T_future^beta - lambda * T_current^beta\n\n\n\nSolution\n\n\nlambda    &lt;- 0.0005\nbeta      &lt;- 1.2\nT_current &lt;- 5000\nT_future  &lt;- 6000\nexpected_failures &lt;- lambda * T_future^beta - lambda * T_current^beta\ncat(\"Expected additional failures:\", round(expected_failures, 2), \"\\n\")\n\nExpected additional failures: 3.36 \n\n\n\n\n\n\n\n\n\n\n\nTipReview\n\n\n\nA system has a fitted Power Law model with \\(\\beta = 1.35\\). What is the operational implication?\n\n\nAnswer\n\nThe failure rate is increasing — wear-out or aging is occurring. The system may be approaching a major overhaul threshold. The instantaneous MTBF is below the cumulative historical average.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Repairable Systems Analysis</span>"
+    ]
+  },
+  {
+    "objectID": "06-rs.html#summary",
+    "href": "06-rs.html#summary",
+    "title": "6  Repairable Systems Analysis",
+    "section": "6.11 Summary",
+    "text": "6.11 Summary\nKey takeaways:\n\nRepairable systems analysis models the sequence of recurring failures, not just the first failure.\nThe Power Law Process (\\(E[N(t)] = \\lambda t^\\beta\\)) is the standard NHPP for repairable systems.\n\\(\\hat{\\beta}\\) determines whether the failure rate is improving (\\(&lt; 1\\)), stable (\\(= 1\\)), or worsening (\\(&gt; 1\\)).\nnhpp() fits the Crow-AMSAA model; add breaks for piecewise fitting.\nexposure() computes fleet-level operating time at risk.\nmcf() estimates cumulative failures per system non-parametrically.\nFuture failure counts: \\(E[\\Delta N] = \\hat{\\lambda}(T + \\Delta t)^{\\hat{\\beta}} - \\hat{\\lambda}\\,T^{\\hat{\\beta}}\\).\n\n\n\n\n\n\n\nAscher, Harold, and Harry Feingold. 1984. Repairable Systems Reliability. Marcel Dekker.\n\n\nCrow, Larry H. 1975. Reliability Analysis for Complex, Repairable Systems. Army Material Systems Analysis Activity. https://apps.dtic.mil/sti/citations/ADA020296.\n\n\nGovan, Paul. 2024. ReliaGrowR: Reliability Growth Analysis. https://doi.org/10.32614/CRAN.package.ReliaGrowR.\n\n\nGuo, H., A. Mettas, G. Sarakakis, and P. Niu. 2010. “Piecewise NHPP Models with Maximum Likelihood Estimation for Repairable Systems.” 2010 Proceedings – Annual Reliability and Maintainability Symposium (RAMS), 1–7. https://doi.org/10.1109/RAMS.2010.5448029.\n\n\nMeeker, William Q., and Luis A. Escobar. 1998. Statistical Methods for Reliability Data. Wiley-Interscience.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Repairable Systems Analysis</span>"
+    ]
+  },
+  {
+    "objectID": "07-reliaplotr.html",
+    "href": "07-reliaplotr.html",
+    "title": "7  Interactive Plots with ReliaPlotR",
+    "section": "",
+    "text": "7.1 Introduction\nThe previous chapters produce static base-R plots. ReliaPlotR (Govan 2023) is a companion package that turns those same fitted model objects into interactive plotly charts — with hover tooltips, zoom/pan controls, and built-in download buttons — without requiring you to change how you fit your models.\nThe API follows a single convention: pass the fitted object from WeibullR, ReliaGrowR, or WeibullR.ALT directly to the corresponding plotly_* function.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Interactive Plots with ReliaPlotR</span>"
+    ]
+  },
+  {
+    "objectID": "07-reliaplotr.html#installation",
+    "href": "07-reliaplotr.html#installation",
+    "title": "7  Interactive Plots with ReliaPlotR",
+    "section": "7.2 Installation",
+    "text": "7.2 Installation\n\ninstall.packages(\"ReliaPlotR\")\n\n\nlibrary(ReliaPlotR)\nlibrary(WeibullR)\nlibrary(ReliaGrowR)\nlibrary(WeibullR.ALT)\n\nReliaPlotR is available on CRAN: https://CRAN.R-project.org/package=ReliaPlotR",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Interactive Plots with ReliaPlotR</span>"
+    ]
+  },
+  {
+    "objectID": "07-reliaplotr.html#life-data-analysis-plots",
+    "href": "07-reliaplotr.html#life-data-analysis-plots",
+    "title": "7  Interactive Plots with ReliaPlotR",
+    "section": "7.3 Life Data Analysis Plots",
+    "text": "7.3 Life Data Analysis Plots\nThese functions accept the wblr objects produced by WeibullR — exactly as shown in Chapter 3. No reformatting needed.\n\nWeibull Probability Plot — plotly_wblr()\nPass any fitted wblr object (or a list of objects for overlays):\n\nfailures &lt;- c(30, 49, 82, 90, 96)\nobj &lt;- wblr.conf(wblr.fit(wblr(failures)))\nplotly_wblr(obj, fitCol = \"blue\", confCol = \"blue\",\n            main = \"Weibull Probability Plot\")\n\n\n\n\n\n\n\nFigure 7.1: Interactive Weibull probability plot with confidence bounds\n\n\n\n\nHover over any point to read off its exact time and cumulative probability. The results table (β, η, Anderson-Darling) appears in the lower right.\nIncluding suspensions:\n\nsuspensions &lt;- c(100, 45, 10)\nobj_susp &lt;- wblr.conf(wblr.fit(wblr(failures, suspensions)))\nplotly_wblr(obj_susp, susp = suspensions,\n            fitCol = \"red\", confCol = \"red\",\n            main = \"Weibull Plot with Suspensions\")\n\n\n\n\n\n\n\nFigure 7.2: Weibull plot with right-censored suspensions\n\n\n\n\nOverlaying two models — pass a list:\n\nobj1 &lt;- wblr.conf(wblr.fit(wblr(failures,             col = \"red\")))\nobj2 &lt;- wblr.conf(wblr.fit(wblr(failures, suspensions, col = \"purple\")))\nplotly_wblr(list(obj1, obj2),\n            cols  = c(\"red\", \"purple\"),\n            main  = \"Multi-Model Weibull Overlay\")\n\n\n\n\n\n\n\nFigure 7.3: Multi-model overlay: with and without suspensions\n\n\n\n\n\n\nContour Plot — plotly_contour()\nPass a wblr object fitted with likelihood-ratio bounds (method.conf = \"lrb\"):\n\nobj_lrb &lt;- wblr.conf(wblr.fit(wblr(failures, col = \"blue\"), method.fit = \"mle\"),\n                     method.conf = \"lrb\")\nplotly_contour(obj_lrb,\n               main = \"Weibull Contour Plot (90% CL)\",\n               xlab = \"Eta (η)\", ylab = \"Beta (β)\")\n\n\n\n\n\n\n\nFigure 7.4: Interactive contour plot showing the 90% confidence region for β and η\n\n\n\n\nHover to read off any (η, β) combination inside the confidence region. Overlaying multiple contours:\n\nset.seed(123)\ndata &lt;- data.frame(\n  time = c(rweibull(5, 0.5, 20), rweibull(10, 1, 10), rweibull(5, 2, 5),\n           rweibull(100, 2, 10)),\n  event        = c(rep(1, 20), rep(0, 100)),\n  failure_mode = c(rep(\"A\", 5), rep(\"B\", 10), rep(\"C\", 5), rep(\"\", 100))\n)\ndat1 &lt;- dat2 &lt;- dat3 &lt;- data\ndat1$event[dat1$failure_mode != \"A\"] &lt;- 0\ndat2$event[dat2$failure_mode != \"B\"] &lt;- 0\ndat3$event[dat3$failure_mode != \"C\"] &lt;- 0\n\nc1 &lt;- wblr.conf(wblr.fit(wblr(dat1, col = \"blue\"),   method.fit = \"mle\"), method.conf = \"lrb\")\nc2 &lt;- wblr.conf(wblr.fit(wblr(dat2, col = \"red\"),    method.fit = \"mle\"), method.conf = \"lrb\")\nc3 &lt;- wblr.conf(wblr.fit(wblr(dat3, col = \"orange\"), method.fit = \"mle\"), method.conf = \"lrb\")\n\nplotly_contour(list(c1, c2, c3),\n               cols = c(\"blue\", \"red\", \"orange\"),\n               main = \"Contour Comparison: Three Failure Modes\")\n\n\n\n\n\n\n\nFigure 7.5: Overlaid contour plots for three competing failure modes",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Interactive Plots with ReliaPlotR</span>"
+    ]
+  },
+  {
+    "objectID": "07-reliaplotr.html#reliability-growth-plots",
+    "href": "07-reliaplotr.html#reliability-growth-plots",
+    "title": "7  Interactive Plots with ReliaPlotR",
+    "section": "7.4 Reliability Growth Plots",
+    "text": "7.4 Reliability Growth Plots\nThese functions accept fitted objects from ReliaGrowR — the same objects plotted in Chapter 4.\n\nDuane Plot — plotly_duane()\n\ntimes    &lt;- c(100, 200, 300, 400, 500)\nfailures &lt;- c(1, 2, 1, 3, 2)\n\nfit_duane &lt;- duane(times, failures)\nplotly_duane(fit_duane,\n             main = \"Duane Reliability Growth\",\n             xlab = \"Cumulative Time\",\n             ylab = \"Cumulative MTBF\")\n\n\n\n\n\n\n\nFigure 7.6: Interactive Duane reliability growth plot\n\n\n\n\n\n\nCrow-AMSAA Plot — plotly_rga()\n\nfit_rga &lt;- rga(times, failures)\nplotly_rga(fit_rga,\n           main = \"Crow-AMSAA Model\",\n           xlab = \"Cumulative Time\",\n           ylab = \"Cumulative Failures\")\n\n\n\n\n\n\n\nFigure 7.7: Interactive Crow-AMSAA cumulative failures plot\n\n\n\n\nHover over any data point to read the exact cumulative time and failure count. The fitted curve and confidence bounds can be toggled via the legend.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Interactive Plots with ReliaPlotR</span>"
+    ]
+  },
+  {
+    "objectID": "07-reliaplotr.html#accelerated-life-testing-plots",
+    "href": "07-reliaplotr.html#accelerated-life-testing-plots",
+    "title": "7  Interactive Plots with ReliaPlotR",
+    "section": "7.5 Accelerated Life Testing Plots",
+    "text": "7.5 Accelerated Life Testing Plots\nThese functions accept alt.make() and alt.fit() objects from WeibullR.ALT — see Chapter 5.\n\nALT Probability Plot — plotly_alt()\n\nt41    &lt;- NelsonData(\"table4.1\")\nset170 &lt;- alt.data(t41$C170f, s = t41$C170s, stress = 170)\nset190 &lt;- alt.data(t41$C190f, s = t41$C190s, stress = 190)\nset220 &lt;- alt.data(t41$C220f, s = t41$C220s, stress = 220)\n\narrobj &lt;- alt.make(list(set170, set190, set220),\n                   dist = \"lognormal\", alt.model = \"arrhenius\",\n                   method.fit = \"mle\", view_dist_fits = FALSE)\nprlobj &lt;- alt.parallel(arrobj)\n\nplotly_alt(prlobj,\n           main = \"Arrhenius-Lognormal ALT Probability Plot\",\n           xlab = \"Time to Failure (hours)\",\n           ylab = \"Probability of Failure\")\n\n\n\n\n\n\n\nFigure 7.8: Interactive ALT probability plot: Arrhenius-Lognormal model (Class B insulation)\n\n\n\n\n\n\n\n\n\n\nFigure 7.9: Interactive ALT probability plot: Arrhenius-Lognormal model (Class B insulation)\n\n\n\n\n\nEach color represents a different temperature level. Hover to inspect unreliability at any time. Note: plotly_alt() requires a parallelized object from alt.parallel().\n\n\nLife-Stress Relationship Plot — plotly_rel()\n\nlnrobj &lt;- alt.fit(prlobj)\nplotly_rel(lnrobj,\n           main = \"Life-Stress Relationship: Arrhenius Model\",\n           xlab = \"Temperature (°C)\",\n           ylab = \"Time to Failure\")\n\n\n\n\n\n\n\nFigure 7.10: Interactive life-stress relationship plot\n\n\n\n\nEach line represents a percentile of the failure distribution (P10, P63.2, P90, etc.). Hover over any point to read the expected life at that stress level and percentile.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Interactive Plots with ReliaPlotR</span>"
+    ]
+  },
+  {
+    "objectID": "07-reliaplotr.html#repairable-systems-plots",
+    "href": "07-reliaplotr.html#repairable-systems-plots",
+    "title": "7  Interactive Plots with ReliaPlotR",
+    "section": "7.6 Repairable Systems Plots",
+    "text": "7.6 Repairable Systems Plots\nThese functions accept the fitted objects from ReliaGrowR — the same objects produced in Chapter 6.\n\nNHPP Plot — plotly_nhpp()\n\ntimes_pump    &lt;- c(500, 1200, 2100, 3300, 4800, 6500, 8400, 10500, 12800, 15000)\nfailures_pump &lt;- c(3, 4, 4, 5, 4, 3, 3, 3, 2, 2)\n\nfit_nhpp &lt;- nhpp(time = times_pump, event = failures_pump)\nplotly_nhpp(fit_nhpp,\n            main = \"Crow-AMSAA: Industrial Pump Fleet\",\n            xlab = \"Cumulative Operating Hours\",\n            ylab = \"Cumulative Failures\")\n\n\n\n\n\n\n\nFigure 7.11: Interactive Crow-AMSAA NHPP plot: industrial pump fleet\n\n\n\n\n\n\nMCF Plot — plotly_mcf()\n\npump_data &lt;- data.frame(\n  id    = c(1, 1, 1,  2, 2, 2,  3, 3,  4, 4, 4, 4,  5, 5),\n  time  = c(310, 850, 1620,  420, 1050, 2100,  580, 1890,\n            240, 710, 1380, 2400,  530, 1740),\n  event = rep(1, 14)\n)\nend_times  &lt;- c(\"1\" = 3000, \"2\" = 3000, \"3\" = 3000, \"4\" = 3000, \"5\" = 3000)\n\nmcf_result &lt;- mcf(id = pump_data$id, time = pump_data$time,\n                  event = pump_data$event, end_time = end_times)\nplotly_mcf(mcf_result,\n           main = \"MCF: Industrial Pump Fleet\",\n           xlab = \"Operating Hours\",\n           ylab = \"Expected Cumulative Failures per System\")\n\n\n\n\n\n\n\nFigure 7.12: Interactive Mean Cumulative Function plot with confidence bounds\n\n\n\n\n\n\nExposure Plot — plotly_exposure()\n\nexp_result &lt;- exposure(id = pump_data$id, time = pump_data$time,\n                       event = pump_data$event)\nplotly_exposure(exp_result,\n                main = \"Fleet Exposure Plot\",\n                xlab = \"Operating Hours\",\n                ylab = \"Event Rate (failures / hour)\")\n\n\n\n\n\n\n\nFigure 7.13: Interactive exposure plot showing fleet-level event rate",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Interactive Plots with ReliaPlotR</span>"
+    ]
+  },
+  {
+    "objectID": "07-reliaplotr.html#embedding-in-reports-and-dashboards",
+    "href": "07-reliaplotr.html#embedding-in-reports-and-dashboards",
+    "title": "7  Interactive Plots with ReliaPlotR",
+    "section": "7.7 Embedding in Reports and Dashboards",
+    "text": "7.7 Embedding in Reports and Dashboards\nReliaPlotR outputs are standard plotly objects and embed natively in:\nQuarto / R Markdown — interactive widgets in HTML output, static fallback in PDF:\n```{r}\nlibrary(ReliaPlotR)\nlibrary(WeibullR)\nfailures &lt;- c(30, 49, 82, 90, 96)\nobj &lt;- wblr.conf(wblr.fit(wblr(failures)))\nplotly_wblr(obj)\n```\nShiny — use plotlyOutput() / renderPlotly():\n\nlibrary(shiny)\nlibrary(plotly)\nlibrary(ReliaPlotR)\nlibrary(WeibullR)\n\nui &lt;- fluidPage(plotlyOutput(\"wblr_plot\"))\n\nserver &lt;- function(input, output) {\n  output$wblr_plot &lt;- renderPlotly({\n    obj &lt;- wblr.conf(wblr.fit(wblr(c(30, 49, 82, 90, 96))))\n    plotly_wblr(obj)\n  })\n}\n\nshinyApp(ui, server)",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Interactive Plots with ReliaPlotR</span>"
+    ]
+  },
+  {
+    "objectID": "07-reliaplotr.html#when-to-use-reliaplotr",
+    "href": "07-reliaplotr.html#when-to-use-reliaplotr",
+    "title": "7  Interactive Plots with ReliaPlotR",
+    "section": "7.8 When to Use ReliaPlotR",
+    "text": "7.8 When to Use ReliaPlotR\n\n\n\n\n\n\n\nUse ReliaPlotR when…\nUse base WeibullR / ReliaGrowR plots when…\n\n\n\n\nDelivering results to non-R stakeholders\nRunning quick exploratory analysis in a script\n\n\nEmbedding in an HTML report or dashboard\nGenerating PDF / print output directly\n\n\nStakeholders need to hover and inspect points\nBatch-processing many analyses\n\n\nPresenting in a web browser or Shiny app\nWorking in a non-HTML environment",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Interactive Plots with ReliaPlotR</span>"
+    ]
+  },
+  {
+    "objectID": "07-reliaplotr.html#getting-help",
+    "href": "07-reliaplotr.html#getting-help",
+    "title": "7  Interactive Plots with ReliaPlotR",
+    "section": "7.9 Getting Help",
+    "text": "7.9 Getting Help\n\nhelp(package = \"ReliaPlotR\")\n\n\nCRAN page: https://CRAN.R-project.org/package=ReliaPlotR",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Interactive Plots with ReliaPlotR</span>"
+    ]
+  },
+  {
+    "objectID": "07-reliaplotr.html#summary",
+    "href": "07-reliaplotr.html#summary",
+    "title": "7  Interactive Plots with ReliaPlotR",
+    "section": "7.10 Summary",
+    "text": "7.10 Summary\nReliaPlotR wraps every major fitted object in the ReliaLearnR ecosystem — wblr, duane, rga, nhpp, mcf, exposure, alt.make, alt.fit — in an interactive plotly chart. The pattern is consistent: fit your model with WeibullR, ReliaGrowR, or WeibullR.ALT as usual, then pass the result to the corresponding plotly_* function. All nine functions support the same customization arguments (titles, axis labels, colors, grid control) and return standard plotly objects compatible with Quarto, R Markdown, and Shiny.\n\n\n\n\n\n\nGovan, Paul. 2023. ReliaPlotR: Interactive Reliability Analysis Plots. https://doi.org/10.32614/CRAN.package.ReliaPlotR.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Interactive Plots with ReliaPlotR</span>"
+    ]
+  },
+  {
+    "objectID": "08-reliashiny.html",
+    "href": "08-reliashiny.html",
+    "title": "8  Web-Based Analysis with ReliaShiny",
+    "section": "",
+    "text": "8.1 Introduction\nAll of the analyses in this book require writing R code. ReliaShiny (Govan 2023) removes that requirement — it is a point-and-click Shiny (Chang et al. 2022) web application that exposes the same reliability analysis workflows (RAM, life data analysis, reliability testing, repairable systems, reliability block diagrams) through a graphical interface. No R programming knowledge is needed to run an analysis.\nThis chapter introduces ReliaShiny, tours its modules, and explains when to reach for it versus a scripted R workflow.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Web-Based Analysis with ReliaShiny</span>"
+    ]
+  },
+  {
+    "objectID": "08-reliashiny.html#installation-and-launch",
+    "href": "08-reliashiny.html#installation-and-launch",
+    "title": "8  Web-Based Analysis with ReliaShiny",
+    "section": "8.2 Installation and Launch",
+    "text": "8.2 Installation and Launch\nReliaShiny is available on CRAN:\n\ninstall.packages(\"ReliaShiny\")\n\nOnce installed, launch the app from the R console:\n\nlibrary(ReliaShiny)\nReliaShiny()\n\nThis opens the application in your default web browser. The app runs locally — no internet connection or account is required.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Web-Based Analysis with ReliaShiny</span>"
+    ]
+  },
+  {
+    "objectID": "08-reliashiny.html#app-overview",
+    "href": "08-reliashiny.html#app-overview",
+    "title": "8  Web-Based Analysis with ReliaShiny",
+    "section": "8.3 App Overview",
+    "text": "8.3 App Overview\nWhen ReliaShiny opens, the left sidebar displays the available analysis modules, each corresponding to a chapter in this book:\n\n\n\nReliaShiny landing page showing the sidebar module list.\n\n\n\n\n\nModule\nCorresponding chapter\n\n\n\n\nRAM\nChapter 1\n\n\nLife Data Analysis\nChapter 3\n\n\nReliability Growth\nChapter 4\n\n\nAccelerated Life Testing\nChapter 5\n\n\nRepairable Systems\nChapter 6\n\n\nReliability Block Diagrams\nChapter 2\n\n\n\nEach module follows the same three-step workflow:\n\nInput — enter or upload your data using form fields, tables, or file uploads.\nAnalyze — click Run to fit the model.\nOutput — view plots, parameter estimates, and summary statistics; download results.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Web-Based Analysis with ReliaShiny</span>"
+    ]
+  },
+  {
+    "objectID": "08-reliashiny.html#module-walkthroughs",
+    "href": "08-reliashiny.html#module-walkthroughs",
+    "title": "8  Web-Based Analysis with ReliaShiny",
+    "section": "8.4 Module Walkthroughs",
+    "text": "8.4 Module Walkthroughs\n\nRAM Module\nThe RAM module computes reliability, availability, MTTR, MTTF, MTBF, and failure rate from summary inputs.\nWorkflow:\n\nSelect the RAM tab in the sidebar.\nEnter the total time, failed time, and (for availability) scheduled maintenance time.\nClick Calculate.\nThe panel displays all five metrics: Reliability, Availability, MTTR, MTTF, MTBF, and Failure Rate.\n\nThis mirrors the rel(), avail(), mttf(), mtbf(), and fr() helper functions from Chapter 1.\n\n\nLife Data Analysis Module\nThe LDA module fits Weibull models and generates probability plots.\n\n\n\nLDA module showing a fitted Weibull probability plot.\n\n\nWorkflow:\n\nSelect the Life Data Analysis tab.\nUpload data — paste failure times into the input table, or upload a CSV with columns time and event (1 = failure, 0 = suspension).\nChoose model — 2-parameter Weibull (default), 3-parameter Weibull, or Weibayes.\nChoose estimation method — MRR or MLE.\nClick Fit Model.\nThe probability plot appears in the main panel, with \\(\\hat{\\beta}\\), \\(\\hat{\\eta}\\), and the Anderson-Darling statistic in the sidebar.\nClick Download Plot to save the chart as a PNG.\n\nCSV format for upload:\ntime,event\n30,1\n49,1\n82,1\n90,1\n96,1\n100,0\n45,0\n10,0\nA 0 in the event column marks a suspension (right-censored observation).\n\n\nReliability Growth Module\nThe Reliability Growth module fits Duane and Crow-AMSAA reliability growth models.\n\n\n\nReliability Growth module showing a fitted Crow-AMSAA cumulative failures plot.\n\n\nWorkflow:\n\nSelect Reliability Growth.\nEnter cumulative test times and failure counts in the data table.\nChoose Duane or Crow-AMSAA model.\nClick Fit.\nThe plot shows the fitted model; \\(\\hat{\\beta}\\) and model parameters appear in the results panel.\n\n\n\nAccelerated Life Testing Module\nThe ALT module fits Arrhenius and Power Law acceleration models using the WeibullR.ALT package (see Chapter 5).\n\n\n\nALT module showing a probability plot and life-stress relationship.\n\n\nWorkflow:\n\nSelect Accelerated Life Testing.\nUpload a dataset with columns time, event, qty, and a stress column (e.g., TempC or Voltage).\nChoose the acceleration model: Arrhenius (temperature) or Power Law (mechanical/voltage stress).\nClick Fit ALT Model.\nThe probability plot and relationship plot are displayed, along with fitted parameters and the computed Acceleration Factor.\n\n\n\nRepairable Systems Module\nThe Repairable Systems module fits the Power Law Process (Crow-AMSAA) and computes the MCF for fleet data.\n\n\n\nRepairable Systems module showing a Mean Cumulative Function plot.\n\n\nWorkflow:\n\nSelect Repairable Systems.\nUpload fleet data with columns id, time, and event.\nChoose analysis type: NHPP (Power Law) or MCF.\nOptionally enter a breakpoint for piecewise NHPP fitting.\nClick Analyze.\nThe cumulative failures plot (NHPP) or MCF curve is displayed, with estimated parameters.\n\nExample CSV format:\nid,time,event\n1,310,1\n1,850,1\n1,1620,1\n2,420,1\n2,1050,1\n2,3000,0\nThe last row for system 2 (event = 0) indicates that system 2 was observed until hour 3,000 without a third failure.\n\n\nReliability Block Diagrams Module\nThe RBD module computes system reliability from component reliabilities for series, parallel, mixed, and k-out-of-n configurations.\nWorkflow:\n\nSelect Reliability Block Diagrams.\nChoose the system topology from the dropdown: Series, Parallel, Mixed, or k-out-of-n.\nEnter the number of components and their individual reliabilities.\nFor Mixed systems, define subsystem groupings.\nFor k-out-of-n systems, enter \\(k\\) (minimum required) and \\(n\\) (total).\nClick Calculate.\nSystem reliability and, for exponential components, system MTTF are displayed.\nA block diagram graphic is shown for Series and Parallel configurations.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Web-Based Analysis with ReliaShiny</span>"
+    ]
+  },
+  {
+    "objectID": "08-reliashiny.html#data-upload-tips",
+    "href": "08-reliashiny.html#data-upload-tips",
+    "title": "8  Web-Based Analysis with ReliaShiny",
+    "section": "8.5 Data Upload Tips",
+    "text": "8.5 Data Upload Tips\n\nCSV files: column names are case-sensitive. Use lowercase (time, event, id).\nMissing values: rows with NA in the time column are automatically excluded.\nLarge datasets: the app handles datasets up to ~10,000 rows without performance issues.\nUnits: ReliaShiny is unit-agnostic — use hours, years, cycles, or any consistent unit. Label your outputs accordingly.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Web-Based Analysis with ReliaShiny</span>"
+    ]
+  },
+  {
+    "objectID": "08-reliashiny.html#downloading-results",
+    "href": "08-reliashiny.html#downloading-results",
+    "title": "8  Web-Based Analysis with ReliaShiny",
+    "section": "8.6 Downloading Results",
+    "text": "8.6 Downloading Results\nEvery module provides download buttons for:\n\nPlot PNG — the current chart at screen resolution.\nResults CSV — parameter estimates and summary statistics in tabular form.\nReport HTML — a self-contained report combining the inputs, plot, and results (available in LDA and RT modules).",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Web-Based Analysis with ReliaShiny</span>"
+    ]
+  },
+  {
+    "objectID": "08-reliashiny.html#when-to-use-reliashiny-vs-scripted-r",
+    "href": "08-reliashiny.html#when-to-use-reliashiny-vs-scripted-r",
+    "title": "8  Web-Based Analysis with ReliaShiny",
+    "section": "8.7 When to Use ReliaShiny vs Scripted R",
+    "text": "8.7 When to Use ReliaShiny vs Scripted R\n\n\n\nSituation\nReliaShiny\nScripted R\n\n\n\n\nQuick one-off analysis\n✅\n\n\n\nTeaching / demonstration\n✅\n\n\n\nSharing with non-R users\n✅\n\n\n\nAutomating repeated analyses\n\n✅\n\n\nCustom plots and formatting\n\n✅\n\n\nReproducible research / version control\n\n✅\n\n\nEmbedding results in a Quarto book\n\n✅\n\n\nLarge batch processing\n\n✅\n\n\n\nReliaShiny excels at rapid exploration, prototyping, and sharing results with stakeholders who do not use R. For production workflows, automated pipelines, and fully reproducible analyses, scripted R with the underlying packages (WeibullR, ReliaGrowR, WeibullR.ALT) gives more control.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Web-Based Analysis with ReliaShiny</span>"
+    ]
+  },
+  {
+    "objectID": "08-reliashiny.html#getting-help",
+    "href": "08-reliashiny.html#getting-help",
+    "title": "8  Web-Based Analysis with ReliaShiny",
+    "section": "8.8 Getting Help",
+    "text": "8.8 Getting Help\nWithin the app, click the ? icon on any panel for a tooltip explaining the inputs and outputs for that module.\nFrom R:\n\nhelp(package = \"ReliaShiny\")\n\nAdditional resources:\n\nCRAN page: https://CRAN.R-project.org/package=ReliaShiny",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Web-Based Analysis with ReliaShiny</span>"
+    ]
+  },
+  {
+    "objectID": "08-reliashiny.html#summary",
+    "href": "08-reliashiny.html#summary",
+    "title": "8  Web-Based Analysis with ReliaShiny",
+    "section": "8.9 Summary",
+    "text": "8.9 Summary\nReliaShiny provides a point-and-click interface to the full ReliaLearnR analysis ecosystem — RAM, life data analysis, reliability testing, repairable systems, and reliability block diagrams — with no R coding required. Install it with install.packages(\"ReliaShiny\") and launch it with ReliaShiny(). Use it for rapid exploration, stakeholder demonstrations, and sharing results; switch to scripted R for reproducibility, automation, and custom outputs.\n\n\n\n\n\n\nChang, Winston, Joe Cheng, JJ Allaire, et al. 2022. Shiny: Web Application Framework for r. https://doi.org/10.32614/CRAN.package.shiny.\n\n\nGovan, Paul. 2023. ReliaShiny: A ’Shiny’ App for Reliability Analysis. https://doi.org/10.32614/CRAN.package.ReliaShiny.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Web-Based Analysis with ReliaShiny</span>"
+    ]
+  },
+  {
+    "objectID": "98-appendix.html",
+    "href": "98-appendix.html",
+    "title": "Appendix: Helper Functions Reference",
+    "section": "",
+    "text": "rel() — Reliability\nThe ReliaLearnR package exports five RAM calculation helper functions. They accept scalar or vector inputs, validate their arguments, and return a single numeric scalar.\nComputes reliability as \\(1 - \\text{outage} / \\text{total}\\).\nrel(outageTime, totalTime)\nReturns: Numeric scalar in \\([0, 1]\\). Sums vectors before dividing.\nValidation: Errors on NA, non-numeric, negative values, zero totalTime, or mismatched vector lengths.\n# Motor: failed 10 days out of 5 years (1825 days)\nrel(outageTime = 10, totalTime = 5 * 365)\n\n[1] 0.9945205\n\n# Vector input: two machines pooled together\nrel(outageTime = c(10, 5), totalTime = c(365, 730))\n\n[1] 0.9863014",
+    "crumbs": [
+      "Appendix: Helper Functions Reference"
+    ]
+  },
+  {
+    "objectID": "98-appendix.html#rel-reliability",
+    "href": "98-appendix.html#rel-reliability",
+    "title": "Appendix: Helper Functions Reference",
+    "section": "",
+    "text": "Argument\nType\nDescription\n\n\n\n\noutageTime\nnumeric scalar or vector\nForced outage (failed) time\n\n\ntotalTime\nnumeric scalar or vector\nTotal time in the same units",
+    "crumbs": [
+      "Appendix: Helper Functions Reference"
+    ]
+  },
+  {
+    "objectID": "98-appendix.html#avail-availability",
+    "href": "98-appendix.html#avail-availability",
+    "title": "Appendix: Helper Functions Reference",
+    "section": "avail() — Availability",
+    "text": "avail() — Availability\nComputes availability as \\(1 - \\text{unavailable} / \\text{total}\\), where unavailable time includes both failures and scheduled maintenance.\n\navail(unavailTime, totalTime)\n\n\n\n\n\n\n\n\n\nArgument\nType\nDescription\n\n\n\n\nunavailTime\nnumeric scalar or vector\nTotal unavailable time (failed + maintenance)\n\n\ntotalTime\nnumeric scalar or vector\nTotal time in the same units\n\n\n\nReturns: Numeric scalar in \\([0, 1]\\).\n\n# Motor: 10 days failed + 15 days maintenance over 5 years\navail(unavailTime = 10 + 15, totalTime = 5 * 365)\n\n[1] 0.9863014\n\n# Vector input: two assets\navail(unavailTime = c(5, 14), totalTime = c(3 * 365, 3 * 365))\n\n[1] 0.9913242",
+    "crumbs": [
+      "Appendix: Helper Functions Reference"
+    ]
+  },
+  {
+    "objectID": "98-appendix.html#mttf-mean-time-to-failure",
+    "href": "98-appendix.html#mttf-mean-time-to-failure",
+    "title": "Appendix: Helper Functions Reference",
+    "section": "mttf() — Mean Time to Failure",
+    "text": "mttf() — Mean Time to Failure\nComputes MTTF as \\(\\text{total time} / \\text{failures}\\), for non-repairable items.\n\nmttf(failures, totalTime)\n\n\n\n\nArgument\nType\nDescription\n\n\n\n\nfailures\nnumeric scalar or vector\nFailure counts\n\n\ntotalTime\nnumeric scalar or vector\nTotal operating time\n\n\n\nReturns: Numeric scalar (same units as totalTime). Returns Inf with a warning if failures = 0.\n\n# 100 motors, 5 years each, 5 failures\nmttf(failures = 5, totalTime = 100 * 5)\n\n[1] 100\n\n# Pooled fleet data\nmttf(failures = c(2, 3), totalTime = c(500, 500))\n\n[1] 200",
+    "crumbs": [
+      "Appendix: Helper Functions Reference"
+    ]
+  },
+  {
+    "objectID": "98-appendix.html#mtbf-mean-time-between-failures",
+    "href": "98-appendix.html#mtbf-mean-time-between-failures",
+    "title": "Appendix: Helper Functions Reference",
+    "section": "mtbf() — Mean Time Between Failures",
+    "text": "mtbf() — Mean Time Between Failures\nComputes MTBF as \\(\\text{total time} / \\text{failures}\\), for repairable systems.\nThe formula is identical to mttf() but the semantic interpretation differs — MTBF is the expected time between successive failures on the same repairable system.\n\nmtbf(failures, totalTime)\n\n\n\n\nArgument\nType\nDescription\n\n\n\n\nfailures\nnumeric scalar or vector\nFailure counts\n\n\ntotalTime\nnumeric scalar or vector\nTotal operating time\n\n\n\nReturns: Numeric scalar. Returns Inf with a warning if failures = 0.\n\n# Machine failed 5 times in 45,000 operating hours\nmtbf(failures = 5, totalTime = 45000)\n\n[1] 9000\n\n# Fleet of 50 generators, 8 years, 20 failures\nmtbf(failures = 20, totalTime = 50 * 8)\n\n[1] 20",
+    "crumbs": [
+      "Appendix: Helper Functions Reference"
+    ]
+  },
+  {
+    "objectID": "98-appendix.html#fr-failure-rate",
+    "href": "98-appendix.html#fr-failure-rate",
+    "title": "Appendix: Helper Functions Reference",
+    "section": "fr() — Failure Rate",
+    "text": "fr() — Failure Rate\nComputes failure rate (λ) as \\(\\text{failures} / \\text{total time}\\).\n\nfr(failures, totalTime)\n\n\n\n\nArgument\nType\nDescription\n\n\n\n\nfailures\nnumeric scalar or vector\nFailure counts\n\n\ntotalTime\nnumeric scalar or vector\nTotal operating time\n\n\n\nReturns: Numeric scalar (failures per unit time). Note: \\(\\lambda = 1 / \\text{MTBF}\\).\n\n# 100 motors, 5000 hours each, 75 failures\nfr(failures = 75, totalTime = 100 * 5000)\n\n[1] 0.00015\n\n# Pooled data\nfr(failures = c(10, 5), totalTime = c(1000, 2000))\n\n[1] 0.005",
+    "crumbs": [
+      "Appendix: Helper Functions Reference"
+    ]
+  },
+  {
+    "objectID": "98-appendix.html#validation-behaviour",
+    "href": "98-appendix.html#validation-behaviour",
+    "title": "Appendix: Helper Functions Reference",
+    "section": "Validation Behaviour",
+    "text": "Validation Behaviour\nAll five functions share the same input checks via an internal .validate_inputs() helper:\n\n\n\n\n\n\n\nCondition\nError message\n\n\n\n\nNA in either argument\n\"NA values not allowed in inputs\"\n\n\nNon-numeric argument\n'\"argument\" must be numeric'\n\n\nNegative values\n\"inputs must be non-negative\"\n\n\nEmpty vector\n\"inputs must not be empty vectors\"\n\n\nMismatched vector lengths\n\"inputs must have the same length or one must be a scalar\"\n\n\nZero total time\n\"sum(totalTime) is zero (cannot divide by zero)\"\n\n\n\n\n# These all produce informative errors:\nrel(NA, 100)\n\nError in `.validate_inputs()`:\n! NA values not allowed in inputs\n\navail(-5, 100)\n\nError in `.validate_inputs()`:\n! inputs must be non-negative\n\nmttf(5, 0)\n\nError in `mttf()`:\n! sum(totalTime) is zero (cannot compute MTTF)",
+    "crumbs": [
+      "Appendix: Helper Functions Reference"
+    ]
+  },
+  {
+    "objectID": "99-glossary.html",
+    "href": "99-glossary.html",
+    "title": "Glossary and Formula Reference",
+    "section": "",
+    "text": "Key Symbols\nA quick-reference guide to the key symbols and formulas used throughout this book. Each entry links back to the chapter where it is first introduced.",
+    "crumbs": [
+      "Glossary and Formula Reference"
+    ]
+  },
+  {
+    "objectID": "99-glossary.html#key-symbols",
+    "href": "99-glossary.html#key-symbols",
+    "title": "Glossary and Formula Reference",
+    "section": "",
+    "text": "Symbol\nName\nDefinition\nFirst used\n\n\n\n\n\\(\\beta\\)\nShape parameter\nControls whether the failure rate increases, decreases, or stays constant over time\n1  Reliability, Availability, and Maintainability (RAM)\n\n\n\\(\\eta\\)\nScale parameter (characteristic life)\nTime at which \\(F(t) = 63.2\\%\\) for any \\(\\beta\\)\n3  Life Data Analysis\n\n\n\\(\\lambda\\)\nFailure rate\nFailures per unit time (constant rate — exponential model)\n1  Reliability, Availability, and Maintainability (RAM)\n\n\n\\(\\rho(t)\\)\nIntensity / recurrence rate\nTime-varying failure rate for repairable systems\n6  Repairable Systems Analysis\n\n\n\\(R(t)\\)\nReliability function\nProbability of survival to time \\(t\\)\n1  Reliability, Availability, and Maintainability (RAM)\n\n\n\\(F(t)\\)\nCumulative distribution function\nProbability of failure by time \\(t\\); \\(F(t) = 1 - R(t)\\)\n3  Life Data Analysis\n\n\nMTTF\nMean Time To Failure\nExpected life for non-repairable items\n1  Reliability, Availability, and Maintainability (RAM)\n\n\nMTBF\nMean Time Between Failures\nExpected time between failures for repairable systems\n1  Reliability, Availability, and Maintainability (RAM)\n\n\nMTTR\nMean Time To Repair\nExpected time to restore a failed system\n1  Reliability, Availability, and Maintainability (RAM)\n\n\n\\(AF\\)\nAcceleration Factor\nRatio of life at use conditions to life at elevated stress\n5  Accelerated Life Testing\n\n\n\\(E_a\\)\nActivation energy\nEnergy barrier for thermally activated failure (eV)\n5  Accelerated Life Testing\n\n\n\\(k\\)\nBoltzmann constant\n\\(8.617 \\times 10^{-5}\\) eV/K\n5  Accelerated Life Testing\n\n\n\\(n\\)\nStress exponent\nSensitivity of life to non-thermal stress (Power Law)\n5  Accelerated Life Testing\n\n\n\\(t_0\\)\nFailure-free period\nMinimum time before any failure can occur (3-parameter Weibull)\n3  Life Data Analysis\n\n\nAD\nAnderson-Darling statistic\nGoodness-of-fit measure; lower values indicate a better fit\n3  Life Data Analysis\n\n\nMCF\nMean Cumulative Function\nExpected cumulative failures per system over time (non-parametric)\n6  Repairable Systems Analysis\n\n\n\\(\\beta_{\\text{CCF}}\\)\nCCF beta-factor\nFraction of total failure rate attributable to common cause failures\n2  Reliability Block Diagrams",
+    "crumbs": [
+      "Glossary and Formula Reference"
+    ]
+  },
+  {
+    "objectID": "99-glossary.html#key-formulas",
+    "href": "99-glossary.html#key-formulas",
+    "title": "Glossary and Formula Reference",
+    "section": "Key Formulas",
+    "text": "Key Formulas\n\nRAM — 1  Reliability, Availability, and Maintainability (RAM)\n\\[R = 1 - \\frac{\\text{failed time}}{\\text{total time}}\\]\n\\[A = 1 - \\frac{\\text{unavailable time}}{\\text{total time}}\\]\n\\[\\lambda = \\frac{\\text{failures}}{\\text{total time}}, \\qquad \\text{MTTF} = \\frac{1}{\\lambda}\\]\n\\[R(t) = e^{-\\lambda t} \\qquad \\text{(exponential model)}\\]\n\\[B_n \\text{ life}: \\text{time } t \\text{ such that } F(t) = n/100\\]\n\n\n\nWeibull Distribution — 3  Life Data Analysis\n\\[R(t) = \\exp\\!\\left[-\\left(\\frac{t}{\\eta}\\right)^{\\!\\beta}\\right], \\qquad F(t) = 1 - R(t)\\]\n\\[F(\\eta) = 1 - e^{-1} \\approx 63.2\\% \\quad \\text{for any } \\beta\\]\n3-parameter Weibull with failure-free period \\(t_0\\):\n\\[R(t) = \\exp\\!\\left[-\\left(\\frac{t - t_0}{\\eta}\\right)^{\\!\\beta}\\right]\\]\n\n\n\nReliability Block Diagrams — 2  Reliability Block Diagrams\n\\[R_{\\text{series}} = \\prod_{i=1}^{n} R_i\\]\n\\[R_{\\text{parallel}} = 1 - \\prod_{i=1}^{n}(1 - R_i)\\]\n\\[R_{\\text{k-out-of-n}} = \\sum_{i=k}^{n} \\binom{n}{i} R^i (1-R)^{n-i}\\]\nBeta-factor CCF model:\n\\[\\lambda_{\\text{CCF}} = \\beta_{\\text{CCF}} \\cdot \\lambda_{\\text{total}}, \\qquad \\lambda_{\\text{ind}} = (1 - \\beta_{\\text{CCF}}) \\cdot \\lambda_{\\text{total}}\\]\n\n\n\nAccelerated Life Testing — 5  Accelerated Life Testing\nArrhenius (temperature):\n\\[AF = \\exp\\!\\left[\\frac{E_a}{k}\\left(\\frac{1}{T_{\\text{use}}} - \\frac{1}{T_{\\text{stress}}}\\right)\\right]\\]\nPower Law (non-thermal stress):\n\\[AF = \\left(\\frac{S_{\\text{stress}}}{S_{\\text{use}}}\\right)^{n}\\]\n\\[\\text{Life}_{\\text{use}} = AF \\times \\text{Life}_{\\text{stress}}\\]\n\n\n\nReliability Growth Analysis — 4  Reliability Growth Analysis\nDuane cumulative MTBF:\n\\[\\text{CMTBF}(t) = K \\cdot t^{\\beta - 1}\\]\nCrow-AMSAA cumulative failures:\n\\[N(t) = \\lambda_0 \\cdot t^{\\beta}\\]\n\n\n\n\\(\\beta\\) (Crow-AMSAA)\nMeaning\n\n\n\n\n\\(&lt; 1\\)\nFailures decreasing — reliability improving\n\n\n\\(= 1\\)\nConstant rate — stable\n\n\n\\(&gt; 1\\)\nFailures increasing — reliability worsening\n\n\n\n\n\n\nRepairable Systems — 6  Repairable Systems Analysis\nPower Law intensity (recurrence rate):\n\\[\\rho(t) = \\lambda \\beta t^{\\beta - 1}\\]\nInstantaneous MTBF at time \\(t\\):\n\\[\\text{MTBF}(t) = \\frac{1}{\\rho(t)}\\]",
+    "crumbs": [
+      "Glossary and Formula Reference"
+    ]
+  }
+]
