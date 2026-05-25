@@ -1,0 +1,62 @@
+# Preface {.unnumbered}
+
+This book is a companion reference guide to the **ReliaLearnR** interactive learning modules. Where the tutorials offer hands-on practice with immediate feedback and interactive widgets, this book provides readable, searchable, printable chapters that cover the same material in a narrative format — plus two additional chapters on the wider ReliaLearnR ecosystem.
+
+## How to Use This Book and the Tutorials Together
+
+The interactive tutorials and this book cover the same core content but serve different purposes:
+
+| Feature | Interactive Tutorials | This Book |
+|---|---|---|
+| Instant code feedback | Yes | No |
+| Quiz questions | Yes | Review questions |
+| Interactive sliders | Yes | Static equivalents |
+| Searchable / printable | No | Yes |
+| Copy-paste code | Limited | Full |
+| Ecosystem chapters (ReliaPlotR, ReliaShiny) | No | Yes |
+
+**Recommended workflow**: Read a chapter here first to understand the concepts and see the code, then open the corresponding tutorial to practice. The chapter order mirrors the tutorial progression.
+
+## The ReliaLearnR Ecosystem
+
+ReliaLearnR is one part of a broader suite of R packages for reliability analysis:
+
+| Package | Role |
+|---|---|
+| **ReliaLearnR** | Interactive learning modules |
+| **WeibullR** | Weibull life data analysis |
+| **ReliaGrowR** | Reliability growth and repairable systems |
+| **WeibullR.ALT** | Accelerated life testing |
+| **ReliaPlotR** | Interactive reliability plots |
+| **ReliaShiny** | Web-based reliability analysis app |
+
+## Installation
+
+Install the core packages needed to run the code in this book:
+
+```{r}
+#| eval: false
+install.packages(c(
+  "ReliaLearnR",
+  "WeibullR",
+  "ReliaGrowR",
+  "WeibullR.ALT",
+  "DiagrammeR",
+  "ReliaPlotR",
+  "ReliaShiny"
+))
+```
+
+## Chapter Overview
+
+1. **RAM** — Foundational reliability, availability, and maintainability metrics.
+2. **Reliability Block Diagrams** — Series, parallel, mixed, and k-out-of-n systems.
+3. **Life Data Analysis** — Weibull distribution, censoring, MRR vs MLE, and contour plots.
+4. **Reliability Testing** — Reliability growth models and accelerated life testing.
+5. **Repairable Systems** — Power Law Process, MCF, and fleet-level analysis.
+6. **Interactive Plots with ReliaPlotR** — Publishable interactive reliability charts.
+7. **Web-Based Analysis with ReliaShiny** — Point-and-click reliability analysis.
+
+## About the Author
+
+Paul Govan is the author of ReliaLearnR, ReliaGrowR, ReliaPlotR, and ReliaShiny. He can be reached at paul.govan2@gmail.com.

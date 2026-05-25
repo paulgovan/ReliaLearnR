@@ -166,28 +166,36 @@ quiz(caption = "Quiz: Failure Processes and the Power Law",
 
 ## NHPP Analysis
 
-The `nhpp()` function fits the Power Law Process (Crow-AMSAA model) to cumulative failure data by maximum likelihood, returning estimates of $\lambda$ and $\beta$. The fitted mean value function is plotted against cumulative time:
+The `nhpp()` function fits the Power Law Process (Crow-AMSAA model) to recurrent failure data, returning estimates of $\lambda$ and $\beta$. The fitted mean value function is plotted against time:
 
 $$E[N(t)] = \hat{\lambda}\, t^{\hat{\beta}}$$
 
-A curve that bends downward (concave) on a cumulative failures vs. time plot indicates $\hat{\beta} < 1$ — the failure rate is falling. A curve that bends upward (convex) indicates $\hat{\beta} > 1$ — the failure rate is rising.
+A curve that bends downward (concave) on an MCF vs. time plot indicates $\hat{\beta} < 1$ — the failure rate is falling. A curve that bends upward (convex) indicates $\hat{\beta} > 1$ — the failure rate is rising.
 
-The `nhpp()` function accepts:
+The `nhpp()` function can accept an `mcf` object directly as its first argument. When passed an MCF object, the Power Law is fit to the non-parametric per-system MCF estimate rather than raw cumulative counts — this accounts for fleet size and unequal observation windows automatically.
 
-* `time` — a numeric vector of cumulative event times.
-* `event` — an optional numeric vector of event counts at each time (if `NULL`, each time is treated as a single event).
+The recommended two-step workflow is:
 
-The following data represent failure records from a fleet of industrial pumps recorded at 10 inspection intervals.
+1. Estimate the MCF non-parametrically with `mcf()`.
+2. Pass the result directly to `nhpp()`.
+
+The following data represent per-system failure records from a fleet of five industrial pumps, each observed for 3,000 hours.
 
 ```{r echo=TRUE}
-times    <- c(500, 1200, 2100, 3300, 4800, 6500, 8400, 10500, 12800, 15000)
-failures <- c(3, 4, 4, 5, 4, 3, 3, 3, 2, 2)
+pump_data <- data.frame(
+  id    = c(1, 1, 1,  2, 2, 2,  3, 3,  4, 4, 4, 4,  5, 5),
+  time  = c(310, 850, 1620,  420, 1050, 2100,  580, 1890,
+            240, 710, 1380, 2400,  530, 1740),
+  event = rep(1, 14)
+)
+end_times <- c("1" = 3000, "2" = 3000, "3" = 3000, "4" = 3000, "5" = 3000)
 
-fit <- nhpp(time = times, event = failures)
+mcf_result <- mcf(id = pump_data$id, time = pump_data$time,
+                  event = pump_data$event, end_time = end_times)
+fit <- nhpp(time = mcf_result)
 plot(fit,
      main = "Crow-AMSAA Model: Industrial Pump Fleet",
-     xlab = "Cumulative Operating Hours",
-     ylab = "Cumulative Failures")
+     xlab = "Operating Hours")
 ```
 
 The fitted curve shape directly reveals the failure trend: a concave curve ($\hat{\beta} < 1$) means each successive failure takes longer to arrive — the system is improving.
@@ -198,9 +206,9 @@ quiz(caption = "Quiz: NHPP Analysis",
     answer("The failure rate is increasing over time",
            message = "A concave curve means failures accumulate more slowly as time passes — the rate is decreasing, not increasing."),
     answer("The failure rate is constant",
-           message = "A straight line on the cumulative failures plot would indicate a constant rate (HPP), not a concave curve."),
+           message = "A straight line on the MCF plot would indicate a constant rate (HPP), not a concave curve."),
     answer("The failure rate is decreasing over time", correct = TRUE,
-           message = "A concave (downward-bending) cumulative failures curve means β < 1: each successive failure takes longer to arrive, so the system is improving."),
+           message = "A concave (downward-bending) MCF curve means β < 1: each successive failure takes longer to arrive, so the system is improving."),
     random_answer_order = TRUE,
     allow_retry = TRUE
   ),
@@ -208,19 +216,19 @@ quiz(caption = "Quiz: NHPP Analysis",
     answer("The pumps are deteriorating — failures are becoming more frequent",
            message = "If the fitted curve bends downward (concave), the rate is actually decreasing, not increasing."),
     answer("The pumps show a perfectly constant failure rate (HPP)",
-           message = "A straight cumulative failures line would indicate HPP. The concave shape indicates a trend."),
+           message = "A straight MCF line would indicate HPP. The concave shape indicates a trend."),
     answer("The pumps show a decreasing failure rate — the fleet appears to be in a favorable operating regime", correct = TRUE,
            message = "The concave curve and β < 1 indicate the failure rate is falling, consistent with stable or improving operational conditions."),
     random_answer_order = TRUE,
     allow_retry = TRUE
   ),
-  question("In nhpp(), what does the event argument represent when fitting interval-aggregated data?",
-    answer("The failure times of individual events",
-           message = "Individual failure times can be passed via the time argument with event = NULL. The event argument accepts counts per interval."),
-    answer("The number of failures observed in each time interval", correct = TRUE,
-           message = "When event is provided, nhpp() treats each entry in time as the end of an interval and the corresponding entry in event as the failure count for that interval."),
-    answer("A binary indicator of whether the system was censored",
-           message = "Censoring indicators are used by mcf() and exposure(). In nhpp(), event holds failure counts per interval."),
+  question("What is the recommended workflow for fitting a Crow-AMSAA model to fleet data with nhpp()?",
+    answer("Pass raw cumulative failure counts directly to nhpp() via the event argument",
+           message = "Passing raw counts does not account for fleet size or unequal observation windows. The recommended approach uses mcf() first."),
+    answer("Estimate the MCF non-parametrically with mcf(), then pass the mcf object to nhpp()", correct = TRUE,
+           message = "nhpp() detects an mcf object passed as its first argument and fits the Power Law to the per-system normalized MCF, automatically accounting for fleet size and censoring."),
+    answer("Convert individual failure times to a single cumulative total before calling nhpp()",
+           message = "Summing across systems without normalizing by the risk set ignores censoring and unequal observation windows. Use mcf() to handle this correctly."),
     random_answer_order = TRUE,
     allow_retry = TRUE
   )
@@ -229,26 +237,39 @@ quiz(caption = "Quiz: NHPP Analysis",
 
 ### Exercise: Fit a Crow-AMSAA Model
 
-A compressor fleet recorded cumulative operating hours and failure counts below. Use `nhpp()` with `method = "LS"` to fit a Power Law model and plot the result.
+A compressor fleet recorded per-system failure times below. Each of the three systems was observed for 5,000 hours. Use `mcf()` to estimate the MCF, then pass the result to `nhpp()` with `method = "LS"` to fit a Power Law model and plot the result.
 
 ```{r ex-rs1, exercise=TRUE}
-times    <- c(1000, 2500, 4000, 5500, 8000)
-failures <- c(2, 3, 4, 5, 5)
+fleet <- data.frame(
+  id    = c(rep(1, 3), rep(2, 4), rep(3, 3)),
+  time  = c(600, 1500, 3200,  400, 1100, 2300, 4000,  800, 2000, 3800),
+  event = rep(1, 10)
+)
+end_times_ex <- c("1" = 5000, "2" = 5000, "3" = 5000)
 
 ```
 
 ```{r ex-rs1-hint}
-# Pass time and event to nhpp(), then plot the result
-# fit <- nhpp(time = times, event = failures, method = "LS")
+# Step 1: estimate the MCF
+# mcf_ex <- mcf(id = fleet$id, time = fleet$time, event = fleet$event,
+#               end_time = end_times_ex)
+# Step 2: fit the Power Law to the MCF
+# fit <- nhpp(time = mcf_ex, method = "LS")
 # plot(fit)
 ```
 
 ```{r ex-rs1-solution}
-times    <- c(1000, 2500, 4000, 5500, 8000)
-failures <- c(2, 3, 4, 5, 5)
-fit <- nhpp(time = times, event = failures, method = "LS")
+fleet <- data.frame(
+  id    = c(rep(1, 3), rep(2, 4), rep(3, 3)),
+  time  = c(600, 1500, 3200,  400, 1100, 2300, 4000,  800, 2000, 3800),
+  event = rep(1, 10)
+)
+end_times_ex <- c("1" = 5000, "2" = 5000, "3" = 5000)
+mcf_ex <- mcf(id = fleet$id, time = fleet$time, event = fleet$event,
+              end_time = end_times_ex)
+fit <- nhpp(time = mcf_ex, method = "LS")
 plot(fit, main = "Crow-AMSAA: Compressor Fleet",
-     xlab = "Cumulative Hours", ylab = "Cumulative Failures")
+     xlab = "Operating Hours", ylab = "MCF")
 ```
 
 ## Piecewise NHPP
@@ -259,24 +280,46 @@ $$E[N(t)] = \begin{cases} \lambda_1 t^{\beta_1} & 0 < t \leq \tau \\ E[N(\tau)] 
 
 Each segment has its own $\lambda_i$ and $\beta_i$, allowing the model to capture, for example, a deteriorating early period followed by improvement after an overhaul.
 
-Pass a known breakpoint time as the `breaks` argument to `nhpp()`. The function will fit a separate Power Law to each segment.
+Pass a known breakpoint time as the `breaks` argument to `nhpp()`. The function will fit a separate Power Law to each segment. The same MCF-first workflow applies: compute the non-parametric MCF from per-system records, then pass it to `nhpp()`.
 
 ```{r echo=TRUE}
-# Extended pump data: fleet underwent a major overhaul at hour 8000
-times2    <- c(500, 1200, 2100, 3300, 4800, 6500, 8400, 9200, 10100, 11300,
-               12800, 14500, 16400, 18500, 20800)
-failures2 <- c(3, 4, 4, 5, 6, 6, 5, 3, 3, 2, 2, 2, 2, 1, 1)
+# Extended pump fleet: 5 systems observed for 20,000 hours each.
+# The fleet underwent a major overhaul at hour 8,000.
+pump2 <- data.frame(
+  id = c(rep(1, 15), rep(2, 15), rep(3, 13), rep(4, 17), rep(5, 12)),
+  time = c(
+    # Pump 1: intervals shrink before overhaul (deteriorating), grow after (improving)
+    2000, 3400, 4600, 5500, 6200, 6800, 7300, 7700,
+    8200, 9000, 10100, 11500, 13300, 15500, 18200,
+    # Pump 2
+    1800, 3100, 4200, 5100, 5800, 6400, 6900, 7300, 7700,
+    8400, 9300, 10500, 12100, 14200, 16900,
+    # Pump 3
+    2500, 4000, 5200, 6100, 6900, 7500, 7900,
+    8600, 9600, 10900, 12500, 14700, 17500,
+    # Pump 4
+    1500, 2700, 3700, 4500, 5200, 5800, 6300, 6700, 7100, 7500,
+    8100, 9000, 10200, 11800, 13800, 16300, 19300,
+    # Pump 5
+    2200, 3700, 5000, 6000, 6800, 7400, 7800,
+    8500, 9600, 11100, 13100, 15700
+  ),
+  event = rep(1, 72)
+)
+end_times2 <- c("1" = 20000, "2" = 20000, "3" = 20000,
+                "4" = 20000, "5" = 20000)
 
-fit_pw <- nhpp(time = times2, event = failures2, breaks = 8000, method = "LS")
+mcf2   <- mcf(id = pump2$id, time = pump2$time,
+              event = pump2$event, end_time = end_times2)
+fit_pw <- nhpp(time = mcf2, breaks = 8000, method = "LS")
 plot(fit_pw,
      main = "Piecewise NHPP: Fleet Overhaul at Hour 8000",
-     xlab = "Cumulative Operating Hours",
-     ylab = "Cumulative Failures")
+     xlab = "Operating Hours")
 ```
 
-The first segment (before the estimated breakpoint) has a steeper slope ($\hat{\beta}_1 > 1$, increasing failure rate), while the second segment (post-overhaul) shows a flatter or downward-bending curve, confirming the overhaul was effective in reducing the failure rate.
+The first segment (before the estimated breakpoint) has a steeper slope ($\hat{\beta}_1 > 1$, increasing failure rate), while the second segment (post-overhaul) shows a flatter or downward-bending MCF curve, confirming the overhaul was effective in reducing the failure rate.
 
-Note that the `breaks` argument serves as an *initial estimate* for the breakpoint location. The `segmented` algorithm optimizes the breakpoint position from the data, so the fitted breakpoint in the plot may differ slightly from the value passed to `breaks`. In the example above, the fitted breakpoint is estimated near hour 9,820, close to the known overhaul time of 8,000.
+Note that the `breaks` argument serves as an *initial estimate* for the breakpoint location. The `segmented` algorithm optimizes the breakpoint position from the data, so the fitted breakpoint in the plot may differ slightly from the value passed to `breaks`. In the example above, the fitted breakpoint is estimated near hour 8,800, close to the known overhaul time of 8,000.
 
 ```{r quiz3, echo=FALSE}
 quiz(caption = "Quiz: Piecewise NHPP",

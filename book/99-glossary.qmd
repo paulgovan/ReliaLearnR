@@ -1,0 +1,109 @@
+# Glossary and Formula Reference {#sec-glossary .unnumbered}
+
+A quick-reference guide to the key symbols and formulas used throughout this book. Each entry links back to the chapter where it is first introduced.
+
+## Key Symbols
+
+| Symbol | Name | Definition | First used |
+|:---:|---|---|:---:|
+| $\beta$ | Shape parameter | Controls whether the failure rate increases, decreases, or stays constant over time | @sec-ram |
+| $\eta$ | Scale parameter (characteristic life) | Time at which $F(t) = 63.2\%$ for any $\beta$ | @sec-lda |
+| $\lambda$ | Failure rate | Failures per unit time (constant rate — exponential model) | @sec-ram |
+| $\rho(t)$ | Intensity / recurrence rate | Time-varying failure rate for repairable systems | @sec-rs |
+| $R(t)$ | Reliability function | Probability of survival to time $t$ | @sec-ram |
+| $F(t)$ | Cumulative distribution function | Probability of failure by time $t$; $F(t) = 1 - R(t)$ | @sec-lda |
+| MTTF | Mean Time To Failure | Expected life for non-repairable items | @sec-ram |
+| MTBF | Mean Time Between Failures | Expected time between failures for repairable systems | @sec-ram |
+| MTTR | Mean Time To Repair | Expected time to restore a failed system | @sec-ram |
+| $AF$ | Acceleration Factor | Ratio of life at use conditions to life at elevated stress | @sec-alt |
+| $E_a$ | Activation energy | Energy barrier for thermally activated failure (eV) | @sec-alt |
+| $k$ | Boltzmann constant | $8.617 \times 10^{-5}$ eV/K | @sec-alt |
+| $n$ | Stress exponent | Sensitivity of life to non-thermal stress (Power Law) | @sec-alt |
+| $t_0$ | Failure-free period | Minimum time before any failure can occur (3-parameter Weibull) | @sec-lda |
+| AD | Anderson-Darling statistic | Goodness-of-fit measure; lower values indicate a better fit | @sec-lda |
+| MCF | Mean Cumulative Function | Expected cumulative failures per system over time (non-parametric) | @sec-rs |
+| $\beta_{\text{CCF}}$ | CCF beta-factor | Fraction of total failure rate attributable to common cause failures | @sec-rbd |
+
+## Key Formulas
+
+### RAM — @sec-ram
+
+$$R = 1 - \frac{\text{failed time}}{\text{total time}}$$
+
+$$A = 1 - \frac{\text{unavailable time}}{\text{total time}}$$
+
+$$\lambda = \frac{\text{failures}}{\text{total time}}, \qquad \text{MTTF} = \frac{1}{\lambda}$$
+
+$$R(t) = e^{-\lambda t} \qquad \text{(exponential model)}$$
+
+$$B_n \text{ life}: \text{time } t \text{ such that } F(t) = n/100$$
+
+---
+
+### Weibull Distribution — @sec-lda
+
+$$R(t) = \exp\!\left[-\left(\frac{t}{\eta}\right)^{\!\beta}\right], \qquad F(t) = 1 - R(t)$$
+
+$$F(\eta) = 1 - e^{-1} \approx 63.2\% \quad \text{for any } \beta$$
+
+3-parameter Weibull with failure-free period $t_0$:
+
+$$R(t) = \exp\!\left[-\left(\frac{t - t_0}{\eta}\right)^{\!\beta}\right]$$
+
+---
+
+### Reliability Block Diagrams — @sec-rbd
+
+$$R_{\text{series}} = \prod_{i=1}^{n} R_i$$
+
+$$R_{\text{parallel}} = 1 - \prod_{i=1}^{n}(1 - R_i)$$
+
+$$R_{\text{k-out-of-n}} = \sum_{i=k}^{n} \binom{n}{i} R^i (1-R)^{n-i}$$
+
+Beta-factor CCF model:
+
+$$\lambda_{\text{CCF}} = \beta_{\text{CCF}} \cdot \lambda_{\text{total}}, \qquad \lambda_{\text{ind}} = (1 - \beta_{\text{CCF}}) \cdot \lambda_{\text{total}}$$
+
+---
+
+### Accelerated Life Testing — @sec-alt
+
+Arrhenius (temperature):
+
+$$AF = \exp\!\left[\frac{E_a}{k}\left(\frac{1}{T_{\text{use}}} - \frac{1}{T_{\text{stress}}}\right)\right]$$
+
+Power Law (non-thermal stress):
+
+$$AF = \left(\frac{S_{\text{stress}}}{S_{\text{use}}}\right)^{n}$$
+
+$$\text{Life}_{\text{use}} = AF \times \text{Life}_{\text{stress}}$$
+
+---
+
+### Reliability Growth Analysis — @sec-rt
+
+Duane cumulative MTBF:
+
+$$\text{CMTBF}(t) = K \cdot t^{\beta - 1}$$
+
+Crow-AMSAA cumulative failures:
+
+$$N(t) = \lambda_0 \cdot t^{\beta}$$
+
+| $\beta$ (Crow-AMSAA) | Meaning |
+|:---:|---|
+| $< 1$ | Failures decreasing — reliability improving |
+| $= 1$ | Constant rate — stable |
+| $> 1$ | Failures increasing — reliability worsening |
+
+---
+
+### Repairable Systems — @sec-rs
+
+Power Law intensity (recurrence rate):
+
+$$\rho(t) = \lambda \beta t^{\beta - 1}$$
+
+Instantaneous MTBF at time $t$:
+
+$$\text{MTBF}(t) = \frac{1}{\rho(t)}$$

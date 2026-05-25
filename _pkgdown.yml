@@ -5,6 +5,12 @@ template:
   bootswatch: flatly
 development:
   mode: auto
+
+navbar:
+  right:
+    - text: "Companion Book"
+      href: https://paulgovan.github.io/ReliaLearnR/book/
+      icon: fa-book
 tutorials:
 - name: ram
   title: Reliability, Availability, and Maintainability (RAM)

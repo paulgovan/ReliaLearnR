@@ -1,0 +1,279 @@
+# Reliability Growth Analysis {#sec-rt}
+
+## Introduction
+
+**Reliability Growth Analysis (RGA)** monitors and improves reliability over time by analyzing failure data collected during testing. It identifies trends in the failure rate, confirming whether corrective actions are having the intended effect.
+
+## Learning Objectives
+
+By the end of this chapter, you will be able to:
+
+- Define key reliability growth concepts: Crow-AMSAA and Duane models.
+- Use `rdt()` to plan a reliability demonstration test (required test time and sample size).
+- Fit reliability growth models using R.
+- Apply the Crow-AMSAA model to assess reliability growth.
+- Use piecewise NHPP models to detect design changes during testing.
+- Forecast future failures from a fitted growth model using `predict_rga()`.
+- Interpret reliability growth plots and make decisions from the results.
+
+## Reliability Growth Analysis
+
+The `ReliaGrowR` package [@ReliaGrowR] provides functions for reliability growth analysis in R.
+
+```{r}
+#| message: false
+library(ReliaGrowR)
+```
+
+## Test Planning
+
+Before analyzing test data, it helps to answer two design questions: *How long must we test?* and *How many failures should we expect?* ReliaGrowR provides tools for both.
+
+### Reliability Demonstration Tests — `rdt()`
+
+A **Reliability Demonstration Test (RDT)** is a pass/fail test designed to demonstrate that a product meets a reliability target at a specified confidence level. `rdt()` calculates the required test time given the sample size (or vice versa).
+
+```{r}
+# How long must we test 10 units to demonstrate R(1000 hrs) >= 0.90
+# at 80% confidence? Assume Weibull shape beta = 2, zero allowable failures.
+plan <- rdt(
+  target       = 0.90,   # target reliability
+  mission_time = 1000,   # mission time (hours)
+  conf_level   = 0.80,   # confidence level
+  beta         = 2,      # assumed Weibull shape parameter
+  n            = 10,     # number of test units
+  f            = 0       # allowable failures
+)
+print(plan)
+```
+
+Each unit must be tested for approximately 1,236 hours without failure. If the test passes, we have demonstrated $R(1000) \geq 0.90$ with 80% confidence.
+
+::: {.callout-note}
+## Try It
+
+Compare the required test time for sample sizes of 5, 10, and 20 units (keep all other parameters the same). What is the trade-off?
+
+```{r}
+# Vary n to see the effect on required test time
+for (n in c(5, 10, 20)) {
+  # plan <- rdt(target = 0.90, mission_time = 1000, conf_level = 0.80,
+  #             beta = 2, n = n, f = 0)
+  # print(plan)
+}
+```
+
+<details><summary>Solution</summary>
+```{r}
+for (n in c(5, 10, 20)) {
+  plan <- rdt(target = 0.90, mission_time = 1000, conf_level = 0.80,
+              beta = 2, n = n, f = 0)
+  print(plan)
+}
+```
+
+More test units means shorter required test time per unit — but total test effort (n × T) stays roughly constant. Larger fleets reduce calendar time at the cost of more physical units.
+</details>
+:::
+
+### Forecasting Growth — `predict_rga()`
+
+Once a growth test is underway, `predict_rga()` projects cumulative failures beyond the current endpoint — useful for deciding whether to continue testing or whether a reliability target will be met by a program deadline.
+
+```{r}
+times    <- c(100, 200, 300, 400, 500)
+failures <- c(1, 2, 1, 3, 2)
+
+fit  <- rga(times, failures)
+pred <- predict_rga(fit, times = seq(500, 1000, by = 100))
+print(pred)
+```
+
+The lower and upper bounds reflect the uncertainty in the Crow-AMSAA parameter estimates. A narrow interval indicates the growth trend is well characterized; a wide interval suggests more test time is needed.
+
+::: {.callout-tip}
+## Review
+
+The fitted Crow-AMSAA model gives $\hat{\beta} = 0.72$. Is the system still improving at time 1,000?
+
+<details><summary>Answer</summary>
+Yes — $\beta < 1$ means the cumulative failure rate is **decreasing** (the growth curve is concave), so reliability is still improving at time 1,000. Testing should continue until $\beta$ stabilizes near the growth target.
+</details>
+:::
+
+## The Duane Model
+
+The **Duane Model** [@Duane1964] is one of the earliest and most widely used models for reliability growth. It is a log-log plot of cumulative MTBF vs cumulative time, where the MTBF is the total operating time divided by the number of failures up to that time.
+
+$$\text{CMTBF}(t) = K \cdot t^{\beta - 1}$$
+
+The slope of the line on the log-log plot indicates the rate of reliability growth:
+
+| Slope ($\beta$) | Meaning |
+|:---:|---|
+| $> 1$ | Reliability improving (failure rate decreasing) |
+| $= 1$ | No change (stable) |
+| $< 1$ | Reliability worsening (failure rate increasing) |
+
+Plotting the Duane model for three beta values:
+
+```{r}
+t <- seq(1, 100, by = 0.1)
+
+# Three scenarios
+plot(log(t), log(0.1 * t^(1.5 - 1)), type = "l", col = "blue", lwd = 2,
+     xlab = "log(Cumulative Time)", ylab = "log(Cumulative MTBF)",
+     main = "Duane Plot: Three Reliability Growth Scenarios",
+     ylim = c(-4, 1))
+lines(log(t), log(0.1 * t^(1.0 - 1)), col = "red",       lwd = 2)
+lines(log(t), log(0.1 * t^(0.6 - 1)), col = "darkgreen", lwd = 2)
+legend("topleft",
+       legend = c("β = 1.5 (improving)", "β = 1.0 (stable)", "β = 0.6 (worsening)"),
+       col = c("blue", "red", "darkgreen"), lwd = 2)
+```
+
+### Fitting with ReliaGrowR
+
+```{r}
+times    <- c(100, 200, 300, 400, 500)
+failures <- c(1, 2, 1, 3, 2)
+
+fit <- duane(times, failures)
+plot(fit, main = "Duane Model Example",
+     xlab = "Cumulative Time", ylab = "Cumulative MTBF")
+```
+
+::: {.callout-note}
+## Try It
+
+A new system was tested and the following cumulative failure counts were recorded. Fit a Duane model and plot the result.
+
+```{r}
+times    <- c(200, 450, 750, 1100, 1500, 2000)
+failures <- c(3, 2, 2, 1, 1, 1)
+# fit <- duane(times, failures)
+# plot(fit)
+```
+
+<details><summary>Solution</summary>
+```{r}
+times    <- c(200, 450, 750, 1100, 1500, 2000)
+failures <- c(3, 2, 2, 1, 1, 1)
+fit <- duane(times, failures)
+plot(fit, main = "Duane Reliability Growth Plot",
+     xlab = "Cumulative Test Time", ylab = "Cumulative MTBF")
+```
+</details>
+:::
+
+::: {.callout-tip}
+## Review
+
+What does a Duane plot with a slope greater than 1 indicate?
+
+<details><summary>Answer</summary>
+The system's reliability is **improving** — the failure rate is decreasing over time.
+</details>
+:::
+
+## The Crow-AMSAA Model
+
+The **Crow-AMSAA Model** [@Crow1975] models cumulative failures vs cumulative time using a Non-Homogeneous Poisson Process (NHPP):
+
+$$N(t) = \lambda_0 \cdot t^{\beta}$$
+
+The shape parameter $\beta$ interpretation:
+
+| $\beta$ | Meaning |
+|:---:|---|
+| $> 1$ | Failures increasing (reliability worsening) |
+| $= 1$ | Constant rate (stable) |
+| $< 1$ | Failures decreasing (reliability improving) |
+
+Note: The Crow-AMSAA $\beta$ interpretation is **reversed** compared to the Duane model — because the Duane plots MTBF (higher is better), while Crow-AMSAA plots cumulative failures (lower slope is better).
+
+```{r}
+t <- seq(0.1, 100, by = 0.1)
+
+# Three beta scenarios for cumulative failures
+plot(t, 0.5 * t^0.6, type = "l", col = "blue", lwd = 2,
+     xlab = "Cumulative Time", ylab = "Cumulative Failures",
+     main = "Crow-AMSAA: Three Reliability Scenarios",
+     ylim = c(0, 20))
+lines(t, 0.5 * t^1.0, col = "red",       lwd = 2)
+lines(t, 0.5 * t^1.5, col = "darkgreen", lwd = 2)
+legend("topleft",
+       legend = c("β = 0.6 (improving)", "β = 1.0 (stable)", "β = 1.5 (worsening)"),
+       col = c("blue", "red", "darkgreen"), lwd = 2)
+```
+
+### Fitting with ReliaGrowR
+
+```{r}
+result <- rga(times, failures)
+plot(result, main = "Crow-AMSAA Model Example",
+     xlab = "Cumulative Time", ylab = "Cumulative Failures")
+```
+
+::: {.callout-note}
+## Try It
+
+A development test recorded these cumulative failure counts. Use `rga()` with `model_type = "Crow-AMSAA"` to fit the model.
+
+```{r}
+times    <- c(50, 120, 220, 360, 530, 740, 1000)
+failures <- c(4, 3, 3, 2, 2, 1, 1)
+# fit <- rga(times, failures, model_type = "Crow-AMSAA")
+# plot(fit)
+```
+
+<details><summary>Solution</summary>
+```{r}
+times    <- c(50, 120, 220, 360, 530, 740, 1000)
+failures <- c(4, 3, 3, 2, 2, 1, 1)
+fit <- rga(times, failures, model_type = "Crow-AMSAA")
+plot(fit, main = "Crow-AMSAA Reliability Growth",
+     xlab = "Cumulative Test Time", ylab = "Cumulative Failures")
+```
+</details>
+:::
+
+### The Piecewise NHPP Model
+
+The **Piecewise NHPP** fits a separate Power Law to each segment of the time axis, separated by breakpoints. This is useful when a design change occurs during testing.
+
+$$N_i(t) = N(t_{i-1}) + \lambda_i (t - t_{i-1})^{\beta_i}, \quad t_{i-1} < t \leq t_i$$
+
+```{r}
+times    <- c(25, 55, 97, 146, 201, 268, 341, 423, 513, 609, 710, 820, 940, 1072, 1217)
+failures <- c(1, 1, 2, 4, 4, 1, 1, 2, 1, 4, 1, 1, 3, 3, 4)
+breaks   <- 500
+
+result <- rga(times, failures, model_type = "Piecewise NHPP", breaks = breaks)
+plot(result, main = "Piecewise NHPP Model",
+     xlab = "Cumulative Time", ylab = "Cumulative Failures")
+```
+
+The two segments have different slopes — the first segment (pre-change) has a higher slope than the second (post-change), confirming the design change reduced the failure rate.
+
+### Change Point Detection
+
+Without a known breakpoint, `rga()` can detect the change point automatically:
+
+```{r}
+result_auto <- rga(times, failures, model_type = "Piecewise NHPP")
+plot(result_auto, main = "Piecewise NHPP with Change Point Detection",
+     xlab = "Cumulative Time", ylab = "Cumulative Failures")
+```
+
+The automatically detected change point is near time 500, consistent with the known design change.
+
+## Summary
+
+**Key takeaways:**
+
+- **Duane model**: log-log of MTBF vs time; positive slope ($\beta > 1$) = improving.
+- **Crow-AMSAA**: log of cumulative failures vs time; concave downward = improving ($\beta < 1$).
+- **Piecewise NHPP**: fits multiple segments; use when a known change occurs during testing.
+- For accelerated life testing (Arrhenius, Power Law, relationship plots), see @sec-alt.
+

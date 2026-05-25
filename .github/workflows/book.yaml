@@ -1,0 +1,64 @@
+# Render and deploy the companion Quarto book to GitHub Pages at /book/
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - 'book/**'
+      - 'inst/tutorials/**'
+      - '.github/workflows/book.yaml'
+  pull_request:
+    branches: [main, master]
+    paths:
+      - 'book/**'
+  workflow_dispatch:
+
+name: book
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: book-${{ github.event_name != 'pull_request' || github.run_id }}
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: r-lib/actions/setup-pandoc@v2
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: |
+            any::quarto
+            local::.
+          needs: website
+
+      - name: Install additional book dependencies
+        run: |
+          install.packages(c(
+            "WeibullR", "ReliaGrowR", "WeibullR.ALT",
+            "DiagrammeR", "ReliaPlotR", "ReliaShiny"
+          ))
+        shell: Rscript {0}
+
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Render book
+        run: quarto render book/
+        shell: bash
+
+      - name: Deploy book to GitHub Pages 🚀
+        if: github.event_name != 'pull_request'
+        uses: JamesIves/github-pages-deploy-action@v4.4.1
+        with:
+          clean: false
+          branch: gh-pages
+          folder: book/_book
+          target-folder: book

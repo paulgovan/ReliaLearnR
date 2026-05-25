@@ -26,3 +26,5 @@
 ^inst/tutorials/rt/rsconnect$
 ^inst/tutorials/rs/rsconnect$
 ^ReliaLearnR/inst/tutorials/rt/rsconnect$
+^book$
+^inst/paper$

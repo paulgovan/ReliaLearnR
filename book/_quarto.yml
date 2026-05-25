@@ -1,0 +1,53 @@
+project:
+  type: book
+
+book:
+  title: "Reliability Analysis with R: A Companion Guide"
+  author: "Paul Govan"
+  date: today
+  description: |
+    A companion reference guide to the ReliaLearnR interactive tutorials,
+    covering RAM analysis, life data analysis, reliability testing, repairable
+    systems, and reliability block diagrams, with additional chapters on
+    interactive visualization with ReliaPlotR and web-based analysis with ReliaShiny.
+  cover-image: cover.png
+  url: https://paulgovan.github.io/ReliaLearnR/
+  repo-url: https://github.com/paulgovan/ReliaLearnR
+  chapters:
+    - index.qmd
+    - 01-ram.qmd
+    - 02-rbd.qmd
+    - 03-lda.qmd
+    - 04-rt.qmd
+    - 05-alt.qmd
+    - 06-rs.qmd
+    - 07-reliaplotr.qmd
+    - 08-reliashiny.qmd
+    - 98-appendix.qmd
+    - 99-glossary.qmd
+  sidebar:
+    search: true
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    number-depth: 2
+    code-fold: false
+    code-tools: true
+    highlight-style: github
+  pdf:
+    documentclass: scrreprt
+    toc: true
+    number-sections: true
+    cover-image: cover.png
+
+execute:
+  echo: true
+  warning: false
+  message: false
+  cache: false

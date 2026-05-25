@@ -1,0 +1,162 @@
+# Appendix: Helper Functions Reference {#sec-appendix .unnumbered}
+
+The `ReliaLearnR` package exports five RAM calculation helper functions. They accept scalar or vector inputs, validate their arguments, and return a single numeric scalar.
+
+```{r}
+library(ReliaLearnR)
+```
+
+## rel() — Reliability
+
+**Computes reliability as** $1 - \text{outage} / \text{total}$.
+
+```{r}
+#| eval: false
+rel(outageTime, totalTime)
+```
+
+| Argument | Type | Description |
+|---|---|---|
+| `outageTime` | numeric scalar or vector | Forced outage (failed) time |
+| `totalTime` | numeric scalar or vector | Total time in the same units |
+
+**Returns**: Numeric scalar in $[0, 1]$. Sums vectors before dividing.
+
+**Validation**: Errors on NA, non-numeric, negative values, zero `totalTime`, or mismatched vector lengths.
+
+```{r}
+# Motor: failed 10 days out of 5 years (1825 days)
+rel(outageTime = 10, totalTime = 5 * 365)
+
+# Vector input: two machines pooled together
+rel(outageTime = c(10, 5), totalTime = c(365, 730))
+```
+
+---
+
+## avail() — Availability
+
+**Computes availability as** $1 - \text{unavailable} / \text{total}$, where unavailable time includes both failures *and* scheduled maintenance.
+
+```{r}
+#| eval: false
+avail(unavailTime, totalTime)
+```
+
+| Argument | Type | Description |
+|---|---|---|
+| `unavailTime` | numeric scalar or vector | Total unavailable time (failed + maintenance) |
+| `totalTime` | numeric scalar or vector | Total time in the same units |
+
+**Returns**: Numeric scalar in $[0, 1]$.
+
+```{r}
+# Motor: 10 days failed + 15 days maintenance over 5 years
+avail(unavailTime = 10 + 15, totalTime = 5 * 365)
+
+# Vector input: two assets
+avail(unavailTime = c(5, 14), totalTime = c(3 * 365, 3 * 365))
+```
+
+---
+
+## mttf() — Mean Time to Failure
+
+**Computes MTTF as** $\text{total time} / \text{failures}$, for **non-repairable** items.
+
+```{r}
+#| eval: false
+mttf(failures, totalTime)
+```
+
+| Argument | Type | Description |
+|---|---|---|
+| `failures` | numeric scalar or vector | Failure counts |
+| `totalTime` | numeric scalar or vector | Total operating time |
+
+**Returns**: Numeric scalar (same units as `totalTime`). Returns `Inf` with a warning if `failures = 0`.
+
+```{r}
+# 100 motors, 5 years each, 5 failures
+mttf(failures = 5, totalTime = 100 * 5)
+
+# Pooled fleet data
+mttf(failures = c(2, 3), totalTime = c(500, 500))
+```
+
+---
+
+## mtbf() — Mean Time Between Failures
+
+**Computes MTBF as** $\text{total time} / \text{failures}$, for **repairable** systems.
+
+The formula is identical to `mttf()` but the semantic interpretation differs — MTBF is the expected time *between* successive failures on the same repairable system.
+
+```{r}
+#| eval: false
+mtbf(failures, totalTime)
+```
+
+| Argument | Type | Description |
+|---|---|---|
+| `failures` | numeric scalar or vector | Failure counts |
+| `totalTime` | numeric scalar or vector | Total operating time |
+
+**Returns**: Numeric scalar. Returns `Inf` with a warning if `failures = 0`.
+
+```{r}
+# Machine failed 5 times in 45,000 operating hours
+mtbf(failures = 5, totalTime = 45000)
+
+# Fleet of 50 generators, 8 years, 20 failures
+mtbf(failures = 20, totalTime = 50 * 8)
+```
+
+---
+
+## fr() — Failure Rate
+
+**Computes failure rate (λ) as** $\text{failures} / \text{total time}$.
+
+```{r}
+#| eval: false
+fr(failures, totalTime)
+```
+
+| Argument | Type | Description |
+|---|---|---|
+| `failures` | numeric scalar or vector | Failure counts |
+| `totalTime` | numeric scalar or vector | Total operating time |
+
+**Returns**: Numeric scalar (failures per unit time). Note: $\lambda = 1 / \text{MTBF}$.
+
+```{r}
+# 100 motors, 5000 hours each, 75 failures
+fr(failures = 75, totalTime = 100 * 5000)
+
+# Pooled data
+fr(failures = c(10, 5), totalTime = c(1000, 2000))
+```
+
+---
+
+## Validation Behaviour
+
+All five functions share the same input checks via an internal `.validate_inputs()` helper:
+
+| Condition | Error message |
+|---|---|
+| NA in either argument | `"NA values not allowed in inputs"` |
+| Non-numeric argument | `'"argument" must be numeric'` |
+| Negative values | `"inputs must be non-negative"` |
+| Empty vector | `"inputs must not be empty vectors"` |
+| Mismatched vector lengths | `"inputs must have the same length or one must be a scalar"` |
+| Zero total time | `"sum(totalTime) is zero (cannot divide by zero)"` |
+
+```{r}
+#| error: true
+# These all produce informative errors:
+rel(NA, 100)
+avail(-5, 100)
+mttf(5, 0)
+```
