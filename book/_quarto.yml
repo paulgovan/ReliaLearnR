@@ -40,13 +40,6 @@ format:
     code-fold: false
     code-tools: true
     highlight-style: github
-  pdf:
-    documentclass: scrreprt
-    toc: true
-    number-sections: true
-    cover-image: cover.png
-
-prefer-html: true
 
 execute:
   echo: true
