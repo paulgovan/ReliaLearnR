@@ -78,6 +78,21 @@ modules:
 - [`fr()`](https://paulgovan.github.io/ReliaLearnR/reference/fr.md) -
   failure rate
 
+## Companion Book
+
+A static companion reference book is available alongside the interactive
+tutorials. It covers the same material in a readable, searchable, and
+printable format, with additional chapters on interactive visualization
+with [ReliaPlotR](https://CRAN.R-project.org/package=ReliaPlotR) and the
+web-based app
+[ReliaShiny](https://CRAN.R-project.org/package=ReliaShiny).
+
+📖 **[Read the Companion
+Book](https://paulgovan.github.io/ReliaLearnR/book/)**
+
+The book source lives in the `book/` directory of this repository and is
+rendered automatically on every push to `main`.
+
 ## Design
 
 The learning modules are designed to be interactive and engaging, with a
