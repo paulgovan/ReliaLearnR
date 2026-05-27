@@ -8,7 +8,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/paulgovan/ReliaLearnR/blob/master/inst/CITATION)
+[`inst/CITATION`](https://github.com/paulgovan/ReliaLearnR/blob/v0.5/inst/CITATION)
 
 Govan P (2026). “ReliaLearnR: Learning Modules for Reliability
 Analysis.” *Journal of Open Source Education*, **9**(95), 302.
