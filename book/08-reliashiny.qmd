@@ -31,14 +31,14 @@ When ReliaShiny opens, the left sidebar displays the available analysis modules,
 
 ![ReliaShiny landing page showing the sidebar module list.](images/Landing.png){fig-alt="ReliaShiny web app with a left sidebar listing modules: RAM, Life Data Analysis, Reliability Growth, Accelerated Life Testing, Repairable Systems, and Reliability Block Diagrams."}
 
-| Module | Corresponding chapter |
-|---|---|
-| **RAM** | @sec-ram |
-| **Life Data Analysis** | @sec-lda |
-| **Reliability Growth** | @sec-rt |
-| **Accelerated Life Testing** | @sec-alt |
-| **Repairable Systems** | @sec-rs |
-| **Reliability Block Diagrams** | @sec-rbd |
+| Module | Corresponding chapter | Key capabilities |
+|---|---|---|
+| **RAM** | @sec-ram | Reliability, availability, MTTF, MTBF, failure rate |
+| **Life Data Analysis** | @sec-lda | 2-parameter, 3-parameter Weibull, Weibayes; MRR and MLE; right-censored data |
+| **Reliability Growth** | @sec-rt | Duane and Crow-AMSAA model fitting; piecewise NHPP |
+| **Accelerated Life Testing** | @sec-alt | Arrhenius and Power Law models; relationship plots |
+| **Repairable Systems** | @sec-rs | Power Law Process (NHPP); MCF; fleet exposure |
+| **Reliability Block Diagrams** | @sec-rbd | Series, parallel, mixed, and k-out-of-n configurations |
 
 Each module follows the same three-step workflow:
 
@@ -168,7 +168,7 @@ The RBD module computes system reliability from component reliabilities for seri
 
 ## Data Upload Tips
 
-- **CSV files**: column names are case-sensitive. Use lowercase (`time`, `event`, `id`).
+- **CSV files**: core column names (`time`, `event`, `id`, `qty`) are case-sensitive and must be **lowercase**. Stress column names (e.g., `TempC`, `Voltage`) may use any valid R name — they are selected in the app's dropdown.
 - **Missing values**: rows with `NA` in the `time` column are automatically excluded.
 - **Large datasets**: the app handles datasets up to ~10,000 rows without performance issues.
 - **Units**: ReliaShiny is unit-agnostic — use hours, years, cycles, or any consistent unit. Label your outputs accordingly.

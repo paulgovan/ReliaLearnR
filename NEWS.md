@@ -1,3 +1,31 @@
+# ReliaLearnR 0.5
+
+## New Features
+
+* New `rbd()` tutorial covering Reliability Block Diagrams and system
+  reliability, including series, parallel, mixed, and k-out-of-n
+  configurations, system MTTF calculation, and an introduction to Fault Tree
+  Analysis — with 4 code exercises and 12 quiz questions.
+* New `rs()` tutorial covering Repairable Systems Analysis, including
+  Non-Homogeneous Poisson Process (NHPP) modeling, Mean Cumulative Function
+  (MCF) estimation, and failure prediction.
+* Added a companion book to supplement the interactive tutorials.
+
+## Improvements
+
+* All tutorials deepened with more exercises and quiz questions:
+  - **RAM**: Added an interactive failure rate (λ) slider, a Weibull bridge
+    section, and 3 new exercises on series/parallel system reliability.
+  - **LDA**: Added an Anderson-Darling goodness-of-fit section with 2 quiz
+    questions and a model comparison exercise; 2 additional code exercises.
+  - **RS**: Added 3 code exercises covering NHPP fitting, MCF plotting, and
+    failure prediction.
+  - **RT**: Added 3 code exercises covering Duane plotting, RGA, and the
+    Arrhenius acceleration factor.
+* NHPP tutorial updated to a MCF-first workflow for a more intuitive
+  learning progression.
+* Added `DiagrammeR`-based visual diagrams to the RBD tutorial.
+
 # ReliaLearnR 0.3 (Formerly WeibullR.learnr)
 
 ## Breaking Changes

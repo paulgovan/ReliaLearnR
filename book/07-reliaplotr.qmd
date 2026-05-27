@@ -4,7 +4,19 @@
 
 The previous chapters produce static base-R plots. **ReliaPlotR** [@ReliaPlotR] is a companion package that turns those same fitted model objects into *interactive* plotly charts — with hover tooltips, zoom/pan controls, and built-in download buttons — without requiring you to change how you fit your models.
 
-The API follows a single convention: pass the fitted object from `WeibullR`, `ReliaGrowR`, or `WeibullR.ALT` directly to the corresponding `plotly_*` function.
+The API follows a single convention: pass the fitted object from `WeibullR`, `ReliaGrowR`, or `WeibullR.ALT` directly to the corresponding `plotly_*` function. The complete function map:
+
+| Function | Input object | Source package | Chapter |
+|---|---|---|:---:|
+| `plotly_wblr()` | `wblr` | WeibullR | @sec-lda |
+| `plotly_contour()` | `wblr` (with `lrb` bounds) | WeibullR | @sec-lda |
+| `plotly_duane()` | `duane` | ReliaGrowR | @sec-rt |
+| `plotly_rga()` | `rga` | ReliaGrowR | @sec-rt |
+| `plotly_alt()` | `alt.parallel` | WeibullR.ALT | @sec-alt |
+| `plotly_rel()` | `alt.fit` | WeibullR.ALT | @sec-alt |
+| `plotly_nhpp()` | `nhpp` | ReliaGrowR | @sec-rs |
+| `plotly_mcf()` | `mcf` | ReliaGrowR | @sec-rs |
+| `plotly_exposure()` | `exposure` | ReliaGrowR | @sec-rs |
 
 ## Installation
 

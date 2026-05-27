@@ -50,12 +50,15 @@ install.packages(c(
 ## Chapter Overview
 
 1. **RAM** — Foundational reliability, availability, and maintainability metrics.
-2. **Reliability Block Diagrams** — Series, parallel, mixed, and k-out-of-n systems.
-3. **Life Data Analysis** — Weibull distribution, censoring, MRR vs MLE, and contour plots.
-4. **Reliability Testing** — Reliability growth models and accelerated life testing.
-5. **Repairable Systems** — Power Law Process, MCF, and fleet-level analysis.
-6. **Interactive Plots with ReliaPlotR** — Publishable interactive reliability charts.
-7. **Web-Based Analysis with ReliaShiny** — Point-and-click reliability analysis.
+2. **Reliability Block Diagrams** — Series, parallel, mixed, k-out-of-n systems, and fault tree analysis.
+3. **Life Data Analysis** — Weibull distribution, censoring, MRR vs. MLE, and contour plots.
+4. **Reliability Growth Analysis** — Duane and Crow-AMSAA growth models, test planning, and forecasting.
+5. **Accelerated Life Testing** — Arrhenius and Power Law acceleration models for compressed test time.
+6. **Repairable Systems** — Power Law Process, MCF, and fleet-level analysis.
+7. **Interactive Plots with ReliaPlotR** — Publishable interactive reliability charts.
+8. **Web-Based Analysis with ReliaShiny** — Point-and-click reliability analysis.
+
+The book also includes an **Appendix** (helper function reference) and a **Glossary** (key symbols and formulas).
 
 ## About the Author
 

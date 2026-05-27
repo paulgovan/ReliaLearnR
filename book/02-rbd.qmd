@@ -103,7 +103,9 @@ The **least reliable** component. It is the bottleneck — improving it produces
 
 ## Parallel Systems
 
-In a **parallel** system, only one component needs to function — **active redundancy**. The system fails only if all components fail simultaneously:
+In a **parallel** system, only one component needs to function — **active redundancy** (all components operate simultaneously). The system fails *only* if all components fail at the same time. Since component failures are assumed to be independent:
+
+$$P(\text{all fail}) = \prod_{i=1}^{n}(1 - R_i)$$
 
 $$R_{\text{sys}} = 1 - \prod_{i=1}^{n}(1 - R_i)$$
 
@@ -132,10 +134,10 @@ digraph parallel {
 ```
 
 ```{r}
-R_primary <- 0.90
-R_standby <- 0.85
+R_gen1 <- 0.90  # Generator 1
+R_gen2 <- 0.85  # Generator 2
 
-R_parallel <- 1 - (1 - R_primary) * (1 - R_standby)
+R_parallel <- 1 - (1 - R_gen1) * (1 - R_gen2)
 R_parallel  # 0.985
 ```
 
@@ -243,6 +245,8 @@ A **k-out-of-n** system succeeds if at least $k$ of its $n$ identical components
 The reliability of a k-out-of-n system (identical components, each with reliability $p$) follows the binomial distribution:
 
 $$R_{k/n} = \sum_{i=k}^{n} \binom{n}{i} p^i (1-p)^{n-i} = 1 - \text{pbinom}(k-1,\, n,\, 1-p)$$
+
+The compact R expression counts the probability that *at least* $k$ components function: `pbinom(k-1, n, 1-p)` gives the probability that $k-1$ or fewer components work (i.e., the system fails), and we subtract that from 1.
 
 ### Example: Flight Control Computers
 
@@ -499,5 +503,6 @@ R_system  # ~0.985
 - **Mixed**: decompose into subsystems, apply formulas step by step.
 - **k-out-of-n**: `1 - pbinom(k-1, n, 1-p)` for voting/load-sharing systems.
 - **Series MTTF**: $1/\sum\lambda_i$; **Parallel MTTF**: $(1/\lambda)\sum_{i=1}^{n}(1/i)$.
+- **Common Cause Failure**: redundancy requires *diversity* to be effective — the $\beta_{\text{CCF}}$ factor quantifies the fraction of failures caused by shared events; adding more identical, coupled components does not protect against CCF.
 - **FTA duality**: series RBD ↔ OR gate; parallel RBD ↔ AND gate.
 

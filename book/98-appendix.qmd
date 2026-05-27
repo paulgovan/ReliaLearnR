@@ -29,6 +29,7 @@ rel(outageTime, totalTime)
 rel(outageTime = 10, totalTime = 5 * 365)
 
 # Vector input: two machines pooled together
+# Returns (10+5)/(365+730) = 0.9863 — sums both machines before dividing
 rel(outageTime = c(10, 5), totalTime = c(365, 730))
 ```
 
@@ -153,10 +154,11 @@ All five functions share the same input checks via an internal `.validate_inputs
 | Mismatched vector lengths | `"inputs must have the same length or one must be a scalar"` |
 | Zero total time | `"sum(totalTime) is zero (cannot divide by zero)"` |
 
+Each call below triggers a different validation rule and prints the corresponding error message inline:
+
 ```{r}
 #| error: true
-# These all produce informative errors:
-rel(NA, 100)
-avail(-5, 100)
-mttf(5, 0)
+rel(NA, 100)      # NA in inputs
+avail(-5, 100)    # negative value
+mttf(5, 0)        # zero total time (division by zero)
 ```

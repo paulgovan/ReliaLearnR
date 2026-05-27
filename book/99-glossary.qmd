@@ -1,6 +1,6 @@
 # Glossary and Formula Reference {#sec-glossary .unnumbered}
 
-A quick-reference guide to the key symbols and formulas used throughout this book. Each entry links back to the chapter where it is first introduced.
+A quick-reference guide to the key symbols and formulas used throughout this book. Each entry links back to the chapter where it is first introduced. Symbols are listed in order of first introduction.
 
 ## Key Symbols
 
@@ -30,9 +30,9 @@ A quick-reference guide to the key symbols and formulas used throughout this boo
 
 $$R = 1 - \frac{\text{failed time}}{\text{total time}}$$
 
-$$A = 1 - \frac{\text{unavailable time}}{\text{total time}}$$
+$$A = 1 - \frac{\text{unavailable time}}{\text{total time}} = \frac{\text{MTTF}}{\text{MTTF} + \text{MTTR}}$$
 
-$$\lambda = \frac{\text{failures}}{\text{total time}}, \qquad \text{MTTF} = \frac{1}{\lambda}$$
+$$\lambda = \frac{\text{failures}}{\text{total time}}, \qquad \text{MTTF} = \frac{1}{\lambda}, \qquad \text{MTBF} = \frac{1}{\lambda}$$
 
 $$R(t) = e^{-\lambda t} \qquad \text{(exponential model)}$$
 
@@ -82,11 +82,11 @@ $$\text{Life}_{\text{use}} = AF \times \text{Life}_{\text{stress}}$$
 
 ### Reliability Growth Analysis — @sec-rt
 
-Duane cumulative MTBF:
+Duane cumulative MTBF ($K$ = scale parameter estimated from data):
 
 $$\text{CMTBF}(t) = K \cdot t^{\beta - 1}$$
 
-Crow-AMSAA cumulative failures:
+Crow-AMSAA cumulative failures ($\lambda_0$ = scale parameter; $\beta$ = shape parameter):
 
 $$N(t) = \lambda_0 \cdot t^{\beta}$$
 
@@ -95,6 +95,10 @@ $$N(t) = \lambda_0 \cdot t^{\beta}$$
 | $< 1$ | Failures decreasing — reliability improving |
 | $= 1$ | Constant rate — stable |
 | $> 1$ | Failures increasing — reliability worsening |
+
+::: {.callout-warning}
+**Note**: Crow-AMSAA $\beta$ and Duane $\beta$ have **opposite** interpretations — Duane $\beta > 1$ means *improving*, Crow-AMSAA $\beta > 1$ means *worsening*. See @sec-rt for details.
+:::
 
 ---
 

@@ -214,7 +214,7 @@ exp_result <- exposure(id = pump_data$id, time = pump_data$time,
 plot(exp_result)
 ```
 
-The exposure plot shows how total observed system-time accumulates and how the fleet-wide event rate behaves over time.
+`exp_result` is a data frame containing three columns: `cum_exposure` (total system-time accumulated across all units at risk), `n_risk` (number of units under observation at each time), and `event_rate` (cumulative events divided by cumulative exposure). The exposure plot shows how total observed system-time accumulates and how the fleet-wide event rate behaves over time.
 
 ::: {.callout-tip}
 ## Review
@@ -230,7 +230,7 @@ Without normalizing by exposure, a system observed for twice as long will appear
 
 The **Mean Cumulative Function (MCF)** is a non-parametric estimate of the expected cumulative number of failures *per system* as a function of time. It makes no distributional assumptions and handles systems with different observation periods.
 
-The Nelson-Aalen estimator:
+The **Nelson-Aalen estimator** is a non-parametric method that requires no distributional assumption and naturally handles systems with different observation lengths (administrative censoring):
 
 $$\hat{M}(t) = \sum_{t_j \leq t} \frac{d_j}{n_j}$$
 

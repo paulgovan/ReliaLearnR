@@ -22,13 +22,13 @@ By the end of this chapter, you will be able to:
 
 The **Weibull distribution** is a flexible continuous probability distribution widely used in life data analysis. Its flexibility comes from a shape parameter $\beta$ that allows it to mimic the normal, exponential, and log-normal distributions.
 
-### The Cumulative Distribution Function
+### The Reliability (Survival) Function
 
-The Weibull reliability (survival) function is:
+The Weibull **reliability** (survival) function is:
 
-$$R(t) = 1 - F(t) = e^{-(t/\eta)^\beta}$$
+$$R(t) = e^{-(t/\eta)^\beta}$$
 
-where $R(t)$ is the cumulative probability of *survival* prior to time $t$, $\beta$ is the shape parameter, and $\eta$ is the scale parameter.
+where $R(t)$ is the probability of *surviving beyond* time $t$, $\beta$ is the shape parameter, and $\eta$ is the scale parameter. The **CDF** (cumulative probability of failure by time $t$) is its complement: $F(t) = 1 - R(t)$.
 
 The shape parameter $\beta$ has a direct physical interpretation:
 
@@ -207,7 +207,7 @@ MLEfit <- wblr.fit(wblr(failures, suspensions, col = "red"),  method.fit = "mle"
 plot.wblr(list(MRRfit, MLEfit))
 ```
 
-Both methods fit the same data. Slight differences in $\beta$ and $\eta$ are visible — the better fit can be determined objectively using the Anderson-Darling statistic.
+Both methods fit the same data. Slight differences in $\beta$ and $\eta$ are visible — the better fit can be determined objectively using the Anderson-Darling statistic. In practice, **MLE is preferred for small samples and censored data** (it uses all the information in the likelihood); **MRR is adequate for larger, complete datasets** and is computationally simpler.
 
 ## Goodness of Fit
 
