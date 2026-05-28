@@ -2,6 +2,8 @@
 
 ## ReliaLearnR 0.5
 
+CRAN release: 2026-05-27
+
 ### New Features
 
 - New
