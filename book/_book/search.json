@@ -932,11 +932,11 @@
   {
     "objectID": "98-appendix.html",
     "href": "98-appendix.html",
-    "title": "Appendix: Helper Functions Reference",
+    "title": "Appendix: R Quick Reference",
     "section": "",
-    "text": "rel() — Reliability\nThe ReliaLearnR package exports five RAM calculation helper functions. They accept scalar or vector inputs, validate their arguments, and return a single numeric scalar.\nComputes reliability as \\(1 - \\text{outage} / \\text{total}\\).\nrel(outageTime, totalTime)\nReturns: Numeric scalar in \\([0, 1]\\). Sums vectors before dividing.\nValidation: Errors on NA, non-numeric, negative values, zero totalTime, or mismatched vector lengths.\n# Motor: failed 10 days out of 5 years (1825 days)\nrel(outageTime = 10, totalTime = 5 * 365)\n\n[1] 0.9945205\n\n# Vector input: two machines pooled together\nrel(outageTime = c(10, 5), totalTime = c(365, 730))\n\n[1] 0.9863014",
+    "text": "ReliaLearnR\nThis appendix lists every R package and function used in this book, organized by package, with the chapter(s) where each appears. Use it as a lookup reference when you want to find the right function quickly without having to search through the chapters.\nInstall all packages at once with:\nRAM (Reliability, Availability, and Maintainability) calculation helpers. All five functions accept scalar or vector inputs and return a single numeric scalar.\ninstall.packages(\"ReliaLearnR\")\nlibrary(ReliaLearnR)\nExample usage:\nlibrary(ReliaLearnR)\n\nrel(outageTime = 10, totalTime = 5 * 365)   # reliability over 5 years\n\n[1] 0.9945205\n\navail(unavailTime = 25, totalTime = 5 * 365) # availability with maintenance\n\n[1] 0.9863014\n\nmttf(failures = 5, totalTime = 100 * 5)      # MTTF for a fleet of 100 units\n\n[1] 100\n\nmtbf(failures = 5, totalTime = 45000)        # MTBF for a repairable machine\n\n[1] 9000\n\nfr(failures = 75, totalTime = 100 * 5000)    # failure rate (failures per hour)\n\n[1] 0.00015",
     "crumbs": [
-      "Appendix: Helper Functions Reference"
+      "Appendix: R Quick Reference"
     ]
   },
   {
@@ -1037,6 +1037,76 @@
     "text": "5.9 Important Limitations of ALT\n\n\n\n\n\n\nImportantWhen ALT Predictions May Be Invalid\n\n\n\nALT is a powerful tool, but it rests on a critical assumption: the same failure mechanism operates at elevated stress as at use conditions. If high stress activates a different failure mode — one that would not appear during normal operation — the accelerated results will not transfer to real-world life predictions.\nCommon pitfalls:\n\nNew failure modes at high stress — e.g., thermal cracking from extreme temperature that would never occur at use temperature.\nMechanism change — e.g., ductile failure at low stress transitions to brittle fracture at high stress; the Weibull shape and the AF model no longer apply.\nUnknown activation energy or stress exponent — small errors in \\(E_a\\) or \\(n\\) produce large errors in predicted AF; always perform a sensitivity analysis.\n\nWhen in doubt: run tests at the lowest stress level possible that still produces observable failures in a reasonable time, and verify that failures look the same as field failures.",
     "crumbs": [
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Accelerated Life Testing</span>"
+    ]
+  },
+  {
+    "objectID": "98-appendix.html#relialearnr",
+    "href": "98-appendix.html#relialearnr",
+    "title": "Appendix: R Quick Reference",
+    "section": "",
+    "text": "Function\nDescription\nChapter\n\n\n\n\nrel(outageTime, totalTime)\nReliability: \\(1 - \\text{outage} / \\text{total}\\)\nCh. 1\n\n\navail(unavailTime, totalTime)\nAvailability: \\(1 - \\text{unavailable} / \\text{total}\\) (failures + maintenance)\nCh. 1\n\n\nmttf(failures, totalTime)\nMean Time to Failure for non-repairable items\nCh. 1\n\n\nmtbf(failures, totalTime)\nMean Time Between Failures for repairable systems\nCh. 1\n\n\nfr(failures, totalTime)\nFailure rate \\(\\lambda = \\text{failures} / \\text{total time}\\)\nCh. 1",
+    "crumbs": [
+      "Appendix: R Quick Reference"
+    ]
+  },
+  {
+    "objectID": "98-appendix.html#weibullr",
+    "href": "98-appendix.html#weibullr",
+    "title": "Appendix: R Quick Reference",
+    "section": "WeibullR",
+    "text": "WeibullR\nLife data analysis: Weibull probability plotting, distribution fitting, and confidence bounds.\n\ninstall.packages(\"WeibullR\")\nlibrary(WeibullR)\n\n\n\n\n\n\n\n\n\nFunction\nDescription\nChapter\n\n\n\n\nwblr(...)\nCreate a Weibull object from time/event data\nCh. 3, 7\n\n\nwblr.fit(obj, ...)\nFit a distribution (MLE or MRR) to a wblr object\nCh. 3, 7\n\n\nwblr.conf(obj, ...)\nCompute confidence bounds on a fitted wblr object\nCh. 3, 7\n\n\nMLEw2p(...)\nFit a 2-parameter Weibull distribution via MLE directly\nCh. 3\n\n\nplot_contour(obj)\nStatic likelihood ratio contour plot\nCh. 3\n\n\n\nExample usage:\n\nlibrary(WeibullR)\n\nfailures &lt;- c(500, 1200, 900, 1500, 750)\nda &lt;- wblr(x = failures, s = c(2000, 2000))  # 2 suspensions\nda &lt;- wblr.fit(da, method.fit = \"mle\")\nda &lt;- wblr.conf(da, method.conf = \"lrb\")\nplot(da)",
+    "crumbs": [
+      "Appendix: R Quick Reference"
+    ]
+  },
+  {
+    "objectID": "98-appendix.html#weibullr.alt",
+    "href": "98-appendix.html#weibullr.alt",
+    "title": "Appendix: R Quick Reference",
+    "section": "WeibullR.ALT",
+    "text": "WeibullR.ALT\nAccelerated Life Testing (ALT): fit life-stress relationships such as Arrhenius, Power Law, and Eyring to multi-stress datasets.\n\ninstall.packages(\"WeibullR.ALT\")\nlibrary(WeibullR.ALT)\n\n\n\n\n\n\n\n\n\nFunction\nDescription\nChapter\n\n\n\n\nNelsonData(name)\nLoad built-in Nelson ALT example datasets\nCh. 5, 7\n\n\nalt.data(...)\nPrepare an ALT data object from raw time/event/stress data\nCh. 5, 7\n\n\nalt.make(...)\nCreate an ALT model object (specify distribution and relationship)\nCh. 5, 7\n\n\nalt.parallel(obj)\nConstrain Weibull slopes to be equal across stress levels\nCh. 5, 7\n\n\nalt.fit(obj, ...)\nFit the life-stress relationship to the ALT model\nCh. 5, 7\n\n\n\nExample usage:\n\nlibrary(WeibullR.ALT)\n\nnd &lt;- NelsonData(\"E2\")\nda &lt;- alt.data(nd)\nmo &lt;- alt.make(da, distribution = \"Weibull\", relationship = \"Arrhenius\")\nmo &lt;- alt.parallel(mo)\nmo &lt;- alt.fit(mo)\nplot(mo)",
+    "crumbs": [
+      "Appendix: R Quick Reference"
+    ]
+  },
+  {
+    "objectID": "98-appendix.html#reliagrowr",
+    "href": "98-appendix.html#reliagrowr",
+    "title": "Appendix: R Quick Reference",
+    "section": "ReliaGrowR",
+    "text": "ReliaGrowR\nReliability growth testing and repairable systems analysis: Crow-AMSAA, Duane, Power Law Process, and Mean Cumulative Function.\n\ninstall.packages(\"ReliaGrowR\")\nlibrary(ReliaGrowR)\n\n\n\n\n\n\n\n\n\nFunction\nDescription\nChapter\n\n\n\n\nrdt(...)\nPlan a Reliability Demonstration Test\nCh. 4\n\n\nrga(times, ...)\nFit a Crow-AMSAA (NHPP Power Law) reliability growth model\nCh. 4, 7\n\n\npredict_rga(obj, ...)\nForecast cumulative failures from a rga object\nCh. 4\n\n\nduane(times, ...)\nFit a Duane reliability growth model\nCh. 4, 7\n\n\nnhpp(...)\nFit a Power Law Process to repairable systems data\nCh. 6, 7\n\n\nmcf(...)\nEstimate the Mean Cumulative Function (Nelson-Aalen)\nCh. 6, 7\n\n\nexposure(...)\nCompute fleet exposure from multi-system event data\nCh. 6, 7\n\n\n\nExample usage:\n\nlibrary(ReliaGrowR)\n\n# Reliability growth\ntimes &lt;- c(9.2, 25, 61.5, 260, 300, 710, 916, 1010, 1220)\nrga_fit &lt;- rga(times, T = 1500)\nplot(rga_fit)\n\n# Repairable systems\nevents &lt;- data.frame(id = c(1,1,1,2,2), time = c(100,300,500,200,450))\nmcf_fit &lt;- mcf(events)\nplot(mcf_fit)",
+    "crumbs": [
+      "Appendix: R Quick Reference"
+    ]
+  },
+  {
+    "objectID": "98-appendix.html#diagrammer",
+    "href": "98-appendix.html#diagrammer",
+    "title": "Appendix: R Quick Reference",
+    "section": "DiagrammeR",
+    "text": "DiagrammeR\nGraph and diagram visualisation: render Graphviz DOT diagrams for reliability block diagrams and fault trees.\n\ninstall.packages(\"DiagrammeR\")\nlibrary(DiagrammeR)\n\n\n\n\n\n\n\n\n\nFunction\nDescription\nChapter\n\n\n\n\ngrViz(diagram)\nRender a Graphviz DOT string as an SVG diagram\nCh. 2\n\n\n\nExample usage:\n\nlibrary(DiagrammeR)\n\ngrViz(\"\n  digraph series {\n    rankdir = LR\n    node [shape = rectangle]\n    A -&gt; B -&gt; C\n  }\n\")",
+    "crumbs": [
+      "Appendix: R Quick Reference"
+    ]
+  },
+  {
+    "objectID": "98-appendix.html#reliaplotr",
+    "href": "98-appendix.html#reliaplotr",
+    "title": "Appendix: R Quick Reference",
+    "section": "ReliaPlotR",
+    "text": "ReliaPlotR\nInteractive, plotly-based versions of every static plot produced by WeibullR, WeibullR.ALT, and ReliaGrowR. Drop-in replacements that return plotly objects embeddable in Quarto documents and Shiny apps.\n\ninstall.packages(\"ReliaPlotR\")\nlibrary(ReliaPlotR)\n\n\n\n\n\n\n\n\n\nFunction\nDescription\nChapter\n\n\n\n\nplotly_wblr(obj)\nInteractive Weibull probability plot\nCh. 7\n\n\nplotly_contour(obj)\nInteractive likelihood ratio contour plot\nCh. 7\n\n\nplotly_duane(obj)\nInteractive Duane reliability growth plot\nCh. 7\n\n\nplotly_rga(obj)\nInteractive Crow-AMSAA plot\nCh. 7\n\n\nplotly_alt(obj)\nInteractive ALT probability plot\nCh. 7\n\n\nplotly_rel(obj)\nInteractive life-stress relationship plot\nCh. 7\n\n\nplotly_nhpp(obj)\nInteractive NHPP intensity (recurrence rate) plot\nCh. 7\n\n\nplotly_mcf(obj)\nInteractive Mean Cumulative Function plot\nCh. 7\n\n\nplotly_exposure(obj)\nInteractive fleet exposure plot\nCh. 7\n\n\n\nExample usage:\n\nlibrary(ReliaPlotR)\nlibrary(WeibullR)\n\nda &lt;- wblr(x = c(500, 1200, 900, 1500, 750))\nda &lt;- wblr.fit(da, method.fit = \"mle\")\nda &lt;- wblr.conf(da, method.conf = \"lrb\")\nplotly_wblr(da)   # interactive version of plot(da)",
+    "crumbs": [
+      "Appendix: R Quick Reference"
+    ]
+  },
+  {
+    "objectID": "98-appendix.html#reliashiny",
+    "href": "98-appendix.html#reliashiny",
+    "title": "Appendix: R Quick Reference",
+    "section": "ReliaShiny",
+    "text": "ReliaShiny\nA point-and-click Shiny web application that wraps all of the above analyses in a browser-based UI — no coding required. Modules cover RAM, Life Data Analysis, Reliability Growth, ALT, Repairable Systems, and RBD.\n\ninstall.packages(\"ReliaShiny\")\nlibrary(ReliaShiny)\n\n\n\n\n\n\n\n\n\nFunction\nDescription\nChapter\n\n\n\n\nReliaShiny()\nLaunch the ReliaShiny web application in the default browser\nCh. 8\n\n\n\nExample usage:\n\nlibrary(ReliaShiny)\nReliaShiny()",
+    "crumbs": [
+      "Appendix: R Quick Reference"
     ]
   }
 ]

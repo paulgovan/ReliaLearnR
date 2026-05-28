@@ -1,164 +1,248 @@
-# Appendix: Helper Functions Reference {#sec-appendix .unnumbered}
+# Appendix: R Quick Reference {#sec-appendix .unnumbered}
 
-The `ReliaLearnR` package exports five RAM calculation helper functions. They accept scalar or vector inputs, validate their arguments, and return a single numeric scalar.
+This appendix lists every R package and function used in this book, organized by package, with the chapter(s) where each appears. Use it as a lookup reference when you want to find the right function quickly without having to search through the chapters.
+
+Install all packages at once with:
 
 ```{r}
+#| eval: false
+install.packages(c(
+  "ReliaLearnR",
+  "WeibullR",
+  "WeibullR.ALT",
+  "ReliaGrowR",
+  "DiagrammeR",
+  "ReliaPlotR",
+  "ReliaShiny"
+))
+```
+
+---
+
+## ReliaLearnR
+
+RAM (Reliability, Availability, and Maintainability) calculation helpers. All five functions accept scalar or vector inputs and return a single numeric scalar.
+
+```{r}
+#| eval: false
+install.packages("ReliaLearnR")
 library(ReliaLearnR)
 ```
 
-## rel() — Reliability
-
-**Computes reliability as** $1 - \text{outage} / \text{total}$.
-
-```{r}
-#| eval: false
-rel(outageTime, totalTime)
-```
-
-| Argument | Type | Description |
+| Function | Description | Chapter |
 |---|---|---|
-| `outageTime` | numeric scalar or vector | Forced outage (failed) time |
-| `totalTime` | numeric scalar or vector | Total time in the same units |
+| `rel(outageTime, totalTime)` | Reliability: $1 - \text{outage} / \text{total}$ | Ch. 1 |
+| `avail(unavailTime, totalTime)` | Availability: $1 - \text{unavailable} / \text{total}$ (failures + maintenance) | Ch. 1 |
+| `mttf(failures, totalTime)` | Mean Time to Failure for non-repairable items | Ch. 1 |
+| `mtbf(failures, totalTime)` | Mean Time Between Failures for repairable systems | Ch. 1 |
+| `fr(failures, totalTime)` | Failure rate $\lambda = \text{failures} / \text{total time}$ | Ch. 1 |
 
-**Returns**: Numeric scalar in $[0, 1]$. Sums vectors before dividing.
-
-**Validation**: Errors on NA, non-numeric, negative values, zero `totalTime`, or mismatched vector lengths.
+**Example usage:**
 
 ```{r}
-# Motor: failed 10 days out of 5 years (1825 days)
-rel(outageTime = 10, totalTime = 5 * 365)
+library(ReliaLearnR)
 
-# Vector input: two machines pooled together
-# Returns (10+5)/(365+730) = 0.9863 — sums both machines before dividing
-rel(outageTime = c(10, 5), totalTime = c(365, 730))
+rel(outageTime = 10, totalTime = 5 * 365)   # reliability over 5 years
+avail(unavailTime = 25, totalTime = 5 * 365) # availability with maintenance
+mttf(failures = 5, totalTime = 100 * 5)      # MTTF for a fleet of 100 units
+mtbf(failures = 5, totalTime = 45000)        # MTBF for a repairable machine
+fr(failures = 75, totalTime = 100 * 5000)    # failure rate (failures per hour)
 ```
 
 ---
 
-## avail() — Availability
+## WeibullR
 
-**Computes availability as** $1 - \text{unavailable} / \text{total}$, where unavailable time includes both failures *and* scheduled maintenance.
+Life data analysis: Weibull probability plotting, distribution fitting, and confidence bounds.
 
 ```{r}
 #| eval: false
-avail(unavailTime, totalTime)
+install.packages("WeibullR")
+library(WeibullR)
 ```
 
-| Argument | Type | Description |
+| Function | Description | Chapter |
 |---|---|---|
-| `unavailTime` | numeric scalar or vector | Total unavailable time (failed + maintenance) |
-| `totalTime` | numeric scalar or vector | Total time in the same units |
+| `wblr(...)` | Create a Weibull object from time/event data | Ch. 3, 7 |
+| `wblr.fit(obj, ...)` | Fit a distribution (MLE or MRR) to a `wblr` object | Ch. 3, 7 |
+| `wblr.conf(obj, ...)` | Compute confidence bounds on a fitted `wblr` object | Ch. 3, 7 |
+| `MLEw2p(...)` | Fit a 2-parameter Weibull distribution via MLE directly | Ch. 3 |
+| `plot_contour(obj)` | Static likelihood ratio contour plot | Ch. 3 |
 
-**Returns**: Numeric scalar in $[0, 1]$.
+**Example usage:**
 
 ```{r}
-# Motor: 10 days failed + 15 days maintenance over 5 years
-avail(unavailTime = 10 + 15, totalTime = 5 * 365)
+#| eval: false
+library(WeibullR)
 
-# Vector input: two assets
-avail(unavailTime = c(5, 14), totalTime = c(3 * 365, 3 * 365))
+failures <- c(500, 1200, 900, 1500, 750)
+da <- wblr(x = failures, s = c(2000, 2000))  # 2 suspensions
+da <- wblr.fit(da, method.fit = "mle")
+da <- wblr.conf(da, method.conf = "lrb")
+plot(da)
 ```
 
 ---
 
-## mttf() — Mean Time to Failure
+## WeibullR.ALT
 
-**Computes MTTF as** $\text{total time} / \text{failures}$, for **non-repairable** items.
+Accelerated Life Testing (ALT): fit life-stress relationships such as Arrhenius, Power Law, and Eyring to multi-stress datasets.
 
 ```{r}
 #| eval: false
-mttf(failures, totalTime)
+install.packages("WeibullR.ALT")
+library(WeibullR.ALT)
 ```
 
-| Argument | Type | Description |
+| Function | Description | Chapter |
 |---|---|---|
-| `failures` | numeric scalar or vector | Failure counts |
-| `totalTime` | numeric scalar or vector | Total operating time |
+| `NelsonData(name)` | Load built-in Nelson ALT example datasets | Ch. 5, 7 |
+| `alt.data(...)` | Prepare an ALT data object from raw time/event/stress data | Ch. 5, 7 |
+| `alt.make(...)` | Create an ALT model object (specify distribution and relationship) | Ch. 5, 7 |
+| `alt.parallel(obj)` | Constrain Weibull slopes to be equal across stress levels | Ch. 5, 7 |
+| `alt.fit(obj, ...)` | Fit the life-stress relationship to the ALT model | Ch. 5, 7 |
 
-**Returns**: Numeric scalar (same units as `totalTime`). Returns `Inf` with a warning if `failures = 0`.
+**Example usage:**
 
 ```{r}
-# 100 motors, 5 years each, 5 failures
-mttf(failures = 5, totalTime = 100 * 5)
+#| eval: false
+library(WeibullR.ALT)
 
-# Pooled fleet data
-mttf(failures = c(2, 3), totalTime = c(500, 500))
+nd <- NelsonData("E2")
+da <- alt.data(nd)
+mo <- alt.make(da, distribution = "Weibull", relationship = "Arrhenius")
+mo <- alt.parallel(mo)
+mo <- alt.fit(mo)
+plot(mo)
 ```
 
 ---
 
-## mtbf() — Mean Time Between Failures
+## ReliaGrowR
 
-**Computes MTBF as** $\text{total time} / \text{failures}$, for **repairable** systems.
-
-The formula is identical to `mttf()` but the semantic interpretation differs — MTBF is the expected time *between* successive failures on the same repairable system.
+Reliability growth testing and repairable systems analysis: Crow-AMSAA, Duane, Power Law Process, and Mean Cumulative Function.
 
 ```{r}
 #| eval: false
-mtbf(failures, totalTime)
+install.packages("ReliaGrowR")
+library(ReliaGrowR)
 ```
 
-| Argument | Type | Description |
+| Function | Description | Chapter |
 |---|---|---|
-| `failures` | numeric scalar or vector | Failure counts |
-| `totalTime` | numeric scalar or vector | Total operating time |
+| `rdt(...)` | Plan a Reliability Demonstration Test | Ch. 4 |
+| `rga(times, ...)` | Fit a Crow-AMSAA (NHPP Power Law) reliability growth model | Ch. 4, 7 |
+| `predict_rga(obj, ...)` | Forecast cumulative failures from a `rga` object | Ch. 4 |
+| `duane(times, ...)` | Fit a Duane reliability growth model | Ch. 4, 7 |
+| `nhpp(...)` | Fit a Power Law Process to repairable systems data | Ch. 6, 7 |
+| `mcf(...)` | Estimate the Mean Cumulative Function (Nelson-Aalen) | Ch. 6, 7 |
+| `exposure(...)` | Compute fleet exposure from multi-system event data | Ch. 6, 7 |
 
-**Returns**: Numeric scalar. Returns `Inf` with a warning if `failures = 0`.
+**Example usage:**
 
 ```{r}
-# Machine failed 5 times in 45,000 operating hours
-mtbf(failures = 5, totalTime = 45000)
+#| eval: false
+library(ReliaGrowR)
 
-# Fleet of 50 generators, 8 years, 20 failures
-mtbf(failures = 20, totalTime = 50 * 8)
+# Reliability growth
+times <- c(9.2, 25, 61.5, 260, 300, 710, 916, 1010, 1220)
+rga_fit <- rga(times, T = 1500)
+plot(rga_fit)
+
+# Repairable systems
+events <- data.frame(id = c(1,1,1,2,2), time = c(100,300,500,200,450))
+mcf_fit <- mcf(events)
+plot(mcf_fit)
 ```
 
 ---
 
-## fr() — Failure Rate
+## DiagrammeR
 
-**Computes failure rate (λ) as** $\text{failures} / \text{total time}$.
+Graph and diagram visualisation: render Graphviz DOT diagrams for reliability block diagrams and fault trees.
 
 ```{r}
 #| eval: false
-fr(failures, totalTime)
+install.packages("DiagrammeR")
+library(DiagrammeR)
 ```
 
-| Argument | Type | Description |
+| Function | Description | Chapter |
 |---|---|---|
-| `failures` | numeric scalar or vector | Failure counts |
-| `totalTime` | numeric scalar or vector | Total operating time |
+| `grViz(diagram)` | Render a Graphviz DOT string as an SVG diagram | Ch. 2 |
 
-**Returns**: Numeric scalar (failures per unit time). Note: $\lambda = 1 / \text{MTBF}$.
+**Example usage:**
 
 ```{r}
-# 100 motors, 5000 hours each, 75 failures
-fr(failures = 75, totalTime = 100 * 5000)
+#| eval: false
+library(DiagrammeR)
 
-# Pooled data
-fr(failures = c(10, 5), totalTime = c(1000, 2000))
+grViz("
+  digraph series {
+    rankdir = LR
+    node [shape = rectangle]
+    A -> B -> C
+  }
+")
 ```
 
 ---
 
-## Validation Behaviour
+## ReliaPlotR
 
-All five functions share the same input checks via an internal `.validate_inputs()` helper:
-
-| Condition | Error message |
-|---|---|
-| NA in either argument | `"NA values not allowed in inputs"` |
-| Non-numeric argument | `'"argument" must be numeric'` |
-| Negative values | `"inputs must be non-negative"` |
-| Empty vector | `"inputs must not be empty vectors"` |
-| Mismatched vector lengths | `"inputs must have the same length or one must be a scalar"` |
-| Zero total time | `"sum(totalTime) is zero (cannot divide by zero)"` |
-
-Each call below triggers a different validation rule and prints the corresponding error message inline:
+Interactive, plotly-based versions of every static plot produced by WeibullR, WeibullR.ALT, and ReliaGrowR. Drop-in replacements that return `plotly` objects embeddable in Quarto documents and Shiny apps.
 
 ```{r}
-#| error: true
-rel(NA, 100)      # NA in inputs
-avail(-5, 100)    # negative value
-mttf(5, 0)        # zero total time (division by zero)
+#| eval: false
+install.packages("ReliaPlotR")
+library(ReliaPlotR)
+```
+
+| Function | Description | Chapter |
+|---|---|---|
+| `plotly_wblr(obj)` | Interactive Weibull probability plot | Ch. 7 |
+| `plotly_contour(obj)` | Interactive likelihood ratio contour plot | Ch. 7 |
+| `plotly_duane(obj)` | Interactive Duane reliability growth plot | Ch. 7 |
+| `plotly_rga(obj)` | Interactive Crow-AMSAA plot | Ch. 7 |
+| `plotly_alt(obj)` | Interactive ALT probability plot | Ch. 7 |
+| `plotly_rel(obj)` | Interactive life-stress relationship plot | Ch. 7 |
+| `plotly_nhpp(obj)` | Interactive NHPP intensity (recurrence rate) plot | Ch. 7 |
+| `plotly_mcf(obj)` | Interactive Mean Cumulative Function plot | Ch. 7 |
+| `plotly_exposure(obj)` | Interactive fleet exposure plot | Ch. 7 |
+
+**Example usage:**
+
+```{r}
+#| eval: false
+library(ReliaPlotR)
+library(WeibullR)
+
+da <- wblr(x = c(500, 1200, 900, 1500, 750))
+da <- wblr.fit(da, method.fit = "mle")
+da <- wblr.conf(da, method.conf = "lrb")
+plotly_wblr(da)   # interactive version of plot(da)
+```
+
+---
+
+## ReliaShiny
+
+A point-and-click Shiny web application that wraps all of the above analyses in a browser-based UI — no coding required. Modules cover RAM, Life Data Analysis, Reliability Growth, ALT, Repairable Systems, and RBD.
+
+```{r}
+#| eval: false
+install.packages("ReliaShiny")
+library(ReliaShiny)
+```
+
+| Function | Description | Chapter |
+|---|---|---|
+| `ReliaShiny()` | Launch the ReliaShiny web application in the default browser | Ch. 8 |
+
+**Example usage:**
+
+```{r}
+#| eval: false
+library(ReliaShiny)
+ReliaShiny()
 ```
