@@ -935,14 +935,8 @@ Solution
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pred<span class="sc">$</span>times, pred<span class="sc">$</span>cum_failures, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">lwd =</span> <span class="dv">2</span>,</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Cumulative Time"</span>, <span class="at">ylab =</span> <span class="st">"Cumulative Failures"</span>,</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Crow-AMSAA Forecast (600–1000 hrs)"</span>,</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylim =</span> <span class="fu">range</span>(<span class="fu">c</span>(pred<span class="sc">$</span>lower_bounds, pred<span class="sc">$</span>upper_bounds)))</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(pred<span class="sc">$</span>times, pred<span class="sc">$</span>lower_bounds, <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(pred<span class="sc">$</span>times, pred<span class="sc">$</span>upper_bounds, <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topleft"</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Forecast"</span>, <span class="st">"95% Bounds"</span>),</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pred, <span class="at">main =</span> <span class="st">"Crow-AMSAA Forecast (600–1000 hrs)"</span>,</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Cumulative Time"</span>, <span class="at">ylab =</span> <span class="st">"Cumulative Failures"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1746,37 +1740,31 @@ Govan, Paul. 2024. <em>ReliaGrowR: Reliability Growth Analysis</em>. <a href="ht
 <span id="cb20-298"><a href="#cb20-298" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb20-299"><a href="#cb20-299" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-302"><a href="#cb20-302" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb20-303"><a href="#cb20-303" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pred<span class="sc">$</span>times, pred<span class="sc">$</span>cum_failures, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">lwd =</span> <span class="dv">2</span>,</span>
-<span id="cb20-304"><a href="#cb20-304" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Cumulative Time"</span>, <span class="at">ylab =</span> <span class="st">"Cumulative Failures"</span>,</span>
-<span id="cb20-305"><a href="#cb20-305" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Crow-AMSAA Forecast (600–1000 hrs)"</span>,</span>
-<span id="cb20-306"><a href="#cb20-306" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylim =</span> <span class="fu">range</span>(<span class="fu">c</span>(pred<span class="sc">$</span>lower_bounds, pred<span class="sc">$</span>upper_bounds)))</span>
-<span id="cb20-307"><a href="#cb20-307" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(pred<span class="sc">$</span>times, pred<span class="sc">$</span>lower_bounds, <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb20-308"><a href="#cb20-308" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(pred<span class="sc">$</span>times, pred<span class="sc">$</span>upper_bounds, <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb20-309"><a href="#cb20-309" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topleft"</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Forecast"</span>, <span class="st">"95% Bounds"</span>),</span>
-<span id="cb20-310"><a href="#cb20-310" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">lwd =</span> <span class="dv">2</span>)</span>
-<span id="cb20-311"><a href="#cb20-311" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb20-312"><a href="#cb20-312" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-313"><a href="#cb20-313" aria-hidden="true" tabindex="-1"></a>The confidence band reflects the uncertainty in the Crow-AMSAA parameter estimates. A narrow band indicates the growth trend is well characterized; a wide band suggests more test time is needed.</span>
-<span id="cb20-314"><a href="#cb20-314" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-315"><a href="#cb20-315" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
-<span id="cb20-316"><a href="#cb20-316" aria-hidden="true" tabindex="-1"></a><span class="fu">## Review</span></span>
-<span id="cb20-317"><a href="#cb20-317" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-318"><a href="#cb20-318" aria-hidden="true" tabindex="-1"></a>The fitted model gives $\hat{\beta} &lt; 1$. Is the system still improving at time 1,000?</span>
-<span id="cb20-319"><a href="#cb20-319" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-320"><a href="#cb20-320" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Answer<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
-<span id="cb20-321"><a href="#cb20-321" aria-hidden="true" tabindex="-1"></a>Yes — for the Crow-AMSAA model, $\beta &lt; 1$ means the cumulative failure rate is **decreasing** (the growth curve is concave), so reliability is still improving at time 1,000. Testing should continue until $\beta$ stabilizes near the growth target.</span>
-<span id="cb20-322"><a href="#cb20-322" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
-<span id="cb20-323"><a href="#cb20-323" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb20-324"><a href="#cb20-324" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-325"><a href="#cb20-325" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
-<span id="cb20-326"><a href="#cb20-326" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-327"><a href="#cb20-327" aria-hidden="true" tabindex="-1"></a>**Key takeaways:**</span>
-<span id="cb20-328"><a href="#cb20-328" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-329"><a href="#cb20-329" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Duane model**: log-log of MTBF vs time; positive slope ($\beta &gt; 1$) = improving.</span>
-<span id="cb20-330"><a href="#cb20-330" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Crow-AMSAA**: log of cumulative failures vs time; concave downward = improving ($\beta &lt; 1$).</span>
-<span id="cb20-331"><a href="#cb20-331" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Piecewise NHPP**: fits multiple segments; use when a known change occurs during testing.</span>
-<span id="cb20-332"><a href="#cb20-332" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Forecasting**: <span class="in">`predict_rga()`</span> projects cumulative failures with confidence bounds beyond the current test endpoint.</span>
-<span id="cb20-333"><a href="#cb20-333" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>For accelerated life testing (Arrhenius, Power Law, relationship plots), see @sec-alt.</span>
+<span id="cb20-303"><a href="#cb20-303" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pred, <span class="at">main =</span> <span class="st">"Crow-AMSAA Forecast (600–1000 hrs)"</span>,</span>
+<span id="cb20-304"><a href="#cb20-304" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Cumulative Time"</span>, <span class="at">ylab =</span> <span class="st">"Cumulative Failures"</span>)</span>
+<span id="cb20-305"><a href="#cb20-305" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb20-306"><a href="#cb20-306" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-307"><a href="#cb20-307" aria-hidden="true" tabindex="-1"></a>The confidence band reflects the uncertainty in the Crow-AMSAA parameter estimates. A narrow band indicates the growth trend is well characterized; a wide band suggests more test time is needed.</span>
+<span id="cb20-308"><a href="#cb20-308" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-309"><a href="#cb20-309" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb20-310"><a href="#cb20-310" aria-hidden="true" tabindex="-1"></a><span class="fu">## Review</span></span>
+<span id="cb20-311"><a href="#cb20-311" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-312"><a href="#cb20-312" aria-hidden="true" tabindex="-1"></a>The fitted model gives $\hat{\beta} &lt; 1$. Is the system still improving at time 1,000?</span>
+<span id="cb20-313"><a href="#cb20-313" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-314"><a href="#cb20-314" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Answer<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
+<span id="cb20-315"><a href="#cb20-315" aria-hidden="true" tabindex="-1"></a>Yes — for the Crow-AMSAA model, $\beta &lt; 1$ means the cumulative failure rate is **decreasing** (the growth curve is concave), so reliability is still improving at time 1,000. Testing should continue until $\beta$ stabilizes near the growth target.</span>
+<span id="cb20-316"><a href="#cb20-316" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
+<span id="cb20-317"><a href="#cb20-317" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb20-318"><a href="#cb20-318" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-319"><a href="#cb20-319" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
+<span id="cb20-320"><a href="#cb20-320" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-321"><a href="#cb20-321" aria-hidden="true" tabindex="-1"></a>**Key takeaways:**</span>
+<span id="cb20-322"><a href="#cb20-322" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-323"><a href="#cb20-323" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Duane model**: log-log of MTBF vs time; positive slope ($\beta &gt; 1$) = improving.</span>
+<span id="cb20-324"><a href="#cb20-324" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Crow-AMSAA**: log of cumulative failures vs time; concave downward = improving ($\beta &lt; 1$).</span>
+<span id="cb20-325"><a href="#cb20-325" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Piecewise NHPP**: fits multiple segments; use when a known change occurs during testing.</span>
+<span id="cb20-326"><a href="#cb20-326" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Forecasting**: <span class="in">`predict_rga()`</span> projects cumulative failures with confidence bounds beyond the current test endpoint.</span>
+<span id="cb20-327"><a href="#cb20-327" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>For accelerated life testing (Arrhenius, Power Law, relationship plots), see @sec-alt.</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

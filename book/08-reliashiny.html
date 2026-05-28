@@ -468,12 +468,10 @@ window.Quarto = {
   <li><a href="#app-overview" id="toc-app-overview" class="nav-link" data-scroll-target="#app-overview"><span class="header-section-number">8.3</span> App Overview</a></li>
   <li><a href="#module-walkthroughs" id="toc-module-walkthroughs" class="nav-link" data-scroll-target="#module-walkthroughs"><span class="header-section-number">8.4</span> Module Walkthroughs</a>
   <ul class="collapse">
-  <li><a href="#ram-module" id="toc-ram-module" class="nav-link" data-scroll-target="#ram-module">RAM Module</a></li>
   <li><a href="#life-data-analysis-module" id="toc-life-data-analysis-module" class="nav-link" data-scroll-target="#life-data-analysis-module">Life Data Analysis Module</a></li>
   <li><a href="#reliability-growth-module" id="toc-reliability-growth-module" class="nav-link" data-scroll-target="#reliability-growth-module">Reliability Growth Module</a></li>
   <li><a href="#accelerated-life-testing-module" id="toc-accelerated-life-testing-module" class="nav-link" data-scroll-target="#accelerated-life-testing-module">Accelerated Life Testing Module</a></li>
   <li><a href="#repairable-systems-module" id="toc-repairable-systems-module" class="nav-link" data-scroll-target="#repairable-systems-module">Repairable Systems Module</a></li>
-  <li><a href="#reliability-block-diagrams-module" id="toc-reliability-block-diagrams-module" class="nav-link" data-scroll-target="#reliability-block-diagrams-module">Reliability Block Diagrams Module</a></li>
   </ul></li>
   <li><a href="#data-upload-tips" id="toc-data-upload-tips" class="nav-link" data-scroll-target="#data-upload-tips"><span class="header-section-number">8.5</span> Data Upload Tips</a></li>
   <li><a href="#downloading-results" id="toc-downloading-results" class="nav-link" data-scroll-target="#downloading-results"><span class="header-section-number">8.6</span> Downloading Results</a></li>
@@ -508,7 +506,7 @@ window.Quarto = {
 
 <section id="introduction" class="level2" data-number="8.1">
 <h2 data-number="8.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">8.1</span> Introduction</h2>
-<p>All of the analyses in this book require writing R code. <strong>ReliaShiny</strong> <span class="citation" data-cites="ReliaShiny">(<a href="#ref-ReliaShiny" role="doc-biblioref">Govan 2023</a>)</span> removes that requirement — it is a point-and-click Shiny <span class="citation" data-cites="shiny">(<a href="#ref-shiny" role="doc-biblioref">Chang et al. 2022</a>)</span> web application that exposes the same reliability analysis workflows (RAM, life data analysis, reliability testing, repairable systems, reliability block diagrams) through a graphical interface. No R programming knowledge is needed to run an analysis.</p>
+<p>All of the analyses in this book require writing R code. <strong>ReliaShiny</strong> <span class="citation" data-cites="ReliaShiny">(<a href="#ref-ReliaShiny" role="doc-biblioref">Govan 2023</a>)</span> removes that requirement — it is a point-and-click Shiny <span class="citation" data-cites="shiny">(<a href="#ref-shiny" role="doc-biblioref">Chang et al. 2022</a>)</span> web application that exposes the same reliability analysis workflows (life data analysis, reliability growth, accelerated life testing, repairable systems) through a graphical interface. No R programming knowledge is needed to run an analysis.</p>
 <p>This chapter introduces ReliaShiny, tours its modules, and explains when to reach for it versus a scripted R workflow.</p>
 </section>
 <section id="installation-and-launch" class="level2" data-number="8.2">
@@ -529,7 +527,7 @@ window.Quarto = {
 <p>When ReliaShiny opens, the left sidebar displays the available analysis modules, each corresponding to a chapter in this book:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/Landing.png" class="img-fluid figure-img" alt="ReliaShiny web app with a left sidebar listing modules: RAM, Life Data Analysis, Reliability Growth, Accelerated Life Testing, Repairable Systems, and Reliability Block Diagrams."></p>
+<p><img src="images/Landing.png" class="img-fluid figure-img" alt="ReliaShiny web app with a left sidebar listing modules: Life Data Analysis, Reliability Growth, Accelerated Life Testing, and Repairable Systems."></p>
 <figcaption>ReliaShiny landing page showing the sidebar module list.</figcaption>
 </figure>
 </div>
@@ -548,34 +546,24 @@ window.Quarto = {
 </thead>
 <tbody>
 <tr class="odd">
-<td><strong>RAM</strong></td>
-<td><a href="01-ram.html" class="quarto-xref"><span>Chapter 1</span></a></td>
-<td>Reliability, availability, MTTF, MTBF, failure rate</td>
-</tr>
-<tr class="even">
 <td><strong>Life Data Analysis</strong></td>
 <td><a href="03-lda.html" class="quarto-xref"><span>Chapter 3</span></a></td>
 <td>2-parameter, 3-parameter Weibull, Weibayes; MRR and MLE; right-censored data</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><strong>Reliability Growth</strong></td>
 <td><a href="04-rt.html" class="quarto-xref"><span>Chapter 4</span></a></td>
 <td>Duane and Crow-AMSAA model fitting; piecewise NHPP</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><strong>Accelerated Life Testing</strong></td>
 <td><a href="05-alt.html" class="quarto-xref"><span>Chapter 5</span></a></td>
 <td>Arrhenius and Power Law models; relationship plots</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><strong>Repairable Systems</strong></td>
 <td><a href="06-rs.html" class="quarto-xref"><span>Chapter 6</span></a></td>
 <td>Power Law Process (NHPP); MCF; fleet exposure</td>
-</tr>
-<tr class="even">
-<td><strong>Reliability Block Diagrams</strong></td>
-<td><a href="02-rbd.html" class="quarto-xref"><span>Chapter 2</span></a></td>
-<td>Series, parallel, mixed, and k-out-of-n configurations</td>
 </tr>
 </tbody>
 </table>
@@ -588,18 +576,6 @@ window.Quarto = {
 </section>
 <section id="module-walkthroughs" class="level2" data-number="8.4">
 <h2 data-number="8.4" class="anchored" data-anchor-id="module-walkthroughs"><span class="header-section-number">8.4</span> Module Walkthroughs</h2>
-<section id="ram-module" class="level3">
-<h3 class="anchored" data-anchor-id="ram-module">RAM Module</h3>
-<p>The RAM module computes reliability, availability, MTTR, MTTF, MTBF, and failure rate from summary inputs.</p>
-<p><strong>Workflow:</strong></p>
-<ol type="1">
-<li>Select the <em>RAM</em> tab in the sidebar.</li>
-<li>Enter the total time, failed time, and (for availability) scheduled maintenance time.</li>
-<li>Click <strong>Calculate</strong>.</li>
-<li>The panel displays all five metrics: Reliability, Availability, MTTR, MTTF, MTBF, and Failure Rate.</li>
-</ol>
-<p>This mirrors the <code>rel()</code>, <code>avail()</code>, <code>mttf()</code>, <code>mtbf()</code>, and <code>fr()</code> helper functions from <a href="01-ram.html" class="quarto-xref"><span>Chapter 1</span></a>.</p>
-</section>
 <section id="life-data-analysis-module" class="level3">
 <h3 class="anchored" data-anchor-id="life-data-analysis-module">Life Data Analysis Module</h3>
 <p>The LDA module fits Weibull models and generates probability and contour plots. The app includes a preloaded <strong>Time-to-Failure</strong> dataset so you can explore the workflow immediately without uploading data.</p>
@@ -701,21 +677,6 @@ window.Quarto = {
 <p>The last row for system 2 (<code>event = 0</code>) indicates that system 2 was observed until hour 3,000 without a third failure.</p>
 <p>See the <a href="https://paulgovan.github.io/ReliaShiny/articles/RS.html">Repairable Systems Analysis article</a> for a full walkthrough.</p>
 </section>
-<section id="reliability-block-diagrams-module" class="level3">
-<h3 class="anchored" data-anchor-id="reliability-block-diagrams-module">Reliability Block Diagrams Module</h3>
-<p>The RBD module computes system reliability from component reliabilities for series, parallel, mixed, and k-out-of-n configurations.</p>
-<p><strong>Workflow:</strong></p>
-<ol type="1">
-<li>Select <em>Reliability Block Diagrams</em>.</li>
-<li>Choose the system <strong>topology</strong> from the dropdown: Series, Parallel, Mixed, or k-out-of-n.</li>
-<li>Enter the number of components and their individual reliabilities.</li>
-<li>For Mixed systems, define subsystem groupings.</li>
-<li>For k-out-of-n systems, enter <span class="math inline">\(k\)</span> (minimum required) and <span class="math inline">\(n\)</span> (total).</li>
-<li>Click <strong>Calculate</strong>.</li>
-<li>System reliability and, for exponential components, system MTTF are displayed.</li>
-<li>A block diagram graphic is shown for Series and Parallel configurations.</li>
-</ol>
-</section>
 </section>
 <section id="data-upload-tips" class="level2" data-number="8.5">
 <h2 data-number="8.5" class="anchored" data-anchor-id="data-upload-tips"><span class="header-section-number">8.5</span> Data Upload Tips</h2>
@@ -805,7 +766,7 @@ window.Quarto = {
 </section>
 <section id="summary" class="level2" data-number="8.9">
 <h2 data-number="8.9" class="anchored" data-anchor-id="summary"><span class="header-section-number">8.9</span> Summary</h2>
-<p>ReliaShiny provides a point-and-click interface to the full ReliaLearnR analysis ecosystem — RAM, life data analysis, reliability testing, repairable systems, and reliability block diagrams — with no R coding required. Install it with <code>install.packages("ReliaShiny")</code> and launch it with <code>ReliaShiny()</code>. Use it for rapid exploration, stakeholder demonstrations, and sharing results; switch to scripted R for reproducibility, automation, and custom outputs.</p>
+<p>ReliaShiny provides a point-and-click interface to the ReliaLearnR analysis ecosystem — life data analysis, reliability growth, accelerated life testing, and repairable systems — with no R coding required. Install it with <code>install.packages("ReliaShiny")</code> and launch it with <code>ReliaShiny()</code>. Use it for rapid exploration, stakeholder demonstrations, and sharing results; switch to scripted R for reproducibility, automation, and custom outputs.</p>
 
 
 <!-- -->
@@ -1301,7 +1262,7 @@ Govan, Paul. 2023. <em>ReliaShiny: A ’Shiny’ App for Reliability Analysis</e
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">## Introduction</span></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>All of the analyses in this book require writing R code. **ReliaShiny** <span class="co">[</span><span class="ot">@ReliaShiny</span><span class="co">]</span> removes that requirement — it is a point-and-click Shiny <span class="co">[</span><span class="ot">@shiny</span><span class="co">]</span> web application that exposes the same reliability analysis workflows (RAM, life data analysis, reliability testing, repairable systems, reliability block diagrams) through a graphical interface. No R programming knowledge is needed to run an analysis.</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>All of the analyses in this book require writing R code. **ReliaShiny** <span class="co">[</span><span class="ot">@ReliaShiny</span><span class="co">]</span> removes that requirement — it is a point-and-click Shiny <span class="co">[</span><span class="ot">@shiny</span><span class="co">]</span> web application that exposes the same reliability analysis workflows (life data analysis, reliability growth, accelerated life testing, repairable systems) through a graphical interface. No R programming knowledge is needed to run an analysis.</span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>This chapter introduces ReliaShiny, tours its modules, and explains when to reach for it versus a scripted R workflow.</span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
@@ -1328,200 +1289,169 @@ Govan, Paul. 2023. <em>ReliaShiny: A ’Shiny’ App for Reliability Analysis</e
 <span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>When ReliaShiny opens, the left sidebar displays the available analysis modules, each corresponding to a chapter in this book:</span>
 <span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="al">![ReliaShiny landing page showing the sidebar module list.](images/Landing.png)</span>{fig-alt="ReliaShiny web app with a left sidebar listing modules: RAM, Life Data Analysis, Reliability Growth, Accelerated Life Testing, Repairable Systems, and Reliability Block Diagrams."}</span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="al">![ReliaShiny landing page showing the sidebar module list.](images/Landing.png)</span>{fig-alt="ReliaShiny web app with a left sidebar listing modules: Life Data Analysis, Reliability Growth, Accelerated Life Testing, and Repairable Systems."}</span>
 <span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Module <span class="pp">|</span> Corresponding chapter <span class="pp">|</span> Key capabilities <span class="pp">|</span></span>
 <span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|</span></span>
-<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **RAM** <span class="pp">|</span> @sec-ram <span class="pp">|</span> Reliability, availability, MTTF, MTBF, failure rate <span class="pp">|</span></span>
-<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Life Data Analysis** <span class="pp">|</span> @sec-lda <span class="pp">|</span> 2-parameter, 3-parameter Weibull, Weibayes; MRR and MLE; right-censored data <span class="pp">|</span></span>
-<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Reliability Growth** <span class="pp">|</span> @sec-rt <span class="pp">|</span> Duane and Crow-AMSAA model fitting; piecewise NHPP <span class="pp">|</span></span>
-<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Accelerated Life Testing** <span class="pp">|</span> @sec-alt <span class="pp">|</span> Arrhenius and Power Law models; relationship plots <span class="pp">|</span></span>
-<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Repairable Systems** <span class="pp">|</span> @sec-rs <span class="pp">|</span> Power Law Process (NHPP); MCF; fleet exposure <span class="pp">|</span></span>
-<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Reliability Block Diagrams** <span class="pp">|</span> @sec-rbd <span class="pp">|</span> Series, parallel, mixed, and k-out-of-n configurations <span class="pp">|</span></span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Life Data Analysis** <span class="pp">|</span> @sec-lda <span class="pp">|</span> 2-parameter, 3-parameter Weibull, Weibayes; MRR and MLE; right-censored data <span class="pp">|</span></span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Reliability Growth** <span class="pp">|</span> @sec-rt <span class="pp">|</span> Duane and Crow-AMSAA model fitting; piecewise NHPP <span class="pp">|</span></span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Accelerated Life Testing** <span class="pp">|</span> @sec-alt <span class="pp">|</span> Arrhenius and Power Law models; relationship plots <span class="pp">|</span></span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Repairable Systems** <span class="pp">|</span> @sec-rs <span class="pp">|</span> Power Law Process (NHPP); MCF; fleet exposure <span class="pp">|</span></span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>Each module follows the same three-step workflow:</span>
 <span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>Each module follows the same three-step workflow:</span>
-<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Input** — enter or upload your data using form fields, tables, or file uploads.</span>
-<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Analyze** — click **Run** to fit the model.</span>
-<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Output** — view plots, parameter estimates, and summary statistics; download results.</span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Input** — enter or upload your data using form fields, tables, or file uploads.</span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Analyze** — click **Run** to fit the model.</span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Output** — view plots, parameter estimates, and summary statistics; download results.</span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a><span class="fu">## Module Walkthroughs</span></span>
 <span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a><span class="fu">## Module Walkthroughs</span></span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a><span class="fu">### Life Data Analysis Module</span></span>
 <span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a><span class="fu">### RAM Module</span></span>
+<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a>The LDA module fits Weibull models and generates probability and contour plots. The app includes a preloaded **Time-to-Failure** dataset so you can explore the workflow immediately without uploading data.</span>
 <span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a>The RAM module computes reliability, availability, MTTR, MTTF, MTBF, and failure rate from summary inputs.</span>
+<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a><span class="al">![LDA module showing a fitted Weibull probability plot.](images/ProbPlot.png)</span>{fig-alt="ReliaShiny Life Data Analysis module with a Weibull probability plot in the main panel and parameter estimates in the sidebar."}</span>
 <span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a>**Workflow:**</span>
 <span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Select the *RAM* tab in the sidebar.</span>
-<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Enter the total time, failed time, and (for availability) scheduled maintenance time.</span>
-<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Click **Calculate**.</span>
-<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>The panel displays all five metrics: Reliability, Availability, MTTR, MTTF, MTBF, and Failure Rate.</span>
-<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a>This mirrors the <span class="in">`rel()`</span>, <span class="in">`avail()`</span>, <span class="in">`mttf()`</span>, <span class="in">`mtbf()`</span>, and <span class="in">`fr()`</span> helper functions from @sec-ram.</span>
+<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Select the *Life Data Analysis* tab in the sidebar.</span>
+<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Navigate to the **Data** sub-menu. The preloaded *Time-to-Failure* dataset is already loaded — explore additional options for data arrangement or upload your own CSV with columns <span class="in">`time`</span> and <span class="in">`event`</span> (1 = failure, 0 = suspension).</span>
+<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Navigate to the **Model** sub-menu. Select the distribution (2-parameter Weibull by default) and estimation method (MRR or MLE).</span>
+<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Click **Fit Model**. The **Probability Plot** appears in the main panel, with $\hat{\beta}$, $\hat{\eta}$, and the Anderson-Darling statistic.</span>
+<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>Switch to the **Contour Plot** tab for an interactive likelihood ratio contour showing the joint confidence region for $\hat{\beta}$ and $\hat{\eta}$.</span>
+<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>Click **Download Plot** to save the current chart as a PNG.</span>
 <span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a><span class="fu">### Life Data Analysis Module</span></span>
+<span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a>**CSV format for upload:**</span>
 <span id="cb6-69"><a href="#cb6-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-70"><a href="#cb6-70" aria-hidden="true" tabindex="-1"></a>The LDA module fits Weibull models and generates probability and contour plots. The app includes a preloaded **Time-to-Failure** dataset so you can explore the workflow immediately without uploading data.</span>
-<span id="cb6-71"><a href="#cb6-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-72"><a href="#cb6-72" aria-hidden="true" tabindex="-1"></a><span class="al">![LDA module showing a fitted Weibull probability plot.](images/ProbPlot.png)</span>{fig-alt="ReliaShiny Life Data Analysis module with a Weibull probability plot in the main panel and parameter estimates in the sidebar."}</span>
-<span id="cb6-73"><a href="#cb6-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-74"><a href="#cb6-74" aria-hidden="true" tabindex="-1"></a>**Workflow:**</span>
-<span id="cb6-75"><a href="#cb6-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-76"><a href="#cb6-76" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Select the *Life Data Analysis* tab in the sidebar.</span>
-<span id="cb6-77"><a href="#cb6-77" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Navigate to the **Data** sub-menu. The preloaded *Time-to-Failure* dataset is already loaded — explore additional options for data arrangement or upload your own CSV with columns <span class="in">`time`</span> and <span class="in">`event`</span> (1 = failure, 0 = suspension).</span>
-<span id="cb6-78"><a href="#cb6-78" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Navigate to the **Model** sub-menu. Select the distribution (2-parameter Weibull by default) and estimation method (MRR or MLE).</span>
-<span id="cb6-79"><a href="#cb6-79" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Click **Fit Model**. The **Probability Plot** appears in the main panel, with $\hat{\beta}$, $\hat{\eta}$, and the Anderson-Darling statistic.</span>
-<span id="cb6-80"><a href="#cb6-80" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>Switch to the **Contour Plot** tab for an interactive likelihood ratio contour showing the joint confidence region for $\hat{\beta}$ and $\hat{\eta}$.</span>
-<span id="cb6-81"><a href="#cb6-81" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>Click **Download Plot** to save the current chart as a PNG.</span>
-<span id="cb6-82"><a href="#cb6-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-83"><a href="#cb6-83" aria-hidden="true" tabindex="-1"></a>**CSV format for upload:**</span>
-<span id="cb6-84"><a href="#cb6-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-85"><a href="#cb6-85" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb6-86"><a href="#cb6-86" aria-hidden="true" tabindex="-1"></a><span class="in">time,event</span></span>
-<span id="cb6-87"><a href="#cb6-87" aria-hidden="true" tabindex="-1"></a><span class="in">30,1</span></span>
-<span id="cb6-88"><a href="#cb6-88" aria-hidden="true" tabindex="-1"></a><span class="in">49,1</span></span>
-<span id="cb6-89"><a href="#cb6-89" aria-hidden="true" tabindex="-1"></a><span class="in">82,1</span></span>
-<span id="cb6-90"><a href="#cb6-90" aria-hidden="true" tabindex="-1"></a><span class="in">90,1</span></span>
-<span id="cb6-91"><a href="#cb6-91" aria-hidden="true" tabindex="-1"></a><span class="in">96,1</span></span>
-<span id="cb6-92"><a href="#cb6-92" aria-hidden="true" tabindex="-1"></a><span class="in">100,0</span></span>
-<span id="cb6-93"><a href="#cb6-93" aria-hidden="true" tabindex="-1"></a><span class="in">45,0</span></span>
-<span id="cb6-94"><a href="#cb6-94" aria-hidden="true" tabindex="-1"></a><span class="in">10,0</span></span>
-<span id="cb6-95"><a href="#cb6-95" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb6-96"><a href="#cb6-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-97"><a href="#cb6-97" aria-hidden="true" tabindex="-1"></a>A <span class="in">`0`</span> in the <span class="in">`event`</span> column marks a suspension (right-censored observation).</span>
-<span id="cb6-98"><a href="#cb6-98" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-99"><a href="#cb6-99" aria-hidden="true" tabindex="-1"></a>See the <span class="co">[</span><span class="ot">Life Data Analysis article</span><span class="co">](https://paulgovan.github.io/ReliaShiny/articles/LDA.html)</span> for a full walkthrough.</span>
-<span id="cb6-100"><a href="#cb6-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-101"><a href="#cb6-101" aria-hidden="true" tabindex="-1"></a><span class="fu">### Reliability Growth Module</span></span>
-<span id="cb6-102"><a href="#cb6-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-103"><a href="#cb6-103" aria-hidden="true" tabindex="-1"></a>The Reliability Growth module fits Crow-AMSAA and Duane reliability growth models. The app includes a preloaded **Simple Data** dataset for immediate exploration.</span>
-<span id="cb6-104"><a href="#cb6-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-105"><a href="#cb6-105" aria-hidden="true" tabindex="-1"></a><span class="al">![Reliability Growth module showing a fitted Crow-AMSAA cumulative failures plot.](images/GrowthPlot.png)</span>{fig-alt="ReliaShiny Reliability Growth module displaying a Crow-AMSAA cumulative failures plot with fitted model curve."}</span>
-<span id="cb6-106"><a href="#cb6-106" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-107"><a href="#cb6-107" aria-hidden="true" tabindex="-1"></a>**Workflow:**</span>
-<span id="cb6-108"><a href="#cb6-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-109"><a href="#cb6-109" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Select *Reliability Growth* in the sidebar.</span>
-<span id="cb6-110"><a href="#cb6-110" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Navigate to the **Data** sub-menu. The preloaded *Simple Data* dataset is loaded — designate the **failures** column as the failure indicator, or upload your own data.</span>
-<span id="cb6-111"><a href="#cb6-111" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Navigate to the **Model** sub-menu.</span>
-<span id="cb6-112"><a href="#cb6-112" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Click **Fit**. The **Reliability Growth Plot** (Crow-AMSAA cumulative failures) appears with the fitted curve and $\hat{\beta}$.</span>
-<span id="cb6-113"><a href="#cb6-113" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>Switch to the **Duane Plot** tab to view the log-log cumulative MTBF plot for the same data.</span>
-<span id="cb6-114"><a href="#cb6-114" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-115"><a href="#cb6-115" aria-hidden="true" tabindex="-1"></a>See the <span class="co">[</span><span class="ot">Reliability Growth Analysis article</span><span class="co">](https://paulgovan.github.io/ReliaShiny/articles/RGA.html)</span> for a full walkthrough.</span>
-<span id="cb6-116"><a href="#cb6-116" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-117"><a href="#cb6-117" aria-hidden="true" tabindex="-1"></a><span class="fu">### Accelerated Life Testing Module</span></span>
-<span id="cb6-118"><a href="#cb6-118" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-119"><a href="#cb6-119" aria-hidden="true" tabindex="-1"></a>The ALT module fits Arrhenius and Power Law acceleration models using the <span class="in">`WeibullR.ALT`</span> package (see @sec-alt). The app includes the preloaded **Nelson Data** dataset.</span>
-<span id="cb6-120"><a href="#cb6-120" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-121"><a href="#cb6-121" aria-hidden="true" tabindex="-1"></a><span class="al">![ALT module showing a probability plot and life-stress relationship.](images/ALTPlot.png)</span>{fig-alt="ReliaShiny Accelerated Life Testing module showing an ALT probability plot with stress-level curves and a life-stress relationship plot."}</span>
-<span id="cb6-122"><a href="#cb6-122" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-123"><a href="#cb6-123" aria-hidden="true" tabindex="-1"></a>**Workflow:**</span>
-<span id="cb6-124"><a href="#cb6-124" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-125"><a href="#cb6-125" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Select *Accelerated Life Testing* in the sidebar.</span>
-<span id="cb6-126"><a href="#cb6-126" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Navigate to the **Data** sub-menu. The preloaded *Nelson Data* is already loaded. Map the columns: select the **Stress Level**, **Time to Failure**, and **Event Indicator** columns from the dropdowns.</span>
-<span id="cb6-127"><a href="#cb6-127" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Navigate to the **Model** sub-menu. Choose the acceleration model (**Arrhenius** for temperature, **Power Law** for voltage/mechanical stress) and distribution (Weibull or Lognormal).</span>
-<span id="cb6-128"><a href="#cb6-128" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Click **Fit ALT Model**. The **ALT Probability Plot** appears, with one curve per stress level.</span>
-<span id="cb6-129"><a href="#cb6-129" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>Switch to the **Life-Stress Relationship** tab to view how predicted life varies across the stress range, with percentile lines (P10, P63.2, P90).</span>
-<span id="cb6-130"><a href="#cb6-130" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-131"><a href="#cb6-131" aria-hidden="true" tabindex="-1"></a>See the <span class="co">[</span><span class="ot">Accelerated Life Testing article</span><span class="co">](https://paulgovan.github.io/ReliaShiny/articles/ALT.html)</span> for a full walkthrough.</span>
-<span id="cb6-132"><a href="#cb6-132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-133"><a href="#cb6-133" aria-hidden="true" tabindex="-1"></a><span class="fu">### Repairable Systems Module</span></span>
-<span id="cb6-134"><a href="#cb6-134" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-135"><a href="#cb6-135" aria-hidden="true" tabindex="-1"></a>The Repairable Systems module fits the Power Law Process (Crow-AMSAA) and computes the MCF and exposure for fleet data. The app includes a preloaded **Simple Data Set**.</span>
-<span id="cb6-136"><a href="#cb6-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-137"><a href="#cb6-137" aria-hidden="true" tabindex="-1"></a><span class="al">![Repairable Systems module showing a Mean Cumulative Function plot.](images/RepairablePlot.png)</span>{fig-alt="ReliaShiny Repairable Systems module displaying an MCF cumulative failures curve with confidence bounds for a fleet of systems."}</span>
-<span id="cb6-138"><a href="#cb6-138" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-139"><a href="#cb6-139" aria-hidden="true" tabindex="-1"></a>**Workflow:**</span>
-<span id="cb6-140"><a href="#cb6-140" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-141"><a href="#cb6-141" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Select *Repairable Systems* in the sidebar.</span>
-<span id="cb6-142"><a href="#cb6-142" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Navigate to the **Data** sub-menu. The preloaded *Simple Data Set* is loaded — map the **System ID**, **Event Time**, and **Event Indicator** columns, or upload your own fleet data with columns <span class="in">`id`</span>, <span class="in">`time`</span>, and <span class="in">`event`</span>.</span>
-<span id="cb6-143"><a href="#cb6-143" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Navigate to the **Model** sub-menu.</span>
-<span id="cb6-144"><a href="#cb6-144" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Click **Analyze**. Three plots are produced:</span>
-<span id="cb6-145"><a href="#cb6-145" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>**NHPP Plot** — Crow-AMSAA Power Law fit with cumulative failures curve and $\hat{\beta}$, $\hat{\lambda}$.</span>
-<span id="cb6-146"><a href="#cb6-146" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>**Exposure Plot** — fleet-level event rate as a function of operating time.</span>
-<span id="cb6-147"><a href="#cb6-147" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>**MCF Plot** — non-parametric Mean Cumulative Function with confidence bounds.</span>
-<span id="cb6-148"><a href="#cb6-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-149"><a href="#cb6-149" aria-hidden="true" tabindex="-1"></a>**Example CSV format:**</span>
-<span id="cb6-150"><a href="#cb6-150" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-151"><a href="#cb6-151" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb6-152"><a href="#cb6-152" aria-hidden="true" tabindex="-1"></a><span class="in">id,time,event</span></span>
-<span id="cb6-153"><a href="#cb6-153" aria-hidden="true" tabindex="-1"></a><span class="in">1,310,1</span></span>
-<span id="cb6-154"><a href="#cb6-154" aria-hidden="true" tabindex="-1"></a><span class="in">1,850,1</span></span>
-<span id="cb6-155"><a href="#cb6-155" aria-hidden="true" tabindex="-1"></a><span class="in">1,1620,1</span></span>
-<span id="cb6-156"><a href="#cb6-156" aria-hidden="true" tabindex="-1"></a><span class="in">2,420,1</span></span>
-<span id="cb6-157"><a href="#cb6-157" aria-hidden="true" tabindex="-1"></a><span class="in">2,1050,1</span></span>
-<span id="cb6-158"><a href="#cb6-158" aria-hidden="true" tabindex="-1"></a><span class="in">2,3000,0</span></span>
-<span id="cb6-159"><a href="#cb6-159" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb6-70"><a href="#cb6-70" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb6-71"><a href="#cb6-71" aria-hidden="true" tabindex="-1"></a><span class="in">time,event</span></span>
+<span id="cb6-72"><a href="#cb6-72" aria-hidden="true" tabindex="-1"></a><span class="in">30,1</span></span>
+<span id="cb6-73"><a href="#cb6-73" aria-hidden="true" tabindex="-1"></a><span class="in">49,1</span></span>
+<span id="cb6-74"><a href="#cb6-74" aria-hidden="true" tabindex="-1"></a><span class="in">82,1</span></span>
+<span id="cb6-75"><a href="#cb6-75" aria-hidden="true" tabindex="-1"></a><span class="in">90,1</span></span>
+<span id="cb6-76"><a href="#cb6-76" aria-hidden="true" tabindex="-1"></a><span class="in">96,1</span></span>
+<span id="cb6-77"><a href="#cb6-77" aria-hidden="true" tabindex="-1"></a><span class="in">100,0</span></span>
+<span id="cb6-78"><a href="#cb6-78" aria-hidden="true" tabindex="-1"></a><span class="in">45,0</span></span>
+<span id="cb6-79"><a href="#cb6-79" aria-hidden="true" tabindex="-1"></a><span class="in">10,0</span></span>
+<span id="cb6-80"><a href="#cb6-80" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb6-81"><a href="#cb6-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-82"><a href="#cb6-82" aria-hidden="true" tabindex="-1"></a>A <span class="in">`0`</span> in the <span class="in">`event`</span> column marks a suspension (right-censored observation).</span>
+<span id="cb6-83"><a href="#cb6-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-84"><a href="#cb6-84" aria-hidden="true" tabindex="-1"></a>See the <span class="co">[</span><span class="ot">Life Data Analysis article</span><span class="co">](https://paulgovan.github.io/ReliaShiny/articles/LDA.html)</span> for a full walkthrough.</span>
+<span id="cb6-85"><a href="#cb6-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-86"><a href="#cb6-86" aria-hidden="true" tabindex="-1"></a><span class="fu">### Reliability Growth Module</span></span>
+<span id="cb6-87"><a href="#cb6-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-88"><a href="#cb6-88" aria-hidden="true" tabindex="-1"></a>The Reliability Growth module fits Crow-AMSAA and Duane reliability growth models. The app includes a preloaded **Simple Data** dataset for immediate exploration.</span>
+<span id="cb6-89"><a href="#cb6-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-90"><a href="#cb6-90" aria-hidden="true" tabindex="-1"></a><span class="al">![Reliability Growth module showing a fitted Crow-AMSAA cumulative failures plot.](images/GrowthPlot.png)</span>{fig-alt="ReliaShiny Reliability Growth module displaying a Crow-AMSAA cumulative failures plot with fitted model curve."}</span>
+<span id="cb6-91"><a href="#cb6-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-92"><a href="#cb6-92" aria-hidden="true" tabindex="-1"></a>**Workflow:**</span>
+<span id="cb6-93"><a href="#cb6-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-94"><a href="#cb6-94" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Select *Reliability Growth* in the sidebar.</span>
+<span id="cb6-95"><a href="#cb6-95" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Navigate to the **Data** sub-menu. The preloaded *Simple Data* dataset is loaded — designate the **failures** column as the failure indicator, or upload your own data.</span>
+<span id="cb6-96"><a href="#cb6-96" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Navigate to the **Model** sub-menu.</span>
+<span id="cb6-97"><a href="#cb6-97" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Click **Fit**. The **Reliability Growth Plot** (Crow-AMSAA cumulative failures) appears with the fitted curve and $\hat{\beta}$.</span>
+<span id="cb6-98"><a href="#cb6-98" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>Switch to the **Duane Plot** tab to view the log-log cumulative MTBF plot for the same data.</span>
+<span id="cb6-99"><a href="#cb6-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-100"><a href="#cb6-100" aria-hidden="true" tabindex="-1"></a>See the <span class="co">[</span><span class="ot">Reliability Growth Analysis article</span><span class="co">](https://paulgovan.github.io/ReliaShiny/articles/RGA.html)</span> for a full walkthrough.</span>
+<span id="cb6-101"><a href="#cb6-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-102"><a href="#cb6-102" aria-hidden="true" tabindex="-1"></a><span class="fu">### Accelerated Life Testing Module</span></span>
+<span id="cb6-103"><a href="#cb6-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-104"><a href="#cb6-104" aria-hidden="true" tabindex="-1"></a>The ALT module fits Arrhenius and Power Law acceleration models using the <span class="in">`WeibullR.ALT`</span> package (see @sec-alt). The app includes the preloaded **Nelson Data** dataset.</span>
+<span id="cb6-105"><a href="#cb6-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-106"><a href="#cb6-106" aria-hidden="true" tabindex="-1"></a><span class="al">![ALT module showing a probability plot and life-stress relationship.](images/ALTPlot.png)</span>{fig-alt="ReliaShiny Accelerated Life Testing module showing an ALT probability plot with stress-level curves and a life-stress relationship plot."}</span>
+<span id="cb6-107"><a href="#cb6-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-108"><a href="#cb6-108" aria-hidden="true" tabindex="-1"></a>**Workflow:**</span>
+<span id="cb6-109"><a href="#cb6-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-110"><a href="#cb6-110" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Select *Accelerated Life Testing* in the sidebar.</span>
+<span id="cb6-111"><a href="#cb6-111" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Navigate to the **Data** sub-menu. The preloaded *Nelson Data* is already loaded. Map the columns: select the **Stress Level**, **Time to Failure**, and **Event Indicator** columns from the dropdowns.</span>
+<span id="cb6-112"><a href="#cb6-112" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Navigate to the **Model** sub-menu. Choose the acceleration model (**Arrhenius** for temperature, **Power Law** for voltage/mechanical stress) and distribution (Weibull or Lognormal).</span>
+<span id="cb6-113"><a href="#cb6-113" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Click **Fit ALT Model**. The **ALT Probability Plot** appears, with one curve per stress level.</span>
+<span id="cb6-114"><a href="#cb6-114" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>Switch to the **Life-Stress Relationship** tab to view how predicted life varies across the stress range, with percentile lines (P10, P63.2, P90).</span>
+<span id="cb6-115"><a href="#cb6-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-116"><a href="#cb6-116" aria-hidden="true" tabindex="-1"></a>See the <span class="co">[</span><span class="ot">Accelerated Life Testing article</span><span class="co">](https://paulgovan.github.io/ReliaShiny/articles/ALT.html)</span> for a full walkthrough.</span>
+<span id="cb6-117"><a href="#cb6-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-118"><a href="#cb6-118" aria-hidden="true" tabindex="-1"></a><span class="fu">### Repairable Systems Module</span></span>
+<span id="cb6-119"><a href="#cb6-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-120"><a href="#cb6-120" aria-hidden="true" tabindex="-1"></a>The Repairable Systems module fits the Power Law Process (Crow-AMSAA) and computes the MCF and exposure for fleet data. The app includes a preloaded **Simple Data Set**.</span>
+<span id="cb6-121"><a href="#cb6-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-122"><a href="#cb6-122" aria-hidden="true" tabindex="-1"></a><span class="al">![Repairable Systems module showing a Mean Cumulative Function plot.](images/RepairablePlot.png)</span>{fig-alt="ReliaShiny Repairable Systems module displaying an MCF cumulative failures curve with confidence bounds for a fleet of systems."}</span>
+<span id="cb6-123"><a href="#cb6-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-124"><a href="#cb6-124" aria-hidden="true" tabindex="-1"></a>**Workflow:**</span>
+<span id="cb6-125"><a href="#cb6-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-126"><a href="#cb6-126" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Select *Repairable Systems* in the sidebar.</span>
+<span id="cb6-127"><a href="#cb6-127" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Navigate to the **Data** sub-menu. The preloaded *Simple Data Set* is loaded — map the **System ID**, **Event Time**, and **Event Indicator** columns, or upload your own fleet data with columns <span class="in">`id`</span>, <span class="in">`time`</span>, and <span class="in">`event`</span>.</span>
+<span id="cb6-128"><a href="#cb6-128" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Navigate to the **Model** sub-menu.</span>
+<span id="cb6-129"><a href="#cb6-129" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Click **Analyze**. Three plots are produced:</span>
+<span id="cb6-130"><a href="#cb6-130" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>**NHPP Plot** — Crow-AMSAA Power Law fit with cumulative failures curve and $\hat{\beta}$, $\hat{\lambda}$.</span>
+<span id="cb6-131"><a href="#cb6-131" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>**Exposure Plot** — fleet-level event rate as a function of operating time.</span>
+<span id="cb6-132"><a href="#cb6-132" aria-hidden="true" tabindex="-1"></a><span class="ss">   - </span>**MCF Plot** — non-parametric Mean Cumulative Function with confidence bounds.</span>
+<span id="cb6-133"><a href="#cb6-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-134"><a href="#cb6-134" aria-hidden="true" tabindex="-1"></a>**Example CSV format:**</span>
+<span id="cb6-135"><a href="#cb6-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-136"><a href="#cb6-136" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb6-137"><a href="#cb6-137" aria-hidden="true" tabindex="-1"></a><span class="in">id,time,event</span></span>
+<span id="cb6-138"><a href="#cb6-138" aria-hidden="true" tabindex="-1"></a><span class="in">1,310,1</span></span>
+<span id="cb6-139"><a href="#cb6-139" aria-hidden="true" tabindex="-1"></a><span class="in">1,850,1</span></span>
+<span id="cb6-140"><a href="#cb6-140" aria-hidden="true" tabindex="-1"></a><span class="in">1,1620,1</span></span>
+<span id="cb6-141"><a href="#cb6-141" aria-hidden="true" tabindex="-1"></a><span class="in">2,420,1</span></span>
+<span id="cb6-142"><a href="#cb6-142" aria-hidden="true" tabindex="-1"></a><span class="in">2,1050,1</span></span>
+<span id="cb6-143"><a href="#cb6-143" aria-hidden="true" tabindex="-1"></a><span class="in">2,3000,0</span></span>
+<span id="cb6-144"><a href="#cb6-144" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb6-145"><a href="#cb6-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-146"><a href="#cb6-146" aria-hidden="true" tabindex="-1"></a>The last row for system 2 (<span class="in">`event = 0`</span>) indicates that system 2 was observed until hour 3,000 without a third failure.</span>
+<span id="cb6-147"><a href="#cb6-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-148"><a href="#cb6-148" aria-hidden="true" tabindex="-1"></a>See the <span class="co">[</span><span class="ot">Repairable Systems Analysis article</span><span class="co">](https://paulgovan.github.io/ReliaShiny/articles/RS.html)</span> for a full walkthrough.</span>
+<span id="cb6-149"><a href="#cb6-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-150"><a href="#cb6-150" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data Upload Tips</span></span>
+<span id="cb6-151"><a href="#cb6-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-152"><a href="#cb6-152" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**CSV files**: core column names (`time`, `event`, `id`, `qty`) are case-sensitive and must be **lowercase**. Stress column names (e.g., <span class="in">`TempC`</span>, <span class="in">`Voltage`</span>) may use any valid R name — they are selected in the app's dropdown.</span>
+<span id="cb6-153"><a href="#cb6-153" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Missing values**: rows with <span class="in">`NA`</span> in the <span class="in">`time`</span> column are automatically excluded.</span>
+<span id="cb6-154"><a href="#cb6-154" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Large datasets**: the app handles datasets up to ~10,000 rows without performance issues.</span>
+<span id="cb6-155"><a href="#cb6-155" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Units**: ReliaShiny is unit-agnostic — use hours, years, cycles, or any consistent unit. Label your outputs accordingly.</span>
+<span id="cb6-156"><a href="#cb6-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-157"><a href="#cb6-157" aria-hidden="true" tabindex="-1"></a><span class="fu">## Downloading Results</span></span>
+<span id="cb6-158"><a href="#cb6-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-159"><a href="#cb6-159" aria-hidden="true" tabindex="-1"></a>Every module provides download buttons for:</span>
 <span id="cb6-160"><a href="#cb6-160" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-161"><a href="#cb6-161" aria-hidden="true" tabindex="-1"></a>The last row for system 2 (<span class="in">`event = 0`</span>) indicates that system 2 was observed until hour 3,000 without a third failure.</span>
-<span id="cb6-162"><a href="#cb6-162" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-163"><a href="#cb6-163" aria-hidden="true" tabindex="-1"></a>See the <span class="co">[</span><span class="ot">Repairable Systems Analysis article</span><span class="co">](https://paulgovan.github.io/ReliaShiny/articles/RS.html)</span> for a full walkthrough.</span>
+<span id="cb6-161"><a href="#cb6-161" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Plot PNG** — the current chart at screen resolution.</span>
+<span id="cb6-162"><a href="#cb6-162" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Results CSV** — parameter estimates and summary statistics in tabular form.</span>
+<span id="cb6-163"><a href="#cb6-163" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Report HTML** — a self-contained report combining the inputs, plot, and results (available in LDA and RT modules).</span>
 <span id="cb6-164"><a href="#cb6-164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-165"><a href="#cb6-165" aria-hidden="true" tabindex="-1"></a><span class="fu">### Reliability Block Diagrams Module</span></span>
+<span id="cb6-165"><a href="#cb6-165" aria-hidden="true" tabindex="-1"></a><span class="fu">## When to Use ReliaShiny vs Scripted R</span></span>
 <span id="cb6-166"><a href="#cb6-166" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-167"><a href="#cb6-167" aria-hidden="true" tabindex="-1"></a>The RBD module computes system reliability from component reliabilities for series, parallel, mixed, and k-out-of-n configurations.</span>
-<span id="cb6-168"><a href="#cb6-168" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-169"><a href="#cb6-169" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-170"><a href="#cb6-170" aria-hidden="true" tabindex="-1"></a>**Workflow:**</span>
-<span id="cb6-171"><a href="#cb6-171" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-172"><a href="#cb6-172" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Select *Reliability Block Diagrams*.</span>
-<span id="cb6-173"><a href="#cb6-173" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Choose the system **topology** from the dropdown: Series, Parallel, Mixed, or k-out-of-n.</span>
-<span id="cb6-174"><a href="#cb6-174" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Enter the number of components and their individual reliabilities.</span>
-<span id="cb6-175"><a href="#cb6-175" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>For Mixed systems, define subsystem groupings.</span>
-<span id="cb6-176"><a href="#cb6-176" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>For k-out-of-n systems, enter $k$ (minimum required) and $n$ (total).</span>
-<span id="cb6-177"><a href="#cb6-177" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>Click **Calculate**.</span>
-<span id="cb6-178"><a href="#cb6-178" aria-hidden="true" tabindex="-1"></a><span class="ss">7. </span>System reliability and, for exponential components, system MTTF are displayed.</span>
-<span id="cb6-179"><a href="#cb6-179" aria-hidden="true" tabindex="-1"></a><span class="ss">8. </span>A block diagram graphic is shown for Series and Parallel configurations.</span>
-<span id="cb6-180"><a href="#cb6-180" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-181"><a href="#cb6-181" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data Upload Tips</span></span>
-<span id="cb6-182"><a href="#cb6-182" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-183"><a href="#cb6-183" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**CSV files**: core column names (`time`, `event`, `id`, `qty`) are case-sensitive and must be **lowercase**. Stress column names (e.g., <span class="in">`TempC`</span>, <span class="in">`Voltage`</span>) may use any valid R name — they are selected in the app's dropdown.</span>
-<span id="cb6-184"><a href="#cb6-184" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Missing values**: rows with <span class="in">`NA`</span> in the <span class="in">`time`</span> column are automatically excluded.</span>
-<span id="cb6-185"><a href="#cb6-185" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Large datasets**: the app handles datasets up to ~10,000 rows without performance issues.</span>
-<span id="cb6-186"><a href="#cb6-186" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Units**: ReliaShiny is unit-agnostic — use hours, years, cycles, or any consistent unit. Label your outputs accordingly.</span>
-<span id="cb6-187"><a href="#cb6-187" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-188"><a href="#cb6-188" aria-hidden="true" tabindex="-1"></a><span class="fu">## Downloading Results</span></span>
-<span id="cb6-189"><a href="#cb6-189" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-190"><a href="#cb6-190" aria-hidden="true" tabindex="-1"></a>Every module provides download buttons for:</span>
-<span id="cb6-191"><a href="#cb6-191" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-192"><a href="#cb6-192" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Plot PNG** — the current chart at screen resolution.</span>
-<span id="cb6-193"><a href="#cb6-193" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Results CSV** — parameter estimates and summary statistics in tabular form.</span>
-<span id="cb6-194"><a href="#cb6-194" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Report HTML** — a self-contained report combining the inputs, plot, and results (available in LDA and RT modules).</span>
-<span id="cb6-195"><a href="#cb6-195" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-196"><a href="#cb6-196" aria-hidden="true" tabindex="-1"></a><span class="fu">## When to Use ReliaShiny vs Scripted R</span></span>
+<span id="cb6-167"><a href="#cb6-167" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Situation <span class="pp">|</span> ReliaShiny <span class="pp">|</span> Scripted R <span class="pp">|</span></span>
+<span id="cb6-168"><a href="#cb6-168" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|:---:|:---:|</span></span>
+<span id="cb6-169"><a href="#cb6-169" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Quick one-off analysis <span class="pp">|</span> ✅ <span class="pp">|</span> <span class="pp">|</span></span>
+<span id="cb6-170"><a href="#cb6-170" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Teaching / demonstration <span class="pp">|</span> ✅ <span class="pp">|</span> <span class="pp">|</span></span>
+<span id="cb6-171"><a href="#cb6-171" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Sharing with non-R users <span class="pp">|</span> ✅ <span class="pp">|</span> <span class="pp">|</span></span>
+<span id="cb6-172"><a href="#cb6-172" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Automating repeated analyses <span class="pp">|</span> <span class="pp">|</span> ✅ <span class="pp">|</span></span>
+<span id="cb6-173"><a href="#cb6-173" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Custom plots and formatting <span class="pp">|</span> <span class="pp">|</span> ✅ <span class="pp">|</span></span>
+<span id="cb6-174"><a href="#cb6-174" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Reproducible research / version control <span class="pp">|</span> <span class="pp">|</span> ✅ <span class="pp">|</span></span>
+<span id="cb6-175"><a href="#cb6-175" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Embedding results in a Quarto book <span class="pp">|</span> <span class="pp">|</span> ✅ <span class="pp">|</span></span>
+<span id="cb6-176"><a href="#cb6-176" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Large batch processing <span class="pp">|</span> <span class="pp">|</span> ✅ <span class="pp">|</span></span>
+<span id="cb6-177"><a href="#cb6-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-178"><a href="#cb6-178" aria-hidden="true" tabindex="-1"></a>ReliaShiny excels at rapid exploration, prototyping, and sharing results with stakeholders who do not use R. For production workflows, automated pipelines, and fully reproducible analyses, scripted R with the underlying packages (WeibullR, ReliaGrowR, WeibullR.ALT) gives more control.</span>
+<span id="cb6-179"><a href="#cb6-179" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-180"><a href="#cb6-180" aria-hidden="true" tabindex="-1"></a><span class="fu">## Getting Help</span></span>
+<span id="cb6-181"><a href="#cb6-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-182"><a href="#cb6-182" aria-hidden="true" tabindex="-1"></a>Within the app, click the **?** icon on any panel for a tooltip explaining the inputs and outputs for that module.</span>
+<span id="cb6-183"><a href="#cb6-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-184"><a href="#cb6-184" aria-hidden="true" tabindex="-1"></a>From R:</span>
+<span id="cb6-185"><a href="#cb6-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-188"><a href="#cb6-188" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb6-189"><a href="#cb6-189" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb6-190"><a href="#cb6-190" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(<span class="at">package =</span> <span class="st">"ReliaShiny"</span>)</span>
+<span id="cb6-191"><a href="#cb6-191" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb6-192"><a href="#cb6-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-193"><a href="#cb6-193" aria-hidden="true" tabindex="-1"></a>Additional resources:</span>
+<span id="cb6-194"><a href="#cb6-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-195"><a href="#cb6-195" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>CRAN page: <span class="ot">&lt;https://CRAN.R-project.org/package=ReliaShiny&gt;</span></span>
+<span id="cb6-196"><a href="#cb6-196" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Articles and walkthroughs: <span class="ot">&lt;https://paulgovan.github.io/ReliaShiny/&gt;</span></span>
 <span id="cb6-197"><a href="#cb6-197" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-198"><a href="#cb6-198" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Situation <span class="pp">|</span> ReliaShiny <span class="pp">|</span> Scripted R <span class="pp">|</span></span>
-<span id="cb6-199"><a href="#cb6-199" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|:---:|:---:|</span></span>
-<span id="cb6-200"><a href="#cb6-200" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Quick one-off analysis <span class="pp">|</span> ✅ <span class="pp">|</span> <span class="pp">|</span></span>
-<span id="cb6-201"><a href="#cb6-201" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Teaching / demonstration <span class="pp">|</span> ✅ <span class="pp">|</span> <span class="pp">|</span></span>
-<span id="cb6-202"><a href="#cb6-202" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Sharing with non-R users <span class="pp">|</span> ✅ <span class="pp">|</span> <span class="pp">|</span></span>
-<span id="cb6-203"><a href="#cb6-203" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Automating repeated analyses <span class="pp">|</span> <span class="pp">|</span> ✅ <span class="pp">|</span></span>
-<span id="cb6-204"><a href="#cb6-204" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Custom plots and formatting <span class="pp">|</span> <span class="pp">|</span> ✅ <span class="pp">|</span></span>
-<span id="cb6-205"><a href="#cb6-205" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Reproducible research / version control <span class="pp">|</span> <span class="pp">|</span> ✅ <span class="pp">|</span></span>
-<span id="cb6-206"><a href="#cb6-206" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Embedding results in a Quarto book <span class="pp">|</span> <span class="pp">|</span> ✅ <span class="pp">|</span></span>
-<span id="cb6-207"><a href="#cb6-207" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Large batch processing <span class="pp">|</span> <span class="pp">|</span> ✅ <span class="pp">|</span></span>
-<span id="cb6-208"><a href="#cb6-208" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-209"><a href="#cb6-209" aria-hidden="true" tabindex="-1"></a>ReliaShiny excels at rapid exploration, prototyping, and sharing results with stakeholders who do not use R. For production workflows, automated pipelines, and fully reproducible analyses, scripted R with the underlying packages (WeibullR, ReliaGrowR, WeibullR.ALT) gives more control.</span>
-<span id="cb6-210"><a href="#cb6-210" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-211"><a href="#cb6-211" aria-hidden="true" tabindex="-1"></a><span class="fu">## Getting Help</span></span>
-<span id="cb6-212"><a href="#cb6-212" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-213"><a href="#cb6-213" aria-hidden="true" tabindex="-1"></a>Within the app, click the **?** icon on any panel for a tooltip explaining the inputs and outputs for that module.</span>
-<span id="cb6-214"><a href="#cb6-214" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-215"><a href="#cb6-215" aria-hidden="true" tabindex="-1"></a>From R:</span>
-<span id="cb6-216"><a href="#cb6-216" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-219"><a href="#cb6-219" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb6-220"><a href="#cb6-220" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb6-221"><a href="#cb6-221" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(<span class="at">package =</span> <span class="st">"ReliaShiny"</span>)</span>
-<span id="cb6-222"><a href="#cb6-222" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb6-223"><a href="#cb6-223" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-224"><a href="#cb6-224" aria-hidden="true" tabindex="-1"></a>Additional resources:</span>
-<span id="cb6-225"><a href="#cb6-225" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-226"><a href="#cb6-226" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>CRAN page: <span class="ot">&lt;https://CRAN.R-project.org/package=ReliaShiny&gt;</span></span>
-<span id="cb6-227"><a href="#cb6-227" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Articles and walkthroughs: <span class="ot">&lt;https://paulgovan.github.io/ReliaShiny/&gt;</span></span>
-<span id="cb6-228"><a href="#cb6-228" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-229"><a href="#cb6-229" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
-<span id="cb6-230"><a href="#cb6-230" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-231"><a href="#cb6-231" aria-hidden="true" tabindex="-1"></a>ReliaShiny provides a point-and-click interface to the full ReliaLearnR analysis ecosystem — RAM, life data analysis, reliability testing, repairable systems, and reliability block diagrams — with no R coding required. Install it with <span class="in">`install.packages("ReliaShiny")`</span> and launch it with <span class="in">`ReliaShiny()`</span>. Use it for rapid exploration, stakeholder demonstrations, and sharing results; switch to scripted R for reproducibility, automation, and custom outputs.</span>
+<span id="cb6-198"><a href="#cb6-198" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
+<span id="cb6-199"><a href="#cb6-199" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-200"><a href="#cb6-200" aria-hidden="true" tabindex="-1"></a>ReliaShiny provides a point-and-click interface to the ReliaLearnR analysis ecosystem — life data analysis, reliability growth, accelerated life testing, and repairable systems — with no R coding required. Install it with <span class="in">`install.packages("ReliaShiny")`</span> and launch it with <span class="in">`ReliaShiny()`</span>. Use it for rapid exploration, stakeholder demonstrations, and sharing results; switch to scripted R for reproducibility, automation, and custom outputs.</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
