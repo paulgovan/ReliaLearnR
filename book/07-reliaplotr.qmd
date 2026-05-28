@@ -1,3 +1,7 @@
+---
+prefer-html: true
+---
+
 # Interactive Plots with ReliaPlotR {#sec-reliaplotr}
 
 ## Introduction
