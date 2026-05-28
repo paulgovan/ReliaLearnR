@@ -53,6 +53,7 @@ format:
   epub:
     cover-image: cover.png
     toc: true
+    prefer-html: true
 
 execute:
   echo: true
