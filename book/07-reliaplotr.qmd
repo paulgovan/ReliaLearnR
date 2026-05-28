@@ -167,7 +167,7 @@ set220 <- alt.data(t41$C220f, s = t41$C220s, stress = 220)
 
 arrobj <- alt.make(list(set170, set190, set220),
                    dist = "lognormal", alt.model = "arrhenius",
-                   method.fit = "mle", view_dist_fits = FALSE)
+                   method.fit = "mle")
 prlobj <- alt.parallel(arrobj)
 
 plotly_alt(prlobj,
@@ -182,7 +182,7 @@ Each color represents a different temperature level. Hover to inspect unreliabil
 
 ```{r}
 #| label: fig-rel
-#| fig-cap: "Interactive life-stress relationship plot"
+#| fig-cap: "Interactive life-stress relationship plot (Arrhenius-Lognormal)"
 lnrobj <- alt.fit(prlobj)
 plotly_rel(lnrobj,
            main = "Life-Stress Relationship: Arrhenius Model",
@@ -192,23 +192,64 @@ plotly_rel(lnrobj,
 
 Each line represents a percentile of the failure distribution (P10, P63.2, P90, etc.). Hover over any point to read the expected life at that stress level and percentile.
 
-## Repairable Systems Plots
+### Power Law–Weibull ALT Plots
 
-These functions accept the fitted objects from `ReliaGrowR` — the same objects produced in @sec-rs.
-
-### NHPP Plot — `plotly_nhpp()`
+The Power Law model applies to non-thermal stress (voltage, load, pressure). Here, electrical insulating fluids are tested at seven voltage levels (Nelson Table 3.1 — see @sec-alt):
 
 ```{r}
-#| label: fig-nhpp
-#| fig-cap: "Interactive Crow-AMSAA NHPP plot: industrial pump fleet"
-times_pump    <- c(500, 1200, 2100, 3300, 4800, 6500, 8400, 10500, 12800, 15000)
-failures_pump <- c(3, 4, 4, 5, 4, 3, 3, 3, 2, 2)
+#| label: fig-alt-weibull
+#| fig-cap: "Interactive Power Law–Weibull ALT probability plot (electrical insulating fluids)"
+data_nelson <- NelsonData("table3.1")
+data26 <- alt.data(data_nelson$kV26, stress = 26)
+data28 <- alt.data(data_nelson$kV28, stress = 28)
+data30 <- alt.data(data_nelson$kV30, stress = 30)
+data32 <- alt.data(data_nelson$kV32, stress = 32)
+data34 <- alt.data(data_nelson$kV34, stress = 34)
+data36 <- alt.data(data_nelson$kV36, stress = 36)
+data38 <- alt.data(data_nelson$kV38, stress = 38)
 
-fit_nhpp <- nhpp(time = times_pump, event = failures_pump)
-plotly_nhpp(fit_nhpp,
-            main = "Crow-AMSAA: Industrial Pump Fleet",
-            xlab = "Cumulative Operating Hours",
-            ylab = "Cumulative Failures")
+pwrobj <- alt.make(list(data26, data28, data30, data32, data34, data36, data38),
+                   dist = "weibull", alt.model = "power")
+expobj <- alt.parallel(pwrobj)
+
+plotly_alt(expobj,
+           main = "Power Law–Weibull ALT Probability Plot",
+           xlab = "Time to Failure",
+           ylab = "Probability of Failure")
+```
+
+```{r}
+#| label: fig-rel-weibull
+#| fig-cap: "Interactive life-stress relationship plot (Power Law–Weibull)"
+pwrrobj <- alt.fit(expobj)
+plotly_rel(pwrrobj,
+           main = "Life-Stress Relationship: Power Law Model",
+           xlab = "Voltage (kV)",
+           ylab = "Time to Failure")
+```
+
+## Repairable Systems Plots
+
+These functions accept the fitted objects from `ReliaGrowR` — the same objects produced in @sec-rs. The section introduces the `pump_data` fleet dataset first via the non-parametric tools, then uses the same data for the parametric NHPP fit.
+
+### Exposure Plot — `plotly_exposure()`
+
+```{r}
+#| label: fig-exposure
+#| fig-cap: "Interactive exposure plot showing fleet-level event rate"
+pump_data <- data.frame(
+  id    = c(1, 1, 1,  2, 2, 2,  3, 3,  4, 4, 4, 4,  5, 5),
+  time  = c(310, 850, 1620,  420, 1050, 2100,  580, 1890,
+            240, 710, 1380, 2400,  530, 1740),
+  event = rep(1, 14)
+)
+
+exp_result <- exposure(id = pump_data$id, time = pump_data$time,
+                       event = pump_data$event)
+plotly_exposure(exp_result,
+                main = "Fleet Exposure Plot",
+                xlab = "Operating Hours",
+                ylab = "Event Rate (failures / hour)")
 ```
 
 ### MCF Plot — `plotly_mcf()`
@@ -216,12 +257,6 @@ plotly_nhpp(fit_nhpp,
 ```{r}
 #| label: fig-mcf
 #| fig-cap: "Interactive Mean Cumulative Function plot with confidence bounds"
-pump_data <- data.frame(
-  id    = c(1, 1, 1,  2, 2, 2,  3, 3,  4, 4, 4, 4,  5, 5),
-  time  = c(310, 850, 1620,  420, 1050, 2100,  580, 1890,
-            240, 710, 1380, 2400,  530, 1740),
-  event = rep(1, 14)
-)
 end_times  <- c("1" = 3000, "2" = 3000, "3" = 3000, "4" = 3000, "5" = 3000)
 
 mcf_result <- mcf(id = pump_data$id, time = pump_data$time,
@@ -232,17 +267,20 @@ plotly_mcf(mcf_result,
            ylab = "Expected Cumulative Failures per System")
 ```
 
-### Exposure Plot — `plotly_exposure()`
+### NHPP Plot — `plotly_nhpp()`
+
+The parametric Crow-AMSAA fit uses the same `pump_data` fleet — individual failure times are extracted and sorted across all systems:
 
 ```{r}
-#| label: fig-exposure
-#| fig-cap: "Interactive exposure plot showing fleet-level event rate"
-exp_result <- exposure(id = pump_data$id, time = pump_data$time,
-                       event = pump_data$event)
-plotly_exposure(exp_result,
-                main = "Fleet Exposure Plot",
-                xlab = "Operating Hours",
-                ylab = "Event Rate (failures / hour)")
+#| label: fig-nhpp
+#| fig-cap: "Interactive Crow-AMSAA NHPP plot: industrial pump fleet"
+failure_times <- sort(pump_data$time[pump_data$event == 1])
+
+fit_nhpp <- nhpp(time = failure_times, event = rep(1, length(failure_times)))
+plotly_nhpp(fit_nhpp,
+            main = "Crow-AMSAA: Industrial Pump Fleet",
+            xlab = "Operating Hours",
+            ylab = "Cumulative Failures")
 ```
 
 ## Embedding in Reports and Dashboards

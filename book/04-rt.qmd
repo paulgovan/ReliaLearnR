@@ -11,9 +11,10 @@ By the end of this chapter, you will be able to:
 - Define key reliability growth concepts: Crow-AMSAA and Duane models.
 - Use `rdt()` to plan a reliability demonstration test (required test time and sample size).
 - Fit reliability growth models using R.
-- Apply the Crow-AMSAA model to assess reliability growth.
+- Apply the Duane model to assess reliability growth on a log-log plot.
+- Apply the Crow-AMSAA model and interpret its shape parameter $\beta$.
 - Use piecewise NHPP models to detect design changes during testing.
-- Forecast future failures from a fitted growth model using `predict_rga()`.
+- Forecast future failures from a fitted growth model using `predict_rga()` and visualize the result.
 - Interpret reliability growth plots and make decisions from the results.
 
 ## Reliability Growth Analysis
@@ -41,8 +42,7 @@ plan <- rdt(
   mission_time = 1000,   # mission time (hours)
   conf_level   = 0.80,   # confidence level
   beta         = 2,      # assumed Weibull shape parameter
-  n            = 10,     # number of test units
-  f            = 0       # allowable failures
+  n            = 10      # number of test units
 )
 print(plan)
 ```
@@ -58,7 +58,7 @@ Compare the required test time for sample sizes of 5, 10, and 20 units (keep all
 # Vary n to see the effect on required test time
 for (n in c(5, 10, 20)) {
   # plan <- rdt(target = 0.90, mission_time = 1000, conf_level = 0.80,
-  #             beta = 2, n = n, f = 0)
+  #             beta = 2, n = n)
   # print(plan)
 }
 ```
@@ -67,37 +67,12 @@ for (n in c(5, 10, 20)) {
 ```{r}
 for (n in c(5, 10, 20)) {
   plan <- rdt(target = 0.90, mission_time = 1000, conf_level = 0.80,
-              beta = 2, n = n, f = 0)
+              beta = 2, n = n)
   print(plan)
 }
 ```
 
 More test units means shorter required test time per unit — but total test effort (n × T) stays roughly constant. Larger fleets reduce calendar time at the cost of more physical units.
-</details>
-:::
-
-### Forecasting Growth — `predict_rga()`
-
-Once a growth test is underway, `predict_rga()` projects cumulative failures beyond the current endpoint — useful for deciding whether to continue testing or whether a reliability target will be met by a program deadline.
-
-```{r}
-times    <- c(100, 200, 300, 400, 500)
-failures <- c(1, 2, 1, 3, 2)
-
-fit  <- rga(times, failures)
-pred <- predict_rga(fit, times = seq(500, 1000, by = 100))
-print(pred)
-```
-
-The lower and upper bounds reflect the uncertainty in the Crow-AMSAA parameter estimates. A narrow interval indicates the growth trend is well characterized; a wide interval suggests more test time is needed.
-
-::: {.callout-tip}
-## Review
-
-The fitted model (using the Crow-AMSAA framework, described fully below) gives $\hat{\beta} = 0.72$. Is the system still improving at time 1,000?
-
-<details><summary>Answer</summary>
-Yes — for the Crow-AMSAA model, $\beta < 1$ means the cumulative failure rate is **decreasing** (the growth curve is concave), so reliability is still improving at time 1,000. Testing should continue until $\beta$ stabilizes near the growth target.
 </details>
 :::
 
@@ -279,6 +254,42 @@ plot(result_auto, main = "Piecewise NHPP with Change Point Detection",
 
 The automatically detected change point is near time 500, consistent with the known design change.
 
+## Forecasting Growth — `predict_rga()`
+
+Once a growth test is underway, `predict_rga()` projects cumulative failures beyond the current endpoint — useful for deciding whether to continue testing or whether a reliability target will be met by a program deadline.
+
+```{r}
+times    <- c(100, 200, 300, 400, 500)
+failures <- c(1, 2, 1, 3, 2)
+
+fit  <- rga(times, failures)
+pred <- predict_rga(fit, times = seq(600, 1000, by = 100))
+print(pred)
+```
+
+```{r}
+plot(pred$times, pred$cum_failures, type = "l", col = "blue", lwd = 2,
+     xlab = "Cumulative Time", ylab = "Cumulative Failures",
+     main = "Crow-AMSAA Forecast (600–1000 hrs)",
+     ylim = range(c(pred$lower_bounds, pred$upper_bounds)))
+lines(pred$times, pred$lower_bounds, col = "blue", lty = 2)
+lines(pred$times, pred$upper_bounds, col = "blue", lty = 2)
+legend("topleft", legend = c("Forecast", "95% Bounds"),
+       col = "blue", lty = c(1, 2), lwd = 2)
+```
+
+The confidence band reflects the uncertainty in the Crow-AMSAA parameter estimates. A narrow band indicates the growth trend is well characterized; a wide band suggests more test time is needed.
+
+::: {.callout-tip}
+## Review
+
+The fitted model gives $\hat{\beta} < 1$. Is the system still improving at time 1,000?
+
+<details><summary>Answer</summary>
+Yes — for the Crow-AMSAA model, $\beta < 1$ means the cumulative failure rate is **decreasing** (the growth curve is concave), so reliability is still improving at time 1,000. Testing should continue until $\beta$ stabilizes near the growth target.
+</details>
+:::
+
 ## Summary
 
 **Key takeaways:**
@@ -286,5 +297,6 @@ The automatically detected change point is near time 500, consistent with the kn
 - **Duane model**: log-log of MTBF vs time; positive slope ($\beta > 1$) = improving.
 - **Crow-AMSAA**: log of cumulative failures vs time; concave downward = improving ($\beta < 1$).
 - **Piecewise NHPP**: fits multiple segments; use when a known change occurs during testing.
+- **Forecasting**: `predict_rga()` projects cumulative failures with confidence bounds beyond the current test endpoint.
 - For accelerated life testing (Arrhenius, Power Law, relationship plots), see @sec-alt.
 

@@ -11,10 +11,10 @@ By the end of this chapter, you will be able to:
 - Define the distinction between repairable and non-repairable systems.
 - Explain the Homogeneous Poisson Process (HPP) and Non-Homogeneous Poisson Process (NHPP).
 - Describe the Power Law Process and its parameters.
-- Fit and interpret the Crow-AMSAA model using `nhpp()` from ReliaGrowR.
-- Apply the Piecewise NHPP model to detect changes in failure behavior.
 - Compute fleet-level exposure using `exposure()`.
 - Estimate the Mean Cumulative Function (MCF) using `mcf()`.
+- Fit and interpret the Crow-AMSAA model using `nhpp()` from ReliaGrowR.
+- Apply the Piecewise NHPP model to detect changes in failure behavior.
 - Forecast future failure counts from a fitted Power Law model.
 
 The `ReliaGrowR` package [@ReliaGrowR] provides functions for repairable systems analysis in R.
@@ -119,80 +119,6 @@ A repairable system is observed to have an increasing failure rate over time. Wh
 </details>
 :::
 
-## NHPP Analysis with nhpp()
-
-The `nhpp()` function fits the Power Law Process (Crow-AMSAA model) [@Crow1975] to cumulative failure data by maximum likelihood, returning estimates of $\lambda$ and $\beta$.
-
-A curve that bends downward (concave) indicates $\hat{\beta} < 1$ — improving system. Upward bending (convex) indicates $\hat{\beta} > 1$ — deteriorating system.
-
-```{r}
-times    <- c(500, 1200, 2100, 3300, 4800, 6500, 8400, 10500, 12800, 15000)
-failures <- c(3, 4, 4, 5, 4, 3, 3, 3, 2, 2)
-
-fit <- nhpp(time = times, event = failures)
-plot(fit,
-     main = "Crow-AMSAA Model: Industrial Pump Fleet",
-     xlab = "Cumulative Operating Hours",
-     ylab = "Cumulative Failures")
-```
-
-The concave curve and $\hat{\beta} < 1$ indicate the pump fleet's failure rate is decreasing — a favorable operating regime.
-
-::: {.callout-note}
-## Try It
-
-A compressor fleet recorded these cumulative operating hours and failure counts. Fit a Power Law model using `nhpp()` with `method = "LS"`.
-
-```{r}
-times    <- c(1000, 2500, 4000, 5500, 8000)
-failures <- c(2, 3, 4, 5, 5)
-# fit <- nhpp(time = times, event = failures, method = "LS")
-# plot(fit)
-```
-
-<details><summary>Solution</summary>
-```{r}
-times    <- c(1000, 2500, 4000, 5500, 8000)
-failures <- c(2, 3, 4, 5, 5)
-fit <- nhpp(time = times, event = failures, method = "LS")
-plot(fit, main = "Crow-AMSAA: Compressor Fleet",
-     xlab = "Cumulative Hours", ylab = "Cumulative Failures")
-```
-</details>
-:::
-
-## Piecewise NHPP
-
-The **Piecewise NHPP** [@Guo2010] fits a separate Power Law to each segment of the time axis, allowing for structural changes in failure behavior (overhauls, design modifications, operational changes):
-
-$$E[N(t)] = \begin{cases} \lambda_1 t^{\beta_1} & 0 < t \leq \tau \\ E[N(\tau)] + \lambda_2(t-\tau)^{\beta_2} & t > \tau \end{cases}$$
-
-Pass a breakpoint estimate via the `breaks` argument. The `segmented` algorithm then optimizes the breakpoint location from the data.
-
-```{r}
-times2    <- c(500, 1200, 2100, 3300, 4800, 6500, 8400, 9200, 10100, 11300,
-               12800, 14500, 16400, 18500, 20800)
-failures2 <- c(3, 4, 4, 5, 6, 6, 5, 3, 3, 2, 2, 2, 2, 1, 1)
-
-fit_pw <- nhpp(time = times2, event = failures2, breaks = 8000, method = "LS")
-plot(fit_pw,
-     main = "Piecewise NHPP: Fleet Overhaul at Hour 8000",
-     xlab = "Cumulative Operating Hours",
-     ylab = "Cumulative Failures")
-```
-
-The first segment (pre-overhaul, steeper slope) gives way to a flatter or downward-bending second segment, confirming the overhaul reduced the failure rate. The fitted breakpoint may differ slightly from the input value — here it is estimated near hour 9,820.
-
-::: {.callout-tip}
-## Review
-
-What is the primary reason to use a Piecewise NHPP instead of a single Crow-AMSAA model?
-
-<details><summary>Answer</summary>
-To account for a **known or suspected structural change** in the failure process (overhaul, design change, operational change). A piecewise model fits each segment independently, capturing the change in failure behavior.
-</details>
-:::
-
 ## Exposure Analysis
 
 When analyzing a *fleet*, individual units enter and leave observation at different times. **Exposure** is the total operating time accumulated across all units currently at risk.
@@ -278,6 +204,79 @@ plot(fit, main = "MCF Example", xlab = "Time (hours)", ylab = "MCF")
 </details>
 :::
 
+## NHPP Analysis with nhpp()
+
+The `nhpp()` function fits the Power Law Process (Crow-AMSAA model) [@Crow1975] to individual failure event data by maximum likelihood, returning estimates of $\lambda$ and $\beta$.
+
+A curve that bends downward (concave) indicates $\hat{\beta} < 1$ — improving system. Upward bending (convex) indicates $\hat{\beta} > 1$ — deteriorating system.
+
+```{r}
+# pump_data defined above in the Exposure section
+failure_times <- sort(pump_data$time[pump_data$event == 1])
+
+fit <- nhpp(time = failure_times, event = rep(1, length(failure_times)))
+plot(fit,
+     main = "Crow-AMSAA Model: Industrial Pump Fleet",
+     xlab = "Operating Hours",
+     ylab = "Cumulative Failures")
+```
+
+The concave curve and $\hat{\beta} < 1$ indicate the pump fleet's failure rate is decreasing — a favorable operating regime.
+
+::: {.callout-note}
+## Try It
+
+A compressor fleet recorded individual failure times across five systems. Fit a Power Law model using `nhpp()` with `method = "LS"`.
+
+```{r}
+comp_times <- c(250, 800, 1400, 550, 1100, 1900, 700, 1350, 420, 1050, 1800)
+# fit <- nhpp(time = comp_times, event = rep(1, length(comp_times)), method = "LS")
+# plot(fit)
+```
+
+<details><summary>Solution</summary>
+```{r}
+comp_times <- c(250, 800, 1400, 550, 1100, 1900, 700, 1350, 420, 1050, 1800)
+fit <- nhpp(time = sort(comp_times),
+            event = rep(1, length(comp_times)), method = "LS")
+plot(fit, main = "Crow-AMSAA: Compressor Fleet",
+     xlab = "Operating Hours", ylab = "Cumulative Failures")
+```
+</details>
+:::
+
+## Piecewise NHPP
+
+The **Piecewise NHPP** [@Guo2010] fits a separate Power Law to each segment of the time axis, allowing for structural changes in failure behavior (overhauls, design modifications, operational changes):
+
+$$E[N(t)] = \begin{cases} \lambda_1 t^{\beta_1} & 0 < t \leq \tau \\ E[N(\tau)] + \lambda_2(t-\tau)^{\beta_2} & t > \tau \end{cases}$$
+
+Pass a breakpoint estimate via the `breaks` argument. The `segmented` algorithm then optimizes the breakpoint location from the data.
+
+```{r}
+times2    <- c(500, 1200, 2100, 3300, 4800, 6500, 8400, 9200, 10100, 11300,
+               12800, 14500, 16400, 18500, 20800)
+failures2 <- c(3, 4, 4, 5, 6, 6, 5, 3, 3, 2, 2, 2, 2, 1, 1)
+
+fit_pw <- nhpp(time = times2, event = failures2, breaks = 8000, method = "LS")
+plot(fit_pw,
+     main = "Piecewise NHPP: Fleet Overhaul at Hour 8000",
+     xlab = "Cumulative Operating Hours",
+     ylab = "Cumulative Failures")
+```
+
+The first segment (pre-overhaul, steeper slope) gives way to a flatter or downward-bending second segment, confirming the overhaul reduced the failure rate. The fitted breakpoint may differ slightly from the input value — here it is estimated near hour 9,820.
+
+::: {.callout-tip}
+## Review
+
+What is the primary reason to use a Piecewise NHPP instead of a single Crow-AMSAA model?
+
+<details><summary>Answer</summary>
+To account for a **known or suspected structural change** in the failure process (overhaul, design change, operational change). A piecewise model fits each segment independently, capturing the change in failure behavior.
+</details>
+:::
+
 ## Interpreting Results and Predicting Future Failures
 
 ### Reading $\hat{\beta}$
@@ -353,8 +352,8 @@ The failure rate is **increasing** — wear-out or aging is occurring. The syste
 - Repairable systems analysis models the *sequence* of recurring failures, not just the first failure.
 - The **Power Law Process** ($E[N(t)] = \lambda t^\beta$) is the standard NHPP for repairable systems.
 - $\hat{\beta}$ determines whether the failure rate is improving ($< 1$), stable ($= 1$), or worsening ($> 1$).
-- `nhpp()` fits the Crow-AMSAA model; add `breaks` for piecewise fitting.
 - `exposure()` computes fleet-level operating time at risk.
-- `mcf()` estimates cumulative failures per system non-parametrically.
+- `mcf()` estimates cumulative failures per system non-parametrically (no distributional assumption).
+- `nhpp()` fits the Crow-AMSAA model from individual failure times; add `breaks` for piecewise fitting.
 - Future failure counts: $E[\Delta N] = \hat{\lambda}(T + \Delta t)^{\hat{\beta}} - \hat{\lambda}\,T^{\hat{\beta}}$.
 

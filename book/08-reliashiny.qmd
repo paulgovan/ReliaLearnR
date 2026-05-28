@@ -63,19 +63,18 @@ This mirrors the `rel()`, `avail()`, `mttf()`, `mtbf()`, and `fr()` helper funct
 
 ### Life Data Analysis Module
 
-The LDA module fits Weibull models and generates probability plots.
+The LDA module fits Weibull models and generates probability and contour plots. The app includes a preloaded **Time-to-Failure** dataset so you can explore the workflow immediately without uploading data.
 
 ![LDA module showing a fitted Weibull probability plot.](images/ProbPlot.png){fig-alt="ReliaShiny Life Data Analysis module with a Weibull probability plot in the main panel and parameter estimates in the sidebar."}
 
 **Workflow:**
 
-1. Select the *Life Data Analysis* tab.
-2. **Upload data** — paste failure times into the input table, or upload a CSV with columns `time` and `event` (1 = failure, 0 = suspension).
-3. **Choose model** — 2-parameter Weibull (default), 3-parameter Weibull, or Weibayes.
-4. **Choose estimation method** — MRR or MLE.
-5. Click **Fit Model**.
-6. The probability plot appears in the main panel, with $\hat{\beta}$, $\hat{\eta}$, and the Anderson-Darling statistic in the sidebar.
-7. Click **Download Plot** to save the chart as a PNG.
+1. Select the *Life Data Analysis* tab in the sidebar.
+2. Navigate to the **Data** sub-menu. The preloaded *Time-to-Failure* dataset is already loaded — explore additional options for data arrangement or upload your own CSV with columns `time` and `event` (1 = failure, 0 = suspension).
+3. Navigate to the **Model** sub-menu. Select the distribution (2-parameter Weibull by default) and estimation method (MRR or MLE).
+4. Click **Fit Model**. The **Probability Plot** appears in the main panel, with $\hat{\beta}$, $\hat{\eta}$, and the Anderson-Darling statistic.
+5. Switch to the **Contour Plot** tab for an interactive likelihood ratio contour showing the joint confidence region for $\hat{\beta}$ and $\hat{\eta}$.
+6. Click **Download Plot** to save the current chart as a PNG.
 
 **CSV format for upload:**
 
@@ -93,48 +92,55 @@ time,event
 
 A `0` in the `event` column marks a suspension (right-censored observation).
 
+See the [Life Data Analysis article](https://paulgovan.github.io/ReliaShiny/articles/LDA.html) for a full walkthrough.
+
 ### Reliability Growth Module
 
-The Reliability Growth module fits Duane and Crow-AMSAA reliability growth models.
+The Reliability Growth module fits Crow-AMSAA and Duane reliability growth models. The app includes a preloaded **Simple Data** dataset for immediate exploration.
 
 ![Reliability Growth module showing a fitted Crow-AMSAA cumulative failures plot.](images/GrowthPlot.png){fig-alt="ReliaShiny Reliability Growth module displaying a Crow-AMSAA cumulative failures plot with fitted model curve."}
 
 **Workflow:**
 
-1. Select *Reliability Growth*.
-2. Enter cumulative test times and failure counts in the data table.
-3. Choose **Duane** or **Crow-AMSAA** model.
-4. Click **Fit**.
-5. The plot shows the fitted model; $\hat{\beta}$ and model parameters appear in the results panel.
+1. Select *Reliability Growth* in the sidebar.
+2. Navigate to the **Data** sub-menu. The preloaded *Simple Data* dataset is loaded — designate the **failures** column as the failure indicator, or upload your own data.
+3. Navigate to the **Model** sub-menu.
+4. Click **Fit**. The **Reliability Growth Plot** (Crow-AMSAA cumulative failures) appears with the fitted curve and $\hat{\beta}$.
+5. Switch to the **Duane Plot** tab to view the log-log cumulative MTBF plot for the same data.
+
+See the [Reliability Growth Analysis article](https://paulgovan.github.io/ReliaShiny/articles/RGA.html) for a full walkthrough.
 
 ### Accelerated Life Testing Module
 
-The ALT module fits Arrhenius and Power Law acceleration models using the `WeibullR.ALT` package (see @sec-alt).
+The ALT module fits Arrhenius and Power Law acceleration models using the `WeibullR.ALT` package (see @sec-alt). The app includes the preloaded **Nelson Data** dataset.
 
 ![ALT module showing a probability plot and life-stress relationship.](images/ALTPlot.png){fig-alt="ReliaShiny Accelerated Life Testing module showing an ALT probability plot with stress-level curves and a life-stress relationship plot."}
 
 **Workflow:**
 
-1. Select *Accelerated Life Testing*.
-2. Upload a dataset with columns `time`, `event`, `qty`, and a stress column (e.g., `TempC` or `Voltage`).
-3. Choose the acceleration model: **Arrhenius** (temperature) or **Power Law** (mechanical/voltage stress).
-4. Click **Fit ALT Model**.
-5. The probability plot and relationship plot are displayed, along with fitted parameters and the computed Acceleration Factor.
+1. Select *Accelerated Life Testing* in the sidebar.
+2. Navigate to the **Data** sub-menu. The preloaded *Nelson Data* is already loaded. Map the columns: select the **Stress Level**, **Time to Failure**, and **Event Indicator** columns from the dropdowns.
+3. Navigate to the **Model** sub-menu. Choose the acceleration model (**Arrhenius** for temperature, **Power Law** for voltage/mechanical stress) and distribution (Weibull or Lognormal).
+4. Click **Fit ALT Model**. The **ALT Probability Plot** appears, with one curve per stress level.
+5. Switch to the **Life-Stress Relationship** tab to view how predicted life varies across the stress range, with percentile lines (P10, P63.2, P90).
+
+See the [Accelerated Life Testing article](https://paulgovan.github.io/ReliaShiny/articles/ALT.html) for a full walkthrough.
 
 ### Repairable Systems Module
 
-The Repairable Systems module fits the Power Law Process (Crow-AMSAA) and computes the MCF for fleet data.
+The Repairable Systems module fits the Power Law Process (Crow-AMSAA) and computes the MCF and exposure for fleet data. The app includes a preloaded **Simple Data Set**.
 
 ![Repairable Systems module showing a Mean Cumulative Function plot.](images/RepairablePlot.png){fig-alt="ReliaShiny Repairable Systems module displaying an MCF cumulative failures curve with confidence bounds for a fleet of systems."}
 
 **Workflow:**
 
-1. Select *Repairable Systems*.
-2. Upload fleet data with columns `id`, `time`, and `event`.
-3. Choose analysis type: **NHPP (Power Law)** or **MCF**.
-4. Optionally enter a breakpoint for piecewise NHPP fitting.
-5. Click **Analyze**.
-6. The cumulative failures plot (NHPP) or MCF curve is displayed, with estimated parameters.
+1. Select *Repairable Systems* in the sidebar.
+2. Navigate to the **Data** sub-menu. The preloaded *Simple Data Set* is loaded — map the **System ID**, **Event Time**, and **Event Indicator** columns, or upload your own fleet data with columns `id`, `time`, and `event`.
+3. Navigate to the **Model** sub-menu.
+4. Click **Analyze**. Three plots are produced:
+   - **NHPP Plot** — Crow-AMSAA Power Law fit with cumulative failures curve and $\hat{\beta}$, $\hat{\lambda}$.
+   - **Exposure Plot** — fleet-level event rate as a function of operating time.
+   - **MCF Plot** — non-parametric Mean Cumulative Function with confidence bounds.
 
 **Example CSV format:**
 
@@ -149,6 +155,8 @@ id,time,event
 ```
 
 The last row for system 2 (`event = 0`) indicates that system 2 was observed until hour 3,000 without a third failure.
+
+See the [Repairable Systems Analysis article](https://paulgovan.github.io/ReliaShiny/articles/RS.html) for a full walkthrough.
 
 ### Reliability Block Diagrams Module
 
@@ -210,6 +218,7 @@ help(package = "ReliaShiny")
 Additional resources:
 
 - CRAN page: <https://CRAN.R-project.org/package=ReliaShiny>
+- Articles and walkthroughs: <https://paulgovan.github.io/ReliaShiny/>
 
 ## Summary
 

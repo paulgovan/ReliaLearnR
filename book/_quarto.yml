@@ -13,6 +13,7 @@ book:
   cover-image: cover.png
   url: https://paulgovan.github.io/ReliaLearnR/
   repo-url: https://github.com/paulgovan/ReliaLearnR
+  sharing: [twitter, facebook, linkedin]
   chapters:
     - index.qmd
     - 01-ram.qmd
@@ -32,7 +33,9 @@ bibliography: references.bib
 
 format:
   html:
-    theme: cosmo
+    theme:
+      light: cosmo
+      dark: darkly
     toc: true
     toc-depth: 3
     number-sections: true
@@ -40,6 +43,14 @@ format:
     code-fold: false
     code-tools: true
     highlight-style: github
+  pdf:
+    documentclass: scrreprt
+    toc: true
+    number-sections: true
+    colorlinks: true
+  epub:
+    cover-image: cover.png
+    toc: true
 
 execute:
   echo: true
