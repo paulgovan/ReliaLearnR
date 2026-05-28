@@ -2,7 +2,7 @@
 
 ## Introduction
 
-All of the analyses in this book require writing R code. **ReliaShiny** [@ReliaShiny] removes that requirement — it is a point-and-click Shiny [@shiny] web application that exposes the same reliability analysis workflows (RAM, life data analysis, reliability testing, repairable systems, reliability block diagrams) through a graphical interface. No R programming knowledge is needed to run an analysis.
+All of the analyses in this book require writing R code. **ReliaShiny** [@ReliaShiny] removes that requirement — it is a point-and-click Shiny [@shiny] web application that exposes the same reliability analysis workflows (life data analysis, reliability growth, accelerated life testing, repairable systems) through a graphical interface. No R programming knowledge is needed to run an analysis.
 
 This chapter introduces ReliaShiny, tours its modules, and explains when to reach for it versus a scripted R workflow.
 
@@ -29,16 +29,14 @@ This opens the application in your default web browser. The app runs locally —
 
 When ReliaShiny opens, the left sidebar displays the available analysis modules, each corresponding to a chapter in this book:
 
-![ReliaShiny landing page showing the sidebar module list.](images/Landing.png){fig-alt="ReliaShiny web app with a left sidebar listing modules: RAM, Life Data Analysis, Reliability Growth, Accelerated Life Testing, Repairable Systems, and Reliability Block Diagrams."}
+![ReliaShiny landing page showing the sidebar module list.](images/Landing.png){fig-alt="ReliaShiny web app with a left sidebar listing modules: Life Data Analysis, Reliability Growth, Accelerated Life Testing, and Repairable Systems."}
 
 | Module | Corresponding chapter | Key capabilities |
 |---|---|---|
-| **RAM** | @sec-ram | Reliability, availability, MTTF, MTBF, failure rate |
 | **Life Data Analysis** | @sec-lda | 2-parameter, 3-parameter Weibull, Weibayes; MRR and MLE; right-censored data |
 | **Reliability Growth** | @sec-rt | Duane and Crow-AMSAA model fitting; piecewise NHPP |
 | **Accelerated Life Testing** | @sec-alt | Arrhenius and Power Law models; relationship plots |
 | **Repairable Systems** | @sec-rs | Power Law Process (NHPP); MCF; fleet exposure |
-| **Reliability Block Diagrams** | @sec-rbd | Series, parallel, mixed, and k-out-of-n configurations |
 
 Each module follows the same three-step workflow:
 
@@ -47,19 +45,6 @@ Each module follows the same three-step workflow:
 3. **Output** — view plots, parameter estimates, and summary statistics; download results.
 
 ## Module Walkthroughs
-
-### RAM Module
-
-The RAM module computes reliability, availability, MTTR, MTTF, MTBF, and failure rate from summary inputs.
-
-**Workflow:**
-
-1. Select the *RAM* tab in the sidebar.
-2. Enter the total time, failed time, and (for availability) scheduled maintenance time.
-3. Click **Calculate**.
-4. The panel displays all five metrics: Reliability, Availability, MTTR, MTTF, MTBF, and Failure Rate.
-
-This mirrors the `rel()`, `avail()`, `mttf()`, `mtbf()`, and `fr()` helper functions from @sec-ram.
 
 ### Life Data Analysis Module
 
@@ -158,22 +143,6 @@ The last row for system 2 (`event = 0`) indicates that system 2 was observed unt
 
 See the [Repairable Systems Analysis article](https://paulgovan.github.io/ReliaShiny/articles/RS.html) for a full walkthrough.
 
-### Reliability Block Diagrams Module
-
-The RBD module computes system reliability from component reliabilities for series, parallel, mixed, and k-out-of-n configurations.
-
-
-**Workflow:**
-
-1. Select *Reliability Block Diagrams*.
-2. Choose the system **topology** from the dropdown: Series, Parallel, Mixed, or k-out-of-n.
-3. Enter the number of components and their individual reliabilities.
-4. For Mixed systems, define subsystem groupings.
-5. For k-out-of-n systems, enter $k$ (minimum required) and $n$ (total).
-6. Click **Calculate**.
-7. System reliability and, for exponential components, system MTTF are displayed.
-8. A block diagram graphic is shown for Series and Parallel configurations.
-
 ## Data Upload Tips
 
 - **CSV files**: core column names (`time`, `event`, `id`, `qty`) are case-sensitive and must be **lowercase**. Stress column names (e.g., `TempC`, `Voltage`) may use any valid R name — they are selected in the app's dropdown.
@@ -222,5 +191,5 @@ Additional resources:
 
 ## Summary
 
-ReliaShiny provides a point-and-click interface to the full ReliaLearnR analysis ecosystem — RAM, life data analysis, reliability testing, repairable systems, and reliability block diagrams — with no R coding required. Install it with `install.packages("ReliaShiny")` and launch it with `ReliaShiny()`. Use it for rapid exploration, stakeholder demonstrations, and sharing results; switch to scripted R for reproducibility, automation, and custom outputs.
+ReliaShiny provides a point-and-click interface to the ReliaLearnR analysis ecosystem — life data analysis, reliability growth, accelerated life testing, and repairable systems — with no R coding required. Install it with `install.packages("ReliaShiny")` and launch it with `ReliaShiny()`. Use it for rapid exploration, stakeholder demonstrations, and sharing results; switch to scripted R for reproducibility, automation, and custom outputs.
 

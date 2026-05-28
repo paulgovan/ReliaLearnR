@@ -268,14 +268,8 @@ print(pred)
 ```
 
 ```{r}
-plot(pred$times, pred$cum_failures, type = "l", col = "blue", lwd = 2,
-     xlab = "Cumulative Time", ylab = "Cumulative Failures",
-     main = "Crow-AMSAA Forecast (600–1000 hrs)",
-     ylim = range(c(pred$lower_bounds, pred$upper_bounds)))
-lines(pred$times, pred$lower_bounds, col = "blue", lty = 2)
-lines(pred$times, pred$upper_bounds, col = "blue", lty = 2)
-legend("topleft", legend = c("Forecast", "95% Bounds"),
-       col = "blue", lty = c(1, 2), lwd = 2)
+plot(pred, main = "Crow-AMSAA Forecast (600–1000 hrs)",
+     xlab = "Cumulative Time", ylab = "Cumulative Failures")
 ```
 
 The confidence band reflects the uncertainty in the Crow-AMSAA parameter estimates. A narrow band indicates the growth trend is well characterized; a wide band suggests more test time is needed.
