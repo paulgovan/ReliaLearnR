@@ -176,7 +176,7 @@ set220 <- alt.data(t41$C220f, s = t41$C220s, stress = 220)
 
 arrobj <- alt.make(list(set170, set190, set220),
                    dist = "lognormal", alt.model = "arrhenius",
-                   method.fit = "rr-xony")
+                   method.fit = "mle-rba")
 prlobj <- alt.parallel(arrobj)
 
 plotly_alt(prlobj,
