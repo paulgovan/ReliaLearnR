@@ -2,6 +2,11 @@
 prefer-html: true
 ---
 
+```{r}
+#| include: false
+if (!knitr::is_html_output()) knitr::opts_chunk$set(eval = FALSE)
+```
+
 # Interactive Plots with ReliaPlotR {#sec-reliaplotr}
 
 ## Introduction

@@ -44,6 +44,7 @@ A series system is *always less reliable* than its weakest component. Adding mor
 A pumping system requires a motor (R = 0.95), a pump (R = 0.90), and a control valve (R = 0.98) to all be operational.
 
 ```{r}
+#| eval: !expr knitr::is_html_output()
 grViz("
 digraph series {
   rankdir = LR
@@ -116,6 +117,7 @@ Adding parallel components always increases system reliability.
 A primary generator (R = 0.90) and a standby generator (R = 0.85) — either alone keeps the system running.
 
 ```{r}
+#| eval: !expr knitr::is_html_output()
 grViz("
 digraph parallel {
   rankdir = LR
@@ -191,6 +193,7 @@ Most real systems combine series and parallel blocks. To analyze a **mixed** sys
 - Subsystems A and B in series (both must work).
 
 ```{r}
+#| eval: !expr knitr::is_html_output()
 grViz("
 digraph mixed {
   rankdir = LR
@@ -253,6 +256,7 @@ The compact R expression counts the probability that *at least* $k$ components f
 A 2-out-of-3 voter: at least 2 of 3 computers must agree. Each computer has R = 0.99.
 
 ```{r}
+#| eval: !expr knitr::is_html_output()
 grViz("
 digraph koon {
   rankdir = LR
@@ -412,6 +416,7 @@ While an RBD asks "What must work for the system to succeed?", a fault tree asks
 | Parallel (any can work) | AND gate (all must fail for system failure) |
 
 ```{r}
+#| eval: !expr knitr::is_html_output()
 grViz("
 digraph fta {
   rankdir = TB
