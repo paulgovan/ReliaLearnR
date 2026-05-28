@@ -1,6 +1,8 @@
 project:
   type: book
 
+prefer-html: true
+
 book:
   title: "Reliability Analysis with R: A Companion Guide"
   author: "Paul Govan"
