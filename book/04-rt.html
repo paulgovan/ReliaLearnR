@@ -254,7 +254,7 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./98-appendix.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Appendix: Helper Functions Reference</span></a>
+ <span class="menu-text">Appendix: R Quick Reference</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -469,12 +469,12 @@ More test units means shorter required test time per unit — but total test eff
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The fitted Crow-AMSAA model gives <span class="math inline">\(\hat{\beta} = 0.72\)</span>. Is the system still improving at time 1,000?</p>
+<p>The fitted model (using the Crow-AMSAA framework, described fully below) gives <span class="math inline">\(\hat{\beta} = 0.72\)</span>. Is the system still improving at time 1,000?</p>
 <details>
 <summary>
 Answer
 </summary>
-Yes — <span class="math inline">\(\beta &lt; 1\)</span> means the cumulative failure rate is <strong>decreasing</strong> (the growth curve is concave), so reliability is still improving at time 1,000. Testing should continue until <span class="math inline">\(\beta\)</span> stabilizes near the growth target.
+Yes — for the Crow-AMSAA model, <span class="math inline">\(\beta &lt; 1\)</span> means the cumulative failure rate is <strong>decreasing</strong> (the growth curve is concave), so reliability is still improving at time 1,000. Testing should continue until <span class="math inline">\(\beta\)</span> stabilizes near the growth target.
 </details>
 </div>
 </div>
@@ -484,7 +484,7 @@ Yes — <span class="math inline">\(\beta &lt; 1\)</span> means the cumulative f
 <h2 data-number="4.5" class="anchored" data-anchor-id="the-duane-model"><span class="header-section-number">4.5</span> The Duane Model</h2>
 <p>The <strong>Duane Model</strong> <span class="citation" data-cites="Duane1964">(<a href="#ref-Duane1964" role="doc-biblioref">Duane 1964</a>)</span> is one of the earliest and most widely used models for reliability growth. It is a log-log plot of cumulative MTBF vs cumulative time, where the MTBF is the total operating time divided by the number of failures up to that time.</p>
 <p><span class="math display">\[\text{CMTBF}(t) = K \cdot t^{\beta - 1}\]</span></p>
-<p>The slope of the line on the log-log plot indicates the rate of reliability growth:</p>
+<p>where <span class="math inline">\(K &gt; 0\)</span> is a scale parameter estimated from the data and <span class="math inline">\(\beta\)</span> is the growth slope. The slope of the line on the log-log plot indicates the rate of reliability growth:</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -609,6 +609,7 @@ The system’s reliability is <strong>improving</strong> — the failure rate is
 <h2 data-number="4.6" class="anchored" data-anchor-id="the-crow-amsaa-model"><span class="header-section-number">4.6</span> The Crow-AMSAA Model</h2>
 <p>The <strong>Crow-AMSAA Model</strong> <span class="citation" data-cites="Crow1975">(<a href="#ref-Crow1975" role="doc-biblioref">Crow 1975</a>)</span> models cumulative failures vs cumulative time using a Non-Homogeneous Poisson Process (NHPP):</p>
 <p><span class="math display">\[N(t) = \lambda_0 \cdot t^{\beta}\]</span></p>
+<p>where <span class="math inline">\(\lambda_0 &gt; 0\)</span> is the scale parameter and <span class="math inline">\(\beta\)</span> is the shape parameter.</p>
 <p>The shape parameter <span class="math inline">\(\beta\)</span> interpretation:</p>
 <table class="caption-top table">
 <thead>
@@ -632,7 +633,24 @@ The system’s reliability is <strong>improving</strong> — the failure rate is
 </tr>
 </tbody>
 </table>
-<p>Note: The Crow-AMSAA <span class="math inline">\(\beta\)</span> interpretation is <strong>reversed</strong> compared to the Duane model — because the Duane plots MTBF (higher is better), while Crow-AMSAA plots cumulative failures (lower slope is better).</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>β Interpretation is Reversed Between Models
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The Crow-AMSAA <span class="math inline">\(\beta\)</span> means the <strong>opposite</strong> of the Duane <span class="math inline">\(\beta\)</span>:</p>
+<ul>
+<li><strong>Duane</strong>: <span class="math inline">\(\beta &gt; 1\)</span> = reliability <em>improving</em> (MTBF is rising).</li>
+<li><strong>Crow-AMSAA</strong>: <span class="math inline">\(\beta &gt; 1\)</span> = reliability <em>worsening</em> (cumulative failures are accelerating).</li>
+</ul>
+<p>This reversal occurs because Duane plots MTBF (higher is better), while Crow-AMSAA plots cumulative failures (a lower slope means fewer failures, so <em>improving</em>). Always check which model produced your <span class="math inline">\(\beta\)</span> before interpreting the result.</p>
+</div>
+</div>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.1</span>, <span class="dv">100</span>, <span class="at">by =</span> <span class="fl">0.1</span>)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -1333,10 +1351,10 @@ Govan, Paul. 2024. <em>ReliaGrowR: Reliability Growth Analysis</em>. <a href="ht
 <span id="cb19-104"><a href="#cb19-104" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
 <span id="cb19-105"><a href="#cb19-105" aria-hidden="true" tabindex="-1"></a><span class="fu">## Review</span></span>
 <span id="cb19-106"><a href="#cb19-106" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-107"><a href="#cb19-107" aria-hidden="true" tabindex="-1"></a>The fitted Crow-AMSAA model gives $\hat{\beta} = 0.72$. Is the system still improving at time 1,000?</span>
+<span id="cb19-107"><a href="#cb19-107" aria-hidden="true" tabindex="-1"></a>The fitted model (using the Crow-AMSAA framework, described fully below) gives $\hat{\beta} = 0.72$. Is the system still improving at time 1,000?</span>
 <span id="cb19-108"><a href="#cb19-108" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-109"><a href="#cb19-109" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Answer<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
-<span id="cb19-110"><a href="#cb19-110" aria-hidden="true" tabindex="-1"></a>Yes — $\beta &lt; 1$ means the cumulative failure rate is **decreasing** (the growth curve is concave), so reliability is still improving at time 1,000. Testing should continue until $\beta$ stabilizes near the growth target.</span>
+<span id="cb19-110"><a href="#cb19-110" aria-hidden="true" tabindex="-1"></a>Yes — for the Crow-AMSAA model, $\beta &lt; 1$ means the cumulative failure rate is **decreasing** (the growth curve is concave), so reliability is still improving at time 1,000. Testing should continue until $\beta$ stabilizes near the growth target.</span>
 <span id="cb19-111"><a href="#cb19-111" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
 <span id="cb19-112"><a href="#cb19-112" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb19-113"><a href="#cb19-113" aria-hidden="true" tabindex="-1"></a></span>
@@ -1346,7 +1364,7 @@ Govan, Paul. 2024. <em>ReliaGrowR: Reliability Growth Analysis</em>. <a href="ht
 <span id="cb19-117"><a href="#cb19-117" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-118"><a href="#cb19-118" aria-hidden="true" tabindex="-1"></a>$$\text{CMTBF}(t) = K \cdot t^{\beta - 1}$$</span>
 <span id="cb19-119"><a href="#cb19-119" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-120"><a href="#cb19-120" aria-hidden="true" tabindex="-1"></a>The slope of the line on the log-log plot indicates the rate of reliability growth:</span>
+<span id="cb19-120"><a href="#cb19-120" aria-hidden="true" tabindex="-1"></a>where $K &gt; 0$ is a scale parameter estimated from the data and $\beta$ is the growth slope. The slope of the line on the log-log plot indicates the rate of reliability growth:</span>
 <span id="cb19-121"><a href="#cb19-121" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-122"><a href="#cb19-122" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Slope ($\beta$) <span class="pp">|</span> Meaning <span class="pp">|</span></span>
 <span id="cb19-123"><a href="#cb19-123" aria-hidden="true" tabindex="-1"></a><span class="pp">|:---:|---|</span></span>
@@ -1421,100 +1439,111 @@ Govan, Paul. 2024. <em>ReliaGrowR: Reliability Growth Analysis</em>. <a href="ht
 <span id="cb19-200"><a href="#cb19-200" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-201"><a href="#cb19-201" aria-hidden="true" tabindex="-1"></a>$$N(t) = \lambda_0 \cdot t^{\beta}$$</span>
 <span id="cb19-202"><a href="#cb19-202" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-203"><a href="#cb19-203" aria-hidden="true" tabindex="-1"></a>The shape parameter $\beta$ interpretation:</span>
+<span id="cb19-203"><a href="#cb19-203" aria-hidden="true" tabindex="-1"></a>where $\lambda_0 &gt; 0$ is the scale parameter and $\beta$ is the shape parameter.</span>
 <span id="cb19-204"><a href="#cb19-204" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-205"><a href="#cb19-205" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> $\beta$ <span class="pp">|</span> Meaning <span class="pp">|</span></span>
-<span id="cb19-206"><a href="#cb19-206" aria-hidden="true" tabindex="-1"></a><span class="pp">|:---:|---|</span></span>
-<span id="cb19-207"><a href="#cb19-207" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> $&gt; 1$ <span class="pp">|</span> Failures increasing (reliability worsening) <span class="pp">|</span></span>
-<span id="cb19-208"><a href="#cb19-208" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> $= 1$ <span class="pp">|</span> Constant rate (stable) <span class="pp">|</span></span>
-<span id="cb19-209"><a href="#cb19-209" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> $&lt; 1$ <span class="pp">|</span> Failures decreasing (reliability improving) <span class="pp">|</span></span>
-<span id="cb19-210"><a href="#cb19-210" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-211"><a href="#cb19-211" aria-hidden="true" tabindex="-1"></a>Note: The Crow-AMSAA $\beta$ interpretation is **reversed** compared to the Duane model — because the Duane plots MTBF (higher is better), while Crow-AMSAA plots cumulative failures (lower slope is better).</span>
+<span id="cb19-205"><a href="#cb19-205" aria-hidden="true" tabindex="-1"></a>The shape parameter $\beta$ interpretation:</span>
+<span id="cb19-206"><a href="#cb19-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-207"><a href="#cb19-207" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> $\beta$ <span class="pp">|</span> Meaning <span class="pp">|</span></span>
+<span id="cb19-208"><a href="#cb19-208" aria-hidden="true" tabindex="-1"></a><span class="pp">|:---:|---|</span></span>
+<span id="cb19-209"><a href="#cb19-209" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> $&gt; 1$ <span class="pp">|</span> Failures increasing (reliability worsening) <span class="pp">|</span></span>
+<span id="cb19-210"><a href="#cb19-210" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> $= 1$ <span class="pp">|</span> Constant rate (stable) <span class="pp">|</span></span>
+<span id="cb19-211"><a href="#cb19-211" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> $&lt; 1$ <span class="pp">|</span> Failures decreasing (reliability improving) <span class="pp">|</span></span>
 <span id="cb19-212"><a href="#cb19-212" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-215"><a href="#cb19-215" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb19-216"><a href="#cb19-216" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.1</span>, <span class="dv">100</span>, <span class="at">by =</span> <span class="fl">0.1</span>)</span>
+<span id="cb19-213"><a href="#cb19-213" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning}</span>
+<span id="cb19-214"><a href="#cb19-214" aria-hidden="true" tabindex="-1"></a><span class="fu">## β Interpretation is Reversed Between Models</span></span>
+<span id="cb19-215"><a href="#cb19-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-216"><a href="#cb19-216" aria-hidden="true" tabindex="-1"></a>The Crow-AMSAA $\beta$ means the **opposite** of the Duane $\beta$:</span>
 <span id="cb19-217"><a href="#cb19-217" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-218"><a href="#cb19-218" aria-hidden="true" tabindex="-1"></a><span class="co"># Three beta scenarios for cumulative failures</span></span>
-<span id="cb19-219"><a href="#cb19-219" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(t, <span class="fl">0.5</span> <span class="sc">*</span> t<span class="sc">^</span><span class="fl">0.6</span>, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">lwd =</span> <span class="dv">2</span>,</span>
-<span id="cb19-220"><a href="#cb19-220" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Cumulative Time"</span>, <span class="at">ylab =</span> <span class="st">"Cumulative Failures"</span>,</span>
-<span id="cb19-221"><a href="#cb19-221" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Crow-AMSAA: Three Reliability Scenarios"</span>,</span>
-<span id="cb19-222"><a href="#cb19-222" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">20</span>))</span>
-<span id="cb19-223"><a href="#cb19-223" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(t, <span class="fl">0.5</span> <span class="sc">*</span> t<span class="sc">^</span><span class="fl">1.0</span>, <span class="at">col =</span> <span class="st">"red"</span>,       <span class="at">lwd =</span> <span class="dv">2</span>)</span>
-<span id="cb19-224"><a href="#cb19-224" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(t, <span class="fl">0.5</span> <span class="sc">*</span> t<span class="sc">^</span><span class="fl">1.5</span>, <span class="at">col =</span> <span class="st">"darkgreen"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
-<span id="cb19-225"><a href="#cb19-225" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topleft"</span>,</span>
-<span id="cb19-226"><a href="#cb19-226" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"β = 0.6 (improving)"</span>, <span class="st">"β = 1.0 (stable)"</span>, <span class="st">"β = 1.5 (worsening)"</span>),</span>
-<span id="cb19-227"><a href="#cb19-227" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"red"</span>, <span class="st">"darkgreen"</span>), <span class="at">lwd =</span> <span class="dv">2</span>)</span>
-<span id="cb19-228"><a href="#cb19-228" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb19-229"><a href="#cb19-229" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-230"><a href="#cb19-230" aria-hidden="true" tabindex="-1"></a><span class="fu">### Fitting with ReliaGrowR</span></span>
-<span id="cb19-231"><a href="#cb19-231" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-234"><a href="#cb19-234" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb19-235"><a href="#cb19-235" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">rga</span>(times, failures)</span>
-<span id="cb19-236"><a href="#cb19-236" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(result, <span class="at">main =</span> <span class="st">"Crow-AMSAA Model Example"</span>,</span>
-<span id="cb19-237"><a href="#cb19-237" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Cumulative Time"</span>, <span class="at">ylab =</span> <span class="st">"Cumulative Failures"</span>)</span>
-<span id="cb19-238"><a href="#cb19-238" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb19-239"><a href="#cb19-239" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-240"><a href="#cb19-240" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb19-241"><a href="#cb19-241" aria-hidden="true" tabindex="-1"></a><span class="fu">## Try It</span></span>
+<span id="cb19-218"><a href="#cb19-218" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Duane**: $\beta &gt; 1$ = reliability *improving* (MTBF is rising).</span>
+<span id="cb19-219"><a href="#cb19-219" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Crow-AMSAA**: $\beta &gt; 1$ = reliability *worsening* (cumulative failures are accelerating).</span>
+<span id="cb19-220"><a href="#cb19-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-221"><a href="#cb19-221" aria-hidden="true" tabindex="-1"></a>This reversal occurs because Duane plots MTBF (higher is better), while Crow-AMSAA plots cumulative failures (a lower slope means fewer failures, so *improving*). Always check which model produced your $\beta$ before interpreting the result.</span>
+<span id="cb19-222"><a href="#cb19-222" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb19-223"><a href="#cb19-223" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-226"><a href="#cb19-226" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb19-227"><a href="#cb19-227" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.1</span>, <span class="dv">100</span>, <span class="at">by =</span> <span class="fl">0.1</span>)</span>
+<span id="cb19-228"><a href="#cb19-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-229"><a href="#cb19-229" aria-hidden="true" tabindex="-1"></a><span class="co"># Three beta scenarios for cumulative failures</span></span>
+<span id="cb19-230"><a href="#cb19-230" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(t, <span class="fl">0.5</span> <span class="sc">*</span> t<span class="sc">^</span><span class="fl">0.6</span>, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">lwd =</span> <span class="dv">2</span>,</span>
+<span id="cb19-231"><a href="#cb19-231" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Cumulative Time"</span>, <span class="at">ylab =</span> <span class="st">"Cumulative Failures"</span>,</span>
+<span id="cb19-232"><a href="#cb19-232" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Crow-AMSAA: Three Reliability Scenarios"</span>,</span>
+<span id="cb19-233"><a href="#cb19-233" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">20</span>))</span>
+<span id="cb19-234"><a href="#cb19-234" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(t, <span class="fl">0.5</span> <span class="sc">*</span> t<span class="sc">^</span><span class="fl">1.0</span>, <span class="at">col =</span> <span class="st">"red"</span>,       <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb19-235"><a href="#cb19-235" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(t, <span class="fl">0.5</span> <span class="sc">*</span> t<span class="sc">^</span><span class="fl">1.5</span>, <span class="at">col =</span> <span class="st">"darkgreen"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb19-236"><a href="#cb19-236" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topleft"</span>,</span>
+<span id="cb19-237"><a href="#cb19-237" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"β = 0.6 (improving)"</span>, <span class="st">"β = 1.0 (stable)"</span>, <span class="st">"β = 1.5 (worsening)"</span>),</span>
+<span id="cb19-238"><a href="#cb19-238" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"red"</span>, <span class="st">"darkgreen"</span>), <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb19-239"><a href="#cb19-239" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-240"><a href="#cb19-240" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-241"><a href="#cb19-241" aria-hidden="true" tabindex="-1"></a><span class="fu">### Fitting with ReliaGrowR</span></span>
 <span id="cb19-242"><a href="#cb19-242" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-243"><a href="#cb19-243" aria-hidden="true" tabindex="-1"></a>A development test recorded these cumulative failure counts. Use <span class="in">`rga()`</span> with <span class="in">`model_type = "Crow-AMSAA"`</span> to fit the model.</span>
-<span id="cb19-244"><a href="#cb19-244" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-247"><a href="#cb19-247" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb19-248"><a href="#cb19-248" aria-hidden="true" tabindex="-1"></a>times    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">120</span>, <span class="dv">220</span>, <span class="dv">360</span>, <span class="dv">530</span>, <span class="dv">740</span>, <span class="dv">1000</span>)</span>
-<span id="cb19-249"><a href="#cb19-249" aria-hidden="true" tabindex="-1"></a>failures <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>)</span>
-<span id="cb19-250"><a href="#cb19-250" aria-hidden="true" tabindex="-1"></a><span class="co"># fit &lt;- rga(times, failures, model_type = "Crow-AMSAA")</span></span>
-<span id="cb19-251"><a href="#cb19-251" aria-hidden="true" tabindex="-1"></a><span class="co"># plot(fit)</span></span>
-<span id="cb19-252"><a href="#cb19-252" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-245"><a href="#cb19-245" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb19-246"><a href="#cb19-246" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">rga</span>(times, failures)</span>
+<span id="cb19-247"><a href="#cb19-247" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(result, <span class="at">main =</span> <span class="st">"Crow-AMSAA Model Example"</span>,</span>
+<span id="cb19-248"><a href="#cb19-248" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Cumulative Time"</span>, <span class="at">ylab =</span> <span class="st">"Cumulative Failures"</span>)</span>
+<span id="cb19-249"><a href="#cb19-249" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-250"><a href="#cb19-250" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-251"><a href="#cb19-251" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb19-252"><a href="#cb19-252" aria-hidden="true" tabindex="-1"></a><span class="fu">## Try It</span></span>
 <span id="cb19-253"><a href="#cb19-253" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-254"><a href="#cb19-254" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Solution<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
-<span id="cb19-257"><a href="#cb19-257" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb19-258"><a href="#cb19-258" aria-hidden="true" tabindex="-1"></a>times    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">120</span>, <span class="dv">220</span>, <span class="dv">360</span>, <span class="dv">530</span>, <span class="dv">740</span>, <span class="dv">1000</span>)</span>
-<span id="cb19-259"><a href="#cb19-259" aria-hidden="true" tabindex="-1"></a>failures <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>)</span>
-<span id="cb19-260"><a href="#cb19-260" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">rga</span>(times, failures, <span class="at">model_type =</span> <span class="st">"Crow-AMSAA"</span>)</span>
-<span id="cb19-261"><a href="#cb19-261" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit, <span class="at">main =</span> <span class="st">"Crow-AMSAA Reliability Growth"</span>,</span>
-<span id="cb19-262"><a href="#cb19-262" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Cumulative Test Time"</span>, <span class="at">ylab =</span> <span class="st">"Cumulative Failures"</span>)</span>
+<span id="cb19-254"><a href="#cb19-254" aria-hidden="true" tabindex="-1"></a>A development test recorded these cumulative failure counts. Use <span class="in">`rga()`</span> with <span class="in">`model_type = "Crow-AMSAA"`</span> to fit the model.</span>
+<span id="cb19-255"><a href="#cb19-255" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-258"><a href="#cb19-258" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb19-259"><a href="#cb19-259" aria-hidden="true" tabindex="-1"></a>times    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">120</span>, <span class="dv">220</span>, <span class="dv">360</span>, <span class="dv">530</span>, <span class="dv">740</span>, <span class="dv">1000</span>)</span>
+<span id="cb19-260"><a href="#cb19-260" aria-hidden="true" tabindex="-1"></a>failures <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb19-261"><a href="#cb19-261" aria-hidden="true" tabindex="-1"></a><span class="co"># fit &lt;- rga(times, failures, model_type = "Crow-AMSAA")</span></span>
+<span id="cb19-262"><a href="#cb19-262" aria-hidden="true" tabindex="-1"></a><span class="co"># plot(fit)</span></span>
 <span id="cb19-263"><a href="#cb19-263" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb19-264"><a href="#cb19-264" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
-<span id="cb19-265"><a href="#cb19-265" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb19-266"><a href="#cb19-266" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-267"><a href="#cb19-267" aria-hidden="true" tabindex="-1"></a><span class="fu">### The Piecewise NHPP Model</span></span>
-<span id="cb19-268"><a href="#cb19-268" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-269"><a href="#cb19-269" aria-hidden="true" tabindex="-1"></a>The **Piecewise NHPP** fits a separate Power Law to each segment of the time axis, separated by breakpoints. This is useful when a design change occurs during testing.</span>
-<span id="cb19-270"><a href="#cb19-270" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-271"><a href="#cb19-271" aria-hidden="true" tabindex="-1"></a>$$N_i(t) = N(t_{i-1}) + \lambda_i (t - t_{i-1})^{\beta_i}, \quad t_{i-1} &lt; t \leq t_i$$</span>
-<span id="cb19-272"><a href="#cb19-272" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-275"><a href="#cb19-275" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb19-276"><a href="#cb19-276" aria-hidden="true" tabindex="-1"></a>times    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">55</span>, <span class="dv">97</span>, <span class="dv">146</span>, <span class="dv">201</span>, <span class="dv">268</span>, <span class="dv">341</span>, <span class="dv">423</span>, <span class="dv">513</span>, <span class="dv">609</span>, <span class="dv">710</span>, <span class="dv">820</span>, <span class="dv">940</span>, <span class="dv">1072</span>, <span class="dv">1217</span>)</span>
-<span id="cb19-277"><a href="#cb19-277" aria-hidden="true" tabindex="-1"></a>failures <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">4</span>)</span>
-<span id="cb19-278"><a href="#cb19-278" aria-hidden="true" tabindex="-1"></a>breaks   <span class="ot">&lt;-</span> <span class="dv">500</span></span>
+<span id="cb19-264"><a href="#cb19-264" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-265"><a href="#cb19-265" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Solution<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
+<span id="cb19-268"><a href="#cb19-268" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb19-269"><a href="#cb19-269" aria-hidden="true" tabindex="-1"></a>times    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">120</span>, <span class="dv">220</span>, <span class="dv">360</span>, <span class="dv">530</span>, <span class="dv">740</span>, <span class="dv">1000</span>)</span>
+<span id="cb19-270"><a href="#cb19-270" aria-hidden="true" tabindex="-1"></a>failures <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb19-271"><a href="#cb19-271" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">rga</span>(times, failures, <span class="at">model_type =</span> <span class="st">"Crow-AMSAA"</span>)</span>
+<span id="cb19-272"><a href="#cb19-272" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit, <span class="at">main =</span> <span class="st">"Crow-AMSAA Reliability Growth"</span>,</span>
+<span id="cb19-273"><a href="#cb19-273" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Cumulative Test Time"</span>, <span class="at">ylab =</span> <span class="st">"Cumulative Failures"</span>)</span>
+<span id="cb19-274"><a href="#cb19-274" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-275"><a href="#cb19-275" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
+<span id="cb19-276"><a href="#cb19-276" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb19-277"><a href="#cb19-277" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-278"><a href="#cb19-278" aria-hidden="true" tabindex="-1"></a><span class="fu">### The Piecewise NHPP Model</span></span>
 <span id="cb19-279"><a href="#cb19-279" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-280"><a href="#cb19-280" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">rga</span>(times, failures, <span class="at">model_type =</span> <span class="st">"Piecewise NHPP"</span>, <span class="at">breaks =</span> breaks)</span>
-<span id="cb19-281"><a href="#cb19-281" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(result, <span class="at">main =</span> <span class="st">"Piecewise NHPP Model"</span>,</span>
-<span id="cb19-282"><a href="#cb19-282" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Cumulative Time"</span>, <span class="at">ylab =</span> <span class="st">"Cumulative Failures"</span>)</span>
-<span id="cb19-283"><a href="#cb19-283" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb19-284"><a href="#cb19-284" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-285"><a href="#cb19-285" aria-hidden="true" tabindex="-1"></a>The two segments have different slopes — the first segment (pre-change) has a higher slope than the second (post-change), confirming the design change reduced the failure rate.</span>
-<span id="cb19-286"><a href="#cb19-286" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-287"><a href="#cb19-287" aria-hidden="true" tabindex="-1"></a><span class="fu">### Change Point Detection</span></span>
-<span id="cb19-288"><a href="#cb19-288" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-289"><a href="#cb19-289" aria-hidden="true" tabindex="-1"></a>Without a known breakpoint, <span class="in">`rga()`</span> can detect the change point automatically:</span>
+<span id="cb19-280"><a href="#cb19-280" aria-hidden="true" tabindex="-1"></a>The **Piecewise NHPP** fits a separate Power Law to each segment of the time axis, separated by breakpoints. This is useful when a design change occurs during testing.</span>
+<span id="cb19-281"><a href="#cb19-281" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-282"><a href="#cb19-282" aria-hidden="true" tabindex="-1"></a>$$N_i(t) = N(t_{i-1}) + \lambda_i (t - t_{i-1})^{\beta_i}, \quad t_{i-1} &lt; t \leq t_i$$</span>
+<span id="cb19-283"><a href="#cb19-283" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-286"><a href="#cb19-286" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb19-287"><a href="#cb19-287" aria-hidden="true" tabindex="-1"></a>times    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">55</span>, <span class="dv">97</span>, <span class="dv">146</span>, <span class="dv">201</span>, <span class="dv">268</span>, <span class="dv">341</span>, <span class="dv">423</span>, <span class="dv">513</span>, <span class="dv">609</span>, <span class="dv">710</span>, <span class="dv">820</span>, <span class="dv">940</span>, <span class="dv">1072</span>, <span class="dv">1217</span>)</span>
+<span id="cb19-288"><a href="#cb19-288" aria-hidden="true" tabindex="-1"></a>failures <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">4</span>)</span>
+<span id="cb19-289"><a href="#cb19-289" aria-hidden="true" tabindex="-1"></a>breaks   <span class="ot">&lt;-</span> <span class="dv">500</span></span>
 <span id="cb19-290"><a href="#cb19-290" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-293"><a href="#cb19-293" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb19-294"><a href="#cb19-294" aria-hidden="true" tabindex="-1"></a>result_auto <span class="ot">&lt;-</span> <span class="fu">rga</span>(times, failures, <span class="at">model_type =</span> <span class="st">"Piecewise NHPP"</span>)</span>
-<span id="cb19-295"><a href="#cb19-295" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(result_auto, <span class="at">main =</span> <span class="st">"Piecewise NHPP with Change Point Detection"</span>,</span>
-<span id="cb19-296"><a href="#cb19-296" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Cumulative Time"</span>, <span class="at">ylab =</span> <span class="st">"Cumulative Failures"</span>)</span>
-<span id="cb19-297"><a href="#cb19-297" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb19-298"><a href="#cb19-298" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-299"><a href="#cb19-299" aria-hidden="true" tabindex="-1"></a>The automatically detected change point is near time 500, consistent with the known design change.</span>
-<span id="cb19-300"><a href="#cb19-300" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-301"><a href="#cb19-301" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
-<span id="cb19-302"><a href="#cb19-302" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-303"><a href="#cb19-303" aria-hidden="true" tabindex="-1"></a>**Key takeaways:**</span>
-<span id="cb19-304"><a href="#cb19-304" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-305"><a href="#cb19-305" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Duane model**: log-log of MTBF vs time; positive slope ($\beta &gt; 1$) = improving.</span>
-<span id="cb19-306"><a href="#cb19-306" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Crow-AMSAA**: log of cumulative failures vs time; concave downward = improving ($\beta &lt; 1$).</span>
-<span id="cb19-307"><a href="#cb19-307" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Piecewise NHPP**: fits multiple segments; use when a known change occurs during testing.</span>
-<span id="cb19-308"><a href="#cb19-308" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>For accelerated life testing (Arrhenius, Power Law, relationship plots), see @sec-alt.</span>
+<span id="cb19-291"><a href="#cb19-291" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">rga</span>(times, failures, <span class="at">model_type =</span> <span class="st">"Piecewise NHPP"</span>, <span class="at">breaks =</span> breaks)</span>
+<span id="cb19-292"><a href="#cb19-292" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(result, <span class="at">main =</span> <span class="st">"Piecewise NHPP Model"</span>,</span>
+<span id="cb19-293"><a href="#cb19-293" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Cumulative Time"</span>, <span class="at">ylab =</span> <span class="st">"Cumulative Failures"</span>)</span>
+<span id="cb19-294"><a href="#cb19-294" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-295"><a href="#cb19-295" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-296"><a href="#cb19-296" aria-hidden="true" tabindex="-1"></a>The two segments have different slopes — the first segment (pre-change) has a higher slope than the second (post-change), confirming the design change reduced the failure rate.</span>
+<span id="cb19-297"><a href="#cb19-297" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-298"><a href="#cb19-298" aria-hidden="true" tabindex="-1"></a><span class="fu">### Change Point Detection</span></span>
+<span id="cb19-299"><a href="#cb19-299" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-300"><a href="#cb19-300" aria-hidden="true" tabindex="-1"></a>Without a known breakpoint, <span class="in">`rga()`</span> can detect the change point automatically:</span>
+<span id="cb19-301"><a href="#cb19-301" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-304"><a href="#cb19-304" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb19-305"><a href="#cb19-305" aria-hidden="true" tabindex="-1"></a>result_auto <span class="ot">&lt;-</span> <span class="fu">rga</span>(times, failures, <span class="at">model_type =</span> <span class="st">"Piecewise NHPP"</span>)</span>
+<span id="cb19-306"><a href="#cb19-306" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(result_auto, <span class="at">main =</span> <span class="st">"Piecewise NHPP with Change Point Detection"</span>,</span>
+<span id="cb19-307"><a href="#cb19-307" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Cumulative Time"</span>, <span class="at">ylab =</span> <span class="st">"Cumulative Failures"</span>)</span>
+<span id="cb19-308"><a href="#cb19-308" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-309"><a href="#cb19-309" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-310"><a href="#cb19-310" aria-hidden="true" tabindex="-1"></a>The automatically detected change point is near time 500, consistent with the known design change.</span>
+<span id="cb19-311"><a href="#cb19-311" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-312"><a href="#cb19-312" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
+<span id="cb19-313"><a href="#cb19-313" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-314"><a href="#cb19-314" aria-hidden="true" tabindex="-1"></a>**Key takeaways:**</span>
+<span id="cb19-315"><a href="#cb19-315" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-316"><a href="#cb19-316" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Duane model**: log-log of MTBF vs time; positive slope ($\beta &gt; 1$) = improving.</span>
+<span id="cb19-317"><a href="#cb19-317" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Crow-AMSAA**: log of cumulative failures vs time; concave downward = improving ($\beta &lt; 1$).</span>
+<span id="cb19-318"><a href="#cb19-318" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Piecewise NHPP**: fits multiple segments; use when a known change occurs during testing.</span>
+<span id="cb19-319"><a href="#cb19-319" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>For accelerated life testing (Arrhenius, Power Law, relationship plots), see @sec-alt.</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

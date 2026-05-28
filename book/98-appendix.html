@@ -8,7 +8,7 @@
 
 <meta name="description" content="A companion reference guide to the ReliaLearnR interactive tutorials, covering RAM analysis, life data analysis, reliability testing, repairable systems, and reliability block diagrams, with additional chapters on interactive visualization with ReliaPlotR and web-based analysis with ReliaShiny.">
 
-<title>Appendix: Helper Functions Reference – Reliability Analysis with R: A Companion Guide</title>
+<title>Appendix: R Quick Reference – Reliability Analysis with R: A Companion Guide</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -150,7 +150,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./98-appendix.html">Appendix: Helper Functions Reference</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./98-appendix.html">Appendix: R Quick Reference</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -235,7 +235,7 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./98-appendix.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Appendix: Helper Functions Reference</span></a>
+ <span class="menu-text">Appendix: R Quick Reference</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -254,12 +254,13 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#rel-reliability" id="toc-rel-reliability" class="nav-link active" data-scroll-target="#rel-reliability">rel() — Reliability</a></li>
-  <li><a href="#avail-availability" id="toc-avail-availability" class="nav-link" data-scroll-target="#avail-availability">avail() — Availability</a></li>
-  <li><a href="#mttf-mean-time-to-failure" id="toc-mttf-mean-time-to-failure" class="nav-link" data-scroll-target="#mttf-mean-time-to-failure">mttf() — Mean Time to Failure</a></li>
-  <li><a href="#mtbf-mean-time-between-failures" id="toc-mtbf-mean-time-between-failures" class="nav-link" data-scroll-target="#mtbf-mean-time-between-failures">mtbf() — Mean Time Between Failures</a></li>
-  <li><a href="#fr-failure-rate" id="toc-fr-failure-rate" class="nav-link" data-scroll-target="#fr-failure-rate">fr() — Failure Rate</a></li>
-  <li><a href="#validation-behaviour" id="toc-validation-behaviour" class="nav-link" data-scroll-target="#validation-behaviour">Validation Behaviour</a></li>
+  <li><a href="#relialearnr" id="toc-relialearnr" class="nav-link active" data-scroll-target="#relialearnr">ReliaLearnR</a></li>
+  <li><a href="#weibullr" id="toc-weibullr" class="nav-link" data-scroll-target="#weibullr">WeibullR</a></li>
+  <li><a href="#weibullr.alt" id="toc-weibullr.alt" class="nav-link" data-scroll-target="#weibullr.alt">WeibullR.ALT</a></li>
+  <li><a href="#reliagrowr" id="toc-reliagrowr" class="nav-link" data-scroll-target="#reliagrowr">ReliaGrowR</a></li>
+  <li><a href="#diagrammer" id="toc-diagrammer" class="nav-link" data-scroll-target="#diagrammer">DiagrammeR</a></li>
+  <li><a href="#reliaplotr" id="toc-reliaplotr" class="nav-link" data-scroll-target="#reliaplotr">ReliaPlotR</a></li>
+  <li><a href="#reliashiny" id="toc-reliashiny" class="nav-link" data-scroll-target="#reliashiny">ReliaShiny</a></li>
   </ul>
 </nav>
     </div>
@@ -268,7 +269,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span id="sec-appendix" class="quarto-section-identifier">Appendix: Helper Functions Reference</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<div class="quarto-title-block"><div><h1 class="title"><span id="sec-appendix" class="quarto-section-identifier">Appendix: R Quick Reference</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
@@ -285,15 +286,26 @@ window.Quarto = {
 </header>
 
 
-<p>The <code>ReliaLearnR</code> package exports five RAM calculation helper functions. They accept scalar or vector inputs, validate their arguments, and return a single numeric scalar.</p>
+<p>This appendix lists every R package and function used in this book, organized by package, with the chapter(s) where each appears. Use it as a lookup reference when you want to find the right function quickly without having to search through the chapters.</p>
+<p>Install all packages at once with:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ReliaLearnR)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ReliaLearnR"</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"WeibullR"</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"WeibullR.ALT"</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ReliaGrowR"</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"DiagrammeR"</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ReliaPlotR"</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ReliaShiny"</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<section id="rel-reliability" class="level2">
-<h2 class="anchored" data-anchor-id="rel-reliability">rel() — Reliability</h2>
-<p><strong>Computes reliability as</strong> <span class="math inline">\(1 - \text{outage} / \text{total}\)</span>.</p>
+<hr>
+<section id="relialearnr" class="level2">
+<h2 class="anchored" data-anchor-id="relialearnr">ReliaLearnR</h2>
+<p>RAM (Reliability, Availability, and Maintainability) calculation helpers. All five functions accept scalar or vector inputs and return a single numeric scalar.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rel</span>(outageTime, totalTime)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"ReliaLearnR"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ReliaLearnR)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <table class="caption-top table">
 <colgroup>
@@ -303,272 +315,415 @@ window.Quarto = {
 </colgroup>
 <thead>
 <tr class="header">
-<th>Argument</th>
-<th>Type</th>
+<th>Function</th>
 <th>Description</th>
+<th>Chapter</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>outageTime</code></td>
-<td>numeric scalar or vector</td>
-<td>Forced outage (failed) time</td>
+<td><code>rel(outageTime, totalTime)</code></td>
+<td>Reliability: <span class="math inline">\(1 - \text{outage} / \text{total}\)</span></td>
+<td>Ch. 1</td>
 </tr>
 <tr class="even">
-<td><code>totalTime</code></td>
-<td>numeric scalar or vector</td>
-<td>Total time in the same units</td>
+<td><code>avail(unavailTime, totalTime)</code></td>
+<td>Availability: <span class="math inline">\(1 - \text{unavailable} / \text{total}\)</span> (failures + maintenance)</td>
+<td>Ch. 1</td>
+</tr>
+<tr class="odd">
+<td><code>mttf(failures, totalTime)</code></td>
+<td>Mean Time to Failure for non-repairable items</td>
+<td>Ch. 1</td>
+</tr>
+<tr class="even">
+<td><code>mtbf(failures, totalTime)</code></td>
+<td>Mean Time Between Failures for repairable systems</td>
+<td>Ch. 1</td>
+</tr>
+<tr class="odd">
+<td><code>fr(failures, totalTime)</code></td>
+<td>Failure rate <span class="math inline">\(\lambda = \text{failures} / \text{total time}\)</span></td>
+<td>Ch. 1</td>
 </tr>
 </tbody>
 </table>
-<p><strong>Returns</strong>: Numeric scalar in <span class="math inline">\([0, 1]\)</span>. Sums vectors before dividing.</p>
-<p><strong>Validation</strong>: Errors on NA, non-numeric, negative values, zero <code>totalTime</code>, or mismatched vector lengths.</p>
+<p><strong>Example usage:</strong></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Motor: failed 10 days out of 5 years (1825 days)</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rel</span>(<span class="at">outageTime =</span> <span class="dv">10</span>, <span class="at">totalTime =</span> <span class="dv">5</span> <span class="sc">*</span> <span class="dv">365</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ReliaLearnR)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rel</span>(<span class="at">outageTime =</span> <span class="dv">10</span>, <span class="at">totalTime =</span> <span class="dv">5</span> <span class="sc">*</span> <span class="dv">365</span>)   <span class="co"># reliability over 5 years</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.9945205</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Vector input: two machines pooled together</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rel</span>(<span class="at">outageTime =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">5</span>), <span class="at">totalTime =</span> <span class="fu">c</span>(<span class="dv">365</span>, <span class="dv">730</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">avail</span>(<span class="at">unavailTime =</span> <span class="dv">25</span>, <span class="at">totalTime =</span> <span class="dv">5</span> <span class="sc">*</span> <span class="dv">365</span>) <span class="co"># availability with maintenance</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.9863014</code></pre>
 </div>
-</div>
-<hr>
-</section>
-<section id="avail-availability" class="level2">
-<h2 class="anchored" data-anchor-id="avail-availability">avail() — Availability</h2>
-<p><strong>Computes availability as</strong> <span class="math inline">\(1 - \text{unavailable} / \text{total}\)</span>, where unavailable time includes both failures <em>and</em> scheduled maintenance.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">avail</span>(unavailTime, totalTime)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Argument</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>unavailTime</code></td>
-<td>numeric scalar or vector</td>
-<td>Total unavailable time (failed + maintenance)</td>
-</tr>
-<tr class="even">
-<td><code>totalTime</code></td>
-<td>numeric scalar or vector</td>
-<td>Total time in the same units</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Returns</strong>: Numeric scalar in <span class="math inline">\([0, 1]\)</span>.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Motor: 10 days failed + 15 days maintenance over 5 years</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">avail</span>(<span class="at">unavailTime =</span> <span class="dv">10</span> <span class="sc">+</span> <span class="dv">15</span>, <span class="at">totalTime =</span> <span class="dv">5</span> <span class="sc">*</span> <span class="dv">365</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.9863014</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Vector input: two assets</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">avail</span>(<span class="at">unavailTime =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">14</span>), <span class="at">totalTime =</span> <span class="fu">c</span>(<span class="dv">3</span> <span class="sc">*</span> <span class="dv">365</span>, <span class="dv">3</span> <span class="sc">*</span> <span class="dv">365</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.9913242</code></pre>
-</div>
-</div>
-<hr>
-</section>
-<section id="mttf-mean-time-to-failure" class="level2">
-<h2 class="anchored" data-anchor-id="mttf-mean-time-to-failure">mttf() — Mean Time to Failure</h2>
-<p><strong>Computes MTTF as</strong> <span class="math inline">\(\text{total time} / \text{failures}\)</span>, for <strong>non-repairable</strong> items.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mttf</span>(failures, totalTime)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Argument</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>failures</code></td>
-<td>numeric scalar or vector</td>
-<td>Failure counts</td>
-</tr>
-<tr class="even">
-<td><code>totalTime</code></td>
-<td>numeric scalar or vector</td>
-<td>Total operating time</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Returns</strong>: Numeric scalar (same units as <code>totalTime</code>). Returns <code>Inf</code> with a warning if <code>failures = 0</code>.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 100 motors, 5 years each, 5 failures</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mttf</span>(<span class="at">failures =</span> <span class="dv">5</span>, <span class="at">totalTime =</span> <span class="dv">100</span> <span class="sc">*</span> <span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mttf</span>(<span class="at">failures =</span> <span class="dv">5</span>, <span class="at">totalTime =</span> <span class="dv">100</span> <span class="sc">*</span> <span class="dv">5</span>)      <span class="co"># MTTF for a fleet of 100 units</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 100</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pooled fleet data</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mttf</span>(<span class="at">failures =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>), <span class="at">totalTime =</span> <span class="fu">c</span>(<span class="dv">500</span>, <span class="dv">500</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 200</code></pre>
-</div>
-</div>
-<hr>
-</section>
-<section id="mtbf-mean-time-between-failures" class="level2">
-<h2 class="anchored" data-anchor-id="mtbf-mean-time-between-failures">mtbf() — Mean Time Between Failures</h2>
-<p><strong>Computes MTBF as</strong> <span class="math inline">\(\text{total time} / \text{failures}\)</span>, for <strong>repairable</strong> systems.</p>
-<p>The formula is identical to <code>mttf()</code> but the semantic interpretation differs — MTBF is the expected time <em>between</em> successive failures on the same repairable system.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mtbf</span>(failures, totalTime)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Argument</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>failures</code></td>
-<td>numeric scalar or vector</td>
-<td>Failure counts</td>
-</tr>
-<tr class="even">
-<td><code>totalTime</code></td>
-<td>numeric scalar or vector</td>
-<td>Total operating time</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Returns</strong>: Numeric scalar. Returns <code>Inf</code> with a warning if <code>failures = 0</code>.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Machine failed 5 times in 45,000 operating hours</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mtbf</span>(<span class="at">failures =</span> <span class="dv">5</span>, <span class="at">totalTime =</span> <span class="dv">45000</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mtbf</span>(<span class="at">failures =</span> <span class="dv">5</span>, <span class="at">totalTime =</span> <span class="dv">45000</span>)        <span class="co"># MTBF for a repairable machine</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 9000</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fleet of 50 generators, 8 years, 20 failures</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mtbf</span>(<span class="at">failures =</span> <span class="dv">20</span>, <span class="at">totalTime =</span> <span class="dv">50</span> <span class="sc">*</span> <span class="dv">8</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 20</code></pre>
-</div>
-</div>
-<hr>
-</section>
-<section id="fr-failure-rate" class="level2">
-<h2 class="anchored" data-anchor-id="fr-failure-rate">fr() — Failure Rate</h2>
-<p><strong>Computes failure rate (λ) as</strong> <span class="math inline">\(\text{failures} / \text{total time}\)</span>.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fr</span>(failures, totalTime)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Argument</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>failures</code></td>
-<td>numeric scalar or vector</td>
-<td>Failure counts</td>
-</tr>
-<tr class="even">
-<td><code>totalTime</code></td>
-<td>numeric scalar or vector</td>
-<td>Total operating time</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Returns</strong>: Numeric scalar (failures per unit time). Note: <span class="math inline">\(\lambda = 1 / \text{MTBF}\)</span>.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 100 motors, 5000 hours each, 75 failures</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">fr</span>(<span class="at">failures =</span> <span class="dv">75</span>, <span class="at">totalTime =</span> <span class="dv">100</span> <span class="sc">*</span> <span class="dv">5000</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fr</span>(<span class="at">failures =</span> <span class="dv">75</span>, <span class="at">totalTime =</span> <span class="dv">100</span> <span class="sc">*</span> <span class="dv">5000</span>)    <span class="co"># failure rate (failures per hour)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.00015</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pooled data</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">fr</span>(<span class="at">failures =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">5</span>), <span class="at">totalTime =</span> <span class="fu">c</span>(<span class="dv">1000</span>, <span class="dv">2000</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.005</code></pre>
-</div>
 </div>
 <hr>
 </section>
-<section id="validation-behaviour" class="level2">
-<h2 class="anchored" data-anchor-id="validation-behaviour">Validation Behaviour</h2>
-<p>All five functions share the same input checks via an internal <code>.validate_inputs()</code> helper:</p>
+<section id="weibullr" class="level2">
+<h2 class="anchored" data-anchor-id="weibullr">WeibullR</h2>
+<p>Life data analysis: Weibull probability plotting, distribution fitting, and confidence bounds.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"WeibullR"</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(WeibullR)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Condition</th>
-<th>Error message</th>
+<th>Function</th>
+<th>Description</th>
+<th>Chapter</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>NA in either argument</td>
-<td><code>"NA values not allowed in inputs"</code></td>
+<td><code>wblr(...)</code></td>
+<td>Create a Weibull object from time/event data</td>
+<td>Ch. 3, 7</td>
 </tr>
 <tr class="even">
-<td>Non-numeric argument</td>
-<td><code>'"argument" must be numeric'</code></td>
+<td><code>wblr.fit(obj, ...)</code></td>
+<td>Fit a distribution (MLE or MRR) to a <code>wblr</code> object</td>
+<td>Ch. 3, 7</td>
 </tr>
 <tr class="odd">
-<td>Negative values</td>
-<td><code>"inputs must be non-negative"</code></td>
+<td><code>wblr.conf(obj, ...)</code></td>
+<td>Compute confidence bounds on a fitted <code>wblr</code> object</td>
+<td>Ch. 3, 7</td>
 </tr>
 <tr class="even">
-<td>Empty vector</td>
-<td><code>"inputs must not be empty vectors"</code></td>
+<td><code>MLEw2p(...)</code></td>
+<td>Fit a 2-parameter Weibull distribution via MLE directly</td>
+<td>Ch. 3</td>
 </tr>
 <tr class="odd">
-<td>Mismatched vector lengths</td>
-<td><code>"inputs must have the same length or one must be a scalar"</code></td>
-</tr>
-<tr class="even">
-<td>Zero total time</td>
-<td><code>"sum(totalTime) is zero (cannot divide by zero)"</code></td>
+<td><code>plot_contour(obj)</code></td>
+<td>Static likelihood ratio contour plot</td>
+<td>Ch. 3</td>
 </tr>
 </tbody>
 </table>
+<p><strong>Example usage:</strong></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># These all produce informative errors:</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rel</span>(<span class="cn">NA</span>, <span class="dv">100</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in `.validate_inputs()`:
-! NA values not allowed in inputs</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(WeibullR)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>failures <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">500</span>, <span class="dv">1200</span>, <span class="dv">900</span>, <span class="dv">1500</span>, <span class="dv">750</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>da <span class="ot">&lt;-</span> <span class="fu">wblr</span>(<span class="at">x =</span> failures, <span class="at">s =</span> <span class="fu">c</span>(<span class="dv">2000</span>, <span class="dv">2000</span>))  <span class="co"># 2 suspensions</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>da <span class="ot">&lt;-</span> <span class="fu">wblr.fit</span>(da, <span class="at">method.fit =</span> <span class="st">"mle"</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>da <span class="ot">&lt;-</span> <span class="fu">wblr.conf</span>(da, <span class="at">method.conf =</span> <span class="st">"lrb"</span>)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(da)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">avail</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="dv">100</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in `.validate_inputs()`:
-! inputs must be non-negative</code></pre>
+<hr>
+</section>
+<section id="weibullr.alt" class="level2">
+<h2 class="anchored" data-anchor-id="weibullr.alt">WeibullR.ALT</h2>
+<p>Accelerated Life Testing (ALT): fit life-stress relationships such as Arrhenius, Power Law, and Eyring to multi-stress datasets.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"WeibullR.ALT"</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(WeibullR.ALT)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mttf</span>(<span class="dv">5</span>, <span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in `mttf()`:
-! sum(totalTime) is zero (cannot compute MTTF)</code></pre>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Description</th>
+<th>Chapter</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>NelsonData(name)</code></td>
+<td>Load built-in Nelson ALT example datasets</td>
+<td>Ch. 5, 7</td>
+</tr>
+<tr class="even">
+<td><code>alt.data(...)</code></td>
+<td>Prepare an ALT data object from raw time/event/stress data</td>
+<td>Ch. 5, 7</td>
+</tr>
+<tr class="odd">
+<td><code>alt.make(...)</code></td>
+<td>Create an ALT model object (specify distribution and relationship)</td>
+<td>Ch. 5, 7</td>
+</tr>
+<tr class="even">
+<td><code>alt.parallel(obj)</code></td>
+<td>Constrain Weibull slopes to be equal across stress levels</td>
+<td>Ch. 5, 7</td>
+</tr>
+<tr class="odd">
+<td><code>alt.fit(obj, ...)</code></td>
+<td>Fit the life-stress relationship to the ALT model</td>
+<td>Ch. 5, 7</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example usage:</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(WeibullR.ALT)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>nd <span class="ot">&lt;-</span> <span class="fu">NelsonData</span>(<span class="st">"E2"</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>da <span class="ot">&lt;-</span> <span class="fu">alt.data</span>(nd)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>mo <span class="ot">&lt;-</span> <span class="fu">alt.make</span>(da, <span class="at">distribution =</span> <span class="st">"Weibull"</span>, <span class="at">relationship =</span> <span class="st">"Arrhenius"</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>mo <span class="ot">&lt;-</span> <span class="fu">alt.parallel</span>(mo)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>mo <span class="ot">&lt;-</span> <span class="fu">alt.fit</span>(mo)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mo)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<hr>
+</section>
+<section id="reliagrowr" class="level2">
+<h2 class="anchored" data-anchor-id="reliagrowr">ReliaGrowR</h2>
+<p>Reliability growth testing and repairable systems analysis: Crow-AMSAA, Duane, Power Law Process, and Mean Cumulative Function.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"ReliaGrowR"</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ReliaGrowR)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Description</th>
+<th>Chapter</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>rdt(...)</code></td>
+<td>Plan a Reliability Demonstration Test</td>
+<td>Ch. 4</td>
+</tr>
+<tr class="even">
+<td><code>rga(times, ...)</code></td>
+<td>Fit a Crow-AMSAA (NHPP Power Law) reliability growth model</td>
+<td>Ch. 4, 7</td>
+</tr>
+<tr class="odd">
+<td><code>predict_rga(obj, ...)</code></td>
+<td>Forecast cumulative failures from a <code>rga</code> object</td>
+<td>Ch. 4</td>
+</tr>
+<tr class="even">
+<td><code>duane(times, ...)</code></td>
+<td>Fit a Duane reliability growth model</td>
+<td>Ch. 4, 7</td>
+</tr>
+<tr class="odd">
+<td><code>nhpp(...)</code></td>
+<td>Fit a Power Law Process to repairable systems data</td>
+<td>Ch. 6, 7</td>
+</tr>
+<tr class="even">
+<td><code>mcf(...)</code></td>
+<td>Estimate the Mean Cumulative Function (Nelson-Aalen)</td>
+<td>Ch. 6, 7</td>
+</tr>
+<tr class="odd">
+<td><code>exposure(...)</code></td>
+<td>Compute fleet exposure from multi-system event data</td>
+<td>Ch. 6, 7</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example usage:</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ReliaGrowR)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Reliability growth</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>times <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">9.2</span>, <span class="dv">25</span>, <span class="fl">61.5</span>, <span class="dv">260</span>, <span class="dv">300</span>, <span class="dv">710</span>, <span class="dv">916</span>, <span class="dv">1010</span>, <span class="dv">1220</span>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>rga_fit <span class="ot">&lt;-</span> <span class="fu">rga</span>(times, <span class="at">T =</span> <span class="dv">1500</span>)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(rga_fit)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Repairable systems</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>events <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">id =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>), <span class="at">time =</span> <span class="fu">c</span>(<span class="dv">100</span>,<span class="dv">300</span>,<span class="dv">500</span>,<span class="dv">200</span>,<span class="dv">450</span>))</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>mcf_fit <span class="ot">&lt;-</span> <span class="fu">mcf</span>(events)</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mcf_fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<hr>
+</section>
+<section id="diagrammer" class="level2">
+<h2 class="anchored" data-anchor-id="diagrammer">DiagrammeR</h2>
+<p>Graph and diagram visualisation: render Graphviz DOT diagrams for reliability block diagrams and fault trees.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"DiagrammeR"</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DiagrammeR)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Description</th>
+<th>Chapter</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>grViz(diagram)</code></td>
+<td>Render a Graphviz DOT string as an SVG diagram</td>
+<td>Ch. 2</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example usage:</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DiagrammeR)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">grViz</span>(<span class="st">"</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="st">  digraph series {</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="st">    rankdir = LR</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="st">    node [shape = rectangle]</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="st">    A -&gt; B -&gt; C</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<hr>
+</section>
+<section id="reliaplotr" class="level2">
+<h2 class="anchored" data-anchor-id="reliaplotr">ReliaPlotR</h2>
+<p>Interactive, plotly-based versions of every static plot produced by WeibullR, WeibullR.ALT, and ReliaGrowR. Drop-in replacements that return <code>plotly</code> objects embeddable in Quarto documents and Shiny apps.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"ReliaPlotR"</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ReliaPlotR)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Description</th>
+<th>Chapter</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>plotly_wblr(obj)</code></td>
+<td>Interactive Weibull probability plot</td>
+<td>Ch. 7</td>
+</tr>
+<tr class="even">
+<td><code>plotly_contour(obj)</code></td>
+<td>Interactive likelihood ratio contour plot</td>
+<td>Ch. 7</td>
+</tr>
+<tr class="odd">
+<td><code>plotly_duane(obj)</code></td>
+<td>Interactive Duane reliability growth plot</td>
+<td>Ch. 7</td>
+</tr>
+<tr class="even">
+<td><code>plotly_rga(obj)</code></td>
+<td>Interactive Crow-AMSAA plot</td>
+<td>Ch. 7</td>
+</tr>
+<tr class="odd">
+<td><code>plotly_alt(obj)</code></td>
+<td>Interactive ALT probability plot</td>
+<td>Ch. 7</td>
+</tr>
+<tr class="even">
+<td><code>plotly_rel(obj)</code></td>
+<td>Interactive life-stress relationship plot</td>
+<td>Ch. 7</td>
+</tr>
+<tr class="odd">
+<td><code>plotly_nhpp(obj)</code></td>
+<td>Interactive NHPP intensity (recurrence rate) plot</td>
+<td>Ch. 7</td>
+</tr>
+<tr class="even">
+<td><code>plotly_mcf(obj)</code></td>
+<td>Interactive Mean Cumulative Function plot</td>
+<td>Ch. 7</td>
+</tr>
+<tr class="odd">
+<td><code>plotly_exposure(obj)</code></td>
+<td>Interactive fleet exposure plot</td>
+<td>Ch. 7</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example usage:</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ReliaPlotR)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(WeibullR)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>da <span class="ot">&lt;-</span> <span class="fu">wblr</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">500</span>, <span class="dv">1200</span>, <span class="dv">900</span>, <span class="dv">1500</span>, <span class="dv">750</span>))</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>da <span class="ot">&lt;-</span> <span class="fu">wblr.fit</span>(da, <span class="at">method.fit =</span> <span class="st">"mle"</span>)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>da <span class="ot">&lt;-</span> <span class="fu">wblr.conf</span>(da, <span class="at">method.conf =</span> <span class="st">"lrb"</span>)</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plotly_wblr</span>(da)   <span class="co"># interactive version of plot(da)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<hr>
+</section>
+<section id="reliashiny" class="level2">
+<h2 class="anchored" data-anchor-id="reliashiny">ReliaShiny</h2>
+<p>A point-and-click Shiny web application that wraps all of the above analyses in a browser-based UI — no coding required. Modules cover RAM, Life Data Analysis, Reliability Growth, ALT, Repairable Systems, and RBD.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"ReliaShiny"</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ReliaShiny)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Description</th>
+<th>Chapter</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>ReliaShiny()</code></td>
+<td>Launch the ReliaShiny web application in the default browser</td>
+<td>Ch. 8</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example usage:</strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ReliaShiny)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ReliaShiny</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 
@@ -1040,168 +1195,254 @@ window.Quarto = {
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Appendix: Helper Functions Reference {#sec-appendix .unnumbered}</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>The <span class="in">`ReliaLearnR`</span> package exports five RAM calculation helper functions. They accept scalar or vector inputs, validate their arguments, and return a single numeric scalar.</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ReliaLearnR)</span>
-<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a><span class="fu">## rel() — Reliability</span></span>
-<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>**Computes reliability as** $1 - \text{outage} / \text{total}$.</span>
-<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a><span class="fu">rel</span>(outageTime, totalTime)</span>
-<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-22"><a href="#cb33-22" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Argument <span class="pp">|</span> Type <span class="pp">|</span> Description <span class="pp">|</span></span>
-<span id="cb33-23"><a href="#cb33-23" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|</span></span>
-<span id="cb33-24"><a href="#cb33-24" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`outageTime`</span> <span class="pp">|</span> numeric scalar or vector <span class="pp">|</span> Forced outage (failed) time <span class="pp">|</span></span>
-<span id="cb33-25"><a href="#cb33-25" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`totalTime`</span> <span class="pp">|</span> numeric scalar or vector <span class="pp">|</span> Total time in the same units <span class="pp">|</span></span>
-<span id="cb33-26"><a href="#cb33-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-27"><a href="#cb33-27" aria-hidden="true" tabindex="-1"></a>**Returns**: Numeric scalar in $<span class="co">[</span><span class="ot">0, 1</span><span class="co">]</span>$. Sums vectors before dividing.</span>
-<span id="cb33-28"><a href="#cb33-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-29"><a href="#cb33-29" aria-hidden="true" tabindex="-1"></a>**Validation**: Errors on NA, non-numeric, negative values, zero <span class="in">`totalTime`</span>, or mismatched vector lengths.</span>
-<span id="cb33-30"><a href="#cb33-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-33"><a href="#cb33-33" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb33-34"><a href="#cb33-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Motor: failed 10 days out of 5 years (1825 days)</span></span>
-<span id="cb33-35"><a href="#cb33-35" aria-hidden="true" tabindex="-1"></a><span class="fu">rel</span>(<span class="at">outageTime =</span> <span class="dv">10</span>, <span class="at">totalTime =</span> <span class="dv">5</span> <span class="sc">*</span> <span class="dv">365</span>)</span>
-<span id="cb33-36"><a href="#cb33-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-37"><a href="#cb33-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Vector input: two machines pooled together</span></span>
-<span id="cb33-38"><a href="#cb33-38" aria-hidden="true" tabindex="-1"></a><span class="fu">rel</span>(<span class="at">outageTime =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">5</span>), <span class="at">totalTime =</span> <span class="fu">c</span>(<span class="dv">365</span>, <span class="dv">730</span>))</span>
-<span id="cb33-39"><a href="#cb33-39" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb33-40"><a href="#cb33-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-41"><a href="#cb33-41" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb33-42"><a href="#cb33-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-43"><a href="#cb33-43" aria-hidden="true" tabindex="-1"></a><span class="fu">## avail() — Availability</span></span>
-<span id="cb33-44"><a href="#cb33-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-45"><a href="#cb33-45" aria-hidden="true" tabindex="-1"></a>**Computes availability as** $1 - \text{unavailable} / \text{total}$, where unavailable time includes both failures *and* scheduled maintenance.</span>
-<span id="cb33-46"><a href="#cb33-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-49"><a href="#cb33-49" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb33-50"><a href="#cb33-50" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb33-51"><a href="#cb33-51" aria-hidden="true" tabindex="-1"></a><span class="fu">avail</span>(unavailTime, totalTime)</span>
-<span id="cb33-52"><a href="#cb33-52" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb33-53"><a href="#cb33-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-54"><a href="#cb33-54" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Argument <span class="pp">|</span> Type <span class="pp">|</span> Description <span class="pp">|</span></span>
-<span id="cb33-55"><a href="#cb33-55" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|</span></span>
-<span id="cb33-56"><a href="#cb33-56" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`unavailTime`</span> <span class="pp">|</span> numeric scalar or vector <span class="pp">|</span> Total unavailable time (failed + maintenance) <span class="pp">|</span></span>
-<span id="cb33-57"><a href="#cb33-57" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`totalTime`</span> <span class="pp">|</span> numeric scalar or vector <span class="pp">|</span> Total time in the same units <span class="pp">|</span></span>
-<span id="cb33-58"><a href="#cb33-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-59"><a href="#cb33-59" aria-hidden="true" tabindex="-1"></a>**Returns**: Numeric scalar in $<span class="co">[</span><span class="ot">0, 1</span><span class="co">]</span>$.</span>
-<span id="cb33-60"><a href="#cb33-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-63"><a href="#cb33-63" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb33-64"><a href="#cb33-64" aria-hidden="true" tabindex="-1"></a><span class="co"># Motor: 10 days failed + 15 days maintenance over 5 years</span></span>
-<span id="cb33-65"><a href="#cb33-65" aria-hidden="true" tabindex="-1"></a><span class="fu">avail</span>(<span class="at">unavailTime =</span> <span class="dv">10</span> <span class="sc">+</span> <span class="dv">15</span>, <span class="at">totalTime =</span> <span class="dv">5</span> <span class="sc">*</span> <span class="dv">365</span>)</span>
-<span id="cb33-66"><a href="#cb33-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-67"><a href="#cb33-67" aria-hidden="true" tabindex="-1"></a><span class="co"># Vector input: two assets</span></span>
-<span id="cb33-68"><a href="#cb33-68" aria-hidden="true" tabindex="-1"></a><span class="fu">avail</span>(<span class="at">unavailTime =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">14</span>), <span class="at">totalTime =</span> <span class="fu">c</span>(<span class="dv">3</span> <span class="sc">*</span> <span class="dv">365</span>, <span class="dv">3</span> <span class="sc">*</span> <span class="dv">365</span>))</span>
-<span id="cb33-69"><a href="#cb33-69" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb33-70"><a href="#cb33-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-71"><a href="#cb33-71" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb33-72"><a href="#cb33-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-73"><a href="#cb33-73" aria-hidden="true" tabindex="-1"></a><span class="fu">## mttf() — Mean Time to Failure</span></span>
-<span id="cb33-74"><a href="#cb33-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-75"><a href="#cb33-75" aria-hidden="true" tabindex="-1"></a>**Computes MTTF as** $\text{total time} / \text{failures}$, for **non-repairable** items.</span>
-<span id="cb33-76"><a href="#cb33-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-79"><a href="#cb33-79" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb33-80"><a href="#cb33-80" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb33-81"><a href="#cb33-81" aria-hidden="true" tabindex="-1"></a><span class="fu">mttf</span>(failures, totalTime)</span>
-<span id="cb33-82"><a href="#cb33-82" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb33-83"><a href="#cb33-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-84"><a href="#cb33-84" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Argument <span class="pp">|</span> Type <span class="pp">|</span> Description <span class="pp">|</span></span>
-<span id="cb33-85"><a href="#cb33-85" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|</span></span>
-<span id="cb33-86"><a href="#cb33-86" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`failures`</span> <span class="pp">|</span> numeric scalar or vector <span class="pp">|</span> Failure counts <span class="pp">|</span></span>
-<span id="cb33-87"><a href="#cb33-87" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`totalTime`</span> <span class="pp">|</span> numeric scalar or vector <span class="pp">|</span> Total operating time <span class="pp">|</span></span>
-<span id="cb33-88"><a href="#cb33-88" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-89"><a href="#cb33-89" aria-hidden="true" tabindex="-1"></a>**Returns**: Numeric scalar (same units as <span class="in">`totalTime`</span>). Returns <span class="in">`Inf`</span> with a warning if <span class="in">`failures = 0`</span>.</span>
-<span id="cb33-90"><a href="#cb33-90" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-93"><a href="#cb33-93" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb33-94"><a href="#cb33-94" aria-hidden="true" tabindex="-1"></a><span class="co"># 100 motors, 5 years each, 5 failures</span></span>
-<span id="cb33-95"><a href="#cb33-95" aria-hidden="true" tabindex="-1"></a><span class="fu">mttf</span>(<span class="at">failures =</span> <span class="dv">5</span>, <span class="at">totalTime =</span> <span class="dv">100</span> <span class="sc">*</span> <span class="dv">5</span>)</span>
-<span id="cb33-96"><a href="#cb33-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-97"><a href="#cb33-97" aria-hidden="true" tabindex="-1"></a><span class="co"># Pooled fleet data</span></span>
-<span id="cb33-98"><a href="#cb33-98" aria-hidden="true" tabindex="-1"></a><span class="fu">mttf</span>(<span class="at">failures =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>), <span class="at">totalTime =</span> <span class="fu">c</span>(<span class="dv">500</span>, <span class="dv">500</span>))</span>
-<span id="cb33-99"><a href="#cb33-99" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb33-100"><a href="#cb33-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-101"><a href="#cb33-101" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb33-102"><a href="#cb33-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-103"><a href="#cb33-103" aria-hidden="true" tabindex="-1"></a><span class="fu">## mtbf() — Mean Time Between Failures</span></span>
-<span id="cb33-104"><a href="#cb33-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-105"><a href="#cb33-105" aria-hidden="true" tabindex="-1"></a>**Computes MTBF as** $\text{total time} / \text{failures}$, for **repairable** systems.</span>
-<span id="cb33-106"><a href="#cb33-106" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-107"><a href="#cb33-107" aria-hidden="true" tabindex="-1"></a>The formula is identical to <span class="in">`mttf()`</span> but the semantic interpretation differs — MTBF is the expected time *between* successive failures on the same repairable system.</span>
-<span id="cb33-108"><a href="#cb33-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-111"><a href="#cb33-111" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb33-112"><a href="#cb33-112" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb33-113"><a href="#cb33-113" aria-hidden="true" tabindex="-1"></a><span class="fu">mtbf</span>(failures, totalTime)</span>
-<span id="cb33-114"><a href="#cb33-114" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb33-115"><a href="#cb33-115" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-116"><a href="#cb33-116" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Argument <span class="pp">|</span> Type <span class="pp">|</span> Description <span class="pp">|</span></span>
-<span id="cb33-117"><a href="#cb33-117" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|</span></span>
-<span id="cb33-118"><a href="#cb33-118" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`failures`</span> <span class="pp">|</span> numeric scalar or vector <span class="pp">|</span> Failure counts <span class="pp">|</span></span>
-<span id="cb33-119"><a href="#cb33-119" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`totalTime`</span> <span class="pp">|</span> numeric scalar or vector <span class="pp">|</span> Total operating time <span class="pp">|</span></span>
-<span id="cb33-120"><a href="#cb33-120" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-121"><a href="#cb33-121" aria-hidden="true" tabindex="-1"></a>**Returns**: Numeric scalar. Returns <span class="in">`Inf`</span> with a warning if <span class="in">`failures = 0`</span>.</span>
-<span id="cb33-122"><a href="#cb33-122" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-125"><a href="#cb33-125" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb33-126"><a href="#cb33-126" aria-hidden="true" tabindex="-1"></a><span class="co"># Machine failed 5 times in 45,000 operating hours</span></span>
-<span id="cb33-127"><a href="#cb33-127" aria-hidden="true" tabindex="-1"></a><span class="fu">mtbf</span>(<span class="at">failures =</span> <span class="dv">5</span>, <span class="at">totalTime =</span> <span class="dv">45000</span>)</span>
-<span id="cb33-128"><a href="#cb33-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-129"><a href="#cb33-129" aria-hidden="true" tabindex="-1"></a><span class="co"># Fleet of 50 generators, 8 years, 20 failures</span></span>
-<span id="cb33-130"><a href="#cb33-130" aria-hidden="true" tabindex="-1"></a><span class="fu">mtbf</span>(<span class="at">failures =</span> <span class="dv">20</span>, <span class="at">totalTime =</span> <span class="dv">50</span> <span class="sc">*</span> <span class="dv">8</span>)</span>
-<span id="cb33-131"><a href="#cb33-131" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb33-132"><a href="#cb33-132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-133"><a href="#cb33-133" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb33-134"><a href="#cb33-134" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-135"><a href="#cb33-135" aria-hidden="true" tabindex="-1"></a><span class="fu">## fr() — Failure Rate</span></span>
-<span id="cb33-136"><a href="#cb33-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-137"><a href="#cb33-137" aria-hidden="true" tabindex="-1"></a>**Computes failure rate (λ) as** $\text{failures} / \text{total time}$.</span>
-<span id="cb33-138"><a href="#cb33-138" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-141"><a href="#cb33-141" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb33-142"><a href="#cb33-142" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb33-143"><a href="#cb33-143" aria-hidden="true" tabindex="-1"></a><span class="fu">fr</span>(failures, totalTime)</span>
-<span id="cb33-144"><a href="#cb33-144" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb33-145"><a href="#cb33-145" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-146"><a href="#cb33-146" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Argument <span class="pp">|</span> Type <span class="pp">|</span> Description <span class="pp">|</span></span>
-<span id="cb33-147"><a href="#cb33-147" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|</span></span>
-<span id="cb33-148"><a href="#cb33-148" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`failures`</span> <span class="pp">|</span> numeric scalar or vector <span class="pp">|</span> Failure counts <span class="pp">|</span></span>
-<span id="cb33-149"><a href="#cb33-149" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`totalTime`</span> <span class="pp">|</span> numeric scalar or vector <span class="pp">|</span> Total operating time <span class="pp">|</span></span>
-<span id="cb33-150"><a href="#cb33-150" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-151"><a href="#cb33-151" aria-hidden="true" tabindex="-1"></a>**Returns**: Numeric scalar (failures per unit time). Note: $\lambda = 1 / \text{MTBF}$.</span>
-<span id="cb33-152"><a href="#cb33-152" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-155"><a href="#cb33-155" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb33-156"><a href="#cb33-156" aria-hidden="true" tabindex="-1"></a><span class="co"># 100 motors, 5000 hours each, 75 failures</span></span>
-<span id="cb33-157"><a href="#cb33-157" aria-hidden="true" tabindex="-1"></a><span class="fu">fr</span>(<span class="at">failures =</span> <span class="dv">75</span>, <span class="at">totalTime =</span> <span class="dv">100</span> <span class="sc">*</span> <span class="dv">5000</span>)</span>
-<span id="cb33-158"><a href="#cb33-158" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-159"><a href="#cb33-159" aria-hidden="true" tabindex="-1"></a><span class="co"># Pooled data</span></span>
-<span id="cb33-160"><a href="#cb33-160" aria-hidden="true" tabindex="-1"></a><span class="fu">fr</span>(<span class="at">failures =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">5</span>), <span class="at">totalTime =</span> <span class="fu">c</span>(<span class="dv">1000</span>, <span class="dv">2000</span>))</span>
-<span id="cb33-161"><a href="#cb33-161" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb33-162"><a href="#cb33-162" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-163"><a href="#cb33-163" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb33-164"><a href="#cb33-164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-165"><a href="#cb33-165" aria-hidden="true" tabindex="-1"></a><span class="fu">## Validation Behaviour</span></span>
-<span id="cb33-166"><a href="#cb33-166" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-167"><a href="#cb33-167" aria-hidden="true" tabindex="-1"></a>All five functions share the same input checks via an internal <span class="in">`.validate_inputs()`</span> helper:</span>
-<span id="cb33-168"><a href="#cb33-168" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-169"><a href="#cb33-169" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Condition <span class="pp">|</span> Error message <span class="pp">|</span></span>
-<span id="cb33-170"><a href="#cb33-170" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|</span></span>
-<span id="cb33-171"><a href="#cb33-171" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> NA in either argument <span class="pp">|</span> <span class="in">`"NA values not allowed in inputs"`</span> <span class="pp">|</span></span>
-<span id="cb33-172"><a href="#cb33-172" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Non-numeric argument <span class="pp">|</span> <span class="in">`'"argument" must be numeric'`</span> <span class="pp">|</span></span>
-<span id="cb33-173"><a href="#cb33-173" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Negative values <span class="pp">|</span> <span class="in">`"inputs must be non-negative"`</span> <span class="pp">|</span></span>
-<span id="cb33-174"><a href="#cb33-174" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Empty vector <span class="pp">|</span> <span class="in">`"inputs must not be empty vectors"`</span> <span class="pp">|</span></span>
-<span id="cb33-175"><a href="#cb33-175" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Mismatched vector lengths <span class="pp">|</span> <span class="in">`"inputs must have the same length or one must be a scalar"`</span> <span class="pp">|</span></span>
-<span id="cb33-176"><a href="#cb33-176" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Zero total time <span class="pp">|</span> <span class="in">`"sum(totalTime) is zero (cannot divide by zero)"`</span> <span class="pp">|</span></span>
-<span id="cb33-177"><a href="#cb33-177" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-180"><a href="#cb33-180" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb33-181"><a href="#cb33-181" aria-hidden="true" tabindex="-1"></a><span class="co">#| error: true</span></span>
-<span id="cb33-182"><a href="#cb33-182" aria-hidden="true" tabindex="-1"></a><span class="co"># These all produce informative errors:</span></span>
-<span id="cb33-183"><a href="#cb33-183" aria-hidden="true" tabindex="-1"></a><span class="fu">rel</span>(<span class="cn">NA</span>, <span class="dv">100</span>)</span>
-<span id="cb33-184"><a href="#cb33-184" aria-hidden="true" tabindex="-1"></a><span class="fu">avail</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="dv">100</span>)</span>
-<span id="cb33-185"><a href="#cb33-185" aria-hidden="true" tabindex="-1"></a><span class="fu">mttf</span>(<span class="dv">5</span>, <span class="dv">0</span>)</span>
-<span id="cb33-186"><a href="#cb33-186" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Appendix: R Quick Reference {#sec-appendix .unnumbered}</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>This appendix lists every R package and function used in this book, organized by package, with the chapter(s) where each appears. Use it as a lookup reference when you want to find the right function quickly without having to search through the chapters.</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>Install all packages at once with:</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ReliaLearnR"</span>,</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">"WeibullR"</span>,</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">"WeibullR.ALT"</span>,</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ReliaGrowR"</span>,</span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">"DiagrammeR"</span>,</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ReliaPlotR"</span>,</span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ReliaShiny"</span></span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>))</span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a><span class="fu">## ReliaLearnR</span></span>
+<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a>RAM (Reliability, Availability, and Maintainability) calculation helpers. All five functions accept scalar or vector inputs and return a single numeric scalar.</span>
+<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-30"><a href="#cb25-30" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb25-31"><a href="#cb25-31" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb25-32"><a href="#cb25-32" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"ReliaLearnR"</span>)</span>
+<span id="cb25-33"><a href="#cb25-33" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ReliaLearnR)</span>
+<span id="cb25-34"><a href="#cb25-34" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb25-35"><a href="#cb25-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-36"><a href="#cb25-36" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Function <span class="pp">|</span> Description <span class="pp">|</span> Chapter <span class="pp">|</span></span>
+<span id="cb25-37"><a href="#cb25-37" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|</span></span>
+<span id="cb25-38"><a href="#cb25-38" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`rel(outageTime, totalTime)`</span> <span class="pp">|</span> Reliability: $1 - \text{outage} / \text{total}$ <span class="pp">|</span> Ch. 1 <span class="pp">|</span></span>
+<span id="cb25-39"><a href="#cb25-39" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`avail(unavailTime, totalTime)`</span> <span class="pp">|</span> Availability: $1 - \text{unavailable} / \text{total}$ (failures + maintenance) <span class="pp">|</span> Ch. 1 <span class="pp">|</span></span>
+<span id="cb25-40"><a href="#cb25-40" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`mttf(failures, totalTime)`</span> <span class="pp">|</span> Mean Time to Failure for non-repairable items <span class="pp">|</span> Ch. 1 <span class="pp">|</span></span>
+<span id="cb25-41"><a href="#cb25-41" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`mtbf(failures, totalTime)`</span> <span class="pp">|</span> Mean Time Between Failures for repairable systems <span class="pp">|</span> Ch. 1 <span class="pp">|</span></span>
+<span id="cb25-42"><a href="#cb25-42" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`fr(failures, totalTime)`</span> <span class="pp">|</span> Failure rate $\lambda = \text{failures} / \text{total time}$ <span class="pp">|</span> Ch. 1 <span class="pp">|</span></span>
+<span id="cb25-43"><a href="#cb25-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-44"><a href="#cb25-44" aria-hidden="true" tabindex="-1"></a>**Example usage:**</span>
+<span id="cb25-45"><a href="#cb25-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-48"><a href="#cb25-48" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb25-49"><a href="#cb25-49" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ReliaLearnR)</span>
+<span id="cb25-50"><a href="#cb25-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-51"><a href="#cb25-51" aria-hidden="true" tabindex="-1"></a><span class="fu">rel</span>(<span class="at">outageTime =</span> <span class="dv">10</span>, <span class="at">totalTime =</span> <span class="dv">5</span> <span class="sc">*</span> <span class="dv">365</span>)   <span class="co"># reliability over 5 years</span></span>
+<span id="cb25-52"><a href="#cb25-52" aria-hidden="true" tabindex="-1"></a><span class="fu">avail</span>(<span class="at">unavailTime =</span> <span class="dv">25</span>, <span class="at">totalTime =</span> <span class="dv">5</span> <span class="sc">*</span> <span class="dv">365</span>) <span class="co"># availability with maintenance</span></span>
+<span id="cb25-53"><a href="#cb25-53" aria-hidden="true" tabindex="-1"></a><span class="fu">mttf</span>(<span class="at">failures =</span> <span class="dv">5</span>, <span class="at">totalTime =</span> <span class="dv">100</span> <span class="sc">*</span> <span class="dv">5</span>)      <span class="co"># MTTF for a fleet of 100 units</span></span>
+<span id="cb25-54"><a href="#cb25-54" aria-hidden="true" tabindex="-1"></a><span class="fu">mtbf</span>(<span class="at">failures =</span> <span class="dv">5</span>, <span class="at">totalTime =</span> <span class="dv">45000</span>)        <span class="co"># MTBF for a repairable machine</span></span>
+<span id="cb25-55"><a href="#cb25-55" aria-hidden="true" tabindex="-1"></a><span class="fu">fr</span>(<span class="at">failures =</span> <span class="dv">75</span>, <span class="at">totalTime =</span> <span class="dv">100</span> <span class="sc">*</span> <span class="dv">5000</span>)    <span class="co"># failure rate (failures per hour)</span></span>
+<span id="cb25-56"><a href="#cb25-56" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb25-57"><a href="#cb25-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-58"><a href="#cb25-58" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb25-59"><a href="#cb25-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-60"><a href="#cb25-60" aria-hidden="true" tabindex="-1"></a><span class="fu">## WeibullR</span></span>
+<span id="cb25-61"><a href="#cb25-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-62"><a href="#cb25-62" aria-hidden="true" tabindex="-1"></a>Life data analysis: Weibull probability plotting, distribution fitting, and confidence bounds.</span>
+<span id="cb25-63"><a href="#cb25-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-66"><a href="#cb25-66" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb25-67"><a href="#cb25-67" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb25-68"><a href="#cb25-68" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"WeibullR"</span>)</span>
+<span id="cb25-69"><a href="#cb25-69" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(WeibullR)</span>
+<span id="cb25-70"><a href="#cb25-70" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb25-71"><a href="#cb25-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-72"><a href="#cb25-72" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Function <span class="pp">|</span> Description <span class="pp">|</span> Chapter <span class="pp">|</span></span>
+<span id="cb25-73"><a href="#cb25-73" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|</span></span>
+<span id="cb25-74"><a href="#cb25-74" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`wblr(...)`</span> <span class="pp">|</span> Create a Weibull object from time/event data <span class="pp">|</span> Ch. 3, 7 <span class="pp">|</span></span>
+<span id="cb25-75"><a href="#cb25-75" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`wblr.fit(obj, ...)`</span> <span class="pp">|</span> Fit a distribution (MLE or MRR) to a <span class="in">`wblr`</span> object <span class="pp">|</span> Ch. 3, 7 <span class="pp">|</span></span>
+<span id="cb25-76"><a href="#cb25-76" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`wblr.conf(obj, ...)`</span> <span class="pp">|</span> Compute confidence bounds on a fitted <span class="in">`wblr`</span> object <span class="pp">|</span> Ch. 3, 7 <span class="pp">|</span></span>
+<span id="cb25-77"><a href="#cb25-77" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`MLEw2p(...)`</span> <span class="pp">|</span> Fit a 2-parameter Weibull distribution via MLE directly <span class="pp">|</span> Ch. 3 <span class="pp">|</span></span>
+<span id="cb25-78"><a href="#cb25-78" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`plot_contour(obj)`</span> <span class="pp">|</span> Static likelihood ratio contour plot <span class="pp">|</span> Ch. 3 <span class="pp">|</span></span>
+<span id="cb25-79"><a href="#cb25-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-80"><a href="#cb25-80" aria-hidden="true" tabindex="-1"></a>**Example usage:**</span>
+<span id="cb25-81"><a href="#cb25-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-84"><a href="#cb25-84" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb25-85"><a href="#cb25-85" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb25-86"><a href="#cb25-86" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(WeibullR)</span>
+<span id="cb25-87"><a href="#cb25-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-88"><a href="#cb25-88" aria-hidden="true" tabindex="-1"></a>failures <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">500</span>, <span class="dv">1200</span>, <span class="dv">900</span>, <span class="dv">1500</span>, <span class="dv">750</span>)</span>
+<span id="cb25-89"><a href="#cb25-89" aria-hidden="true" tabindex="-1"></a>da <span class="ot">&lt;-</span> <span class="fu">wblr</span>(<span class="at">x =</span> failures, <span class="at">s =</span> <span class="fu">c</span>(<span class="dv">2000</span>, <span class="dv">2000</span>))  <span class="co"># 2 suspensions</span></span>
+<span id="cb25-90"><a href="#cb25-90" aria-hidden="true" tabindex="-1"></a>da <span class="ot">&lt;-</span> <span class="fu">wblr.fit</span>(da, <span class="at">method.fit =</span> <span class="st">"mle"</span>)</span>
+<span id="cb25-91"><a href="#cb25-91" aria-hidden="true" tabindex="-1"></a>da <span class="ot">&lt;-</span> <span class="fu">wblr.conf</span>(da, <span class="at">method.conf =</span> <span class="st">"lrb"</span>)</span>
+<span id="cb25-92"><a href="#cb25-92" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(da)</span>
+<span id="cb25-93"><a href="#cb25-93" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb25-94"><a href="#cb25-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-95"><a href="#cb25-95" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb25-96"><a href="#cb25-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-97"><a href="#cb25-97" aria-hidden="true" tabindex="-1"></a><span class="fu">## WeibullR.ALT</span></span>
+<span id="cb25-98"><a href="#cb25-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-99"><a href="#cb25-99" aria-hidden="true" tabindex="-1"></a>Accelerated Life Testing (ALT): fit life-stress relationships such as Arrhenius, Power Law, and Eyring to multi-stress datasets.</span>
+<span id="cb25-100"><a href="#cb25-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-103"><a href="#cb25-103" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb25-104"><a href="#cb25-104" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb25-105"><a href="#cb25-105" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"WeibullR.ALT"</span>)</span>
+<span id="cb25-106"><a href="#cb25-106" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(WeibullR.ALT)</span>
+<span id="cb25-107"><a href="#cb25-107" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb25-108"><a href="#cb25-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-109"><a href="#cb25-109" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Function <span class="pp">|</span> Description <span class="pp">|</span> Chapter <span class="pp">|</span></span>
+<span id="cb25-110"><a href="#cb25-110" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|</span></span>
+<span id="cb25-111"><a href="#cb25-111" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`NelsonData(name)`</span> <span class="pp">|</span> Load built-in Nelson ALT example datasets <span class="pp">|</span> Ch. 5, 7 <span class="pp">|</span></span>
+<span id="cb25-112"><a href="#cb25-112" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`alt.data(...)`</span> <span class="pp">|</span> Prepare an ALT data object from raw time/event/stress data <span class="pp">|</span> Ch. 5, 7 <span class="pp">|</span></span>
+<span id="cb25-113"><a href="#cb25-113" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`alt.make(...)`</span> <span class="pp">|</span> Create an ALT model object (specify distribution and relationship) <span class="pp">|</span> Ch. 5, 7 <span class="pp">|</span></span>
+<span id="cb25-114"><a href="#cb25-114" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`alt.parallel(obj)`</span> <span class="pp">|</span> Constrain Weibull slopes to be equal across stress levels <span class="pp">|</span> Ch. 5, 7 <span class="pp">|</span></span>
+<span id="cb25-115"><a href="#cb25-115" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`alt.fit(obj, ...)`</span> <span class="pp">|</span> Fit the life-stress relationship to the ALT model <span class="pp">|</span> Ch. 5, 7 <span class="pp">|</span></span>
+<span id="cb25-116"><a href="#cb25-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-117"><a href="#cb25-117" aria-hidden="true" tabindex="-1"></a>**Example usage:**</span>
+<span id="cb25-118"><a href="#cb25-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-121"><a href="#cb25-121" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb25-122"><a href="#cb25-122" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb25-123"><a href="#cb25-123" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(WeibullR.ALT)</span>
+<span id="cb25-124"><a href="#cb25-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-125"><a href="#cb25-125" aria-hidden="true" tabindex="-1"></a>nd <span class="ot">&lt;-</span> <span class="fu">NelsonData</span>(<span class="st">"E2"</span>)</span>
+<span id="cb25-126"><a href="#cb25-126" aria-hidden="true" tabindex="-1"></a>da <span class="ot">&lt;-</span> <span class="fu">alt.data</span>(nd)</span>
+<span id="cb25-127"><a href="#cb25-127" aria-hidden="true" tabindex="-1"></a>mo <span class="ot">&lt;-</span> <span class="fu">alt.make</span>(da, <span class="at">distribution =</span> <span class="st">"Weibull"</span>, <span class="at">relationship =</span> <span class="st">"Arrhenius"</span>)</span>
+<span id="cb25-128"><a href="#cb25-128" aria-hidden="true" tabindex="-1"></a>mo <span class="ot">&lt;-</span> <span class="fu">alt.parallel</span>(mo)</span>
+<span id="cb25-129"><a href="#cb25-129" aria-hidden="true" tabindex="-1"></a>mo <span class="ot">&lt;-</span> <span class="fu">alt.fit</span>(mo)</span>
+<span id="cb25-130"><a href="#cb25-130" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mo)</span>
+<span id="cb25-131"><a href="#cb25-131" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb25-132"><a href="#cb25-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-133"><a href="#cb25-133" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb25-134"><a href="#cb25-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-135"><a href="#cb25-135" aria-hidden="true" tabindex="-1"></a><span class="fu">## ReliaGrowR</span></span>
+<span id="cb25-136"><a href="#cb25-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-137"><a href="#cb25-137" aria-hidden="true" tabindex="-1"></a>Reliability growth testing and repairable systems analysis: Crow-AMSAA, Duane, Power Law Process, and Mean Cumulative Function.</span>
+<span id="cb25-138"><a href="#cb25-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-141"><a href="#cb25-141" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb25-142"><a href="#cb25-142" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb25-143"><a href="#cb25-143" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"ReliaGrowR"</span>)</span>
+<span id="cb25-144"><a href="#cb25-144" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ReliaGrowR)</span>
+<span id="cb25-145"><a href="#cb25-145" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb25-146"><a href="#cb25-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-147"><a href="#cb25-147" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Function <span class="pp">|</span> Description <span class="pp">|</span> Chapter <span class="pp">|</span></span>
+<span id="cb25-148"><a href="#cb25-148" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|</span></span>
+<span id="cb25-149"><a href="#cb25-149" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`rdt(...)`</span> <span class="pp">|</span> Plan a Reliability Demonstration Test <span class="pp">|</span> Ch. 4 <span class="pp">|</span></span>
+<span id="cb25-150"><a href="#cb25-150" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`rga(times, ...)`</span> <span class="pp">|</span> Fit a Crow-AMSAA (NHPP Power Law) reliability growth model <span class="pp">|</span> Ch. 4, 7 <span class="pp">|</span></span>
+<span id="cb25-151"><a href="#cb25-151" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`predict_rga(obj, ...)`</span> <span class="pp">|</span> Forecast cumulative failures from a <span class="in">`rga`</span> object <span class="pp">|</span> Ch. 4 <span class="pp">|</span></span>
+<span id="cb25-152"><a href="#cb25-152" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`duane(times, ...)`</span> <span class="pp">|</span> Fit a Duane reliability growth model <span class="pp">|</span> Ch. 4, 7 <span class="pp">|</span></span>
+<span id="cb25-153"><a href="#cb25-153" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`nhpp(...)`</span> <span class="pp">|</span> Fit a Power Law Process to repairable systems data <span class="pp">|</span> Ch. 6, 7 <span class="pp">|</span></span>
+<span id="cb25-154"><a href="#cb25-154" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`mcf(...)`</span> <span class="pp">|</span> Estimate the Mean Cumulative Function (Nelson-Aalen) <span class="pp">|</span> Ch. 6, 7 <span class="pp">|</span></span>
+<span id="cb25-155"><a href="#cb25-155" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`exposure(...)`</span> <span class="pp">|</span> Compute fleet exposure from multi-system event data <span class="pp">|</span> Ch. 6, 7 <span class="pp">|</span></span>
+<span id="cb25-156"><a href="#cb25-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-157"><a href="#cb25-157" aria-hidden="true" tabindex="-1"></a>**Example usage:**</span>
+<span id="cb25-158"><a href="#cb25-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-161"><a href="#cb25-161" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb25-162"><a href="#cb25-162" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb25-163"><a href="#cb25-163" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ReliaGrowR)</span>
+<span id="cb25-164"><a href="#cb25-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-165"><a href="#cb25-165" aria-hidden="true" tabindex="-1"></a><span class="co"># Reliability growth</span></span>
+<span id="cb25-166"><a href="#cb25-166" aria-hidden="true" tabindex="-1"></a>times <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">9.2</span>, <span class="dv">25</span>, <span class="fl">61.5</span>, <span class="dv">260</span>, <span class="dv">300</span>, <span class="dv">710</span>, <span class="dv">916</span>, <span class="dv">1010</span>, <span class="dv">1220</span>)</span>
+<span id="cb25-167"><a href="#cb25-167" aria-hidden="true" tabindex="-1"></a>rga_fit <span class="ot">&lt;-</span> <span class="fu">rga</span>(times, <span class="at">T =</span> <span class="dv">1500</span>)</span>
+<span id="cb25-168"><a href="#cb25-168" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(rga_fit)</span>
+<span id="cb25-169"><a href="#cb25-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-170"><a href="#cb25-170" aria-hidden="true" tabindex="-1"></a><span class="co"># Repairable systems</span></span>
+<span id="cb25-171"><a href="#cb25-171" aria-hidden="true" tabindex="-1"></a>events <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">id =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>), <span class="at">time =</span> <span class="fu">c</span>(<span class="dv">100</span>,<span class="dv">300</span>,<span class="dv">500</span>,<span class="dv">200</span>,<span class="dv">450</span>))</span>
+<span id="cb25-172"><a href="#cb25-172" aria-hidden="true" tabindex="-1"></a>mcf_fit <span class="ot">&lt;-</span> <span class="fu">mcf</span>(events)</span>
+<span id="cb25-173"><a href="#cb25-173" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mcf_fit)</span>
+<span id="cb25-174"><a href="#cb25-174" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb25-175"><a href="#cb25-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-176"><a href="#cb25-176" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb25-177"><a href="#cb25-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-178"><a href="#cb25-178" aria-hidden="true" tabindex="-1"></a><span class="fu">## DiagrammeR</span></span>
+<span id="cb25-179"><a href="#cb25-179" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-180"><a href="#cb25-180" aria-hidden="true" tabindex="-1"></a>Graph and diagram visualisation: render Graphviz DOT diagrams for reliability block diagrams and fault trees.</span>
+<span id="cb25-181"><a href="#cb25-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-184"><a href="#cb25-184" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb25-185"><a href="#cb25-185" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb25-186"><a href="#cb25-186" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"DiagrammeR"</span>)</span>
+<span id="cb25-187"><a href="#cb25-187" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DiagrammeR)</span>
+<span id="cb25-188"><a href="#cb25-188" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb25-189"><a href="#cb25-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-190"><a href="#cb25-190" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Function <span class="pp">|</span> Description <span class="pp">|</span> Chapter <span class="pp">|</span></span>
+<span id="cb25-191"><a href="#cb25-191" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|</span></span>
+<span id="cb25-192"><a href="#cb25-192" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`grViz(diagram)`</span> <span class="pp">|</span> Render a Graphviz DOT string as an SVG diagram <span class="pp">|</span> Ch. 2 <span class="pp">|</span></span>
+<span id="cb25-193"><a href="#cb25-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-194"><a href="#cb25-194" aria-hidden="true" tabindex="-1"></a>**Example usage:**</span>
+<span id="cb25-195"><a href="#cb25-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-198"><a href="#cb25-198" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb25-199"><a href="#cb25-199" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb25-200"><a href="#cb25-200" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DiagrammeR)</span>
+<span id="cb25-201"><a href="#cb25-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-202"><a href="#cb25-202" aria-hidden="true" tabindex="-1"></a><span class="fu">grViz</span>(<span class="st">"</span></span>
+<span id="cb25-203"><a href="#cb25-203" aria-hidden="true" tabindex="-1"></a><span class="st">  digraph series {</span></span>
+<span id="cb25-204"><a href="#cb25-204" aria-hidden="true" tabindex="-1"></a><span class="st">    rankdir = LR</span></span>
+<span id="cb25-205"><a href="#cb25-205" aria-hidden="true" tabindex="-1"></a><span class="st">    node [shape = rectangle]</span></span>
+<span id="cb25-206"><a href="#cb25-206" aria-hidden="true" tabindex="-1"></a><span class="st">    A -&gt; B -&gt; C</span></span>
+<span id="cb25-207"><a href="#cb25-207" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span>
+<span id="cb25-208"><a href="#cb25-208" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)</span>
+<span id="cb25-209"><a href="#cb25-209" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb25-210"><a href="#cb25-210" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-211"><a href="#cb25-211" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb25-212"><a href="#cb25-212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-213"><a href="#cb25-213" aria-hidden="true" tabindex="-1"></a><span class="fu">## ReliaPlotR</span></span>
+<span id="cb25-214"><a href="#cb25-214" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-215"><a href="#cb25-215" aria-hidden="true" tabindex="-1"></a>Interactive, plotly-based versions of every static plot produced by WeibullR, WeibullR.ALT, and ReliaGrowR. Drop-in replacements that return <span class="in">`plotly`</span> objects embeddable in Quarto documents and Shiny apps.</span>
+<span id="cb25-216"><a href="#cb25-216" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-219"><a href="#cb25-219" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb25-220"><a href="#cb25-220" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb25-221"><a href="#cb25-221" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"ReliaPlotR"</span>)</span>
+<span id="cb25-222"><a href="#cb25-222" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ReliaPlotR)</span>
+<span id="cb25-223"><a href="#cb25-223" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb25-224"><a href="#cb25-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-225"><a href="#cb25-225" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Function <span class="pp">|</span> Description <span class="pp">|</span> Chapter <span class="pp">|</span></span>
+<span id="cb25-226"><a href="#cb25-226" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|</span></span>
+<span id="cb25-227"><a href="#cb25-227" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`plotly_wblr(obj)`</span> <span class="pp">|</span> Interactive Weibull probability plot <span class="pp">|</span> Ch. 7 <span class="pp">|</span></span>
+<span id="cb25-228"><a href="#cb25-228" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`plotly_contour(obj)`</span> <span class="pp">|</span> Interactive likelihood ratio contour plot <span class="pp">|</span> Ch. 7 <span class="pp">|</span></span>
+<span id="cb25-229"><a href="#cb25-229" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`plotly_duane(obj)`</span> <span class="pp">|</span> Interactive Duane reliability growth plot <span class="pp">|</span> Ch. 7 <span class="pp">|</span></span>
+<span id="cb25-230"><a href="#cb25-230" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`plotly_rga(obj)`</span> <span class="pp">|</span> Interactive Crow-AMSAA plot <span class="pp">|</span> Ch. 7 <span class="pp">|</span></span>
+<span id="cb25-231"><a href="#cb25-231" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`plotly_alt(obj)`</span> <span class="pp">|</span> Interactive ALT probability plot <span class="pp">|</span> Ch. 7 <span class="pp">|</span></span>
+<span id="cb25-232"><a href="#cb25-232" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`plotly_rel(obj)`</span> <span class="pp">|</span> Interactive life-stress relationship plot <span class="pp">|</span> Ch. 7 <span class="pp">|</span></span>
+<span id="cb25-233"><a href="#cb25-233" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`plotly_nhpp(obj)`</span> <span class="pp">|</span> Interactive NHPP intensity (recurrence rate) plot <span class="pp">|</span> Ch. 7 <span class="pp">|</span></span>
+<span id="cb25-234"><a href="#cb25-234" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`plotly_mcf(obj)`</span> <span class="pp">|</span> Interactive Mean Cumulative Function plot <span class="pp">|</span> Ch. 7 <span class="pp">|</span></span>
+<span id="cb25-235"><a href="#cb25-235" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`plotly_exposure(obj)`</span> <span class="pp">|</span> Interactive fleet exposure plot <span class="pp">|</span> Ch. 7 <span class="pp">|</span></span>
+<span id="cb25-236"><a href="#cb25-236" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-237"><a href="#cb25-237" aria-hidden="true" tabindex="-1"></a>**Example usage:**</span>
+<span id="cb25-238"><a href="#cb25-238" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-241"><a href="#cb25-241" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb25-242"><a href="#cb25-242" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb25-243"><a href="#cb25-243" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ReliaPlotR)</span>
+<span id="cb25-244"><a href="#cb25-244" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(WeibullR)</span>
+<span id="cb25-245"><a href="#cb25-245" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-246"><a href="#cb25-246" aria-hidden="true" tabindex="-1"></a>da <span class="ot">&lt;-</span> <span class="fu">wblr</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">500</span>, <span class="dv">1200</span>, <span class="dv">900</span>, <span class="dv">1500</span>, <span class="dv">750</span>))</span>
+<span id="cb25-247"><a href="#cb25-247" aria-hidden="true" tabindex="-1"></a>da <span class="ot">&lt;-</span> <span class="fu">wblr.fit</span>(da, <span class="at">method.fit =</span> <span class="st">"mle"</span>)</span>
+<span id="cb25-248"><a href="#cb25-248" aria-hidden="true" tabindex="-1"></a>da <span class="ot">&lt;-</span> <span class="fu">wblr.conf</span>(da, <span class="at">method.conf =</span> <span class="st">"lrb"</span>)</span>
+<span id="cb25-249"><a href="#cb25-249" aria-hidden="true" tabindex="-1"></a><span class="fu">plotly_wblr</span>(da)   <span class="co"># interactive version of plot(da)</span></span>
+<span id="cb25-250"><a href="#cb25-250" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb25-251"><a href="#cb25-251" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-252"><a href="#cb25-252" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb25-253"><a href="#cb25-253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-254"><a href="#cb25-254" aria-hidden="true" tabindex="-1"></a><span class="fu">## ReliaShiny</span></span>
+<span id="cb25-255"><a href="#cb25-255" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-256"><a href="#cb25-256" aria-hidden="true" tabindex="-1"></a>A point-and-click Shiny web application that wraps all of the above analyses in a browser-based UI — no coding required. Modules cover RAM, Life Data Analysis, Reliability Growth, ALT, Repairable Systems, and RBD.</span>
+<span id="cb25-257"><a href="#cb25-257" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-260"><a href="#cb25-260" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb25-261"><a href="#cb25-261" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb25-262"><a href="#cb25-262" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"ReliaShiny"</span>)</span>
+<span id="cb25-263"><a href="#cb25-263" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ReliaShiny)</span>
+<span id="cb25-264"><a href="#cb25-264" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb25-265"><a href="#cb25-265" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-266"><a href="#cb25-266" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Function <span class="pp">|</span> Description <span class="pp">|</span> Chapter <span class="pp">|</span></span>
+<span id="cb25-267"><a href="#cb25-267" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|</span></span>
+<span id="cb25-268"><a href="#cb25-268" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`ReliaShiny()`</span> <span class="pp">|</span> Launch the ReliaShiny web application in the default browser <span class="pp">|</span> Ch. 8 <span class="pp">|</span></span>
+<span id="cb25-269"><a href="#cb25-269" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-270"><a href="#cb25-270" aria-hidden="true" tabindex="-1"></a>**Example usage:**</span>
+<span id="cb25-271"><a href="#cb25-271" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-274"><a href="#cb25-274" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb25-275"><a href="#cb25-275" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb25-276"><a href="#cb25-276" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ReliaShiny)</span>
+<span id="cb25-277"><a href="#cb25-277" aria-hidden="true" tabindex="-1"></a><span class="fu">ReliaShiny</span>()</span>
+<span id="cb25-278"><a href="#cb25-278" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

@@ -254,7 +254,7 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./98-appendix.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Appendix: Helper Functions Reference</span></a>
+ <span class="menu-text">Appendix: R Quick Reference</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -278,7 +278,7 @@ window.Quarto = {
   <li><a href="#life-distributions" id="toc-life-distributions" class="nav-link" data-scroll-target="#life-distributions"><span class="header-section-number">3.3</span> Life Distributions</a>
   <ul class="collapse">
   <li><a href="#the-weibull-distribution" id="toc-the-weibull-distribution" class="nav-link" data-scroll-target="#the-weibull-distribution">The Weibull Distribution</a></li>
-  <li><a href="#the-cumulative-distribution-function" id="toc-the-cumulative-distribution-function" class="nav-link" data-scroll-target="#the-cumulative-distribution-function">The Cumulative Distribution Function</a></li>
+  <li><a href="#the-reliability-survival-function" id="toc-the-reliability-survival-function" class="nav-link" data-scroll-target="#the-reliability-survival-function">The Reliability (Survival) Function</a></li>
   </ul></li>
   <li><a href="#weibullr" id="toc-weibullr" class="nav-link" data-scroll-target="#weibullr"><span class="header-section-number">3.4</span> WeibullR</a>
   <ul class="collapse">
@@ -359,11 +359,11 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="the-weibull-distribution">The Weibull Distribution</h3>
 <p>The <strong>Weibull distribution</strong> is a flexible continuous probability distribution widely used in life data analysis. Its flexibility comes from a shape parameter <span class="math inline">\(\beta\)</span> that allows it to mimic the normal, exponential, and log-normal distributions.</p>
 </section>
-<section id="the-cumulative-distribution-function" class="level3">
-<h3 class="anchored" data-anchor-id="the-cumulative-distribution-function">The Cumulative Distribution Function</h3>
-<p>The Weibull reliability (survival) function is:</p>
-<p><span class="math display">\[R(t) = 1 - F(t) = e^{-(t/\eta)^\beta}\]</span></p>
-<p>where <span class="math inline">\(R(t)\)</span> is the cumulative probability of <em>survival</em> prior to time <span class="math inline">\(t\)</span>, <span class="math inline">\(\beta\)</span> is the shape parameter, and <span class="math inline">\(\eta\)</span> is the scale parameter.</p>
+<section id="the-reliability-survival-function" class="level3">
+<h3 class="anchored" data-anchor-id="the-reliability-survival-function">The Reliability (Survival) Function</h3>
+<p>The Weibull <strong>reliability</strong> (survival) function is:</p>
+<p><span class="math display">\[R(t) = e^{-(t/\eta)^\beta}\]</span></p>
+<p>where <span class="math inline">\(R(t)\)</span> is the probability of <em>surviving beyond</em> time <span class="math inline">\(t\)</span>, <span class="math inline">\(\beta\)</span> is the shape parameter, and <span class="math inline">\(\eta\)</span> is the scale parameter. The <strong>CDF</strong> (cumulative probability of failure by time <span class="math inline">\(t\)</span>) is its complement: <span class="math inline">\(F(t) = 1 - R(t)\)</span>.</p>
 <p>The shape parameter <span class="math inline">\(\beta\)</span> has a direct physical interpretation:</p>
 <table class="caption-top table">
 <thead>
@@ -632,7 +632,7 @@ Answer
 </div>
 </div>
 </div>
-<p>Both methods fit the same data. Slight differences in <span class="math inline">\(\beta\)</span> and <span class="math inline">\(\eta\)</span> are visible — the better fit can be determined objectively using the Anderson-Darling statistic.</p>
+<p>Both methods fit the same data. Slight differences in <span class="math inline">\(\beta\)</span> and <span class="math inline">\(\eta\)</span> are visible — the better fit can be determined objectively using the Anderson-Darling statistic. In practice, <strong>MLE is preferred for small samples and censored data</strong> (it uses all the information in the likelihood); <strong>MRR is adequate for larger, complete datasets</strong> and is computationally simpler.</p>
 </section>
 </section>
 <section id="goodness-of-fit" class="level2" data-number="3.7">
@@ -1497,13 +1497,13 @@ Silkworth, David, and Jurgen Symynck. 2022. <em>WeibullR: Weibull Analysis for R
 <span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a>The **Weibull distribution** is a flexible continuous probability distribution widely used in life data analysis. Its flexibility comes from a shape parameter $\beta$ that allows it to mimic the normal, exponential, and log-normal distributions.</span>
 <span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a><span class="fu">### The Cumulative Distribution Function</span></span>
+<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a><span class="fu">### The Reliability (Survival) Function</span></span>
 <span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a>The Weibull reliability (survival) function is:</span>
+<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a>The Weibull **reliability** (survival) function is:</span>
 <span id="cb25-28"><a href="#cb25-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-29"><a href="#cb25-29" aria-hidden="true" tabindex="-1"></a>$$R(t) = 1 - F(t) = e^{-(t/\eta)^\beta}$$</span>
+<span id="cb25-29"><a href="#cb25-29" aria-hidden="true" tabindex="-1"></a>$$R(t) = e^{-(t/\eta)^\beta}$$</span>
 <span id="cb25-30"><a href="#cb25-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-31"><a href="#cb25-31" aria-hidden="true" tabindex="-1"></a>where $R(t)$ is the cumulative probability of *survival* prior to time $t$, $\beta$ is the shape parameter, and $\eta$ is the scale parameter.</span>
+<span id="cb25-31"><a href="#cb25-31" aria-hidden="true" tabindex="-1"></a>where $R(t)$ is the probability of *surviving beyond* time $t$, $\beta$ is the shape parameter, and $\eta$ is the scale parameter. The **CDF** (cumulative probability of failure by time $t$) is its complement: $F(t) = 1 - R(t)$.</span>
 <span id="cb25-32"><a href="#cb25-32" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-33"><a href="#cb25-33" aria-hidden="true" tabindex="-1"></a>The shape parameter $\beta$ has a direct physical interpretation:</span>
 <span id="cb25-34"><a href="#cb25-34" aria-hidden="true" tabindex="-1"></a></span>
@@ -1682,7 +1682,7 @@ Silkworth, David, and Jurgen Symynck. 2022. <em>WeibullR: Weibull Analysis for R
 <span id="cb25-229"><a href="#cb25-229" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.wblr</span>(<span class="fu">list</span>(MRRfit, MLEfit))</span>
 <span id="cb25-230"><a href="#cb25-230" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb25-231"><a href="#cb25-231" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-232"><a href="#cb25-232" aria-hidden="true" tabindex="-1"></a>Both methods fit the same data. Slight differences in $\beta$ and $\eta$ are visible — the better fit can be determined objectively using the Anderson-Darling statistic.</span>
+<span id="cb25-232"><a href="#cb25-232" aria-hidden="true" tabindex="-1"></a>Both methods fit the same data. Slight differences in $\beta$ and $\eta$ are visible — the better fit can be determined objectively using the Anderson-Darling statistic. In practice, **MLE is preferred for small samples and censored data** (it uses all the information in the likelihood); **MRR is adequate for larger, complete datasets** and is computationally simpler.</span>
 <span id="cb25-233"><a href="#cb25-233" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-234"><a href="#cb25-234" aria-hidden="true" tabindex="-1"></a><span class="fu">## Goodness of Fit</span></span>
 <span id="cb25-235"><a href="#cb25-235" aria-hidden="true" tabindex="-1"></a></span>

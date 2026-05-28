@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Paul Govan">
-<meta name="dcterms.date" content="2026-05-25">
+<meta name="dcterms.date" content="2026-05-28">
 <meta name="description" content="A companion reference guide to the ReliaLearnR interactive tutorials, covering RAM analysis, life data analysis, reliability testing, repairable systems, and reliability block diagrams, with additional chapters on interactive visualization with ReliaPlotR and web-based analysis with ReliaShiny.">
 
 <title>Reliability Analysis with R: A Companion Guide</title>
@@ -207,7 +207,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./98-appendix.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Appendix: Helper Functions Reference</span></a>
+ <span class="menu-text">Appendix: R Quick Reference</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -264,7 +264,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">May 25, 2026</p>
+      <p class="date">May 28, 2026</p>
     </div>
   </div>
   
@@ -383,13 +383,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="chapter-overview">Chapter Overview</h2>
 <ol type="1">
 <li><strong>RAM</strong> — Foundational reliability, availability, and maintainability metrics.</li>
-<li><strong>Reliability Block Diagrams</strong> — Series, parallel, mixed, and k-out-of-n systems.</li>
-<li><strong>Life Data Analysis</strong> — Weibull distribution, censoring, MRR vs MLE, and contour plots.</li>
-<li><strong>Reliability Testing</strong> — Reliability growth models and accelerated life testing.</li>
+<li><strong>Reliability Block Diagrams</strong> — Series, parallel, mixed, k-out-of-n systems, and fault tree analysis.</li>
+<li><strong>Life Data Analysis</strong> — Weibull distribution, censoring, MRR vs.&nbsp;MLE, and contour plots.</li>
+<li><strong>Reliability Growth Analysis</strong> — Duane and Crow-AMSAA growth models, test planning, and forecasting.</li>
+<li><strong>Accelerated Life Testing</strong> — Arrhenius and Power Law acceleration models for compressed test time.</li>
 <li><strong>Repairable Systems</strong> — Power Law Process, MCF, and fleet-level analysis.</li>
 <li><strong>Interactive Plots with ReliaPlotR</strong> — Publishable interactive reliability charts.</li>
 <li><strong>Web-Based Analysis with ReliaShiny</strong> — Point-and-click reliability analysis.</li>
 </ol>
+<p>The book also includes an <strong>Appendix</strong> (helper function reference) and a <strong>Glossary</strong> (key symbols and formulas).</p>
 </section>
 <section id="about-the-author" class="level2">
 <h2 class="anchored" data-anchor-id="about-the-author">About the Author</h2>
@@ -914,16 +916,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a><span class="fu">## Chapter Overview</span></span>
 <span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**RAM** — Foundational reliability, availability, and maintainability metrics.</span>
-<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Reliability Block Diagrams** — Series, parallel, mixed, and k-out-of-n systems.</span>
-<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Life Data Analysis** — Weibull distribution, censoring, MRR vs MLE, and contour plots.</span>
-<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Reliability Testing** — Reliability growth models and accelerated life testing.</span>
-<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>**Repairable Systems** — Power Law Process, MCF, and fleet-level analysis.</span>
-<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>**Interactive Plots with ReliaPlotR** — Publishable interactive reliability charts.</span>
-<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a><span class="ss">7. </span>**Web-Based Analysis with ReliaShiny** — Point-and-click reliability analysis.</span>
-<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a><span class="fu">## About the Author</span></span>
-<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>Paul Govan is the author of ReliaLearnR, ReliaGrowR, ReliaPlotR, and ReliaShiny. He can be reached at paul.govan2@gmail.com.</span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Reliability Block Diagrams** — Series, parallel, mixed, k-out-of-n systems, and fault tree analysis.</span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Life Data Analysis** — Weibull distribution, censoring, MRR vs. MLE, and contour plots.</span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Reliability Growth Analysis** — Duane and Crow-AMSAA growth models, test planning, and forecasting.</span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>**Accelerated Life Testing** — Arrhenius and Power Law acceleration models for compressed test time.</span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>**Repairable Systems** — Power Law Process, MCF, and fleet-level analysis.</span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a><span class="ss">7. </span>**Interactive Plots with ReliaPlotR** — Publishable interactive reliability charts.</span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a><span class="ss">8. </span>**Web-Based Analysis with ReliaShiny** — Point-and-click reliability analysis.</span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>The book also includes an **Appendix** (helper function reference) and a **Glossary** (key symbols and formulas).</span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a><span class="fu">## About the Author</span></span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>Paul Govan is the author of ReliaLearnR, ReliaGrowR, ReliaPlotR, and ReliaShiny. He can be reached at paul.govan2@gmail.com.</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
