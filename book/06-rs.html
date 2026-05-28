@@ -96,10 +96,14 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-de63f62b328812d8e578a4d74e282472.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-de63f62b328812d8e578a4d74e282472.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-6b6957c917596b414ec0b78690761e87.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-de63f62b328812d8e578a4d74e282472.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-20cc673454d4e2322ef0b4e40f22bd1f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-b4a76c01c78fe92eb35a980f874a855b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-1c1893f04979aa476fa52bb1a99ba675.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-b4a76c01c78fe92eb35a980f874a855b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -160,7 +164,169 @@ window.Quarto = {
 
 </head>
 
-<body class="nav-sidebar floating quarto-light">
+<body class="nav-sidebar floating quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -185,8 +351,32 @@ window.Quarto = {
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Reliability Analysis with R: A Companion Guide</a> 
-        <div class="sidebar-tools-main">
+        <div class="sidebar-tools-main tools-wide">
     <a href="https://github.com/paulgovan/ReliaLearnR" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+              <i class="bi bi-facebook pe-1"></i>
+            Facebook
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
     </div>
       </div>
@@ -282,10 +472,10 @@ window.Quarto = {
   <li><a href="#non-homogeneous-poisson-process-nhpp" id="toc-non-homogeneous-poisson-process-nhpp" class="nav-link" data-scroll-target="#non-homogeneous-poisson-process-nhpp">Non-Homogeneous Poisson Process (NHPP)</a></li>
   </ul></li>
   <li><a href="#the-power-law-process" id="toc-the-power-law-process" class="nav-link" data-scroll-target="#the-power-law-process"><span class="header-section-number">6.5</span> The Power Law Process</a></li>
-  <li><a href="#nhpp-analysis-with-nhpp" id="toc-nhpp-analysis-with-nhpp" class="nav-link" data-scroll-target="#nhpp-analysis-with-nhpp"><span class="header-section-number">6.6</span> NHPP Analysis with nhpp()</a></li>
-  <li><a href="#piecewise-nhpp" id="toc-piecewise-nhpp" class="nav-link" data-scroll-target="#piecewise-nhpp"><span class="header-section-number">6.7</span> Piecewise NHPP</a></li>
-  <li><a href="#exposure-analysis" id="toc-exposure-analysis" class="nav-link" data-scroll-target="#exposure-analysis"><span class="header-section-number">6.8</span> Exposure Analysis</a></li>
-  <li><a href="#mean-cumulative-function" id="toc-mean-cumulative-function" class="nav-link" data-scroll-target="#mean-cumulative-function"><span class="header-section-number">6.9</span> Mean Cumulative Function</a></li>
+  <li><a href="#exposure-analysis" id="toc-exposure-analysis" class="nav-link" data-scroll-target="#exposure-analysis"><span class="header-section-number">6.6</span> Exposure Analysis</a></li>
+  <li><a href="#mean-cumulative-function" id="toc-mean-cumulative-function" class="nav-link" data-scroll-target="#mean-cumulative-function"><span class="header-section-number">6.7</span> Mean Cumulative Function</a></li>
+  <li><a href="#nhpp-analysis-with-nhpp" id="toc-nhpp-analysis-with-nhpp" class="nav-link" data-scroll-target="#nhpp-analysis-with-nhpp"><span class="header-section-number">6.8</span> NHPP Analysis with nhpp()</a></li>
+  <li><a href="#piecewise-nhpp" id="toc-piecewise-nhpp" class="nav-link" data-scroll-target="#piecewise-nhpp"><span class="header-section-number">6.9</span> Piecewise NHPP</a></li>
   <li><a href="#interpreting-results-and-predicting-future-failures" id="toc-interpreting-results-and-predicting-future-failures" class="nav-link" data-scroll-target="#interpreting-results-and-predicting-future-failures"><span class="header-section-number">6.10</span> Interpreting Results and Predicting Future Failures</a>
   <ul class="collapse">
   <li><a href="#reading-hatbeta" id="toc-reading-hatbeta" class="nav-link" data-scroll-target="#reading-hatbeta">Reading <span class="math inline">\(\hat{\beta}\)</span></a></li>
@@ -298,6 +488,7 @@ window.Quarto = {
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
+
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -329,10 +520,10 @@ window.Quarto = {
 <li>Define the distinction between repairable and non-repairable systems.</li>
 <li>Explain the Homogeneous Poisson Process (HPP) and Non-Homogeneous Poisson Process (NHPP).</li>
 <li>Describe the Power Law Process and its parameters.</li>
-<li>Fit and interpret the Crow-AMSAA model using <code>nhpp()</code> from ReliaGrowR.</li>
-<li>Apply the Piecewise NHPP model to detect changes in failure behavior.</li>
 <li>Compute fleet-level exposure using <code>exposure()</code>.</li>
 <li>Estimate the Mean Cumulative Function (MCF) using <code>mcf()</code>.</li>
+<li>Fit and interpret the Crow-AMSAA model using <code>nhpp()</code> from ReliaGrowR.</li>
+<li>Apply the Piecewise NHPP model to detect changes in failure behavior.</li>
 <li>Forecast future failure counts from a fitted Power Law model.</li>
 </ul>
 <p>The <code>ReliaGrowR</code> package <span class="citation" data-cites="ReliaGrowR">(<a href="#ref-ReliaGrowR" role="doc-biblioref">Govan 2024</a>)</span> provides functions for repairable systems analysis in R.</p>
@@ -458,129 +649,24 @@ Answer
 </div>
 </div>
 </section>
-<section id="nhpp-analysis-with-nhpp" class="level2" data-number="6.6">
-<h2 data-number="6.6" class="anchored" data-anchor-id="nhpp-analysis-with-nhpp"><span class="header-section-number">6.6</span> NHPP Analysis with nhpp()</h2>
-<p>The <code>nhpp()</code> function fits the Power Law Process (Crow-AMSAA model) <span class="citation" data-cites="Crow1975">(<a href="#ref-Crow1975" role="doc-biblioref">Crow 1975</a>)</span> to cumulative failure data by maximum likelihood, returning estimates of <span class="math inline">\(\lambda\)</span> and <span class="math inline">\(\beta\)</span>.</p>
-<p>A curve that bends downward (concave) indicates <span class="math inline">\(\hat{\beta} &lt; 1\)</span> — improving system. Upward bending (convex) indicates <span class="math inline">\(\hat{\beta} &gt; 1\)</span> — deteriorating system.</p>
+<section id="exposure-analysis" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="exposure-analysis"><span class="header-section-number">6.6</span> Exposure Analysis</h2>
+<p>When analyzing a <em>fleet</em>, individual units enter and leave observation at different times. <strong>Exposure</strong> is the total operating time accumulated across all units currently at risk.</p>
+<p>The <code>exposure()</code> function computes: - <strong>Cumulative exposure</strong> — total system-time at risk up to each event time. - <strong>Number at risk</strong> — how many units were under observation at each time. - <strong>Event rate</strong> — cumulative events divided by cumulative exposure.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>times    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">500</span>, <span class="dv">1200</span>, <span class="dv">2100</span>, <span class="dv">3300</span>, <span class="dv">4800</span>, <span class="dv">6500</span>, <span class="dv">8400</span>, <span class="dv">10500</span>, <span class="dv">12800</span>, <span class="dv">15000</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>failures <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">2</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">nhpp</span>(<span class="at">time =</span> times, <span class="at">event =</span> failures)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit,</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Crow-AMSAA Model: Industrial Pump Fleet"</span>,</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Cumulative Operating Hours"</span>,</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Cumulative Failures"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>pump_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">id    =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>,  <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>,  <span class="dv">3</span>, <span class="dv">3</span>,  <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">4</span>,  <span class="dv">5</span>, <span class="dv">5</span>),</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">time  =</span> <span class="fu">c</span>(<span class="dv">310</span>, <span class="dv">850</span>, <span class="dv">1620</span>,  <span class="dv">420</span>, <span class="dv">1050</span>, <span class="dv">2100</span>,  <span class="dv">580</span>, <span class="dv">1890</span>,  <span class="dv">240</span>, <span class="dv">710</span>, <span class="dv">1380</span>, <span class="dv">2400</span>,  <span class="dv">530</span>, <span class="dv">1740</span>),</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">event =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>,   <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>,   <span class="dv">1</span>, <span class="dv">1</span>,   <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>,   <span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>exp_result <span class="ot">&lt;-</span> <span class="fu">exposure</span>(<span class="at">id =</span> pump_data<span class="sc">$</span>id, <span class="at">time =</span> pump_data<span class="sc">$</span>time,</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>                       <span class="at">event =</span> pump_data<span class="sc">$</span>event)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(exp_result)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
 <p><img src="06-rs_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>The concave curve and <span class="math inline">\(\hat{\beta} &lt; 1\)</span> indicate the pump fleet’s failure rate is decreasing — a favorable operating regime.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Try It
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>A compressor fleet recorded these cumulative operating hours and failure counts. Fit a Power Law model using <code>nhpp()</code> with <code>method = "LS"</code>.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>times    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1000</span>, <span class="dv">2500</span>, <span class="dv">4000</span>, <span class="dv">5500</span>, <span class="dv">8000</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>failures <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">5</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># fit &lt;- nhpp(time = times, event = failures, method = "LS")</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># plot(fit)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<details>
-<summary>
-Solution
-</summary>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>times    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1000</span>, <span class="dv">2500</span>, <span class="dv">4000</span>, <span class="dv">5500</span>, <span class="dv">8000</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>failures <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">5</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">nhpp</span>(<span class="at">time =</span> times, <span class="at">event =</span> failures, <span class="at">method =</span> <span class="st">"LS"</span>)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit, <span class="at">main =</span> <span class="st">"Crow-AMSAA: Compressor Fleet"</span>,</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Cumulative Hours"</span>, <span class="at">ylab =</span> <span class="st">"Cumulative Failures"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="06-rs_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</details>
-</div>
-</div>
-</section>
-<section id="piecewise-nhpp" class="level2" data-number="6.7">
-<h2 data-number="6.7" class="anchored" data-anchor-id="piecewise-nhpp"><span class="header-section-number">6.7</span> Piecewise NHPP</h2>
-<p>The <strong>Piecewise NHPP</strong> <span class="citation" data-cites="Guo2010">(<a href="#ref-Guo2010" role="doc-biblioref">Guo et al. 2010</a>)</span> fits a separate Power Law to each segment of the time axis, allowing for structural changes in failure behavior (overhauls, design modifications, operational changes):</p>
-<p><span class="math display">\[E[N(t)] = \begin{cases} \lambda_1 t^{\beta_1} &amp; 0 &lt; t \leq \tau \\ E[N(\tau)] + \lambda_2(t-\tau)^{\beta_2} &amp; t &gt; \tau \end{cases}\]</span></p>
-<p>Pass a breakpoint estimate via the <code>breaks</code> argument. The <code>segmented</code> algorithm then optimizes the breakpoint location from the data.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>times2    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">500</span>, <span class="dv">1200</span>, <span class="dv">2100</span>, <span class="dv">3300</span>, <span class="dv">4800</span>, <span class="dv">6500</span>, <span class="dv">8400</span>, <span class="dv">9200</span>, <span class="dv">10100</span>, <span class="dv">11300</span>,</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>               <span class="dv">12800</span>, <span class="dv">14500</span>, <span class="dv">16400</span>, <span class="dv">18500</span>, <span class="dv">20800</span>)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>failures2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">5</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>fit_pw <span class="ot">&lt;-</span> <span class="fu">nhpp</span>(<span class="at">time =</span> times2, <span class="at">event =</span> failures2, <span class="at">breaks =</span> <span class="dv">8000</span>, <span class="at">method =</span> <span class="st">"LS"</span>)</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit_pw,</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Piecewise NHPP: Fleet Overhaul at Hour 8000"</span>,</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Cumulative Operating Hours"</span>,</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Cumulative Failures"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="06-rs_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>The first segment (pre-overhaul, steeper slope) gives way to a flatter or downward-bending second segment, confirming the overhaul reduced the failure rate. The fitted breakpoint may differ slightly from the input value — here it is estimated near hour 9,820.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Review
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>What is the primary reason to use a Piecewise NHPP instead of a single Crow-AMSAA model?</p>
-<details>
-<summary>
-Answer
-</summary>
-To account for a <strong>known or suspected structural change</strong> in the failure process (overhaul, design change, operational change). A piecewise model fits each segment independently, capturing the change in failure behavior.
-</details>
-</div>
-</div>
-</section>
-<section id="exposure-analysis" class="level2" data-number="6.8">
-<h2 data-number="6.8" class="anchored" data-anchor-id="exposure-analysis"><span class="header-section-number">6.8</span> Exposure Analysis</h2>
-<p>When analyzing a <em>fleet</em>, individual units enter and leave observation at different times. <strong>Exposure</strong> is the total operating time accumulated across all units currently at risk.</p>
-<p>The <code>exposure()</code> function computes: - <strong>Cumulative exposure</strong> — total system-time at risk up to each event time. - <strong>Number at risk</strong> — how many units were under observation at each time. - <strong>Event rate</strong> — cumulative events divided by cumulative exposure.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>pump_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">id    =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>,  <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>,  <span class="dv">3</span>, <span class="dv">3</span>,  <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">4</span>,  <span class="dv">5</span>, <span class="dv">5</span>),</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">time  =</span> <span class="fu">c</span>(<span class="dv">310</span>, <span class="dv">850</span>, <span class="dv">1620</span>,  <span class="dv">420</span>, <span class="dv">1050</span>, <span class="dv">2100</span>,  <span class="dv">580</span>, <span class="dv">1890</span>,  <span class="dv">240</span>, <span class="dv">710</span>, <span class="dv">1380</span>, <span class="dv">2400</span>,  <span class="dv">530</span>, <span class="dv">1740</span>),</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">event =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>,   <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>,   <span class="dv">1</span>, <span class="dv">1</span>,   <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>,   <span class="dv">1</span>, <span class="dv">1</span>)</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>exp_result <span class="ot">&lt;-</span> <span class="fu">exposure</span>(<span class="at">id =</span> pump_data<span class="sc">$</span>id, <span class="at">time =</span> pump_data<span class="sc">$</span>time,</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>                       <span class="at">event =</span> pump_data<span class="sc">$</span>event)</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(exp_result)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="06-rs_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -606,27 +692,27 @@ Without normalizing by exposure, a system observed for twice as long will appear
 </div>
 </div>
 </section>
-<section id="mean-cumulative-function" class="level2" data-number="6.9">
-<h2 data-number="6.9" class="anchored" data-anchor-id="mean-cumulative-function"><span class="header-section-number">6.9</span> Mean Cumulative Function</h2>
+<section id="mean-cumulative-function" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="mean-cumulative-function"><span class="header-section-number">6.7</span> Mean Cumulative Function</h2>
 <p>The <strong>Mean Cumulative Function (MCF)</strong> is a non-parametric estimate of the expected cumulative number of failures <em>per system</em> as a function of time. It makes no distributional assumptions and handles systems with different observation periods.</p>
 <p>The <strong>Nelson-Aalen estimator</strong> is a non-parametric method that requires no distributional assumption and naturally handles systems with different observation lengths (administrative censoring):</p>
 <p><span class="math display">\[\hat{M}(t) = \sum_{t_j \leq t} \frac{d_j}{n_j}\]</span></p>
 <p>where <span class="math inline">\(d_j\)</span> is the number of failures at time <span class="math inline">\(t_j\)</span> and <span class="math inline">\(n_j\)</span> is the number of systems at risk at <span class="math inline">\(t_j\)</span>.</p>
 <p>Pass <code>end_time</code> to <code>mcf()</code> when systems were observed beyond their last recorded failure — otherwise the risk set is deflated too early, inflating the rate estimate.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>end_times  <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"1"</span> <span class="ot">=</span> <span class="dv">3000</span>, <span class="st">"2"</span> <span class="ot">=</span> <span class="dv">3000</span>, <span class="st">"3"</span> <span class="ot">=</span> <span class="dv">3000</span>, <span class="st">"4"</span> <span class="ot">=</span> <span class="dv">3000</span>, <span class="st">"5"</span> <span class="ot">=</span> <span class="dv">3000</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>mcf_result <span class="ot">&lt;-</span> <span class="fu">mcf</span>(<span class="at">id =</span> pump_data<span class="sc">$</span>id, <span class="at">time =</span> pump_data<span class="sc">$</span>time,</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">event =</span> pump_data<span class="sc">$</span>event,</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">end_time =</span> end_times)</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mcf_result,</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Mean Cumulative Function: Industrial Pump Fleet"</span>,</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Operating Hours"</span>,</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Expected Cumulative Failures per System"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>end_times  <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"1"</span> <span class="ot">=</span> <span class="dv">3000</span>, <span class="st">"2"</span> <span class="ot">=</span> <span class="dv">3000</span>, <span class="st">"3"</span> <span class="ot">=</span> <span class="dv">3000</span>, <span class="st">"4"</span> <span class="ot">=</span> <span class="dv">3000</span>, <span class="st">"5"</span> <span class="ot">=</span> <span class="dv">3000</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>mcf_result <span class="ot">&lt;-</span> <span class="fu">mcf</span>(<span class="at">id =</span> pump_data<span class="sc">$</span>id, <span class="at">time =</span> pump_data<span class="sc">$</span>time,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">event =</span> pump_data<span class="sc">$</span>event,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">end_time =</span> end_times)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mcf_result,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Mean Cumulative Function: Industrial Pump Fleet"</span>,</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Operating Hours"</span>,</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Expected Cumulative Failures per System"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="06-rs_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="06-rs_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -644,24 +730,111 @@ Without normalizing by exposure, a system observed for twice as long will appear
 <div class="callout-body-container callout-body">
 <p>Three systems were observed with the following failure times. Each was observed until hour 2000. Compute and plot the MCF.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>id    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"1"</span>, <span class="dv">3</span>), <span class="fu">rep</span>(<span class="st">"2"</span>, <span class="dv">4</span>), <span class="fu">rep</span>(<span class="st">"3"</span>, <span class="dv">2</span>))</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>time  <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">400</span>, <span class="dv">900</span>, <span class="dv">1500</span>,   <span class="dv">300</span>, <span class="dv">700</span>, <span class="dv">1200</span>, <span class="dv">1800</span>,   <span class="dv">600</span>, <span class="dv">1400</span>)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>event <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">9</span>)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>end_times2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"1"</span> <span class="ot">=</span> <span class="dv">2000</span>, <span class="st">"2"</span> <span class="ot">=</span> <span class="dv">2000</span>, <span class="st">"3"</span> <span class="ot">=</span> <span class="dv">2000</span>)</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># fit &lt;- mcf(id, time, event, end_time = end_times2)</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># plot(fit)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>id    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"1"</span>, <span class="dv">3</span>), <span class="fu">rep</span>(<span class="st">"2"</span>, <span class="dv">4</span>), <span class="fu">rep</span>(<span class="st">"3"</span>, <span class="dv">2</span>))</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>time  <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">400</span>, <span class="dv">900</span>, <span class="dv">1500</span>,   <span class="dv">300</span>, <span class="dv">700</span>, <span class="dv">1200</span>, <span class="dv">1800</span>,   <span class="dv">600</span>, <span class="dv">1400</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>event <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">9</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>end_times2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"1"</span> <span class="ot">=</span> <span class="dv">2000</span>, <span class="st">"2"</span> <span class="ot">=</span> <span class="dv">2000</span>, <span class="st">"3"</span> <span class="ot">=</span> <span class="dv">2000</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># fit &lt;- mcf(id, time, event, end_time = end_times2)</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># plot(fit)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <details>
 <summary>
 Solution
 </summary>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>id    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"1"</span>, <span class="dv">3</span>), <span class="fu">rep</span>(<span class="st">"2"</span>, <span class="dv">4</span>), <span class="fu">rep</span>(<span class="st">"3"</span>, <span class="dv">2</span>))</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>time  <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">400</span>, <span class="dv">900</span>, <span class="dv">1500</span>,   <span class="dv">300</span>, <span class="dv">700</span>, <span class="dv">1200</span>, <span class="dv">1800</span>,   <span class="dv">600</span>, <span class="dv">1400</span>)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>event <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">9</span>)</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>end_times2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"1"</span> <span class="ot">=</span> <span class="dv">2000</span>, <span class="st">"2"</span> <span class="ot">=</span> <span class="dv">2000</span>, <span class="st">"3"</span> <span class="ot">=</span> <span class="dv">2000</span>)</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">mcf</span>(<span class="at">id =</span> id, <span class="at">time =</span> time, <span class="at">event =</span> event, <span class="at">end_time =</span> end_times2)</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit, <span class="at">main =</span> <span class="st">"MCF Example"</span>, <span class="at">xlab =</span> <span class="st">"Time (hours)"</span>, <span class="at">ylab =</span> <span class="st">"MCF"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>id    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"1"</span>, <span class="dv">3</span>), <span class="fu">rep</span>(<span class="st">"2"</span>, <span class="dv">4</span>), <span class="fu">rep</span>(<span class="st">"3"</span>, <span class="dv">2</span>))</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>time  <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">400</span>, <span class="dv">900</span>, <span class="dv">1500</span>,   <span class="dv">300</span>, <span class="dv">700</span>, <span class="dv">1200</span>, <span class="dv">1800</span>,   <span class="dv">600</span>, <span class="dv">1400</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>event <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">9</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>end_times2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"1"</span> <span class="ot">=</span> <span class="dv">2000</span>, <span class="st">"2"</span> <span class="ot">=</span> <span class="dv">2000</span>, <span class="st">"3"</span> <span class="ot">=</span> <span class="dv">2000</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">mcf</span>(<span class="at">id =</span> id, <span class="at">time =</span> time, <span class="at">event =</span> event, <span class="at">end_time =</span> end_times2)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit, <span class="at">main =</span> <span class="st">"MCF Example"</span>, <span class="at">xlab =</span> <span class="st">"Time (hours)"</span>, <span class="at">ylab =</span> <span class="st">"MCF"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06-rs_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</details>
+</div>
+</div>
+</section>
+<section id="nhpp-analysis-with-nhpp" class="level2" data-number="6.8">
+<h2 data-number="6.8" class="anchored" data-anchor-id="nhpp-analysis-with-nhpp"><span class="header-section-number">6.8</span> NHPP Analysis with nhpp()</h2>
+<p>The <code>nhpp()</code> function fits the Power Law Process (Crow-AMSAA model) <span class="citation" data-cites="Crow1975">(<a href="#ref-Crow1975" role="doc-biblioref">Crow 1975</a>)</span> to individual failure event data by maximum likelihood, returning estimates of <span class="math inline">\(\lambda\)</span> and <span class="math inline">\(\beta\)</span>.</p>
+<p>A curve that bends downward (concave) indicates <span class="math inline">\(\hat{\beta} &lt; 1\)</span> — improving system. Upward bending (convex) indicates <span class="math inline">\(\hat{\beta} &gt; 1\)</span> — deteriorating system.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pump_data defined above in the Exposure section</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>failure_times <span class="ot">&lt;-</span> <span class="fu">sort</span>(pump_data<span class="sc">$</span>time[pump_data<span class="sc">$</span>event <span class="sc">==</span> <span class="dv">1</span>])</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">nhpp</span>(<span class="at">time =</span> failure_times, <span class="at">event =</span> <span class="fu">rep</span>(<span class="dv">1</span>, <span class="fu">length</span>(failure_times)))</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit,</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Crow-AMSAA Model: Industrial Pump Fleet"</span>,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Operating Hours"</span>,</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Cumulative Failures"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06-rs_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The concave curve and <span class="math inline">\(\hat{\beta} &lt; 1\)</span> indicate the pump fleet’s failure rate is decreasing — a favorable operating regime.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Try It
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A compressor fleet recorded individual failure times across five systems. Fit a Power Law model using <code>nhpp()</code> with <code>method = "LS"</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>comp_times <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">250</span>, <span class="dv">800</span>, <span class="dv">1400</span>, <span class="dv">550</span>, <span class="dv">1100</span>, <span class="dv">1900</span>, <span class="dv">700</span>, <span class="dv">1350</span>, <span class="dv">420</span>, <span class="dv">1050</span>, <span class="dv">1800</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># fit &lt;- nhpp(time = comp_times, event = rep(1, length(comp_times)), method = "LS")</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># plot(fit)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<details>
+<summary>
+Solution
+</summary>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>comp_times <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">250</span>, <span class="dv">800</span>, <span class="dv">1400</span>, <span class="dv">550</span>, <span class="dv">1100</span>, <span class="dv">1900</span>, <span class="dv">700</span>, <span class="dv">1350</span>, <span class="dv">420</span>, <span class="dv">1050</span>, <span class="dv">1800</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">nhpp</span>(<span class="at">time =</span> <span class="fu">sort</span>(comp_times),</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">event =</span> <span class="fu">rep</span>(<span class="dv">1</span>, <span class="fu">length</span>(comp_times)), <span class="at">method =</span> <span class="st">"LS"</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit, <span class="at">main =</span> <span class="st">"Crow-AMSAA: Compressor Fleet"</span>,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Operating Hours"</span>, <span class="at">ylab =</span> <span class="st">"Cumulative Failures"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="06-rs_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</details>
+</div>
+</div>
+</section>
+<section id="piecewise-nhpp" class="level2" data-number="6.9">
+<h2 data-number="6.9" class="anchored" data-anchor-id="piecewise-nhpp"><span class="header-section-number">6.9</span> Piecewise NHPP</h2>
+<p>The <strong>Piecewise NHPP</strong> <span class="citation" data-cites="Guo2010">(<a href="#ref-Guo2010" role="doc-biblioref">Guo et al. 2010</a>)</span> fits a separate Power Law to each segment of the time axis, allowing for structural changes in failure behavior (overhauls, design modifications, operational changes):</p>
+<p><span class="math display">\[E[N(t)] = \begin{cases} \lambda_1 t^{\beta_1} &amp; 0 &lt; t \leq \tau \\ E[N(\tau)] + \lambda_2(t-\tau)^{\beta_2} &amp; t &gt; \tau \end{cases}\]</span></p>
+<p>Pass a breakpoint estimate via the <code>breaks</code> argument. The <code>segmented</code> algorithm then optimizes the breakpoint location from the data.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>times2    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">500</span>, <span class="dv">1200</span>, <span class="dv">2100</span>, <span class="dv">3300</span>, <span class="dv">4800</span>, <span class="dv">6500</span>, <span class="dv">8400</span>, <span class="dv">9200</span>, <span class="dv">10100</span>, <span class="dv">11300</span>,</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>               <span class="dv">12800</span>, <span class="dv">14500</span>, <span class="dv">16400</span>, <span class="dv">18500</span>, <span class="dv">20800</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>failures2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">5</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>fit_pw <span class="ot">&lt;-</span> <span class="fu">nhpp</span>(<span class="at">time =</span> times2, <span class="at">event =</span> failures2, <span class="at">breaks =</span> <span class="dv">8000</span>, <span class="at">method =</span> <span class="st">"LS"</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit_pw,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Piecewise NHPP: Fleet Overhaul at Hour 8000"</span>,</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Cumulative Operating Hours"</span>,</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Cumulative Failures"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -670,6 +843,23 @@ Solution
 </div>
 </div>
 </div>
+<p>The first segment (pre-overhaul, steeper slope) gives way to a flatter or downward-bending second segment, confirming the overhaul reduced the failure rate. The fitted breakpoint may differ slightly from the input value — here it is estimated near hour 9,820.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Review
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>What is the primary reason to use a Piecewise NHPP instead of a single Crow-AMSAA model?</p>
+<details>
+<summary>
+Answer
+</summary>
+To account for a <strong>known or suspected structural change</strong> in the failure process (overhaul, design change, operational change). A piecewise model fits each segment independently, capturing the change in failure behavior.
 </details>
 </div>
 </div>
@@ -798,9 +988,9 @@ The failure rate is <strong>increasing</strong> — wear-out or aging is occurri
 <li>Repairable systems analysis models the <em>sequence</em> of recurring failures, not just the first failure.</li>
 <li>The <strong>Power Law Process</strong> (<span class="math inline">\(E[N(t)] = \lambda t^\beta\)</span>) is the standard NHPP for repairable systems.</li>
 <li><span class="math inline">\(\hat{\beta}\)</span> determines whether the failure rate is improving (<span class="math inline">\(&lt; 1\)</span>), stable (<span class="math inline">\(= 1\)</span>), or worsening (<span class="math inline">\(&gt; 1\)</span>).</li>
-<li><code>nhpp()</code> fits the Crow-AMSAA model; add <code>breaks</code> for piecewise fitting.</li>
 <li><code>exposure()</code> computes fleet-level operating time at risk.</li>
-<li><code>mcf()</code> estimates cumulative failures per system non-parametrically.</li>
+<li><code>mcf()</code> estimates cumulative failures per system non-parametrically (no distributional assumption).</li>
+<li><code>nhpp()</code> fits the Crow-AMSAA model from individual failure times; add <code>breaks</code> for piecewise fitting.</li>
 <li>Future failure counts: <span class="math inline">\(E[\Delta N] = \hat{\lambda}(T + \Delta t)^{\hat{\beta}} - \hat{\lambda}\,T^{\hat{\beta}}\)</span>.</li>
 </ul>
 
@@ -829,6 +1019,19 @@ Meeker, William Q., and Luis A. Escobar. 1998. <em>Statistical Methods for Relia
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
     const icon = "";
     const anchorJS = new window.AnchorJS();
     anchorJS.options = {
@@ -1303,10 +1506,10 @@ Meeker, William Q., and Luis A. Escobar. 1998. <em>Statistical Methods for Relia
 <span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Define the distinction between repairable and non-repairable systems.</span>
 <span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Explain the Homogeneous Poisson Process (HPP) and Non-Homogeneous Poisson Process (NHPP).</span>
 <span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Describe the Power Law Process and its parameters.</span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Fit and interpret the Crow-AMSAA model using <span class="in">`nhpp()`</span> from ReliaGrowR.</span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Apply the Piecewise NHPP model to detect changes in failure behavior.</span>
-<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Compute fleet-level exposure using <span class="in">`exposure()`</span>.</span>
-<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Estimate the Mean Cumulative Function (MCF) using <span class="in">`mcf()`</span>.</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Compute fleet-level exposure using <span class="in">`exposure()`</span>.</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Estimate the Mean Cumulative Function (MCF) using <span class="in">`mcf()`</span>.</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Fit and interpret the Crow-AMSAA model using <span class="in">`nhpp()`</span> from ReliaGrowR.</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Apply the Piecewise NHPP model to detect changes in failure behavior.</span>
 <span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Forecast future failure counts from a fitted Power Law model.</span>
 <span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>The <span class="in">`ReliaGrowR`</span> package <span class="co">[</span><span class="ot">@ReliaGrowR</span><span class="co">]</span> provides functions for repairable systems analysis in R.</span>
@@ -1411,244 +1614,243 @@ Meeker, William Q., and Luis A. Escobar. 1998. <em>Statistical Methods for Relia
 <span id="cb16-123"><a href="#cb16-123" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
 <span id="cb16-124"><a href="#cb16-124" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb16-125"><a href="#cb16-125" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-126"><a href="#cb16-126" aria-hidden="true" tabindex="-1"></a><span class="fu">## NHPP Analysis with nhpp()</span></span>
+<span id="cb16-126"><a href="#cb16-126" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exposure Analysis</span></span>
 <span id="cb16-127"><a href="#cb16-127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-128"><a href="#cb16-128" aria-hidden="true" tabindex="-1"></a>The <span class="in">`nhpp()`</span> function fits the Power Law Process (Crow-AMSAA model) <span class="co">[</span><span class="ot">@Crow1975</span><span class="co">]</span> to cumulative failure data by maximum likelihood, returning estimates of $\lambda$ and $\beta$.</span>
+<span id="cb16-128"><a href="#cb16-128" aria-hidden="true" tabindex="-1"></a>When analyzing a *fleet*, individual units enter and leave observation at different times. **Exposure** is the total operating time accumulated across all units currently at risk.</span>
 <span id="cb16-129"><a href="#cb16-129" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-130"><a href="#cb16-130" aria-hidden="true" tabindex="-1"></a>A curve that bends downward (concave) indicates $\hat{\beta} &lt; 1$ — improving system. Upward bending (convex) indicates $\hat{\beta} &gt; 1$ — deteriorating system.</span>
-<span id="cb16-131"><a href="#cb16-131" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-134"><a href="#cb16-134" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb16-135"><a href="#cb16-135" aria-hidden="true" tabindex="-1"></a>times    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">500</span>, <span class="dv">1200</span>, <span class="dv">2100</span>, <span class="dv">3300</span>, <span class="dv">4800</span>, <span class="dv">6500</span>, <span class="dv">8400</span>, <span class="dv">10500</span>, <span class="dv">12800</span>, <span class="dv">15000</span>)</span>
-<span id="cb16-136"><a href="#cb16-136" aria-hidden="true" tabindex="-1"></a>failures <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">2</span>)</span>
-<span id="cb16-137"><a href="#cb16-137" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-138"><a href="#cb16-138" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">nhpp</span>(<span class="at">time =</span> times, <span class="at">event =</span> failures)</span>
-<span id="cb16-139"><a href="#cb16-139" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit,</span>
-<span id="cb16-140"><a href="#cb16-140" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Crow-AMSAA Model: Industrial Pump Fleet"</span>,</span>
-<span id="cb16-141"><a href="#cb16-141" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Cumulative Operating Hours"</span>,</span>
-<span id="cb16-142"><a href="#cb16-142" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Cumulative Failures"</span>)</span>
-<span id="cb16-143"><a href="#cb16-143" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-144"><a href="#cb16-144" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-145"><a href="#cb16-145" aria-hidden="true" tabindex="-1"></a>The concave curve and $\hat{\beta} &lt; 1$ indicate the pump fleet's failure rate is decreasing — a favorable operating regime.</span>
-<span id="cb16-146"><a href="#cb16-146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-147"><a href="#cb16-147" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb16-148"><a href="#cb16-148" aria-hidden="true" tabindex="-1"></a><span class="fu">## Try It</span></span>
-<span id="cb16-149"><a href="#cb16-149" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-150"><a href="#cb16-150" aria-hidden="true" tabindex="-1"></a>A compressor fleet recorded these cumulative operating hours and failure counts. Fit a Power Law model using <span class="in">`nhpp()`</span> with <span class="in">`method = "LS"`</span>.</span>
-<span id="cb16-151"><a href="#cb16-151" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-154"><a href="#cb16-154" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb16-155"><a href="#cb16-155" aria-hidden="true" tabindex="-1"></a>times    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1000</span>, <span class="dv">2500</span>, <span class="dv">4000</span>, <span class="dv">5500</span>, <span class="dv">8000</span>)</span>
-<span id="cb16-156"><a href="#cb16-156" aria-hidden="true" tabindex="-1"></a>failures <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">5</span>)</span>
-<span id="cb16-157"><a href="#cb16-157" aria-hidden="true" tabindex="-1"></a><span class="co"># fit &lt;- nhpp(time = times, event = failures, method = "LS")</span></span>
-<span id="cb16-158"><a href="#cb16-158" aria-hidden="true" tabindex="-1"></a><span class="co"># plot(fit)</span></span>
-<span id="cb16-159"><a href="#cb16-159" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-130"><a href="#cb16-130" aria-hidden="true" tabindex="-1"></a>The <span class="in">`exposure()`</span> function computes:</span>
+<span id="cb16-131"><a href="#cb16-131" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Cumulative exposure** — total system-time at risk up to each event time.</span>
+<span id="cb16-132"><a href="#cb16-132" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Number at risk** — how many units were under observation at each time.</span>
+<span id="cb16-133"><a href="#cb16-133" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Event rate** — cumulative events divided by cumulative exposure.</span>
+<span id="cb16-134"><a href="#cb16-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-137"><a href="#cb16-137" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb16-138"><a href="#cb16-138" aria-hidden="true" tabindex="-1"></a>pump_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb16-139"><a href="#cb16-139" aria-hidden="true" tabindex="-1"></a>  <span class="at">id    =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>,  <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>,  <span class="dv">3</span>, <span class="dv">3</span>,  <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">4</span>,  <span class="dv">5</span>, <span class="dv">5</span>),</span>
+<span id="cb16-140"><a href="#cb16-140" aria-hidden="true" tabindex="-1"></a>  <span class="at">time  =</span> <span class="fu">c</span>(<span class="dv">310</span>, <span class="dv">850</span>, <span class="dv">1620</span>,  <span class="dv">420</span>, <span class="dv">1050</span>, <span class="dv">2100</span>,  <span class="dv">580</span>, <span class="dv">1890</span>,  <span class="dv">240</span>, <span class="dv">710</span>, <span class="dv">1380</span>, <span class="dv">2400</span>,  <span class="dv">530</span>, <span class="dv">1740</span>),</span>
+<span id="cb16-141"><a href="#cb16-141" aria-hidden="true" tabindex="-1"></a>  <span class="at">event =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>,   <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>,   <span class="dv">1</span>, <span class="dv">1</span>,   <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>,   <span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb16-142"><a href="#cb16-142" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-143"><a href="#cb16-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-144"><a href="#cb16-144" aria-hidden="true" tabindex="-1"></a>exp_result <span class="ot">&lt;-</span> <span class="fu">exposure</span>(<span class="at">id =</span> pump_data<span class="sc">$</span>id, <span class="at">time =</span> pump_data<span class="sc">$</span>time,</span>
+<span id="cb16-145"><a href="#cb16-145" aria-hidden="true" tabindex="-1"></a>                       <span class="at">event =</span> pump_data<span class="sc">$</span>event)</span>
+<span id="cb16-146"><a href="#cb16-146" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(exp_result)</span>
+<span id="cb16-147"><a href="#cb16-147" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-148"><a href="#cb16-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-149"><a href="#cb16-149" aria-hidden="true" tabindex="-1"></a><span class="in">`exp_result`</span> is a data frame containing three columns: <span class="in">`cum_exposure`</span> (total system-time accumulated across all units at risk), <span class="in">`n_risk`</span> (number of units under observation at each time), and <span class="in">`event_rate`</span> (cumulative events divided by cumulative exposure). The exposure plot shows how total observed system-time accumulates and how the fleet-wide event rate behaves over time.</span>
+<span id="cb16-150"><a href="#cb16-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-151"><a href="#cb16-151" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb16-152"><a href="#cb16-152" aria-hidden="true" tabindex="-1"></a><span class="fu">## Review</span></span>
+<span id="cb16-153"><a href="#cb16-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-154"><a href="#cb16-154" aria-hidden="true" tabindex="-1"></a>Why is it important to account for exposure when comparing failure rates across systems with different observation periods?</span>
+<span id="cb16-155"><a href="#cb16-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-156"><a href="#cb16-156" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Answer<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
+<span id="cb16-157"><a href="#cb16-157" aria-hidden="true" tabindex="-1"></a>Without normalizing by exposure, a system observed for twice as long will appear to have twice as many failures even if its underlying rate is identical. Exposure provides the denominator — failures per unit time — so rates can be compared fairly.</span>
+<span id="cb16-158"><a href="#cb16-158" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
+<span id="cb16-159"><a href="#cb16-159" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb16-160"><a href="#cb16-160" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-161"><a href="#cb16-161" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Solution<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
-<span id="cb16-164"><a href="#cb16-164" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb16-165"><a href="#cb16-165" aria-hidden="true" tabindex="-1"></a>times    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1000</span>, <span class="dv">2500</span>, <span class="dv">4000</span>, <span class="dv">5500</span>, <span class="dv">8000</span>)</span>
-<span id="cb16-166"><a href="#cb16-166" aria-hidden="true" tabindex="-1"></a>failures <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">5</span>)</span>
-<span id="cb16-167"><a href="#cb16-167" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">nhpp</span>(<span class="at">time =</span> times, <span class="at">event =</span> failures, <span class="at">method =</span> <span class="st">"LS"</span>)</span>
-<span id="cb16-168"><a href="#cb16-168" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit, <span class="at">main =</span> <span class="st">"Crow-AMSAA: Compressor Fleet"</span>,</span>
-<span id="cb16-169"><a href="#cb16-169" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Cumulative Hours"</span>, <span class="at">ylab =</span> <span class="st">"Cumulative Failures"</span>)</span>
-<span id="cb16-170"><a href="#cb16-170" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-171"><a href="#cb16-171" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
-<span id="cb16-172"><a href="#cb16-172" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb16-173"><a href="#cb16-173" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-174"><a href="#cb16-174" aria-hidden="true" tabindex="-1"></a><span class="fu">## Piecewise NHPP</span></span>
-<span id="cb16-175"><a href="#cb16-175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-176"><a href="#cb16-176" aria-hidden="true" tabindex="-1"></a>The **Piecewise NHPP** <span class="co">[</span><span class="ot">@Guo2010</span><span class="co">]</span> fits a separate Power Law to each segment of the time axis, allowing for structural changes in failure behavior (overhauls, design modifications, operational changes):</span>
+<span id="cb16-161"><a href="#cb16-161" aria-hidden="true" tabindex="-1"></a><span class="fu">## Mean Cumulative Function</span></span>
+<span id="cb16-162"><a href="#cb16-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-163"><a href="#cb16-163" aria-hidden="true" tabindex="-1"></a>The **Mean Cumulative Function (MCF)** is a non-parametric estimate of the expected cumulative number of failures *per system* as a function of time. It makes no distributional assumptions and handles systems with different observation periods.</span>
+<span id="cb16-164"><a href="#cb16-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-165"><a href="#cb16-165" aria-hidden="true" tabindex="-1"></a>The **Nelson-Aalen estimator** is a non-parametric method that requires no distributional assumption and naturally handles systems with different observation lengths (administrative censoring):</span>
+<span id="cb16-166"><a href="#cb16-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-167"><a href="#cb16-167" aria-hidden="true" tabindex="-1"></a>$$\hat{M}(t) = \sum_{t_j \leq t} \frac{d_j}{n_j}$$</span>
+<span id="cb16-168"><a href="#cb16-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-169"><a href="#cb16-169" aria-hidden="true" tabindex="-1"></a>where $d_j$ is the number of failures at time $t_j$ and $n_j$ is the number of systems at risk at $t_j$.</span>
+<span id="cb16-170"><a href="#cb16-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-171"><a href="#cb16-171" aria-hidden="true" tabindex="-1"></a>Pass <span class="in">`end_time`</span> to <span class="in">`mcf()`</span> when systems were observed beyond their last recorded failure — otherwise the risk set is deflated too early, inflating the rate estimate.</span>
+<span id="cb16-172"><a href="#cb16-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-175"><a href="#cb16-175" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb16-176"><a href="#cb16-176" aria-hidden="true" tabindex="-1"></a>end_times  <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"1"</span> <span class="ot">=</span> <span class="dv">3000</span>, <span class="st">"2"</span> <span class="ot">=</span> <span class="dv">3000</span>, <span class="st">"3"</span> <span class="ot">=</span> <span class="dv">3000</span>, <span class="st">"4"</span> <span class="ot">=</span> <span class="dv">3000</span>, <span class="st">"5"</span> <span class="ot">=</span> <span class="dv">3000</span>)</span>
 <span id="cb16-177"><a href="#cb16-177" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-178"><a href="#cb16-178" aria-hidden="true" tabindex="-1"></a>$$E<span class="co">[</span><span class="ot">N(t)</span><span class="co">]</span> = \begin{cases} \lambda_1 t^{\beta_1} &amp; 0 &lt; t \leq \tau <span class="sc">\\</span> E<span class="co">[</span><span class="ot">N(\tau)</span><span class="co">]</span> + \lambda_2(t-\tau)^{\beta_2} &amp; t &gt; \tau \end{cases}$$</span>
-<span id="cb16-179"><a href="#cb16-179" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-180"><a href="#cb16-180" aria-hidden="true" tabindex="-1"></a>Pass a breakpoint estimate via the <span class="in">`breaks`</span> argument. The <span class="in">`segmented`</span> algorithm then optimizes the breakpoint location from the data.</span>
-<span id="cb16-181"><a href="#cb16-181" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-184"><a href="#cb16-184" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb16-185"><a href="#cb16-185" aria-hidden="true" tabindex="-1"></a>times2    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">500</span>, <span class="dv">1200</span>, <span class="dv">2100</span>, <span class="dv">3300</span>, <span class="dv">4800</span>, <span class="dv">6500</span>, <span class="dv">8400</span>, <span class="dv">9200</span>, <span class="dv">10100</span>, <span class="dv">11300</span>,</span>
-<span id="cb16-186"><a href="#cb16-186" aria-hidden="true" tabindex="-1"></a>               <span class="dv">12800</span>, <span class="dv">14500</span>, <span class="dv">16400</span>, <span class="dv">18500</span>, <span class="dv">20800</span>)</span>
-<span id="cb16-187"><a href="#cb16-187" aria-hidden="true" tabindex="-1"></a>failures2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">5</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb16-178"><a href="#cb16-178" aria-hidden="true" tabindex="-1"></a>mcf_result <span class="ot">&lt;-</span> <span class="fu">mcf</span>(<span class="at">id =</span> pump_data<span class="sc">$</span>id, <span class="at">time =</span> pump_data<span class="sc">$</span>time,</span>
+<span id="cb16-179"><a href="#cb16-179" aria-hidden="true" tabindex="-1"></a>                  <span class="at">event =</span> pump_data<span class="sc">$</span>event,</span>
+<span id="cb16-180"><a href="#cb16-180" aria-hidden="true" tabindex="-1"></a>                  <span class="at">end_time =</span> end_times)</span>
+<span id="cb16-181"><a href="#cb16-181" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mcf_result,</span>
+<span id="cb16-182"><a href="#cb16-182" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Mean Cumulative Function: Industrial Pump Fleet"</span>,</span>
+<span id="cb16-183"><a href="#cb16-183" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Operating Hours"</span>,</span>
+<span id="cb16-184"><a href="#cb16-184" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Expected Cumulative Failures per System"</span>)</span>
+<span id="cb16-185"><a href="#cb16-185" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-186"><a href="#cb16-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-187"><a href="#cb16-187" aria-hidden="true" tabindex="-1"></a>The slope of the MCF reveals the recurrence trend: steepening = increasing failure rate; flattening = improving.</span>
 <span id="cb16-188"><a href="#cb16-188" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-189"><a href="#cb16-189" aria-hidden="true" tabindex="-1"></a>fit_pw <span class="ot">&lt;-</span> <span class="fu">nhpp</span>(<span class="at">time =</span> times2, <span class="at">event =</span> failures2, <span class="at">breaks =</span> <span class="dv">8000</span>, <span class="at">method =</span> <span class="st">"LS"</span>)</span>
-<span id="cb16-190"><a href="#cb16-190" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit_pw,</span>
-<span id="cb16-191"><a href="#cb16-191" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Piecewise NHPP: Fleet Overhaul at Hour 8000"</span>,</span>
-<span id="cb16-192"><a href="#cb16-192" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Cumulative Operating Hours"</span>,</span>
-<span id="cb16-193"><a href="#cb16-193" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Cumulative Failures"</span>)</span>
-<span id="cb16-194"><a href="#cb16-194" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-195"><a href="#cb16-195" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-196"><a href="#cb16-196" aria-hidden="true" tabindex="-1"></a>The first segment (pre-overhaul, steeper slope) gives way to a flatter or downward-bending second segment, confirming the overhaul reduced the failure rate. The fitted breakpoint may differ slightly from the input value — here it is estimated near hour 9,820.</span>
-<span id="cb16-197"><a href="#cb16-197" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-198"><a href="#cb16-198" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
-<span id="cb16-199"><a href="#cb16-199" aria-hidden="true" tabindex="-1"></a><span class="fu">## Review</span></span>
-<span id="cb16-200"><a href="#cb16-200" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-201"><a href="#cb16-201" aria-hidden="true" tabindex="-1"></a>What is the primary reason to use a Piecewise NHPP instead of a single Crow-AMSAA model?</span>
-<span id="cb16-202"><a href="#cb16-202" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-203"><a href="#cb16-203" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Answer<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
-<span id="cb16-204"><a href="#cb16-204" aria-hidden="true" tabindex="-1"></a>To account for a **known or suspected structural change** in the failure process (overhaul, design change, operational change). A piecewise model fits each segment independently, capturing the change in failure behavior.</span>
-<span id="cb16-205"><a href="#cb16-205" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
-<span id="cb16-206"><a href="#cb16-206" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb16-207"><a href="#cb16-207" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-208"><a href="#cb16-208" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exposure Analysis</span></span>
-<span id="cb16-209"><a href="#cb16-209" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-210"><a href="#cb16-210" aria-hidden="true" tabindex="-1"></a>When analyzing a *fleet*, individual units enter and leave observation at different times. **Exposure** is the total operating time accumulated across all units currently at risk.</span>
-<span id="cb16-211"><a href="#cb16-211" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-212"><a href="#cb16-212" aria-hidden="true" tabindex="-1"></a>The <span class="in">`exposure()`</span> function computes:</span>
-<span id="cb16-213"><a href="#cb16-213" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Cumulative exposure** — total system-time at risk up to each event time.</span>
-<span id="cb16-214"><a href="#cb16-214" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Number at risk** — how many units were under observation at each time.</span>
-<span id="cb16-215"><a href="#cb16-215" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Event rate** — cumulative events divided by cumulative exposure.</span>
-<span id="cb16-216"><a href="#cb16-216" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-219"><a href="#cb16-219" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb16-220"><a href="#cb16-220" aria-hidden="true" tabindex="-1"></a>pump_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb16-221"><a href="#cb16-221" aria-hidden="true" tabindex="-1"></a>  <span class="at">id    =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>,  <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>,  <span class="dv">3</span>, <span class="dv">3</span>,  <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">4</span>,  <span class="dv">5</span>, <span class="dv">5</span>),</span>
-<span id="cb16-222"><a href="#cb16-222" aria-hidden="true" tabindex="-1"></a>  <span class="at">time  =</span> <span class="fu">c</span>(<span class="dv">310</span>, <span class="dv">850</span>, <span class="dv">1620</span>,  <span class="dv">420</span>, <span class="dv">1050</span>, <span class="dv">2100</span>,  <span class="dv">580</span>, <span class="dv">1890</span>,  <span class="dv">240</span>, <span class="dv">710</span>, <span class="dv">1380</span>, <span class="dv">2400</span>,  <span class="dv">530</span>, <span class="dv">1740</span>),</span>
-<span id="cb16-223"><a href="#cb16-223" aria-hidden="true" tabindex="-1"></a>  <span class="at">event =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>,   <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>,   <span class="dv">1</span>, <span class="dv">1</span>,   <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>,   <span class="dv">1</span>, <span class="dv">1</span>)</span>
-<span id="cb16-224"><a href="#cb16-224" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb16-225"><a href="#cb16-225" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-226"><a href="#cb16-226" aria-hidden="true" tabindex="-1"></a>exp_result <span class="ot">&lt;-</span> <span class="fu">exposure</span>(<span class="at">id =</span> pump_data<span class="sc">$</span>id, <span class="at">time =</span> pump_data<span class="sc">$</span>time,</span>
-<span id="cb16-227"><a href="#cb16-227" aria-hidden="true" tabindex="-1"></a>                       <span class="at">event =</span> pump_data<span class="sc">$</span>event)</span>
-<span id="cb16-228"><a href="#cb16-228" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(exp_result)</span>
-<span id="cb16-229"><a href="#cb16-229" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-189"><a href="#cb16-189" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb16-190"><a href="#cb16-190" aria-hidden="true" tabindex="-1"></a><span class="fu">## Try It</span></span>
+<span id="cb16-191"><a href="#cb16-191" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-192"><a href="#cb16-192" aria-hidden="true" tabindex="-1"></a>Three systems were observed with the following failure times. Each was observed until hour 2000. Compute and plot the MCF.</span>
+<span id="cb16-193"><a href="#cb16-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-196"><a href="#cb16-196" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb16-197"><a href="#cb16-197" aria-hidden="true" tabindex="-1"></a>id    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"1"</span>, <span class="dv">3</span>), <span class="fu">rep</span>(<span class="st">"2"</span>, <span class="dv">4</span>), <span class="fu">rep</span>(<span class="st">"3"</span>, <span class="dv">2</span>))</span>
+<span id="cb16-198"><a href="#cb16-198" aria-hidden="true" tabindex="-1"></a>time  <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">400</span>, <span class="dv">900</span>, <span class="dv">1500</span>,   <span class="dv">300</span>, <span class="dv">700</span>, <span class="dv">1200</span>, <span class="dv">1800</span>,   <span class="dv">600</span>, <span class="dv">1400</span>)</span>
+<span id="cb16-199"><a href="#cb16-199" aria-hidden="true" tabindex="-1"></a>event <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">9</span>)</span>
+<span id="cb16-200"><a href="#cb16-200" aria-hidden="true" tabindex="-1"></a>end_times2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"1"</span> <span class="ot">=</span> <span class="dv">2000</span>, <span class="st">"2"</span> <span class="ot">=</span> <span class="dv">2000</span>, <span class="st">"3"</span> <span class="ot">=</span> <span class="dv">2000</span>)</span>
+<span id="cb16-201"><a href="#cb16-201" aria-hidden="true" tabindex="-1"></a><span class="co"># fit &lt;- mcf(id, time, event, end_time = end_times2)</span></span>
+<span id="cb16-202"><a href="#cb16-202" aria-hidden="true" tabindex="-1"></a><span class="co"># plot(fit)</span></span>
+<span id="cb16-203"><a href="#cb16-203" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-204"><a href="#cb16-204" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-205"><a href="#cb16-205" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Solution<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
+<span id="cb16-208"><a href="#cb16-208" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb16-209"><a href="#cb16-209" aria-hidden="true" tabindex="-1"></a>id    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"1"</span>, <span class="dv">3</span>), <span class="fu">rep</span>(<span class="st">"2"</span>, <span class="dv">4</span>), <span class="fu">rep</span>(<span class="st">"3"</span>, <span class="dv">2</span>))</span>
+<span id="cb16-210"><a href="#cb16-210" aria-hidden="true" tabindex="-1"></a>time  <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">400</span>, <span class="dv">900</span>, <span class="dv">1500</span>,   <span class="dv">300</span>, <span class="dv">700</span>, <span class="dv">1200</span>, <span class="dv">1800</span>,   <span class="dv">600</span>, <span class="dv">1400</span>)</span>
+<span id="cb16-211"><a href="#cb16-211" aria-hidden="true" tabindex="-1"></a>event <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">9</span>)</span>
+<span id="cb16-212"><a href="#cb16-212" aria-hidden="true" tabindex="-1"></a>end_times2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"1"</span> <span class="ot">=</span> <span class="dv">2000</span>, <span class="st">"2"</span> <span class="ot">=</span> <span class="dv">2000</span>, <span class="st">"3"</span> <span class="ot">=</span> <span class="dv">2000</span>)</span>
+<span id="cb16-213"><a href="#cb16-213" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">mcf</span>(<span class="at">id =</span> id, <span class="at">time =</span> time, <span class="at">event =</span> event, <span class="at">end_time =</span> end_times2)</span>
+<span id="cb16-214"><a href="#cb16-214" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit, <span class="at">main =</span> <span class="st">"MCF Example"</span>, <span class="at">xlab =</span> <span class="st">"Time (hours)"</span>, <span class="at">ylab =</span> <span class="st">"MCF"</span>)</span>
+<span id="cb16-215"><a href="#cb16-215" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-216"><a href="#cb16-216" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
+<span id="cb16-217"><a href="#cb16-217" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb16-218"><a href="#cb16-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-219"><a href="#cb16-219" aria-hidden="true" tabindex="-1"></a><span class="fu">## NHPP Analysis with nhpp()</span></span>
+<span id="cb16-220"><a href="#cb16-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-221"><a href="#cb16-221" aria-hidden="true" tabindex="-1"></a>The <span class="in">`nhpp()`</span> function fits the Power Law Process (Crow-AMSAA model) <span class="co">[</span><span class="ot">@Crow1975</span><span class="co">]</span> to individual failure event data by maximum likelihood, returning estimates of $\lambda$ and $\beta$.</span>
+<span id="cb16-222"><a href="#cb16-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-223"><a href="#cb16-223" aria-hidden="true" tabindex="-1"></a>A curve that bends downward (concave) indicates $\hat{\beta} &lt; 1$ — improving system. Upward bending (convex) indicates $\hat{\beta} &gt; 1$ — deteriorating system.</span>
+<span id="cb16-224"><a href="#cb16-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-227"><a href="#cb16-227" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb16-228"><a href="#cb16-228" aria-hidden="true" tabindex="-1"></a><span class="co"># pump_data defined above in the Exposure section</span></span>
+<span id="cb16-229"><a href="#cb16-229" aria-hidden="true" tabindex="-1"></a>failure_times <span class="ot">&lt;-</span> <span class="fu">sort</span>(pump_data<span class="sc">$</span>time[pump_data<span class="sc">$</span>event <span class="sc">==</span> <span class="dv">1</span>])</span>
 <span id="cb16-230"><a href="#cb16-230" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-231"><a href="#cb16-231" aria-hidden="true" tabindex="-1"></a><span class="in">`exp_result`</span> is a data frame containing three columns: <span class="in">`cum_exposure`</span> (total system-time accumulated across all units at risk), <span class="in">`n_risk`</span> (number of units under observation at each time), and <span class="in">`event_rate`</span> (cumulative events divided by cumulative exposure). The exposure plot shows how total observed system-time accumulates and how the fleet-wide event rate behaves over time.</span>
-<span id="cb16-232"><a href="#cb16-232" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-233"><a href="#cb16-233" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
-<span id="cb16-234"><a href="#cb16-234" aria-hidden="true" tabindex="-1"></a><span class="fu">## Review</span></span>
-<span id="cb16-235"><a href="#cb16-235" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-236"><a href="#cb16-236" aria-hidden="true" tabindex="-1"></a>Why is it important to account for exposure when comparing failure rates across systems with different observation periods?</span>
+<span id="cb16-231"><a href="#cb16-231" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">nhpp</span>(<span class="at">time =</span> failure_times, <span class="at">event =</span> <span class="fu">rep</span>(<span class="dv">1</span>, <span class="fu">length</span>(failure_times)))</span>
+<span id="cb16-232"><a href="#cb16-232" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit,</span>
+<span id="cb16-233"><a href="#cb16-233" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Crow-AMSAA Model: Industrial Pump Fleet"</span>,</span>
+<span id="cb16-234"><a href="#cb16-234" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Operating Hours"</span>,</span>
+<span id="cb16-235"><a href="#cb16-235" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Cumulative Failures"</span>)</span>
+<span id="cb16-236"><a href="#cb16-236" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb16-237"><a href="#cb16-237" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-238"><a href="#cb16-238" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Answer<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
-<span id="cb16-239"><a href="#cb16-239" aria-hidden="true" tabindex="-1"></a>Without normalizing by exposure, a system observed for twice as long will appear to have twice as many failures even if its underlying rate is identical. Exposure provides the denominator — failures per unit time — so rates can be compared fairly.</span>
-<span id="cb16-240"><a href="#cb16-240" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
-<span id="cb16-241"><a href="#cb16-241" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb16-238"><a href="#cb16-238" aria-hidden="true" tabindex="-1"></a>The concave curve and $\hat{\beta} &lt; 1$ indicate the pump fleet's failure rate is decreasing — a favorable operating regime.</span>
+<span id="cb16-239"><a href="#cb16-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-240"><a href="#cb16-240" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb16-241"><a href="#cb16-241" aria-hidden="true" tabindex="-1"></a><span class="fu">## Try It</span></span>
 <span id="cb16-242"><a href="#cb16-242" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-243"><a href="#cb16-243" aria-hidden="true" tabindex="-1"></a><span class="fu">## Mean Cumulative Function</span></span>
+<span id="cb16-243"><a href="#cb16-243" aria-hidden="true" tabindex="-1"></a>A compressor fleet recorded individual failure times across five systems. Fit a Power Law model using <span class="in">`nhpp()`</span> with <span class="in">`method = "LS"`</span>.</span>
 <span id="cb16-244"><a href="#cb16-244" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-245"><a href="#cb16-245" aria-hidden="true" tabindex="-1"></a>The **Mean Cumulative Function (MCF)** is a non-parametric estimate of the expected cumulative number of failures *per system* as a function of time. It makes no distributional assumptions and handles systems with different observation periods.</span>
-<span id="cb16-246"><a href="#cb16-246" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-247"><a href="#cb16-247" aria-hidden="true" tabindex="-1"></a>The **Nelson-Aalen estimator** is a non-parametric method that requires no distributional assumption and naturally handles systems with different observation lengths (administrative censoring):</span>
-<span id="cb16-248"><a href="#cb16-248" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-249"><a href="#cb16-249" aria-hidden="true" tabindex="-1"></a>$$\hat{M}(t) = \sum_{t_j \leq t} \frac{d_j}{n_j}$$</span>
-<span id="cb16-250"><a href="#cb16-250" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-251"><a href="#cb16-251" aria-hidden="true" tabindex="-1"></a>where $d_j$ is the number of failures at time $t_j$ and $n_j$ is the number of systems at risk at $t_j$.</span>
+<span id="cb16-247"><a href="#cb16-247" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb16-248"><a href="#cb16-248" aria-hidden="true" tabindex="-1"></a>comp_times <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">250</span>, <span class="dv">800</span>, <span class="dv">1400</span>, <span class="dv">550</span>, <span class="dv">1100</span>, <span class="dv">1900</span>, <span class="dv">700</span>, <span class="dv">1350</span>, <span class="dv">420</span>, <span class="dv">1050</span>, <span class="dv">1800</span>)</span>
+<span id="cb16-249"><a href="#cb16-249" aria-hidden="true" tabindex="-1"></a><span class="co"># fit &lt;- nhpp(time = comp_times, event = rep(1, length(comp_times)), method = "LS")</span></span>
+<span id="cb16-250"><a href="#cb16-250" aria-hidden="true" tabindex="-1"></a><span class="co"># plot(fit)</span></span>
+<span id="cb16-251"><a href="#cb16-251" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb16-252"><a href="#cb16-252" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-253"><a href="#cb16-253" aria-hidden="true" tabindex="-1"></a>Pass <span class="in">`end_time`</span> to <span class="in">`mcf()`</span> when systems were observed beyond their last recorded failure — otherwise the risk set is deflated too early, inflating the rate estimate.</span>
-<span id="cb16-254"><a href="#cb16-254" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-257"><a href="#cb16-257" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb16-258"><a href="#cb16-258" aria-hidden="true" tabindex="-1"></a>end_times  <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"1"</span> <span class="ot">=</span> <span class="dv">3000</span>, <span class="st">"2"</span> <span class="ot">=</span> <span class="dv">3000</span>, <span class="st">"3"</span> <span class="ot">=</span> <span class="dv">3000</span>, <span class="st">"4"</span> <span class="ot">=</span> <span class="dv">3000</span>, <span class="st">"5"</span> <span class="ot">=</span> <span class="dv">3000</span>)</span>
-<span id="cb16-259"><a href="#cb16-259" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-260"><a href="#cb16-260" aria-hidden="true" tabindex="-1"></a>mcf_result <span class="ot">&lt;-</span> <span class="fu">mcf</span>(<span class="at">id =</span> pump_data<span class="sc">$</span>id, <span class="at">time =</span> pump_data<span class="sc">$</span>time,</span>
-<span id="cb16-261"><a href="#cb16-261" aria-hidden="true" tabindex="-1"></a>                  <span class="at">event =</span> pump_data<span class="sc">$</span>event,</span>
-<span id="cb16-262"><a href="#cb16-262" aria-hidden="true" tabindex="-1"></a>                  <span class="at">end_time =</span> end_times)</span>
-<span id="cb16-263"><a href="#cb16-263" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mcf_result,</span>
-<span id="cb16-264"><a href="#cb16-264" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Mean Cumulative Function: Industrial Pump Fleet"</span>,</span>
-<span id="cb16-265"><a href="#cb16-265" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Operating Hours"</span>,</span>
-<span id="cb16-266"><a href="#cb16-266" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Expected Cumulative Failures per System"</span>)</span>
-<span id="cb16-267"><a href="#cb16-267" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-268"><a href="#cb16-268" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-269"><a href="#cb16-269" aria-hidden="true" tabindex="-1"></a>The slope of the MCF reveals the recurrence trend: steepening = increasing failure rate; flattening = improving.</span>
-<span id="cb16-270"><a href="#cb16-270" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-271"><a href="#cb16-271" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb16-272"><a href="#cb16-272" aria-hidden="true" tabindex="-1"></a><span class="fu">## Try It</span></span>
+<span id="cb16-253"><a href="#cb16-253" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Solution<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
+<span id="cb16-256"><a href="#cb16-256" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb16-257"><a href="#cb16-257" aria-hidden="true" tabindex="-1"></a>comp_times <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">250</span>, <span class="dv">800</span>, <span class="dv">1400</span>, <span class="dv">550</span>, <span class="dv">1100</span>, <span class="dv">1900</span>, <span class="dv">700</span>, <span class="dv">1350</span>, <span class="dv">420</span>, <span class="dv">1050</span>, <span class="dv">1800</span>)</span>
+<span id="cb16-258"><a href="#cb16-258" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">nhpp</span>(<span class="at">time =</span> <span class="fu">sort</span>(comp_times),</span>
+<span id="cb16-259"><a href="#cb16-259" aria-hidden="true" tabindex="-1"></a>            <span class="at">event =</span> <span class="fu">rep</span>(<span class="dv">1</span>, <span class="fu">length</span>(comp_times)), <span class="at">method =</span> <span class="st">"LS"</span>)</span>
+<span id="cb16-260"><a href="#cb16-260" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit, <span class="at">main =</span> <span class="st">"Crow-AMSAA: Compressor Fleet"</span>,</span>
+<span id="cb16-261"><a href="#cb16-261" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Operating Hours"</span>, <span class="at">ylab =</span> <span class="st">"Cumulative Failures"</span>)</span>
+<span id="cb16-262"><a href="#cb16-262" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-263"><a href="#cb16-263" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
+<span id="cb16-264"><a href="#cb16-264" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb16-265"><a href="#cb16-265" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-266"><a href="#cb16-266" aria-hidden="true" tabindex="-1"></a><span class="fu">## Piecewise NHPP</span></span>
+<span id="cb16-267"><a href="#cb16-267" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-268"><a href="#cb16-268" aria-hidden="true" tabindex="-1"></a>The **Piecewise NHPP** <span class="co">[</span><span class="ot">@Guo2010</span><span class="co">]</span> fits a separate Power Law to each segment of the time axis, allowing for structural changes in failure behavior (overhauls, design modifications, operational changes):</span>
+<span id="cb16-269"><a href="#cb16-269" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-270"><a href="#cb16-270" aria-hidden="true" tabindex="-1"></a>$$E<span class="co">[</span><span class="ot">N(t)</span><span class="co">]</span> = \begin{cases} \lambda_1 t^{\beta_1} &amp; 0 &lt; t \leq \tau <span class="sc">\\</span> E<span class="co">[</span><span class="ot">N(\tau)</span><span class="co">]</span> + \lambda_2(t-\tau)^{\beta_2} &amp; t &gt; \tau \end{cases}$$</span>
+<span id="cb16-271"><a href="#cb16-271" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-272"><a href="#cb16-272" aria-hidden="true" tabindex="-1"></a>Pass a breakpoint estimate via the <span class="in">`breaks`</span> argument. The <span class="in">`segmented`</span> algorithm then optimizes the breakpoint location from the data.</span>
 <span id="cb16-273"><a href="#cb16-273" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-274"><a href="#cb16-274" aria-hidden="true" tabindex="-1"></a>Three systems were observed with the following failure times. Each was observed until hour 2000. Compute and plot the MCF.</span>
-<span id="cb16-275"><a href="#cb16-275" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-278"><a href="#cb16-278" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb16-279"><a href="#cb16-279" aria-hidden="true" tabindex="-1"></a>id    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"1"</span>, <span class="dv">3</span>), <span class="fu">rep</span>(<span class="st">"2"</span>, <span class="dv">4</span>), <span class="fu">rep</span>(<span class="st">"3"</span>, <span class="dv">2</span>))</span>
-<span id="cb16-280"><a href="#cb16-280" aria-hidden="true" tabindex="-1"></a>time  <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">400</span>, <span class="dv">900</span>, <span class="dv">1500</span>,   <span class="dv">300</span>, <span class="dv">700</span>, <span class="dv">1200</span>, <span class="dv">1800</span>,   <span class="dv">600</span>, <span class="dv">1400</span>)</span>
-<span id="cb16-281"><a href="#cb16-281" aria-hidden="true" tabindex="-1"></a>event <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">9</span>)</span>
-<span id="cb16-282"><a href="#cb16-282" aria-hidden="true" tabindex="-1"></a>end_times2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"1"</span> <span class="ot">=</span> <span class="dv">2000</span>, <span class="st">"2"</span> <span class="ot">=</span> <span class="dv">2000</span>, <span class="st">"3"</span> <span class="ot">=</span> <span class="dv">2000</span>)</span>
-<span id="cb16-283"><a href="#cb16-283" aria-hidden="true" tabindex="-1"></a><span class="co"># fit &lt;- mcf(id, time, event, end_time = end_times2)</span></span>
-<span id="cb16-284"><a href="#cb16-284" aria-hidden="true" tabindex="-1"></a><span class="co"># plot(fit)</span></span>
-<span id="cb16-285"><a href="#cb16-285" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-286"><a href="#cb16-286" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-287"><a href="#cb16-287" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Solution<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
-<span id="cb16-290"><a href="#cb16-290" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb16-291"><a href="#cb16-291" aria-hidden="true" tabindex="-1"></a>id    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"1"</span>, <span class="dv">3</span>), <span class="fu">rep</span>(<span class="st">"2"</span>, <span class="dv">4</span>), <span class="fu">rep</span>(<span class="st">"3"</span>, <span class="dv">2</span>))</span>
-<span id="cb16-292"><a href="#cb16-292" aria-hidden="true" tabindex="-1"></a>time  <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">400</span>, <span class="dv">900</span>, <span class="dv">1500</span>,   <span class="dv">300</span>, <span class="dv">700</span>, <span class="dv">1200</span>, <span class="dv">1800</span>,   <span class="dv">600</span>, <span class="dv">1400</span>)</span>
-<span id="cb16-293"><a href="#cb16-293" aria-hidden="true" tabindex="-1"></a>event <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">9</span>)</span>
-<span id="cb16-294"><a href="#cb16-294" aria-hidden="true" tabindex="-1"></a>end_times2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"1"</span> <span class="ot">=</span> <span class="dv">2000</span>, <span class="st">"2"</span> <span class="ot">=</span> <span class="dv">2000</span>, <span class="st">"3"</span> <span class="ot">=</span> <span class="dv">2000</span>)</span>
-<span id="cb16-295"><a href="#cb16-295" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">mcf</span>(<span class="at">id =</span> id, <span class="at">time =</span> time, <span class="at">event =</span> event, <span class="at">end_time =</span> end_times2)</span>
-<span id="cb16-296"><a href="#cb16-296" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit, <span class="at">main =</span> <span class="st">"MCF Example"</span>, <span class="at">xlab =</span> <span class="st">"Time (hours)"</span>, <span class="at">ylab =</span> <span class="st">"MCF"</span>)</span>
-<span id="cb16-297"><a href="#cb16-297" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-298"><a href="#cb16-298" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
-<span id="cb16-299"><a href="#cb16-299" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb16-300"><a href="#cb16-300" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-301"><a href="#cb16-301" aria-hidden="true" tabindex="-1"></a><span class="fu">## Interpreting Results and Predicting Future Failures</span></span>
-<span id="cb16-302"><a href="#cb16-302" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-303"><a href="#cb16-303" aria-hidden="true" tabindex="-1"></a><span class="fu">### Reading $\hat{\beta}$</span></span>
-<span id="cb16-304"><a href="#cb16-304" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-305"><a href="#cb16-305" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> $\hat{\beta}$ <span class="pp">|</span> Interpretation <span class="pp">|</span> Typical cause <span class="pp">|</span></span>
-<span id="cb16-306"><a href="#cb16-306" aria-hidden="true" tabindex="-1"></a><span class="pp">|:---:|---|---|</span></span>
-<span id="cb16-307"><a href="#cb16-307" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> $&lt; 1$ <span class="pp">|</span> Decreasing failure rate <span class="pp">|</span> Effective maintenance, infant mortality resolved <span class="pp">|</span></span>
-<span id="cb16-308"><a href="#cb16-308" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> $= 1$ <span class="pp">|</span> Constant failure rate <span class="pp">|</span> Random external shocks <span class="pp">|</span></span>
-<span id="cb16-309"><a href="#cb16-309" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> $&gt; 1$ <span class="pp">|</span> Increasing failure rate <span class="pp">|</span> Wear-out, accumulating damage, aging <span class="pp">|</span></span>
-<span id="cb16-310"><a href="#cb16-310" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-311"><a href="#cb16-311" aria-hidden="true" tabindex="-1"></a><span class="fu">### Cumulative vs Instantaneous MTBF</span></span>
-<span id="cb16-312"><a href="#cb16-312" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-313"><a href="#cb16-313" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Cumulative MTBF** = $T / N(T)$ — historical average over all observed failures.</span>
-<span id="cb16-314"><a href="#cb16-314" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Instantaneous MTBF** at time $t$ = $1/\rho(t) = 1/(\hat{\lambda}\hat{\beta}\,t^{\hat{\beta}-1})$ — expected time to the *next* failure.</span>
-<span id="cb16-315"><a href="#cb16-315" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-316"><a href="#cb16-316" aria-hidden="true" tabindex="-1"></a>For $\hat{\beta} &gt; 1$ (aging system), the instantaneous MTBF falls *below* the cumulative average at late times — the system's near-term reliability is worse than its history suggests.</span>
-<span id="cb16-317"><a href="#cb16-317" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-318"><a href="#cb16-318" aria-hidden="true" tabindex="-1"></a><span class="fu">### Predicting Future Failures</span></span>
-<span id="cb16-319"><a href="#cb16-319" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-320"><a href="#cb16-320" aria-hidden="true" tabindex="-1"></a>Expected additional failures from current time $T$ to a future time $T + \Delta t$:</span>
-<span id="cb16-321"><a href="#cb16-321" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-322"><a href="#cb16-322" aria-hidden="true" tabindex="-1"></a>$$E<span class="co">[</span><span class="ot">\Delta N</span><span class="co">]</span> = \hat{\lambda}(T + \Delta t)^{\hat{\beta}} - \hat{\lambda}\, T^{\hat{\beta}}$$</span>
-<span id="cb16-323"><a href="#cb16-323" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-326"><a href="#cb16-326" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb16-327"><a href="#cb16-327" aria-hidden="true" tabindex="-1"></a>lambda    <span class="ot">&lt;-</span> <span class="fl">0.0003</span></span>
-<span id="cb16-328"><a href="#cb16-328" aria-hidden="true" tabindex="-1"></a>beta      <span class="ot">&lt;-</span> <span class="fl">0.85</span></span>
-<span id="cb16-329"><a href="#cb16-329" aria-hidden="true" tabindex="-1"></a>T_current <span class="ot">&lt;-</span> <span class="dv">15000</span></span>
-<span id="cb16-330"><a href="#cb16-330" aria-hidden="true" tabindex="-1"></a>T_future  <span class="ot">&lt;-</span> <span class="dv">17000</span></span>
-<span id="cb16-331"><a href="#cb16-331" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-332"><a href="#cb16-332" aria-hidden="true" tabindex="-1"></a>expected_add <span class="ot">&lt;-</span> lambda <span class="sc">*</span> T_future<span class="sc">^</span>beta <span class="sc">-</span> lambda <span class="sc">*</span> T_current<span class="sc">^</span>beta</span>
-<span id="cb16-333"><a href="#cb16-333" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Expected additional failures:"</span>, <span class="fu">round</span>(expected_add, <span class="dv">2</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb16-334"><a href="#cb16-334" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-335"><a href="#cb16-335" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-336"><a href="#cb16-336" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb16-337"><a href="#cb16-337" aria-hidden="true" tabindex="-1"></a><span class="fu">## Try It</span></span>
-<span id="cb16-338"><a href="#cb16-338" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-339"><a href="#cb16-339" aria-hidden="true" tabindex="-1"></a>A system has been operating for 5,000 hours. A Power Law fit yielded $\lambda = 0.0005$ and $\beta = 1.2$. Calculate the expected additional failures in the next 1,000 hours.</span>
-<span id="cb16-340"><a href="#cb16-340" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-343"><a href="#cb16-343" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb16-344"><a href="#cb16-344" aria-hidden="true" tabindex="-1"></a>lambda    <span class="ot">&lt;-</span> <span class="fl">0.0005</span></span>
-<span id="cb16-345"><a href="#cb16-345" aria-hidden="true" tabindex="-1"></a>beta      <span class="ot">&lt;-</span> <span class="fl">1.2</span></span>
-<span id="cb16-346"><a href="#cb16-346" aria-hidden="true" tabindex="-1"></a>T_current <span class="ot">&lt;-</span> <span class="dv">5000</span></span>
-<span id="cb16-347"><a href="#cb16-347" aria-hidden="true" tabindex="-1"></a>T_future  <span class="ot">&lt;-</span> <span class="dv">6000</span></span>
-<span id="cb16-348"><a href="#cb16-348" aria-hidden="true" tabindex="-1"></a><span class="co"># E[ΔN] = lambda * T_future^beta - lambda * T_current^beta</span></span>
-<span id="cb16-349"><a href="#cb16-349" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-350"><a href="#cb16-350" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-351"><a href="#cb16-351" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Solution<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
-<span id="cb16-354"><a href="#cb16-354" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb16-355"><a href="#cb16-355" aria-hidden="true" tabindex="-1"></a>lambda    <span class="ot">&lt;-</span> <span class="fl">0.0005</span></span>
-<span id="cb16-356"><a href="#cb16-356" aria-hidden="true" tabindex="-1"></a>beta      <span class="ot">&lt;-</span> <span class="fl">1.2</span></span>
-<span id="cb16-357"><a href="#cb16-357" aria-hidden="true" tabindex="-1"></a>T_current <span class="ot">&lt;-</span> <span class="dv">5000</span></span>
-<span id="cb16-358"><a href="#cb16-358" aria-hidden="true" tabindex="-1"></a>T_future  <span class="ot">&lt;-</span> <span class="dv">6000</span></span>
-<span id="cb16-359"><a href="#cb16-359" aria-hidden="true" tabindex="-1"></a>expected_failures <span class="ot">&lt;-</span> lambda <span class="sc">*</span> T_future<span class="sc">^</span>beta <span class="sc">-</span> lambda <span class="sc">*</span> T_current<span class="sc">^</span>beta</span>
-<span id="cb16-360"><a href="#cb16-360" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Expected additional failures:"</span>, <span class="fu">round</span>(expected_failures, <span class="dv">2</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb16-361"><a href="#cb16-361" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-362"><a href="#cb16-362" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
-<span id="cb16-363"><a href="#cb16-363" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb16-364"><a href="#cb16-364" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-365"><a href="#cb16-365" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
-<span id="cb16-366"><a href="#cb16-366" aria-hidden="true" tabindex="-1"></a><span class="fu">## Review</span></span>
-<span id="cb16-367"><a href="#cb16-367" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-368"><a href="#cb16-368" aria-hidden="true" tabindex="-1"></a>A system has a fitted Power Law model with $\beta = 1.35$. What is the operational implication?</span>
-<span id="cb16-369"><a href="#cb16-369" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-370"><a href="#cb16-370" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Answer<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
-<span id="cb16-371"><a href="#cb16-371" aria-hidden="true" tabindex="-1"></a>The failure rate is **increasing** — wear-out or aging is occurring. The system may be approaching a major overhaul threshold. The instantaneous MTBF is below the cumulative historical average.</span>
-<span id="cb16-372"><a href="#cb16-372" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
-<span id="cb16-373"><a href="#cb16-373" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb16-374"><a href="#cb16-374" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-375"><a href="#cb16-375" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
-<span id="cb16-376"><a href="#cb16-376" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-377"><a href="#cb16-377" aria-hidden="true" tabindex="-1"></a>**Key takeaways:**</span>
-<span id="cb16-378"><a href="#cb16-378" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-379"><a href="#cb16-379" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Repairable systems analysis models the *sequence* of recurring failures, not just the first failure.</span>
-<span id="cb16-380"><a href="#cb16-380" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The **Power Law Process** ($E<span class="co">[</span><span class="ot">N(t)</span><span class="co">]</span> = \lambda t^\beta$) is the standard NHPP for repairable systems.</span>
-<span id="cb16-381"><a href="#cb16-381" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$\hat{\beta}$ determines whether the failure rate is improving ($&lt; 1$), stable ($= 1$), or worsening ($&gt; 1$).</span>
-<span id="cb16-382"><a href="#cb16-382" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`nhpp()`</span> fits the Crow-AMSAA model; add <span class="in">`breaks`</span> for piecewise fitting.</span>
-<span id="cb16-383"><a href="#cb16-383" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`exposure()`</span> computes fleet-level operating time at risk.</span>
-<span id="cb16-384"><a href="#cb16-384" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`mcf()`</span> estimates cumulative failures per system non-parametrically.</span>
-<span id="cb16-385"><a href="#cb16-385" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Future failure counts: $E<span class="co">[</span><span class="ot">\Delta N</span><span class="co">]</span> = \hat{\lambda}(T + \Delta t)^{\hat{\beta}} - \hat{\lambda}\,T^{\hat{\beta}}$.</span>
+<span id="cb16-276"><a href="#cb16-276" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb16-277"><a href="#cb16-277" aria-hidden="true" tabindex="-1"></a>times2    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">500</span>, <span class="dv">1200</span>, <span class="dv">2100</span>, <span class="dv">3300</span>, <span class="dv">4800</span>, <span class="dv">6500</span>, <span class="dv">8400</span>, <span class="dv">9200</span>, <span class="dv">10100</span>, <span class="dv">11300</span>,</span>
+<span id="cb16-278"><a href="#cb16-278" aria-hidden="true" tabindex="-1"></a>               <span class="dv">12800</span>, <span class="dv">14500</span>, <span class="dv">16400</span>, <span class="dv">18500</span>, <span class="dv">20800</span>)</span>
+<span id="cb16-279"><a href="#cb16-279" aria-hidden="true" tabindex="-1"></a>failures2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">5</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb16-280"><a href="#cb16-280" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-281"><a href="#cb16-281" aria-hidden="true" tabindex="-1"></a>fit_pw <span class="ot">&lt;-</span> <span class="fu">nhpp</span>(<span class="at">time =</span> times2, <span class="at">event =</span> failures2, <span class="at">breaks =</span> <span class="dv">8000</span>, <span class="at">method =</span> <span class="st">"LS"</span>)</span>
+<span id="cb16-282"><a href="#cb16-282" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit_pw,</span>
+<span id="cb16-283"><a href="#cb16-283" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Piecewise NHPP: Fleet Overhaul at Hour 8000"</span>,</span>
+<span id="cb16-284"><a href="#cb16-284" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Cumulative Operating Hours"</span>,</span>
+<span id="cb16-285"><a href="#cb16-285" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Cumulative Failures"</span>)</span>
+<span id="cb16-286"><a href="#cb16-286" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-287"><a href="#cb16-287" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-288"><a href="#cb16-288" aria-hidden="true" tabindex="-1"></a>The first segment (pre-overhaul, steeper slope) gives way to a flatter or downward-bending second segment, confirming the overhaul reduced the failure rate. The fitted breakpoint may differ slightly from the input value — here it is estimated near hour 9,820.</span>
+<span id="cb16-289"><a href="#cb16-289" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-290"><a href="#cb16-290" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb16-291"><a href="#cb16-291" aria-hidden="true" tabindex="-1"></a><span class="fu">## Review</span></span>
+<span id="cb16-292"><a href="#cb16-292" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-293"><a href="#cb16-293" aria-hidden="true" tabindex="-1"></a>What is the primary reason to use a Piecewise NHPP instead of a single Crow-AMSAA model?</span>
+<span id="cb16-294"><a href="#cb16-294" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-295"><a href="#cb16-295" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Answer<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
+<span id="cb16-296"><a href="#cb16-296" aria-hidden="true" tabindex="-1"></a>To account for a **known or suspected structural change** in the failure process (overhaul, design change, operational change). A piecewise model fits each segment independently, capturing the change in failure behavior.</span>
+<span id="cb16-297"><a href="#cb16-297" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
+<span id="cb16-298"><a href="#cb16-298" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb16-299"><a href="#cb16-299" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-300"><a href="#cb16-300" aria-hidden="true" tabindex="-1"></a><span class="fu">## Interpreting Results and Predicting Future Failures</span></span>
+<span id="cb16-301"><a href="#cb16-301" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-302"><a href="#cb16-302" aria-hidden="true" tabindex="-1"></a><span class="fu">### Reading $\hat{\beta}$</span></span>
+<span id="cb16-303"><a href="#cb16-303" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-304"><a href="#cb16-304" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> $\hat{\beta}$ <span class="pp">|</span> Interpretation <span class="pp">|</span> Typical cause <span class="pp">|</span></span>
+<span id="cb16-305"><a href="#cb16-305" aria-hidden="true" tabindex="-1"></a><span class="pp">|:---:|---|---|</span></span>
+<span id="cb16-306"><a href="#cb16-306" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> $&lt; 1$ <span class="pp">|</span> Decreasing failure rate <span class="pp">|</span> Effective maintenance, infant mortality resolved <span class="pp">|</span></span>
+<span id="cb16-307"><a href="#cb16-307" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> $= 1$ <span class="pp">|</span> Constant failure rate <span class="pp">|</span> Random external shocks <span class="pp">|</span></span>
+<span id="cb16-308"><a href="#cb16-308" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> $&gt; 1$ <span class="pp">|</span> Increasing failure rate <span class="pp">|</span> Wear-out, accumulating damage, aging <span class="pp">|</span></span>
+<span id="cb16-309"><a href="#cb16-309" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-310"><a href="#cb16-310" aria-hidden="true" tabindex="-1"></a><span class="fu">### Cumulative vs Instantaneous MTBF</span></span>
+<span id="cb16-311"><a href="#cb16-311" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-312"><a href="#cb16-312" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Cumulative MTBF** = $T / N(T)$ — historical average over all observed failures.</span>
+<span id="cb16-313"><a href="#cb16-313" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Instantaneous MTBF** at time $t$ = $1/\rho(t) = 1/(\hat{\lambda}\hat{\beta}\,t^{\hat{\beta}-1})$ — expected time to the *next* failure.</span>
+<span id="cb16-314"><a href="#cb16-314" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-315"><a href="#cb16-315" aria-hidden="true" tabindex="-1"></a>For $\hat{\beta} &gt; 1$ (aging system), the instantaneous MTBF falls *below* the cumulative average at late times — the system's near-term reliability is worse than its history suggests.</span>
+<span id="cb16-316"><a href="#cb16-316" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-317"><a href="#cb16-317" aria-hidden="true" tabindex="-1"></a><span class="fu">### Predicting Future Failures</span></span>
+<span id="cb16-318"><a href="#cb16-318" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-319"><a href="#cb16-319" aria-hidden="true" tabindex="-1"></a>Expected additional failures from current time $T$ to a future time $T + \Delta t$:</span>
+<span id="cb16-320"><a href="#cb16-320" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-321"><a href="#cb16-321" aria-hidden="true" tabindex="-1"></a>$$E<span class="co">[</span><span class="ot">\Delta N</span><span class="co">]</span> = \hat{\lambda}(T + \Delta t)^{\hat{\beta}} - \hat{\lambda}\, T^{\hat{\beta}}$$</span>
+<span id="cb16-322"><a href="#cb16-322" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-325"><a href="#cb16-325" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb16-326"><a href="#cb16-326" aria-hidden="true" tabindex="-1"></a>lambda    <span class="ot">&lt;-</span> <span class="fl">0.0003</span></span>
+<span id="cb16-327"><a href="#cb16-327" aria-hidden="true" tabindex="-1"></a>beta      <span class="ot">&lt;-</span> <span class="fl">0.85</span></span>
+<span id="cb16-328"><a href="#cb16-328" aria-hidden="true" tabindex="-1"></a>T_current <span class="ot">&lt;-</span> <span class="dv">15000</span></span>
+<span id="cb16-329"><a href="#cb16-329" aria-hidden="true" tabindex="-1"></a>T_future  <span class="ot">&lt;-</span> <span class="dv">17000</span></span>
+<span id="cb16-330"><a href="#cb16-330" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-331"><a href="#cb16-331" aria-hidden="true" tabindex="-1"></a>expected_add <span class="ot">&lt;-</span> lambda <span class="sc">*</span> T_future<span class="sc">^</span>beta <span class="sc">-</span> lambda <span class="sc">*</span> T_current<span class="sc">^</span>beta</span>
+<span id="cb16-332"><a href="#cb16-332" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Expected additional failures:"</span>, <span class="fu">round</span>(expected_add, <span class="dv">2</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb16-333"><a href="#cb16-333" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-334"><a href="#cb16-334" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-335"><a href="#cb16-335" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb16-336"><a href="#cb16-336" aria-hidden="true" tabindex="-1"></a><span class="fu">## Try It</span></span>
+<span id="cb16-337"><a href="#cb16-337" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-338"><a href="#cb16-338" aria-hidden="true" tabindex="-1"></a>A system has been operating for 5,000 hours. A Power Law fit yielded $\lambda = 0.0005$ and $\beta = 1.2$. Calculate the expected additional failures in the next 1,000 hours.</span>
+<span id="cb16-339"><a href="#cb16-339" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-342"><a href="#cb16-342" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb16-343"><a href="#cb16-343" aria-hidden="true" tabindex="-1"></a>lambda    <span class="ot">&lt;-</span> <span class="fl">0.0005</span></span>
+<span id="cb16-344"><a href="#cb16-344" aria-hidden="true" tabindex="-1"></a>beta      <span class="ot">&lt;-</span> <span class="fl">1.2</span></span>
+<span id="cb16-345"><a href="#cb16-345" aria-hidden="true" tabindex="-1"></a>T_current <span class="ot">&lt;-</span> <span class="dv">5000</span></span>
+<span id="cb16-346"><a href="#cb16-346" aria-hidden="true" tabindex="-1"></a>T_future  <span class="ot">&lt;-</span> <span class="dv">6000</span></span>
+<span id="cb16-347"><a href="#cb16-347" aria-hidden="true" tabindex="-1"></a><span class="co"># E[ΔN] = lambda * T_future^beta - lambda * T_current^beta</span></span>
+<span id="cb16-348"><a href="#cb16-348" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-349"><a href="#cb16-349" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-350"><a href="#cb16-350" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Solution<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
+<span id="cb16-353"><a href="#cb16-353" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb16-354"><a href="#cb16-354" aria-hidden="true" tabindex="-1"></a>lambda    <span class="ot">&lt;-</span> <span class="fl">0.0005</span></span>
+<span id="cb16-355"><a href="#cb16-355" aria-hidden="true" tabindex="-1"></a>beta      <span class="ot">&lt;-</span> <span class="fl">1.2</span></span>
+<span id="cb16-356"><a href="#cb16-356" aria-hidden="true" tabindex="-1"></a>T_current <span class="ot">&lt;-</span> <span class="dv">5000</span></span>
+<span id="cb16-357"><a href="#cb16-357" aria-hidden="true" tabindex="-1"></a>T_future  <span class="ot">&lt;-</span> <span class="dv">6000</span></span>
+<span id="cb16-358"><a href="#cb16-358" aria-hidden="true" tabindex="-1"></a>expected_failures <span class="ot">&lt;-</span> lambda <span class="sc">*</span> T_future<span class="sc">^</span>beta <span class="sc">-</span> lambda <span class="sc">*</span> T_current<span class="sc">^</span>beta</span>
+<span id="cb16-359"><a href="#cb16-359" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Expected additional failures:"</span>, <span class="fu">round</span>(expected_failures, <span class="dv">2</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb16-360"><a href="#cb16-360" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-361"><a href="#cb16-361" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
+<span id="cb16-362"><a href="#cb16-362" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb16-363"><a href="#cb16-363" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-364"><a href="#cb16-364" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb16-365"><a href="#cb16-365" aria-hidden="true" tabindex="-1"></a><span class="fu">## Review</span></span>
+<span id="cb16-366"><a href="#cb16-366" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-367"><a href="#cb16-367" aria-hidden="true" tabindex="-1"></a>A system has a fitted Power Law model with $\beta = 1.35$. What is the operational implication?</span>
+<span id="cb16-368"><a href="#cb16-368" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-369"><a href="#cb16-369" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Answer<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
+<span id="cb16-370"><a href="#cb16-370" aria-hidden="true" tabindex="-1"></a>The failure rate is **increasing** — wear-out or aging is occurring. The system may be approaching a major overhaul threshold. The instantaneous MTBF is below the cumulative historical average.</span>
+<span id="cb16-371"><a href="#cb16-371" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
+<span id="cb16-372"><a href="#cb16-372" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb16-373"><a href="#cb16-373" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-374"><a href="#cb16-374" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
+<span id="cb16-375"><a href="#cb16-375" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-376"><a href="#cb16-376" aria-hidden="true" tabindex="-1"></a>**Key takeaways:**</span>
+<span id="cb16-377"><a href="#cb16-377" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-378"><a href="#cb16-378" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Repairable systems analysis models the *sequence* of recurring failures, not just the first failure.</span>
+<span id="cb16-379"><a href="#cb16-379" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The **Power Law Process** ($E<span class="co">[</span><span class="ot">N(t)</span><span class="co">]</span> = \lambda t^\beta$) is the standard NHPP for repairable systems.</span>
+<span id="cb16-380"><a href="#cb16-380" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$\hat{\beta}$ determines whether the failure rate is improving ($&lt; 1$), stable ($= 1$), or worsening ($&gt; 1$).</span>
+<span id="cb16-381"><a href="#cb16-381" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`exposure()`</span> computes fleet-level operating time at risk.</span>
+<span id="cb16-382"><a href="#cb16-382" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`mcf()`</span> estimates cumulative failures per system non-parametrically (no distributional assumption).</span>
+<span id="cb16-383"><a href="#cb16-383" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`nhpp()`</span> fits the Crow-AMSAA model from individual failure times; add <span class="in">`breaks`</span> for piecewise fitting.</span>
+<span id="cb16-384"><a href="#cb16-384" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Future failure counts: $E<span class="co">[</span><span class="ot">\Delta N</span><span class="co">]</span> = \hat{\lambda}(T + \Delta t)^{\hat{\beta}} - \hat{\lambda}\,T^{\hat{\beta}}$.</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
