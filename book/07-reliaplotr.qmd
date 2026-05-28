@@ -177,7 +177,7 @@ set220 <- alt.data(t41$C220f, s = t41$C220s, stress = 220)
 arrobj <- alt.make(list(set170, set190, set220),
                    dist = "lognormal", alt.model = "arrhenius",
                    method.fit = "mle-rba")
-prlobj <- alt.parallel(arrobj)
+prlobj <- alt.parallel(arrobj, view_parallel_fits = FALSE)
 
 plotly_alt(prlobj,
            main = "Arrhenius-Lognormal ALT Probability Plot",
@@ -219,7 +219,7 @@ data38 <- alt.data(data_nelson$kV38, stress = 38)
 
 pwrobj <- alt.make(list(data26, data28, data30, data32, data34, data36, data38),
                    dist = "weibull", alt.model = "power")
-expobj <- alt.parallel(pwrobj)
+expobj <- alt.parallel(pwrobj, view_parallel_fits = FALSE)
 
 plotly_alt(expobj,
            main = "Power Law–Weibull ALT Probability Plot",
