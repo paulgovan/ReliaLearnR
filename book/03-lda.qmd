@@ -275,7 +275,8 @@ Fit the 3-parameter Weibull failure dataset below with both Weibull and lognorma
 failures_3p <- c(3.47, 3.73, 4.05, 4.63, 4.82, 5.85, 5.89, 5.89,
                  8.17, 10.03, 10.06, 10.50, 11.11, 11.87, 12.21)
 # obj_wb <- wblr.fit(wblr(failures_3p, col = "blue"), method.fit = "rr")
-# obj_ln <- wblr.fit(wblr(failures_3p, col = "red"),  method.fit = "rr", dist = "lognormal")
+# obj_ln <- wblr.fit(wblr(failures_3p, col = "red"),
+#                    method.fit = "rr", dist = "lognormal")
 # plot.wblr(list(obj_wb, obj_ln))
 ```
 
@@ -284,7 +285,8 @@ failures_3p <- c(3.47, 3.73, 4.05, 4.63, 4.82, 5.85, 5.89, 5.89,
 failures_3p <- c(3.47, 3.73, 4.05, 4.63, 4.82, 5.85, 5.89, 5.89,
                  8.17, 10.03, 10.06, 10.50, 11.11, 11.87, 12.21)
 obj_wb <- wblr.fit(wblr(failures_3p, col = "blue"), method.fit = "rr")
-obj_ln <- wblr.fit(wblr(failures_3p, col = "red"),  method.fit = "rr", dist = "lognormal")
+obj_ln <- wblr.fit(wblr(failures_3p, col = "red"),
+                   method.fit = "rr", dist = "lognormal")
 plot.wblr(list(obj_wb, obj_ln),
           main = "Weibull vs. Lognormal")
 ```
@@ -353,10 +355,13 @@ $$R(t) = e^{-((t - t_0)/\eta)^\beta}$$
 This is appropriate for components that must age, wear, or fatigue before they can fail.
 
 ```{r}
-failures_3p <- c(3.46623, 3.732711, 4.052996, 4.628703, 4.8157, 5.84517, 5.888313, 5.892967,
-                 8.168362, 10.02799, 10.06062, 10.49785, 11.11493, 11.87369, 12.21122, 12.51854,
-                 12.91357, 18.04246, 18.20712, 19.57305, 21.20873, 30.03917, 34.88001, 36.87355,
-                 53.91168)
+failures_3p <- c(
+  3.46623,  3.73271,  4.05300,  4.62870,  4.81570,
+  5.84517,  5.88831,  5.89297,  8.16836, 10.02799,
+ 10.06062, 10.49785, 11.11493, 11.87369, 12.21122,
+ 12.51854, 12.91357, 18.04246, 18.20712, 19.57305,
+ 21.20873, 30.03917, 34.88001, 36.87355, 53.91168
+)
 
 fit_3p <- wblr.conf(wblr.fit(wblr(failures_3p), dist = "weibull3p"), col = "darkgreen")
 plot(fit_3p)
@@ -420,7 +425,10 @@ A **contour plot** shows the joint confidence region for $\beta$ and $\eta$. Ove
 ```{r}
 #| results: hide
 failures <- c(30, 49, 82, 90, 96)
-obj <- wblr.conf(wblr.fit(wblr(failures, col = "blue"), method.fit = "mle"), method.conf = "lrb")
+obj <- wblr.conf(
+  wblr.fit(wblr(failures, col = "blue"), method.fit = "mle"),
+  method.conf = "lrb"
+)
 plot_contour(obj, CL = 0.9)
 ```
 
@@ -428,9 +436,18 @@ plot_contour(obj, CL = 0.9)
 
 ```{r}
 #| results: hide
-obj1 <- wblr.conf(wblr.fit(wblr(dat1, col = "blue"),   method.fit = "mle"), method.conf = "lrb")
-obj2 <- wblr.conf(wblr.fit(wblr(dat2, col = "red"),    method.fit = "mle"), method.conf = "lrb")
-obj3 <- wblr.conf(wblr.fit(wblr(dat3, col = "orange"), method.fit = "mle"), method.conf = "lrb")
+obj1 <- wblr.conf(
+  wblr.fit(wblr(dat1, col = "blue"),   method.fit = "mle"),
+  method.conf = "lrb"
+)
+obj2 <- wblr.conf(
+  wblr.fit(wblr(dat2, col = "red"),    method.fit = "mle"),
+  method.conf = "lrb"
+)
+obj3 <- wblr.conf(
+  wblr.fit(wblr(dat3, col = "orange"), method.fit = "mle"),
+  method.conf = "lrb"
+)
 plot_contour(list(obj1, obj2, obj3), CL = 0.9, xlim = c(1, 1500))
 ```
 

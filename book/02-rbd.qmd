@@ -31,6 +31,101 @@ Each block has a reliability $R_i(t)$ derived from the exponential model (@sec-r
 library(DiagrammeR)
 ```
 
+```{r}
+#| include: false
+# Generate static PNG fallbacks for PDF/EPUB output if not yet present
+imgs <- c(
+  "images/rbd-series.png",
+  "images/rbd-parallel.png",
+  "images/rbd-mixed.png",
+  "images/rbd-koon.png",
+  "images/rbd-faulttree.png"
+)
+if (any(!file.exists(imgs))) {
+  library(DiagrammeRsvg)
+  library(rsvg)
+  save_diagram <- function(dot_src, path) {
+    svg <- DiagrammeRsvg::export_svg(grViz(dot_src))
+    rsvg::rsvg_png(charToRaw(svg), path, width = 800)
+  }
+  save_diagram('digraph series {
+    rankdir = LR
+    graph [bgcolor = transparent]
+    node [shape = rectangle, style = filled, fillcolor = "#AED6F1",
+          fontname = "sans-serif", fontsize = 12, margin = "0.2,0.1"]
+    edge [arrowsize = 0.8]
+    I [shape = point, width = 0.15, fillcolor = black]
+    A [label = "Motor\nR = 0.95"]
+    B [label = "Pump\nR = 0.90"]
+    C [label = "Valve\nR = 0.98"]
+    O [shape = point, width = 0.15, fillcolor = black]
+    I -> A -> B -> C -> O
+  }', "images/rbd-series.png")
+  save_diagram('digraph parallel {
+    rankdir = LR
+    graph [bgcolor = transparent]
+    node [shape = rectangle, style = filled, fillcolor = "#A9DFBF",
+          fontname = "sans-serif", fontsize = 12, margin = "0.2,0.1"]
+    edge [arrowsize = 0.8]
+    I [shape = point, width = 0.15, fillcolor = black]
+    A [label = "Generator 1\nR = 0.90"]
+    B [label = "Generator 2\nR = 0.85"]
+    O [shape = point, width = 0.15, fillcolor = black]
+    I -> A -> O
+    I -> B -> O
+  }', "images/rbd-parallel.png")
+  save_diagram('digraph mixed {
+    rankdir = LR
+    graph [bgcolor = transparent]
+    node [shape = rectangle, style = filled, fillcolor = "#F9E79F",
+          fontname = "sans-serif", fontsize = 12, margin = "0.2,0.1"]
+    edge [arrowsize = 0.8]
+    I  [shape = point, width = 0.15, fillcolor = black]
+    S  [label = "Sensor\nR = 0.95"]
+    T  [label = "Transmitter\nR = 0.97"]
+    A1 [label = "Actuator 1\nR = 0.90"]
+    A2 [label = "Actuator 2\nR = 0.90"]
+    O  [shape = point, width = 0.15, fillcolor = black]
+    I -> S -> T -> A1 -> O
+    T -> A2 -> O
+  }', "images/rbd-mixed.png")
+  save_diagram('digraph koon {
+    rankdir = LR
+    graph [bgcolor = transparent]
+    node [shape = rectangle, style = filled, fillcolor = "#D7BDE2",
+          fontname = "sans-serif", fontsize = 12, margin = "0.2,0.1"]
+    edge [arrowsize = 0.8]
+    I  [shape = point, width = 0.15, fillcolor = black]
+    C1 [label = "Computer 1\nR = 0.99"]
+    C2 [label = "Computer 2\nR = 0.99"]
+    C3 [label = "Computer 3\nR = 0.99"]
+    V  [label = "Voter\n(2-of-3)", shape = diamond,
+        fillcolor = "#F1948A", fontsize = 11]
+    O  [shape = point, width = 0.15, fillcolor = black]
+    I -> C1 -> V
+    I -> C2 -> V
+    I -> C3 -> V
+    V -> O
+  }', "images/rbd-koon.png")
+  save_diagram('digraph fta {
+    rankdir = TB
+    graph [bgcolor = transparent]
+    node [fontname = "sans-serif", fontsize = 12, style = filled]
+    edge [arrowsize = 0.8]
+    Top [label = "System\nFailure",  shape = rectangle,
+         fillcolor = "#E74C3C", fontcolor = white]
+    OR  [label = "OR Gate", shape = diamond, fillcolor = "#F39C12"]
+    F1  [label = "Component A\nFails", shape = ellipse,
+         fillcolor = "#AED6F1"]
+    F2  [label = "Component B\nFails", shape = ellipse,
+         fillcolor = "#AED6F1"]
+    Top -> OR
+    OR  -> F1
+    OR  -> F2
+  }', "images/rbd-faulttree.png")
+}
+```
+
 ## Series Systems
 
 In a **series** system, all components must function for the system to succeed:
@@ -43,8 +138,8 @@ A series system is *always less reliable* than its weakest component. Adding mor
 
 A pumping system requires a motor (R = 0.95), a pump (R = 0.90), and a control valve (R = 0.98) to all be operational.
 
+::: {.content-visible when-format="html"}
 ```{r}
-#| eval: !expr knitr::is_html_output(excludes = "epub")
 grViz("
 digraph series {
   rankdir = LR
@@ -61,6 +156,15 @@ digraph series {
 }
 ")
 ```
+:::
+
+::: {.content-visible unless-format="html"}
+```{r}
+#| echo: false
+#| fig-cap: "Series RBD: Motor → Pump → Valve (all must work)"
+knitr::include_graphics("images/rbd-series.png")
+```
+:::
 
 ```{r}
 R_motor <- 0.95
@@ -116,8 +220,8 @@ Adding parallel components always increases system reliability.
 
 A primary generator (R = 0.90) and a standby generator (R = 0.85) — either alone keeps the system running.
 
+::: {.content-visible when-format="html"}
 ```{r}
-#| eval: !expr knitr::is_html_output(excludes = "epub")
 grViz("
 digraph parallel {
   rankdir = LR
@@ -134,6 +238,15 @@ digraph parallel {
 }
 ")
 ```
+:::
+
+::: {.content-visible unless-format="html"}
+```{r}
+#| echo: false
+#| fig-cap: "Parallel RBD: Generator 1 and Generator 2 (either can work)"
+knitr::include_graphics("images/rbd-parallel.png")
+```
+:::
 
 ```{r}
 R_gen1 <- 0.90  # Generator 1
@@ -192,8 +305,8 @@ Most real systems combine series and parallel blocks. To analyze a **mixed** sys
 - **Subsystem B**: two redundant actuators (each R = 0.90) in parallel.
 - Subsystems A and B in series (both must work).
 
+::: {.content-visible when-format="html"}
 ```{r}
-#| eval: !expr knitr::is_html_output(excludes = "epub")
 grViz("
 digraph mixed {
   rankdir = LR
@@ -212,6 +325,15 @@ digraph mixed {
 }
 ")
 ```
+:::
+
+::: {.content-visible unless-format="html"}
+```{r}
+#| echo: false
+#| fig-cap: "Mixed RBD: Sensor–Transmitter in series, Actuators 1 & 2 in parallel"
+knitr::include_graphics("images/rbd-mixed.png")
+```
+:::
 
 ```{r}
 # Subsystem A (series)
@@ -255,8 +377,8 @@ The compact R expression counts the probability that *at least* $k$ components f
 
 A 2-out-of-3 voter: at least 2 of 3 computers must agree. Each computer has R = 0.99.
 
+::: {.content-visible when-format="html"}
 ```{r}
-#| eval: !expr knitr::is_html_output(excludes = "epub")
 grViz("
 digraph koon {
   rankdir = LR
@@ -277,6 +399,15 @@ digraph koon {
 }
 ")
 ```
+:::
+
+::: {.content-visible unless-format="html"}
+```{r}
+#| echo: false
+#| fig-cap: "k-out-of-n RBD: 2-of-3 voting system with three computers"
+knitr::include_graphics("images/rbd-koon.png")
+```
+:::
 
 ```{r}
 n <- 3      # total components
@@ -415,8 +546,8 @@ While an RBD asks "What must work for the system to succeed?", a fault tree asks
 | Series (all must work) | OR gate (any failure causes system failure) |
 | Parallel (any can work) | AND gate (all must fail for system failure) |
 
+::: {.content-visible when-format="html"}
 ```{r}
-#| eval: !expr knitr::is_html_output(excludes = "epub")
 grViz("
 digraph fta {
   rankdir = TB
@@ -433,6 +564,15 @@ digraph fta {
 }
 ")
 ```
+:::
+
+::: {.content-visible unless-format="html"}
+```{r}
+#| echo: false
+#| fig-cap: "Fault Tree: OR gate — system failure if Component A or B fails"
+knitr::include_graphics("images/rbd-faulttree.png")
+```
+:::
 
 This OR gate corresponds to a two-component series RBD: any single failure causes system failure. For complex fault trees, the R package `FaultTree` on CRAN provides computational support.
 

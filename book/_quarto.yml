@@ -51,6 +51,10 @@ format:
     toc: true
     number-sections: true
     colorlinks: true
+    include-in-header:
+      text: |
+        \usepackage{fvextra}
+        \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
   epub:
     cover-image: cover.png
     toc: true

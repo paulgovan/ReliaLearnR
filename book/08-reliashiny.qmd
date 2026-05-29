@@ -29,7 +29,7 @@ This opens the application in your default web browser. The app runs locally —
 
 When ReliaShiny opens, the left sidebar displays the available analysis modules, each corresponding to a chapter in this book:
 
-![ReliaShiny landing page showing the sidebar module list.](images/Landing.png){fig-alt="ReliaShiny web app with a left sidebar listing modules: Life Data Analysis, Reliability Growth, Accelerated Life Testing, and Repairable Systems."}
+![ReliaShiny landing page showing the sidebar module list.](images/Landing.png){width=100% fig-alt="ReliaShiny web app with a left sidebar listing modules: Life Data Analysis, Reliability Growth, Accelerated Life Testing, and Repairable Systems."}
 
 | Module | Corresponding chapter | Key capabilities |
 |---|---|---|
@@ -50,7 +50,7 @@ Each module follows the same three-step workflow:
 
 The LDA module fits Weibull models and generates probability and contour plots. The app includes a preloaded **Time-to-Failure** dataset so you can explore the workflow immediately without uploading data.
 
-![LDA module showing a fitted Weibull probability plot.](images/ProbPlot.png){fig-alt="ReliaShiny Life Data Analysis module with a Weibull probability plot in the main panel and parameter estimates in the sidebar."}
+![LDA module showing a fitted Weibull probability plot.](images/ProbPlot.png){width=100% fig-alt="ReliaShiny Life Data Analysis module with a Weibull probability plot in the main panel and parameter estimates in the sidebar."}
 
 **Workflow:**
 
@@ -83,7 +83,7 @@ See the [Life Data Analysis article](https://paulgovan.github.io/ReliaShiny/arti
 
 The Reliability Growth module fits Crow-AMSAA and Duane reliability growth models. The app includes a preloaded **Simple Data** dataset for immediate exploration.
 
-![Reliability Growth module showing a fitted Crow-AMSAA cumulative failures plot.](images/GrowthPlot.png){fig-alt="ReliaShiny Reliability Growth module displaying a Crow-AMSAA cumulative failures plot with fitted model curve."}
+![Reliability Growth module showing a fitted Crow-AMSAA cumulative failures plot.](images/GrowthPlot.png){width=100% fig-alt="ReliaShiny Reliability Growth module displaying a Crow-AMSAA cumulative failures plot with fitted model curve."}
 
 **Workflow:**
 
@@ -99,7 +99,7 @@ See the [Reliability Growth Analysis article](https://paulgovan.github.io/ReliaS
 
 The ALT module fits Arrhenius and Power Law acceleration models using the `WeibullR.ALT` package (see @sec-alt). The app includes the preloaded **Nelson Data** dataset.
 
-![ALT module showing a probability plot and life-stress relationship.](images/ALTPlot.png){fig-alt="ReliaShiny Accelerated Life Testing module showing an ALT probability plot with stress-level curves and a life-stress relationship plot."}
+![ALT module showing a probability plot and life-stress relationship.](images/ALTPlot.png){width=100% fig-alt="ReliaShiny Accelerated Life Testing module showing an ALT probability plot with stress-level curves and a life-stress relationship plot."}
 
 **Workflow:**
 
@@ -115,7 +115,7 @@ See the [Accelerated Life Testing article](https://paulgovan.github.io/ReliaShin
 
 The Repairable Systems module fits the Power Law Process (Crow-AMSAA) and computes the MCF and exposure for fleet data. The app includes a preloaded **Simple Data Set**.
 
-![Repairable Systems module showing a Mean Cumulative Function plot.](images/RepairablePlot.png){fig-alt="ReliaShiny Repairable Systems module displaying an MCF cumulative failures curve with confidence bounds for a fleet of systems."}
+![Repairable Systems module showing a Mean Cumulative Function plot.](images/RepairablePlot.png){width=100% fig-alt="ReliaShiny Repairable Systems module displaying an MCF cumulative failures curve with confidence bounds for a fleet of systems."}
 
 **Workflow:**
 

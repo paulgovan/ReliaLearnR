@@ -9,6 +9,13 @@ if (!knitr::is_html_output(excludes = "epub")) knitr::opts_chunk$set(eval = FALS
 
 # Interactive Plots with ReliaPlotR {#sec-reliaplotr}
 
+::: {.content-visible unless-format="html"}
+::: {.callout-note}
+## HTML-Only Content
+This chapter produces interactive **plotly** charts that require a web browser. In this PDF/EPUB version the code is shown without output. View the [online version](https://paulgovan.github.io/ReliaLearnR/) for the live interactive plots.
+:::
+:::
+
 ## Introduction
 
 The previous chapters produce static base-R plots. **ReliaPlotR** [@ReliaPlotR] is a companion package that turns those same fitted model objects into *interactive* plotly charts — with hover tooltips, zoom/pan controls, and built-in download buttons — without requiring you to change how you fit your models.
