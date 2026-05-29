@@ -93,7 +93,7 @@ fit <- MLEw2p(failures, bounds = TRUE, show = TRUE)
 
 ### Reading the Probability Plot
 
-The **Weibull probability plot** shows time on the horizontal axis (log scale) and cumulative unreliability $F(t)$ on the vertical axis (log-log scale). This double-log transformation linearizes Weibull data — the result is a straight line when the Weibull model fits.
+The **Weibull probability plot** shows time on the horizontal axis (log scale) and cumulative unreliability $F(t)$ on the vertical axis (log-log scale). This double-log transformation linearizes Weibull data; the result is a straight line when the Weibull model fits.
 
 - Read off $F(t)$ at any time to get the probability of failure by that time.
 - Reliability at time $t$ is $R(t) = 1 - F(t)$.
@@ -119,7 +119,7 @@ fit <- MLEw2p(failures, show = TRUE)
 
 ## Data Censoring
 
-In life data analysis, data is often **censored** — the exact time to failure is not known for all units.
+In life data analysis, data is often **censored**: the exact time to failure is not known for all units.
 
 ### Right-Censored Data (Suspensions)
 
@@ -155,7 +155,7 @@ fit <- MLEw2p(failures, suspensions, show = TRUE)
 
 ### Interval-Censored Data
 
-**Interval censoring** occurs when failures are only detected during periodic inspections — the exact failure time is unknown, but it is known to have occurred within an interval.
+**Interval censoring** occurs when failures are only detected during periodic inspections; the exact failure time is unknown, but it is known to have occurred within an interval.
 
 ```{r}
 #| warning: false
@@ -176,7 +176,7 @@ Black horizontal lines represent the inspection intervals; the solid red line is
 
 ### Grouped Data
 
-Life data is often collected in groups. The `qty` column in the inspection data above indicates how many units failed in each interval — 5 failed between time 0 and 6.12, 16 between 6.12 and 19.92, and so on.
+Life data is often collected in groups. The `qty` column in the inspection data above indicates how many units failed in each interval: 5 failed between time 0 and 6.12, 16 between 6.12 and 19.92, and so on.
 
 ::: {.callout-tip}
 ## Review
@@ -194,7 +194,7 @@ $5 + 16 + 12 + 18 + 18 + 2 + 6 + 17 = 94$ failures. The 73 suspensions were unit
 
 **Median Rank Regression (MRR)** estimates parameters by minimizing the sum of squared errors between observed and predicted values (least squares).
 
-**Maximum Likelihood Estimation (MLE)** finds the parameters that make the observed data most probable — it maximizes the likelihood function.
+**Maximum Likelihood Estimation (MLE)** finds the parameters that make the observed data most probable: it maximizes the likelihood function.
 
 Comparing both methods on the same data:
 
@@ -207,7 +207,7 @@ MLEfit <- wblr.fit(wblr(failures, suspensions, col = "red"),  method.fit = "mle"
 plot.wblr(list(MRRfit, MLEfit))
 ```
 
-Both methods fit the same data. Slight differences in $\beta$ and $\eta$ are visible — the better fit can be determined objectively using the Anderson-Darling statistic. In practice, **MLE is preferred for small samples and censored data** (it uses all the information in the likelihood); **MRR is adequate for larger, complete datasets** and is computationally simpler.
+Both methods fit the same data. Slight differences in $\beta$ and $\eta$ are visible; the better fit can be determined objectively using the Anderson-Darling statistic. In practice, **MLE is preferred for small samples and censored data** (it uses all the information in the likelihood); **MRR is adequate for larger, complete datasets** and is computationally simpler.
 
 ## Goodness of Fit
 
@@ -242,14 +242,14 @@ plot.wblr(list(obj_mrr, obj_mle))
 
 ## Choosing a Distribution
 
-The Weibull distribution is the default in reliability engineering, but it is not always the best fit. The **lognormal** distribution often fits failure data driven by fatigue crack growth, corrosion, or cumulative damage — mechanisms where the logarithm of time-to-failure is normally distributed.
+The Weibull distribution is the default in reliability engineering, but it is not always the best fit. The **lognormal** distribution often fits failure data driven by fatigue crack growth, corrosion, or cumulative damage, mechanisms where the logarithm of time-to-failure is normally distributed.
 
 | Distribution | When it tends to fit best |
 |---|---|
 | Weibull | Wear-out, mechanical fatigue, early-life failures |
 | Lognormal | Corrosion, fatigue crack propagation, electronic degradation |
 
-`wblr.fit()` supports both via the `dist` argument. The goodness-of-fit metric in the plot legend ($r^2$ for rank regression) is the tiebreaker — **higher $r^2$ indicates a better fit**:
+`wblr.fit()` supports both via the `dist` argument. The goodness-of-fit metric in the plot legend ($r^2$ for rank regression) is the tiebreaker: **higher $r^2$ indicates a better fit**:
 
 ```{r}
 failures    <- c(30, 49, 82, 90, 96)
@@ -264,7 +264,7 @@ plot.wblr(list(obj_wb, obj_ln),
           main = "Weibull vs. Lognormal: Goodness-of-Fit Comparison")
 ```
 
-For this dataset, Weibull achieves $r^2 \approx 0.953$ vs. lognormal at $r^2 \approx 0.914$ — Weibull fits better. The choice should be driven by the data, not by habit.
+For this dataset, Weibull achieves $r^2 \approx 0.953$ vs. lognormal at $r^2 \approx 0.914$; Weibull fits better. The choice should be driven by the data, not by habit.
 
 ::: {.callout-note}
 ## Try It
@@ -291,7 +291,7 @@ plot.wblr(list(obj_wb, obj_ln),
           main = "Weibull vs. Lognormal")
 ```
 
-Compare the $r^2$ values in the legend. For this dataset the lognormal often achieves a slightly higher $r^2$, suggesting cumulative-damage behavior — the logarithm of time-to-failure is approximately normally distributed.
+Compare the $r^2$ values in the legend. For this dataset the lognormal often achieves a slightly higher $r^2$, suggesting cumulative-damage behavior, where the logarithm of time-to-failure is approximately normally distributed.
 </details>
 :::
 
@@ -299,7 +299,7 @@ Compare the $r^2$ values in the legend. For this dataset the lognormal often ach
 
 Weibull parameter estimates are most reliable when based on at least 10–15 **observed failures**. With fewer failures, uncertainty grows substantially: confidence bounds widen, $r^2$ loses discriminating power, and estimated $\beta$ and $\eta$ can deviate significantly from the true values.
 
-The following code simulates datasets of different sizes from the same Weibull ($\beta = 2$, $\eta = 100$) and fits each — showing how confidence bounds tighten as sample size increases:
+The following code simulates datasets of different sizes from the same Weibull ($\beta = 2$, $\eta = 100$) and fits each, showing how confidence bounds tighten as sample size increases:
 
 ```{r}
 set.seed(42)
@@ -348,7 +348,7 @@ Confidence bounds are not shown for Weibayes because $\beta$ is fixed by assumpt
 
 ### The 3-Parameter Weibull
 
-The **3-parameter Weibull** adds a failure-free period $t_0$ — the time before which no failures can occur:
+The **3-parameter Weibull** adds a failure-free period $t_0$, the time before which no failures can occur:
 
 $$R(t) = e^{-((t - t_0)/\eta)^\beta}$$
 
@@ -367,7 +367,7 @@ fit_3p <- wblr.conf(wblr.fit(wblr(failures_3p), dist = "weibull3p"), col = "dark
 plot(fit_3p)
 ```
 
-The failure-free period is approximately 3.3 time units — visible as the curve flattening at low probabilities.
+The failure-free period is approximately 3.3 time units, visible as the curve flattening at low probabilities.
 
 ## Multi-Plots
 
@@ -416,7 +416,7 @@ obj3 <- wblr.fit(wblr(dat3, col = "orange"))
 plot.wblr(list(obj1, obj2, obj3), is.plot.legend = FALSE)
 ```
 
-Each failure mode has a distinct $\beta$: Mode A ($\beta < 1$, decreasing rate — infant mortality), Mode B ($\beta \approx 1$, random), Mode C ($\beta > 1$, wear-out).
+Each failure mode has a distinct $\beta$: Mode A ($\beta < 1$, decreasing rate, infant mortality), Mode B ($\beta \approx 1$, random), Mode C ($\beta > 1$, wear-out).
 
 ## Contour Plots
 
@@ -460,8 +460,8 @@ Overlapping contours at 90% confidence level indicate that the three failure mod
 - The Weibull CDF: $R(t) = e^{-(t/\eta)^\beta}$.
 - $\beta < 1$: decreasing rate (infant mortality); $\beta = 1$: constant (exponential); $\beta > 1$: increasing (wear-out).
 - At $t = \eta$: $F(\eta) = 63.2\%$ for any $\beta$.
-- Suspensions are units that did not fail — always include them in the analysis.
-- MRR and MLE often give slightly different fits — use the AD statistic to choose.
+- Suspensions are units that did not fail; always include them in the analysis.
+- MRR and MLE often give slightly different fits; use the AD statistic to choose.
 - Weibayes is appropriate for scarce data with prior knowledge of $\beta$.
 - 3-parameter Weibull handles failure-free periods.
 - Multi-plots and contour plots are powerful tools for comparing distributions.

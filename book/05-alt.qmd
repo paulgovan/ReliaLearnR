@@ -2,7 +2,7 @@
 
 ## Introduction
 
-**Accelerated Life Testing (ALT)** [@Meeker1998; @Nelson1990] subjects products to elevated stress levels — temperature, voltage, mechanical load, humidity — to induce failures more quickly than would occur under normal operating conditions. The acceleration relationship is then used to translate accelerated-test results into normal-use life predictions.
+**Accelerated Life Testing (ALT)** [@Meeker1998; @Nelson1990] subjects products to elevated stress levels: temperature, voltage, mechanical load, humidity; to induce failures more quickly than would occur under normal operating conditions. The acceleration relationship is then used to translate accelerated-test results into normal-use life predictions.
 
 This approach is essential when products are designed for long service lives (years or decades), making it impractical to wait for failures at use conditions. ALT compresses that time by running tests at higher stress, then mathematically projecting back to the use environment.
 
@@ -41,7 +41,7 @@ plot(AF_vals, life_normal / AF_vals, type = "l", col = "blue", lwd = 2,
 abline(h = life_normal / c(2, 5, 10), col = "gray70", lty = 2)
 ```
 
-An AF of 5 means the product fails five times faster under test stress — a 10,000-hour life in the field becomes a 2,000-hour test.
+An AF of 5 means the product fails five times faster under test stress: a 10,000-hour life in the field becomes a 2,000-hour test.
 
 ## The Arrhenius Model
 
@@ -54,7 +54,7 @@ Where:
 - $k$ = Boltzmann constant ($8.617 \times 10^{-5}$ eV/K)
 - $T_{\text{use}}$, $T_{\text{stress}}$ = temperatures in Kelvin
 
-Higher activation energies mean the failure mechanism is more sensitive to temperature — a small temperature increase produces a large change in failure rate.
+Higher activation energies mean the failure mechanism is more sensitive to temperature; a small temperature increase produces a large change in failure rate.
 
 ::: {.callout-note}
 ## Choosing Activation Energy
@@ -86,7 +86,7 @@ arrobj <- alt.make(list(set170, set190, set220),
                    method.fit = "mle", view_dist_fits = FALSE)
 ```
 
-The fitted curves shift left as temperature increases — higher temperature leads to shorter life.
+The fitted curves shift left as temperature increases; higher temperature leads to shorter life.
 
 Calculating the AF at 220°C vs 170°C with $E_a = 1.0$ eV:
 
@@ -100,7 +100,7 @@ AF <- exp(E_a / k * (1 / T_use - 1 / T_stress))
 cat("Acceleration Factor at 220°C vs 170°C:", round(AF, 1), "\n")
 ```
 
-As printed above, the insulation degrades approximately 14 times faster at 220°C than at 170°C — a substantial acceleration that compresses a multi-year test into a much shorter duration.
+As printed above, the insulation degrades approximately 14 times faster at 220°C than at 170°C, a substantial acceleration that compresses a multi-year test into a much shorter duration.
 
 ::: {.callout-note}
 ## Try It
@@ -133,7 +133,7 @@ The **Power Law Model** describes how a product's life is affected by non-therma
 
 $$AF = \left(\frac{S_{\text{stress}}}{S_{\text{use}}}\right)^{n}$$
 
-Where $n$ is the **stress exponent** — the sensitivity of the failure mechanism to the applied stress. Typical values range from 1–3 for low-sensitivity mechanisms to 4–8 for voltage-driven dielectric breakdown. $n$ is estimated from the ALT data by fitting the model at multiple stress levels.
+Where $n$ is the **stress exponent**, the sensitivity of the failure mechanism to the applied stress. Typical values range from 1–3 for low-sensitivity mechanisms to 4–8 for voltage-driven dielectric breakdown. $n$ is estimated from the ALT data by fitting the model at multiple stress levels.
 
 ### WeibullR.ALT: Power Law Example
 
@@ -154,7 +154,7 @@ pwrobj <- alt.make(list(data26, data28, data30, data32, data34, data36, data38),
                    dist = "weibull", alt.model = "power")
 ```
 
-Curves shift left as voltage increases — higher voltage stress leads to shorter life.
+Curves shift left as voltage increases; higher voltage stress leads to shorter life.
 
 ## Multiple Stress Factors
 
@@ -195,7 +195,7 @@ lnrobj2 <- alt.fit(expobj)
 plot(lnrobj2, suppress.dev.new = TRUE)
 ```
 
-Both relationship plots confirm a negative slope — higher stress leads to shorter life in both datasets.
+Both relationship plots confirm a negative slope; higher stress leads to shorter life in both datasets.
 
 ::: {.callout-tip}
 ## Review
@@ -203,7 +203,7 @@ Both relationship plots confirm a negative slope — higher stress leads to shor
 What does a negative slope in a relationship plot indicate?
 
 <details><summary>Answer</summary>
-Higher stress leads to **shorter life**. This is the typical finding in ALT — stress accelerates the failure mechanism.
+Higher stress leads to **shorter life**. This is the typical finding in ALT; stress accelerates the failure mechanism.
 </details>
 :::
 
@@ -212,13 +212,13 @@ Higher stress leads to **shorter life**. This is the typical finding in ALT — 
 ::: {.callout-important}
 ## When ALT Predictions May Be Invalid
 
-ALT is a powerful tool, but it rests on a critical assumption: **the same failure mechanism operates at elevated stress as at use conditions**. If high stress activates a different failure mode — one that would not appear during normal operation — the accelerated results will not transfer to real-world life predictions.
+ALT is a powerful tool, but it rests on a critical assumption: **the same failure mechanism operates at elevated stress as at use conditions**. If high stress activates a different failure mode, one that would not appear during normal operation, the accelerated results will not transfer to real-world life predictions.
 
 Common pitfalls:
 
-- **New failure modes at high stress** — e.g., thermal cracking from extreme temperature that would never occur at use temperature.
-- **Mechanism change** — e.g., ductile failure at low stress transitions to brittle fracture at high stress; the Weibull shape and the AF model no longer apply.
-- **Unknown activation energy or stress exponent** — small errors in $E_a$ or $n$ produce large errors in predicted AF; always perform a sensitivity analysis.
+- **New failure modes at high stress**, e.g., thermal cracking from extreme temperature that would never occur at use temperature.
+- **Mechanism change**, e.g., ductile failure at low stress transitions to brittle fracture at high stress; the Weibull shape and the AF model no longer apply.
+- **Unknown activation energy or stress exponent**: small errors in $E_a$ or $n$ produce large errors in predicted AF; always perform a sensitivity analysis.
 
 When in doubt: run tests at the *lowest* stress level possible that still produces observable failures in a reasonable time, and verify that failures look the same as field failures.
 :::

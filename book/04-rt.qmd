@@ -30,7 +30,7 @@ library(ReliaGrowR)
 
 Before analyzing test data, it helps to answer two design questions: *How long must we test?* and *How many failures should we expect?* ReliaGrowR provides tools for both.
 
-### Reliability Demonstration Tests — `rdt()`
+### Reliability Demonstration Tests: `rdt()`
 
 A **Reliability Demonstration Test (RDT)** is a pass/fail test designed to demonstrate that a product meets a reliability target at a specified confidence level. `rdt()` calculates the required test time given the sample size (or vice versa).
 
@@ -72,7 +72,7 @@ for (n in c(5, 10, 20)) {
 }
 ```
 
-More test units means shorter required test time per unit — but total test effort (n × T) stays roughly constant. Larger fleets reduce calendar time at the cost of more physical units.
+More test units means shorter required test time per unit, but total test effort (n × T) stays roughly constant. Larger fleets reduce calendar time at the cost of more physical units.
 </details>
 :::
 
@@ -147,7 +147,7 @@ plot(fit, main = "Duane Reliability Growth Plot",
 What does a Duane plot with a slope greater than 1 indicate?
 
 <details><summary>Answer</summary>
-The system's reliability is **improving** — the failure rate is decreasing over time.
+The system's reliability is **improving**: the failure rate is decreasing over time.
 </details>
 :::
 
@@ -240,7 +240,7 @@ plot(result, main = "Piecewise NHPP Model",
      xlab = "Cumulative Time", ylab = "Cumulative Failures")
 ```
 
-The two segments have different slopes — the first segment (pre-change) has a higher slope than the second (post-change), confirming the design change reduced the failure rate.
+The two segments have different slopes; the first segment (pre-change) has a higher slope than the second (post-change), confirming the design change reduced the failure rate.
 
 ### Change Point Detection
 
@@ -254,9 +254,9 @@ plot(result_auto, main = "Piecewise NHPP with Change Point Detection",
 
 The automatically detected change point is near time 500, consistent with the known design change.
 
-## Forecasting Growth — `predict_rga()`
+## Forecasting Growth: `predict_rga()`
 
-Once a growth test is underway, `predict_rga()` projects cumulative failures beyond the current endpoint — useful for deciding whether to continue testing or whether a reliability target will be met by a program deadline.
+Once a growth test is underway, `predict_rga()` projects cumulative failures beyond the current endpoint, useful for deciding whether to continue testing or whether a reliability target will be met by a program deadline.
 
 ```{r}
 times    <- c(100, 200, 300, 400, 500)
@@ -280,7 +280,7 @@ The confidence band reflects the uncertainty in the Crow-AMSAA parameter estimat
 The fitted model gives $\hat{\beta} < 1$. Is the system still improving at time 1,000?
 
 <details><summary>Answer</summary>
-Yes — for the Crow-AMSAA model, $\beta < 1$ means the cumulative failure rate is **decreasing** (the growth curve is concave), so reliability is still improving at time 1,000. Testing should continue until $\beta$ stabilizes near the growth target.
+Yes, for the Crow-AMSAA model, $\beta < 1$ means the cumulative failure rate is **decreasing** (the growth curve is concave), so reliability is still improving at time 1,000. Testing should continue until $\beta$ stabilizes near the growth target.
 </details>
 :::
 

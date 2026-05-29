@@ -35,7 +35,7 @@ Two repair assumptions are common:
 | Repair type | Description | Model |
 |---|---|---|
 | Perfect repair | As-good-as-new after each repair | Renewal process |
-| Minimal repair | As-bad-as-old — failure fixed, nothing else changed | NHPP |
+| Minimal repair | As-bad-as-old, failure fixed, nothing else changed | NHPP |
 
 Most field maintenance data best fits the **minimal repair** assumption, making NHPP the standard framework.
 
@@ -96,7 +96,7 @@ $$E[N(t)] = \lambda t^{\beta} \qquad \rho(t) = \lambda \beta t^{\beta-1}$$
 
 **Parameter interpretation:**
 
-- $\lambda > 0$ — scale parameter; overall magnitude of the failure rate.
+- $\lambda > 0$, scale parameter; overall magnitude of the failure rate.
 - $\beta < 1$: decreasing intensity (system improving).
 - $\beta = 1$: constant intensity = HPP.
 - $\beta > 1$: increasing intensity (system deteriorating).
@@ -124,9 +124,9 @@ A repairable system is observed to have an increasing failure rate over time. Wh
 When analyzing a *fleet*, individual units enter and leave observation at different times. **Exposure** is the total operating time accumulated across all units currently at risk.
 
 The `exposure()` function computes:
-- **Cumulative exposure** — total system-time at risk up to each event time.
-- **Number at risk** — how many units were under observation at each time.
-- **Event rate** — cumulative events divided by cumulative exposure.
+- **Cumulative exposure**: total system-time at risk up to each event time.
+- **Number at risk**: how many units were under observation at each time.
+- **Event rate**: cumulative events divided by cumulative exposure.
 
 ```{r}
 pump_data <- data.frame(
@@ -148,7 +148,7 @@ plot(exp_result)
 Why is it important to account for exposure when comparing failure rates across systems with different observation periods?
 
 <details><summary>Answer</summary>
-Without normalizing by exposure, a system observed for twice as long will appear to have twice as many failures even if its underlying rate is identical. Exposure provides the denominator — failures per unit time — so rates can be compared fairly.
+Without normalizing by exposure, a system observed for twice as long will appear to have twice as many failures even if its underlying rate is identical. Exposure provides the denominator, failures per unit time, so rates can be compared fairly.
 </details>
 :::
 
@@ -162,7 +162,7 @@ $$\hat{M}(t) = \sum_{t_j \leq t} \frac{d_j}{n_j}$$
 
 where $d_j$ is the number of failures at time $t_j$ and $n_j$ is the number of systems at risk at $t_j$.
 
-Pass `end_time` to `mcf()` when systems were observed beyond their last recorded failure — otherwise the risk set is deflated too early, inflating the rate estimate.
+Pass `end_time` to `mcf()` when systems were observed beyond their last recorded failure; otherwise the risk set is deflated too early, inflating the rate estimate.
 
 ```{r}
 end_times  <- c("1" = 3000, "2" = 3000, "3" = 3000, "4" = 3000, "5" = 3000)
@@ -208,7 +208,7 @@ plot(fit, main = "MCF Example", xlab = "Time (hours)", ylab = "MCF")
 
 The `nhpp()` function fits the Power Law Process (Crow-AMSAA model) [@Crow1975] to individual failure event data by maximum likelihood, returning estimates of $\lambda$ and $\beta$.
 
-A curve that bends downward (concave) indicates $\hat{\beta} < 1$ — improving system. Upward bending (convex) indicates $\hat{\beta} > 1$ — deteriorating system.
+A curve that bends downward (concave) indicates $\hat{\beta} < 1$, an improving system. Upward bending (convex) indicates $\hat{\beta} > 1$, a deteriorating system.
 
 ```{r}
 # pump_data defined above in the Exposure section
@@ -221,7 +221,7 @@ plot(fit,
      ylab = "Cumulative Failures")
 ```
 
-The concave curve and $\hat{\beta} < 1$ indicate the pump fleet's failure rate is decreasing — a favorable operating regime.
+The concave curve and $\hat{\beta} < 1$ indicate the pump fleet's failure rate is decreasing, a favorable operating regime.
 
 ::: {.callout-note}
 ## Try It
@@ -265,7 +265,7 @@ plot(fit_pw,
      ylab = "Cumulative Failures")
 ```
 
-The first segment (pre-overhaul, steeper slope) gives way to a flatter or downward-bending second segment, confirming the overhaul reduced the failure rate. The fitted breakpoint may differ slightly from the input value — here it is estimated near hour 9,820.
+The first segment (pre-overhaul, steeper slope) gives way to a flatter or downward-bending second segment, confirming the overhaul reduced the failure rate. The fitted breakpoint may differ slightly from the input value; here it is estimated near hour 9,820.
 
 ::: {.callout-tip}
 ## Review
@@ -289,10 +289,10 @@ To account for a **known or suspected structural change** in the failure process
 
 ### Cumulative vs Instantaneous MTBF
 
-- **Cumulative MTBF** = $T / N(T)$ — historical average over all observed failures.
-- **Instantaneous MTBF** at time $t$ = $1/\rho(t) = 1/(\hat{\lambda}\hat{\beta}\,t^{\hat{\beta}-1})$ — expected time to the *next* failure.
+- **Cumulative MTBF** = $T / N(T)$, the historical average over all observed failures.
+- **Instantaneous MTBF** at time $t$ = $1/\rho(t) = 1/(\hat{\lambda}\hat{\beta}\,t^{\hat{\beta}-1})$, the expected time to the *next* failure.
 
-For $\hat{\beta} > 1$ (aging system), the instantaneous MTBF falls *below* the cumulative average at late times — the system's near-term reliability is worse than its history suggests.
+For $\hat{\beta} > 1$ (aging system), the instantaneous MTBF falls *below* the cumulative average at late times; the system's near-term reliability is worse than its history suggests.
 
 ### Predicting Future Failures
 
@@ -341,7 +341,7 @@ cat("Expected additional failures:", round(expected_failures, 2), "\n")
 A system has a fitted Power Law model with $\beta = 1.35$. What is the operational implication?
 
 <details><summary>Answer</summary>
-The failure rate is **increasing** — wear-out or aging is occurring. The system may be approaching a major overhaul threshold. The instantaneous MTBF is below the cumulative historical average.
+The failure rate is **increasing**; wear-out or aging is occurring. The system may be approaching a major overhaul threshold. The instantaneous MTBF is below the cumulative historical average.
 </details>
 :::
 

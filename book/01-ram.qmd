@@ -60,7 +60,7 @@ Reliability = $(1 - 5/(3 \times 365)) \times 100 = 99.5\%$. Unreliability = $0.5
 
 ## Availability
 
-Availability accounts for both failed time **and** scheduled maintenance — any time the item is unavailable for service:
+Availability accounts for both failed time **and** scheduled maintenance: any time the item is unavailable for service:
 
 $$\text{Availability} = \left(1 - \frac{\text{Unavailable Time}}{\text{Total Time}}\right) \times 100$$
 
@@ -87,7 +87,7 @@ Availability includes scheduled maintenance downtime; reliability does not. Avai
 
 ## Mean Time to Repair (MTTR)
 
-**MTTR** measures maintainability — the average time required to repair a failed item:
+**MTTR** measures maintainability: the average time required to repair a failed item:
 
 $$\text{MTTR} = \frac{\sum_{i=1}^{n} \text{RepairTime}_i}{\text{RepairCount}}$$
 
@@ -297,18 +297,18 @@ $$R(t) = e^{-(t/\eta)^\beta}$$
 | $\beta$ | Failure rate | Typical cause |
 |:---:|---|---|
 | $< 1$ | Decreasing | Infant mortality |
-| $= 1$ | Constant | Random failures — exponential applies |
+| $= 1$ | Constant | Random failures, exponential applies |
 | $> 1$ | Increasing | Wear-out (fatigue, corrosion, aging) |
 
 When $\beta = 1$, the Weibull reduces to the exponential with $\lambda = 1/\eta$.
 
 ## The Bathtub Curve
 
-The failure rate of a population of items over its lifetime traces a characteristic shape known as the **bathtub curve** — named for its distinctive U-profile. Rather than drawing it as a stylized cartoon, we can build it analytically by compositing the three Weibull failure modes:
+The failure rate of a population of items over its lifetime traces a characteristic shape known as the **bathtub curve**, named for its distinctive U-profile. Rather than drawing it as a stylized cartoon, we can build it analytically by compositing the three Weibull failure modes:
 
 $$h(t) = \underbrace{h_{\text{infant}}(t)}_{\beta < 1} \;+\; \underbrace{h_{\text{random}}(t)}_{\beta = 1} \;+\; \underbrace{h_{\text{wear-out}}(t)}_{\beta > 1}$$
 
-where the Weibull hazard rate is $h(t) = (\beta/\eta)(t/\eta)^{\beta-1}$. Each term represents a physically distinct failure mechanism — the bathtub shape is not assumed; it *emerges* from their sum.
+where the Weibull hazard rate is $h(t) = (\beta/\eta)(t/\eta)^{\beta-1}$. Each term represents a physically distinct failure mechanism; the bathtub shape is not assumed, it *emerges* from their sum.
 
 ```{r}
 t <- seq(0.01, 15, by = 0.01)
@@ -340,7 +340,7 @@ legend("top", inset = 0.02,
 
 Each region maps to a distinct engineering strategy:
 
-- **Infant mortality** ($\beta < 1$): manufacturing defects, assembly errors, material flaws. Mitigated by *burn-in testing* — running units briefly before shipment to screen out defective items.
+- **Infant mortality** ($\beta < 1$): manufacturing defects, assembly errors, material flaws. Mitigated by *burn-in testing*, running units briefly before shipment to screen out defective items.
 - **Useful life** ($\beta \approx 1$): random external shocks, load spikes, operator error. The constant failure rate means failures are unrelated to age; mitigated by *redundancy*.
 - **Wear-out** ($\beta > 1$): fatigue, corrosion, material aging. Mitigated by *preventive replacement* scheduled before the B₅ or B₁₀ life is reached.
 
@@ -350,7 +350,7 @@ Each region maps to a distinct engineering strategy:
 A pump has $\beta = 2.8$. Which region of the bathtub curve does it occupy, and what maintenance strategy is most appropriate?
 
 <details><summary>Answer</summary>
-$\beta > 1$ places it in the **wear-out** region. The failure rate is increasing with age, so a time-based **preventive replacement** strategy — replacing the pump before it reaches its B₅ or B₁₀ life — is most appropriate.
+$\beta > 1$ places it in the **wear-out** region. The failure rate is increasing with age, so a time-based **preventive replacement** strategy, replacing the pump before it reaches its B₅ or B₁₀ life, is most appropriate.
 </details>
 :::
 
@@ -387,7 +387,7 @@ R_series  # 72.9%
 
 ### Parallel Systems
 
-In a **parallel** configuration, only one component needs to function — redundancy. The system fails only when *all* components fail:
+In a **parallel** configuration, only one component needs to function, providing redundancy. The system fails only when *all* components fail:
 
 $$R_{\text{sys}} = 1 - (1 - R_1)(1 - R_2) \cdots (1 - R_n)$$
 
@@ -450,10 +450,10 @@ $R_{\text{sys}} = 0.8 \times 0.8 \times 0.8 = 0.512 = 51.2\%$
 
 **Key takeaways:**
 
-- $R(t) = e^{-\lambda t}$ — exponential reliability under a constant failure rate.
+- $R(t) = e^{-\lambda t}$, exponential reliability under a constant failure rate.
 - At $t = \text{MTBF} = 1/\lambda$, reliability is always 36.8%.
 - MTTF is for non-repairable items; MTBF is for repairable systems.
-- Series systems: $R_{\text{sys}} = \prod R_i$ — reliability decreases with more components.
-- Parallel systems: $R_{\text{sys}} = 1 - \prod(1 - R_i)$ — redundancy increases reliability.
+- Series systems: $R_{\text{sys}} = \prod R_i$, reliability decreases with more components.
+- Parallel systems: $R_{\text{sys}} = 1 - \prod(1 - R_i)$, redundancy increases reliability.
 - When $\beta \neq 1$, use the Weibull distribution (see @sec-lda).
 

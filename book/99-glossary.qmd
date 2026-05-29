@@ -8,7 +8,7 @@ A quick-reference guide to the key symbols and formulas used throughout this boo
 |:---:|---|---|:---:|
 | $\beta$ | Shape parameter | Controls whether the failure rate increases, decreases, or stays constant over time | @sec-ram |
 | $\eta$ | Scale parameter (characteristic life) | Time at which $F(t) = 63.2\%$ for any $\beta$ | @sec-lda |
-| $\lambda$ | Failure rate | Failures per unit time (constant rate — exponential model) | @sec-ram |
+| $\lambda$ | Failure rate | Failures per unit time (constant rate, exponential model) | @sec-ram |
 | $\rho(t)$ | Intensity / recurrence rate | Time-varying failure rate for repairable systems | @sec-rs |
 | $R(t)$ | Reliability function | Probability of survival to time $t$ | @sec-ram |
 | $F(t)$ | Cumulative distribution function | Probability of failure by time $t$; $F(t) = 1 - R(t)$ | @sec-lda |
@@ -26,7 +26,7 @@ A quick-reference guide to the key symbols and formulas used throughout this boo
 
 ## Key Formulas
 
-### RAM — @sec-ram
+### RAM (@sec-ram)
 
 $$R = 1 - \frac{\text{failed time}}{\text{total time}}$$
 
@@ -40,7 +40,7 @@ $$B_n \text{ life}: \text{time } t \text{ such that } F(t) = n/100$$
 
 ---
 
-### Weibull Distribution — @sec-lda
+### Weibull Distribution (@sec-lda)
 
 $$R(t) = \exp\!\left[-\left(\frac{t}{\eta}\right)^{\!\beta}\right], \qquad F(t) = 1 - R(t)$$
 
@@ -52,7 +52,7 @@ $$R(t) = \exp\!\left[-\left(\frac{t - t_0}{\eta}\right)^{\!\beta}\right]$$
 
 ---
 
-### Reliability Block Diagrams — @sec-rbd
+### Reliability Block Diagrams (@sec-rbd)
 
 $$R_{\text{series}} = \prod_{i=1}^{n} R_i$$
 
@@ -66,7 +66,7 @@ $$\lambda_{\text{CCF}} = \beta_{\text{CCF}} \cdot \lambda_{\text{total}}, \qquad
 
 ---
 
-### Accelerated Life Testing — @sec-alt
+### Accelerated Life Testing (@sec-alt)
 
 Arrhenius (temperature):
 
@@ -80,7 +80,7 @@ $$\text{Life}_{\text{use}} = AF \times \text{Life}_{\text{stress}}$$
 
 ---
 
-### Reliability Growth Analysis — @sec-rt
+### Reliability Growth Analysis (@sec-rt)
 
 Duane cumulative MTBF ($K$ = scale parameter estimated from data):
 
@@ -92,17 +92,17 @@ $$N(t) = \lambda_0 \cdot t^{\beta}$$
 
 | $\beta$ (Crow-AMSAA) | Meaning |
 |:---:|---|
-| $< 1$ | Failures decreasing — reliability improving |
-| $= 1$ | Constant rate — stable |
-| $> 1$ | Failures increasing — reliability worsening |
+| $< 1$ | Failures decreasing, reliability improving |
+| $= 1$ | Constant rate, stable |
+| $> 1$ | Failures increasing, reliability worsening |
 
 ::: {.callout-warning}
-**Note**: Crow-AMSAA $\beta$ and Duane $\beta$ have **opposite** interpretations — Duane $\beta > 1$ means *improving*, Crow-AMSAA $\beta > 1$ means *worsening*. See @sec-rt for details.
+**Note**: Crow-AMSAA $\beta$ and Duane $\beta$ have **opposite** interpretations: Duane $\beta > 1$ means *improving*, Crow-AMSAA $\beta > 1$ means *worsening*. See @sec-rt for details.
 :::
 
 ---
 
-### Repairable Systems — @sec-rs
+### Repairable Systems (@sec-rs)
 
 Power Law intensity (recurrence rate):
 

@@ -6,7 +6,7 @@ prefer-html: true
 
 ## Introduction
 
-In @sec-ram, you learned to calculate reliability metrics for individual components. This chapter extends those concepts to *systems* — collections of components whose arrangement determines whether the system succeeds or fails.
+In @sec-ram, you learned to calculate reliability metrics for individual components. This chapter extends those concepts to *systems*, collections of components whose arrangement determines whether the system succeeds or fails.
 
 A **Reliability Block Diagram (RBD)** is a graphical tool for modeling how component reliabilities combine to produce system-level reliability. RBDs are widely used in reliability engineering to analyze designs, identify vulnerabilities, and evaluate the benefit of redundancy [@Billinton1992].
 
@@ -22,7 +22,7 @@ By the end of this chapter, you will be able to:
 
 ## What is a Reliability Block Diagram?
 
-An RBD represents each component as a **block** with a known reliability value. Blocks are connected by lines showing logical dependencies — not physical connections. A path from left (input) to right (output) through functioning blocks represents a working system.
+An RBD represents each component as a **block** with a known reliability value. Blocks are connected by lines showing logical dependencies, not physical connections. A path from left (input) to right (output) through functioning blocks represents a working system.
 
 Each block has a reliability $R_i(t)$ derived from the exponential model (@sec-ram) or a Weibull fit (@sec-lda).
 
@@ -202,13 +202,13 @@ R_series  # ~0.845
 In a series system, which component has the greatest influence on system reliability?
 
 <details><summary>Answer</summary>
-The **least reliable** component. It is the bottleneck — improving it produces the largest gain in system reliability.
+The **least reliable** component. It is the bottleneck; improving it produces the largest gain in system reliability.
 </details>
 :::
 
 ## Parallel Systems
 
-In a **parallel** system, only one component needs to function — **active redundancy** (all components operate simultaneously). The system fails *only* if all components fail at the same time. Since component failures are assumed to be independent:
+In a **parallel** system, only one component needs to function, through **active redundancy** (all components operate simultaneously). The system fails *only* if all components fail at the same time. Since component failures are assumed to be independent:
 
 $$P(\text{all fail}) = \prod_{i=1}^{n}(1 - R_i)$$
 
@@ -218,7 +218,7 @@ Adding parallel components always increases system reliability.
 
 ### Example: Backup Power System
 
-A primary generator (R = 0.90) and a standby generator (R = 0.85) — either alone keeps the system running.
+A primary generator (R = 0.90) and a standby generator (R = 0.85); either alone keeps the system running.
 
 ::: {.content-visible when-format="html"}
 ```{r}
@@ -475,7 +475,7 @@ $\lambda_{\text{sys}} = 0.02 + 0.03 + 0.05 = 0.10$, so $\text{MTTF} = 1/0.10 = 1
 
 ## Common Cause Failure
 
-All the analyses above assume that component failures are **statistically independent** — if Component A fails, it tells us nothing about Component B's probability of failing. In practice, this assumption can break down.
+All the analyses above assume that component failures are **statistically independent**: if Component A fails, it tells us nothing about Component B's probability of failing. In practice, this assumption can break down.
 
 **Common Cause Failure (CCF)** occurs when a single event simultaneously causes multiple components to fail. Typical sources include:
 
@@ -522,7 +522,7 @@ Even a modest $\beta_{\text{CCF}} = 0.10$ visibly reduces the system reliability
 Why doesn't adding more parallel components help when $\beta_{\text{CCF}}$ is large?
 
 <details><summary>Answer</summary>
-When $\beta_{\text{CCF}}$ is large, a significant fraction of failures are **common cause** — they simultaneously affect all components regardless of how many there are. Adding more identical, coupled components may even increase the common-cause failure rate if they share the same environment or design flaw. Effective mitigation requires **diversity** (different designs, manufacturers, or locations) rather than simple redundancy.
+When $\beta_{\text{CCF}}$ is large, a significant fraction of failures are **common cause**, simultaneously affecting all components regardless of how many there are. Adding more identical, coupled components may even increase the common-cause failure rate if they share the same environment or design flaw. Effective mitigation requires **diversity** (different designs, manufacturers, or locations) rather than simple redundancy.
 </details>
 :::
 
@@ -536,8 +536,8 @@ While an RBD asks "What must work for the system to succeed?", a fault tree asks
 
 ### Gates
 
-- **AND gate**: top event occurs only if *all* inputs occur — corresponds to **parallel** RBD components (all must fail).
-- **OR gate**: top event occurs if *any* input occurs — corresponds to **series** RBD components (any failure causes system failure).
+- **AND gate**: top event occurs only if *all* inputs occur, corresponding to **parallel** RBD components (all must fail).
+- **OR gate**: top event occurs if *any* input occurs, corresponding to **series** RBD components (any failure causes system failure).
 
 ### RBD—Fault Tree Duality
 
@@ -582,7 +582,7 @@ This OR gate corresponds to a two-component series RBD: any single failure cause
 A fault tree has an AND gate combining two component failures. Which RBD configuration does this correspond to?
 
 <details><summary>Answer</summary>
-**Parallel** — an AND gate means the system fails only if both components fail simultaneously, which is exactly the parallel (redundant) configuration.
+**Parallel**: an AND gate means the system fails only if both components fail simultaneously, which is exactly the parallel (redundant) configuration.
 </details>
 :::
 
@@ -643,11 +643,11 @@ R_system  # ~0.985
 
 **Key takeaways:**
 
-- **Series**: $R_{\text{sys}} = \prod R_i$ — every component must work; reliability decreases with more components.
-- **Parallel**: $R_{\text{sys}} = 1 - \prod(1-R_i)$ — redundancy; only one component needs to work.
+- **Series**: $R_{\text{sys}} = \prod R_i$, every component must work; reliability decreases with more components.
+- **Parallel**: $R_{\text{sys}} = 1 - \prod(1-R_i)$, redundancy; only one component needs to work.
 - **Mixed**: decompose into subsystems, apply formulas step by step.
 - **k-out-of-n**: `1 - pbinom(k-1, n, 1-p)` for voting/load-sharing systems.
 - **Series MTTF**: $1/\sum\lambda_i$; **Parallel MTTF**: $(1/\lambda)\sum_{i=1}^{n}(1/i)$.
-- **Common Cause Failure**: redundancy requires *diversity* to be effective — the $\beta_{\text{CCF}}$ factor quantifies the fraction of failures caused by shared events; adding more identical, coupled components does not protect against CCF.
+- **Common Cause Failure**: redundancy requires *diversity* to be effective; the $\beta_{\text{CCF}}$ factor quantifies the fraction of failures caused by shared events, and adding more identical, coupled components does not protect against CCF.
 - **FTA duality**: series RBD ↔ OR gate; parallel RBD ↔ AND gate.
 

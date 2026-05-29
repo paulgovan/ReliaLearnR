@@ -18,7 +18,7 @@ This chapter produces interactive **plotly** charts that require a web browser. 
 
 ## Introduction
 
-The previous chapters produce static base-R plots. **ReliaPlotR** [@ReliaPlotR] is a companion package that turns those same fitted model objects into *interactive* plotly charts — with hover tooltips, zoom/pan controls, and built-in download buttons — without requiring you to change how you fit your models.
+The previous chapters produce static base-R plots. **ReliaPlotR** [@ReliaPlotR] is a companion package that turns those same fitted model objects into *interactive* plotly charts, with hover tooltips, zoom/pan controls, and built-in download buttons, without requiring you to change how you fit your models.
 
 The API follows a single convention: pass the fitted object from `WeibullR`, `ReliaGrowR`, or `WeibullR.ALT` directly to the corresponding `plotly_*` function. The complete function map:
 
@@ -53,9 +53,9 @@ ReliaPlotR is available on CRAN: <https://CRAN.R-project.org/package=ReliaPlotR>
 
 ## Life Data Analysis Plots
 
-These functions accept the `wblr` objects produced by `WeibullR` — exactly as shown in @sec-lda. No reformatting needed.
+These functions accept the `wblr` objects produced by `WeibullR`, exactly as shown in @sec-lda. No reformatting needed.
 
-### Weibull Probability Plot — `plotly_wblr()`
+### Weibull Probability Plot: `plotly_wblr()`
 
 Pass any fitted `wblr` object (or a list of objects for overlays):
 
@@ -82,7 +82,7 @@ plotly_wblr(obj_susp, susp = suspensions,
             main = "Weibull Plot with Suspensions")
 ```
 
-Overlaying two models — pass a list:
+To overlay two models, pass a list:
 
 ```{r}
 #| label: fig-wblr-multi
@@ -94,7 +94,7 @@ plotly_wblr(list(obj1, obj2),
             main  = "Multi-Model Weibull Overlay")
 ```
 
-### Contour Plot — `plotly_contour()`
+### Contour Plot: `plotly_contour()`
 
 Pass a `wblr` object fitted with likelihood-ratio bounds (`method.conf = "lrb"`):
 
@@ -136,9 +136,9 @@ plotly_contour(list(c1, c2, c3),
 
 ## Reliability Growth Plots
 
-These functions accept fitted objects from `ReliaGrowR` — the same objects plotted in @sec-rt.
+These functions accept fitted objects from `ReliaGrowR`, the same objects plotted in @sec-rt.
 
-### Duane Plot — `plotly_duane()`
+### Duane Plot: `plotly_duane()`
 
 ```{r}
 #| label: fig-duane
@@ -153,7 +153,7 @@ plotly_duane(fit_duane,
              ylab = "Cumulative MTBF")
 ```
 
-### Crow-AMSAA Plot — `plotly_rga()`
+### Crow-AMSAA Plot: `plotly_rga()`
 
 ```{r}
 #| label: fig-rga
@@ -169,9 +169,9 @@ Hover over any data point to read the exact cumulative time and failure count. T
 
 ## Accelerated Life Testing Plots
 
-These functions accept `alt.make()` and `alt.fit()` objects from `WeibullR.ALT` — see @sec-alt.
+These functions accept `alt.make()` and `alt.fit()` objects from `WeibullR.ALT`; see @sec-alt.
 
-### ALT Probability Plot — `plotly_alt()`
+### ALT Probability Plot: `plotly_alt()`
 
 ```{r}
 #| label: fig-alt
@@ -194,7 +194,7 @@ plotly_alt(prlobj,
 
 Each color represents a different temperature level. Hover to inspect unreliability at any time. Note: `plotly_alt()` requires a parallelized object from `alt.parallel()`.
 
-### Life-Stress Relationship Plot — `plotly_rel()`
+### Life-Stress Relationship Plot: `plotly_rel()`
 
 ```{r}
 #| label: fig-rel
@@ -210,7 +210,7 @@ Each line represents a percentile of the failure distribution (P10, P63.2, P90, 
 
 ### Power Law–Weibull ALT Plots
 
-The Power Law model applies to non-thermal stress (voltage, load, pressure). Here, electrical insulating fluids are tested at seven voltage levels (Nelson Table 3.1 — see @sec-alt):
+The Power Law model applies to non-thermal stress (voltage, load, pressure). Here, electrical insulating fluids are tested at seven voltage levels (Nelson Table 3.1; see @sec-alt):
 
 ```{r}
 #| label: fig-alt-weibull
@@ -246,9 +246,9 @@ plotly_rel(pwrrobj,
 
 ## Repairable Systems Plots
 
-These functions accept the fitted objects from `ReliaGrowR` — the same objects produced in @sec-rs. The section introduces the `pump_data` fleet dataset first via the non-parametric tools, then uses the same data for the parametric NHPP fit.
+These functions accept the fitted objects from `ReliaGrowR`, the same objects produced in @sec-rs. The section introduces the `pump_data` fleet dataset first via the non-parametric tools, then uses the same data for the parametric NHPP fit.
 
-### Exposure Plot — `plotly_exposure()`
+### Exposure Plot: `plotly_exposure()`
 
 ```{r}
 #| label: fig-exposure
@@ -268,7 +268,7 @@ plotly_exposure(exp_result,
                 ylab = "Event Rate (failures / hour)")
 ```
 
-### MCF Plot — `plotly_mcf()`
+### MCF Plot: `plotly_mcf()`
 
 ```{r}
 #| label: fig-mcf
@@ -283,9 +283,9 @@ plotly_mcf(mcf_result,
            ylab = "Expected Cumulative Failures per System")
 ```
 
-### NHPP Plot — `plotly_nhpp()`
+### NHPP Plot: `plotly_nhpp()`
 
-The parametric Crow-AMSAA fit uses the same `pump_data` fleet — individual failure times are extracted and sorted across all systems:
+The parametric Crow-AMSAA fit uses the same `pump_data` fleet; individual failure times are extracted and sorted across all systems:
 
 ```{r}
 #| label: fig-nhpp
@@ -303,7 +303,7 @@ plotly_nhpp(fit_nhpp,
 
 ReliaPlotR outputs are standard `plotly` objects and embed natively in:
 
-**Quarto / R Markdown** — interactive widgets in HTML output, static fallback in PDF:
+**Quarto / R Markdown**: interactive widgets in HTML output, static fallback in PDF:
 
 ````markdown
 ```{{r}}
@@ -315,7 +315,7 @@ plotly_wblr(obj)
 ```
 ````
 
-**Shiny** — use `plotlyOutput()` / `renderPlotly()`:
+**Shiny**: use `plotlyOutput()` / `renderPlotly()`:
 
 ```{r}
 #| eval: false
@@ -356,4 +356,4 @@ help(package = "ReliaPlotR")
 
 ## Summary
 
-ReliaPlotR wraps every major fitted object in the ReliaLearnR ecosystem — `wblr`, `duane`, `rga`, `nhpp`, `mcf`, `exposure`, `alt.make`, `alt.fit` — in an interactive plotly chart. The pattern is consistent: fit your model with WeibullR, ReliaGrowR, or WeibullR.ALT as usual, then pass the result to the corresponding `plotly_*` function. All nine functions support the same customization arguments (titles, axis labels, colors, grid control) and return standard plotly objects compatible with Quarto, R Markdown, and Shiny.
+ReliaPlotR wraps every major fitted object in the ReliaLearnR ecosystem, including `wblr`, `duane`, `rga`, `nhpp`, `mcf`, `exposure`, `alt.make`, and `alt.fit`, in an interactive plotly chart. The pattern is consistent: fit your model with WeibullR, ReliaGrowR, or WeibullR.ALT as usual, then pass the result to the corresponding `plotly_*` function. All nine functions support the same customization arguments (titles, axis labels, colors, grid control) and return standard plotly objects compatible with Quarto, R Markdown, and Shiny.

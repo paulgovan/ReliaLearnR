@@ -227,7 +227,7 @@ plotly_wblr(da)   # interactive version of plot(da)
 
 ## ReliaShiny
 
-A point-and-click Shiny web application that wraps all of the above analyses in a browser-based UI — no coding required. Modules cover RAM, Life Data Analysis, Reliability Growth, ALT, Repairable Systems, and RBD.
+A point-and-click Shiny web application that wraps all of the above analyses in a browser-based UI; no coding required. Modules cover RAM, Life Data Analysis, Reliability Growth, ALT, Repairable Systems, and RBD.
 
 ```{r}
 #| eval: false
