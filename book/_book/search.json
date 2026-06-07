@@ -1068,5 +1068,115 @@
     "crumbs": [
       "Glossary and Formula Reference"
     ]
+  },
+  {
+    "objectID": "09-mcp.html",
+    "href": "09-mcp.html",
+    "title": "9  AI-Assisted Reliability Analysis with MCP",
+    "section": "",
+    "text": "9.1 Introduction\nAll of the analyses in this book require writing R code or navigating a Shiny app. Model Context Protocol (MCP) opens a third path: letting an AI assistant call your R functions directly during a conversation, so you can describe what you want in plain language and the AI runs the analysis, interprets the results, and generates the plots.\nMCP is an open standard that defines how an AI assistant discovers and calls external tools — in the same way a web browser calls REST APIs. Reliability workflows are a natural fit: fitting a growth model, predicting future failures, computing a fleet MCF, and saving an interactive plot are all discrete, well-defined operations that map cleanly to MCP tools.\nThis chapter shows how to expose ReliaGrowR (Govan 2024) and ReliaPlotR (Govan 2023) as an MCP server so that Claude Desktop, Claude Code, or any other MCP-compatible client can run reliability analyses on demand.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>AI-Assisted Reliability Analysis with MCP</span>"
+    ]
+  },
+  {
+    "objectID": "09-mcp.html#prerequisites",
+    "href": "09-mcp.html#prerequisites",
+    "title": "9  AI-Assisted Reliability Analysis with MCP",
+    "section": "9.2 Prerequisites",
+    "text": "9.2 Prerequisites\nInstall the MCP infrastructure packages. ellmer (Wickham and Cheng 2025) provides the tool() constructor; mcptools (Posit PBC 2025) provides the server transport:\n\ninstall.packages(c(\"ellmer\", \"mcptools\"))\n\nEnsure the reliability packages are also installed:\n\ninstall.packages(c(\"ReliaGrowR\", \"ReliaPlotR\", \"htmlwidgets\"))",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>AI-Assisted Reliability Analysis with MCP</span>"
+    ]
+  },
+  {
+    "objectID": "09-mcp.html#mcp-tools-for-reliagrowr",
+    "href": "09-mcp.html#mcp-tools-for-reliagrowr",
+    "title": "9  AI-Assisted Reliability Analysis with MCP",
+    "section": "9.3 MCP Tools for ReliaGrowR",
+    "text": "9.3 MCP Tools for ReliaGrowR\nThe reliagrow_mcp_tools() function below returns a named list of ellmer::tool() objects. Each tool is a thin wrapper: it accepts plain-text inputs (times and failures as comma-separated strings), calls the underlying ReliaGrowR function, extracts the key scalar results, and returns a plain list that the AI receives as JSON.\n\nlibrary(ellmer)\nlibrary(ReliaGrowR)\n\nreliagrow_mcp_tools &lt;- function() {\n\n  parse_vec &lt;- function(x) as.numeric(strsplit(trimws(x), \"\\\\s*,\\\\s*\")[[1]])\n\n  list(\n\n    fit_duane = tool(\n      .name        = \"fit_duane\",\n      .description = \"Fit a Duane reliability growth model to cumulative failure data.\n                      Returns the growth slope (beta), scale parameter (K), and\n                      cumulative MTBF at the last observation.\",\n      times    = type_string(\"Comma-separated cumulative times (e.g. '100,200,300')\"),\n      failures = type_string(\"Comma-separated cumulative failure counts (e.g. '1,2,1')\"),\n      function(times, failures) {\n        t &lt;- parse_vec(times)\n        f &lt;- parse_vec(failures)\n        fit &lt;- duane(t, f)\n        list(\n          beta  = round(fit$beta, 4),\n          K     = round(fit$K, 4),\n          cmtbf = round(fit$K * max(t)^(fit$beta - 1), 2)\n        )\n      }\n    ),\n\n    fit_crow_amsaa = tool(\n      .name        = \"fit_crow_amsaa\",\n      .description = \"Fit a Crow-AMSAA (NHPP Power Law) reliability growth model.\n                      Returns beta (shape) and lambda (scale). Beta &lt; 1 means\n                      reliability is improving; beta &gt; 1 means worsening.\",\n      times    = type_string(\"Comma-separated cumulative times\"),\n      failures = type_string(\"Comma-separated cumulative failure counts\"),\n      function(times, failures) {\n        t &lt;- parse_vec(times)\n        f &lt;- parse_vec(failures)\n        fit &lt;- rga(t, f, model_type = \"Crow-AMSAA\")\n        list(\n          beta   = round(fit$beta, 4),\n          lambda = round(fit$lambda, 6)\n        )\n      }\n    ),\n\n    fit_piecewise_nhpp = tool(\n      .name        = \"fit_piecewise_nhpp\",\n      .description = \"Fit a piecewise Crow-AMSAA model with an optional known breakpoint.\n                      If no breakpoint is supplied, the change point is detected automatically.\n                      Returns per-segment beta and lambda values.\",\n      times     = type_string(\"Comma-separated cumulative times\"),\n      failures  = type_string(\"Comma-separated cumulative failure counts\"),\n      breakpoint = type_string(\"Optional breakpoint time, or empty string for auto-detection\"),\n      function(times, failures, breakpoint = \"\") {\n        t  &lt;- parse_vec(times)\n        f  &lt;- parse_vec(failures)\n        bp &lt;- if (nchar(trimws(breakpoint)) == 0) NULL else as.numeric(breakpoint)\n        fit &lt;- if (is.null(bp)) {\n          rga(t, f, model_type = \"Piecewise NHPP\")\n        } else {\n          rga(t, f, model_type = \"Piecewise NHPP\", breaks = bp)\n        }\n        list(\n          segments   = length(fit$beta),\n          beta       = round(fit$beta, 4),\n          lambda     = round(fit$lambda, 6),\n          breakpoints = fit$breaks\n        )\n      }\n    ),\n\n    predict_growth = tool(\n      .name        = \"predict_growth\",\n      .description = \"Predict cumulative failures at future times from a fitted Crow-AMSAA model.\",\n      times      = type_string(\"Historical cumulative times used to fit the model\"),\n      failures   = type_string(\"Historical cumulative failure counts\"),\n      pred_times = type_string(\"Future times to predict at (comma-separated)\"),\n      function(times, failures, pred_times) {\n        t  &lt;- parse_vec(times)\n        f  &lt;- parse_vec(failures)\n        pt &lt;- parse_vec(pred_times)\n        fit  &lt;- rga(t, f)\n        pred &lt;- predict_rga(fit, times = pt)\n        data.frame(\n          time               = pt,\n          predicted_failures = round(pred$predicted, 2),\n          lower_95           = round(pred$lower, 2),\n          upper_95           = round(pred$upper, 2)\n        )\n      }\n    ),\n\n    fit_nhpp = tool(\n      .name        = \"fit_nhpp\",\n      .description = \"Fit a Crow-AMSAA Non-Homogeneous Poisson Process (NHPP) to\n                      repairable systems fleet failure times. Returns beta and lambda.\",\n      failure_times = type_string(\"Comma-separated failure times across all systems (pooled)\"),\n      function(failure_times) {\n        ft  &lt;- parse_vec(failure_times)\n        fit &lt;- nhpp(time = ft, event = rep(1L, length(ft)))\n        list(\n          beta   = round(fit$beta, 4),\n          lambda = round(fit$lambda, 6)\n        )\n      }\n    ),\n\n    compute_mcf = tool(\n      .name        = \"compute_mcf\",\n      .description = \"Compute the non-parametric Mean Cumulative Function (MCF) for a fleet.\n                      Provide system IDs, event times, event indicators (1=failure, 0=censored),\n                      and end times. Returns the MCF table.\",\n      ids        = type_string(\"Comma-separated system IDs (e.g. '1,1,1,2,2,2')\"),\n      times      = type_string(\"Comma-separated event times\"),\n      events     = type_string(\"Comma-separated event indicators (1=failure, 0=censored)\"),\n      end_times  = type_string(\"Comma-separated end-of-observation times, one per unique system\"),\n      function(ids, times, events, end_times) {\n        id  &lt;- parse_vec(ids)\n        t   &lt;- parse_vec(times)\n        ev  &lt;- as.integer(parse_vec(events))\n        et  &lt;- parse_vec(end_times)\n        uid &lt;- sort(unique(id))\n        end &lt;- setNames(et, as.character(uid))\n        result &lt;- mcf(id = id, time = t, event = ev, end_time = end)\n        df &lt;- as.data.frame(result)\n        df[, sapply(df, is.numeric)] &lt;- round(df[, sapply(df, is.numeric)], 4)\n        df\n      }\n    ),\n\n    plan_rdt = tool(\n      .name        = \"plan_rdt\",\n      .description = \"Plan a Reliability Demonstration Test (RDT). Calculates the required\n                      test time to demonstrate a reliability target at a given confidence level.\",\n      target       = type_number(\"Target reliability (e.g. 0.90 for 90%)\"),\n      mission_time = type_number(\"Mission time in hours (or any consistent unit)\"),\n      conf_level   = type_number(\"Confidence level (e.g. 0.80 for 80%)\"),\n      beta         = type_number(\"Assumed Weibull shape parameter\"),\n      n            = type_integer(\"Number of test units\"),\n      function(target, mission_time, conf_level, beta, n) {\n        plan &lt;- rdt(\n          target       = target,\n          mission_time = mission_time,\n          conf_level   = conf_level,\n          beta         = beta,\n          n            = n\n        )\n        list(\n          required_test_time = round(plan$test_time, 1),\n          target_reliability = target,\n          mission_time       = mission_time,\n          confidence_level   = conf_level,\n          sample_size        = n\n        )\n      }\n    )\n\n  )\n}\n\n\n\n\n\n\n\nNoteWhat happens inside each tool\n\n\n\nEach tool() call takes a .name, a .description that the AI reads to decide when to call the tool, named argument descriptors (type_string(), type_number(), etc.), and a handler function. The handler does the real work and returns a plain list or data frame — no raw R objects. The AI sees the returned value as structured JSON.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>AI-Assisted Reliability Analysis with MCP</span>"
+    ]
+  },
+  {
+    "objectID": "09-mcp.html#mcp-tools-for-reliaplotr",
+    "href": "09-mcp.html#mcp-tools-for-reliaplotr",
+    "title": "9  AI-Assisted Reliability Analysis with MCP",
+    "section": "9.4 MCP Tools for ReliaPlotR",
+    "text": "9.4 MCP Tools for ReliaPlotR\nThe reliaplotr_mcp_tools() function wraps the four main ReliaGrowR-backed plot functions. Because plotly widgets cannot be sent through a text protocol, each tool saves a self-contained HTML file and returns its path. The AI then reports the path to the user.\n\nlibrary(ellmer)\nlibrary(ReliaGrowR)\nlibrary(ReliaPlotR)\nlibrary(htmlwidgets)\n\nreliaplotr_mcp_tools &lt;- function() {\n\n  parse_vec &lt;- function(x) as.numeric(strsplit(trimws(x), \"\\\\s*,\\\\s*\")[[1]])\n\n  save_plot &lt;- function(widget, prefix) {\n    outpath &lt;- tempfile(pattern = prefix, fileext = \".html\")\n    htmlwidgets::saveWidget(widget, file = outpath, selfcontained = TRUE)\n    list(path = outpath)\n  }\n\n  list(\n\n    plot_duane = tool(\n      .name        = \"plot_duane\",\n      .description = \"Fit a Duane model and save an interactive Duane plot as a\n                      self-contained HTML file. Returns the file path.\",\n      times    = type_string(\"Comma-separated cumulative times\"),\n      failures = type_string(\"Comma-separated cumulative failure counts\"),\n      title    = type_string(\"Optional plot title\"),\n      function(times, failures, title = \"Duane Reliability Growth\") {\n        t   &lt;- parse_vec(times)\n        f   &lt;- parse_vec(failures)\n        fit &lt;- duane(t, f)\n        p   &lt;- plotly_duane(fit, main = title,\n                            xlab = \"Cumulative Time\",\n                            ylab = \"Cumulative MTBF\")\n        save_plot(p, \"duane_\")\n      }\n    ),\n\n    plot_crow_amsaa = tool(\n      .name        = \"plot_crow_amsaa\",\n      .description = \"Fit a Crow-AMSAA model and save an interactive cumulative\n                      failures plot as a self-contained HTML file. Returns the file path.\",\n      times    = type_string(\"Comma-separated cumulative times\"),\n      failures = type_string(\"Comma-separated cumulative failure counts\"),\n      title    = type_string(\"Optional plot title\"),\n      function(times, failures, title = \"Crow-AMSAA Reliability Growth\") {\n        t   &lt;- parse_vec(times)\n        f   &lt;- parse_vec(failures)\n        fit &lt;- rga(t, f)\n        p   &lt;- plotly_rga(fit, main = title,\n                          xlab = \"Cumulative Time\",\n                          ylab = \"Cumulative Failures\")\n        save_plot(p, \"rga_\")\n      }\n    ),\n\n    plot_nhpp = tool(\n      .name        = \"plot_nhpp\",\n      .description = \"Fit a Crow-AMSAA NHPP to repairable system failure times and\n                      save an interactive plot as a self-contained HTML file.\",\n      failure_times = type_string(\"Comma-separated pooled failure times\"),\n      title         = type_string(\"Optional plot title\"),\n      function(failure_times, title = \"Crow-AMSAA NHPP\") {\n        ft  &lt;- parse_vec(failure_times)\n        fit &lt;- nhpp(time = ft, event = rep(1L, length(ft)))\n        p   &lt;- plotly_nhpp(fit, main = title,\n                           xlab = \"Operating Hours\",\n                           ylab = \"Cumulative Failures\")\n        save_plot(p, \"nhpp_\")\n      }\n    ),\n\n    plot_mcf = tool(\n      .name        = \"plot_mcf\",\n      .description = \"Compute the non-parametric MCF for a fleet and save an interactive\n                      plot as a self-contained HTML file.\",\n      ids       = type_string(\"Comma-separated system IDs\"),\n      times     = type_string(\"Comma-separated event times\"),\n      events    = type_string(\"Comma-separated event indicators (1=failure, 0=censored)\"),\n      end_times = type_string(\"Comma-separated end-of-observation times, one per system\"),\n      title     = type_string(\"Optional plot title\"),\n      function(ids, times, events, end_times, title = \"Mean Cumulative Function\") {\n        id  &lt;- parse_vec(ids)\n        t   &lt;- parse_vec(times)\n        ev  &lt;- as.integer(parse_vec(events))\n        et  &lt;- parse_vec(end_times)\n        uid &lt;- sort(unique(id))\n        end &lt;- setNames(et, as.character(uid))\n        result &lt;- mcf(id = id, time = t, event = ev, end_time = end)\n        p &lt;- plotly_mcf(result, main = title,\n                        xlab = \"Operating Hours\",\n                        ylab = \"Expected Cumulative Failures per System\")\n        save_plot(p, \"mcf_\")\n      }\n    )\n\n  )\n}",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>AI-Assisted Reliability Analysis with MCP</span>"
+    ]
+  },
+  {
+    "objectID": "09-mcp.html#launching-the-mcp-server",
+    "href": "09-mcp.html#launching-the-mcp-server",
+    "title": "9  AI-Assisted Reliability Analysis with MCP",
+    "section": "9.5 Launching the MCP Server",
+    "text": "9.5 Launching the MCP Server\nSave the two tool-list functions and the launch call in a single script, for example mcp-server.R:\n\n# mcp-server.R\nlibrary(ReliaGrowR)\nlibrary(ReliaPlotR)\nlibrary(ellmer)\nlibrary(mcptools)\nlibrary(htmlwidgets)\n\n# --- paste reliagrow_mcp_tools() and reliaplotr_mcp_tools() here, or source() them ---\n\nmcptools::mcp_server(\n  tools = c(reliagrow_mcp_tools(), reliaplotr_mcp_tools())\n)\n\nRunning this script starts an MCP server on the standard-IO transport, ready to accept tool calls from any connected client.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>AI-Assisted Reliability Analysis with MCP</span>"
+    ]
+  },
+  {
+    "objectID": "09-mcp.html#connecting-to-claude-desktop",
+    "href": "09-mcp.html#connecting-to-claude-desktop",
+    "title": "9  AI-Assisted Reliability Analysis with MCP",
+    "section": "9.6 Connecting to Claude Desktop",
+    "text": "9.6 Connecting to Claude Desktop\nClaude Desktop reads its MCP server list from a JSON config file. On macOS, open or create ~/Library/Application Support/Claude/claude_desktop_config.json and add an entry for the reliability server:\n{\n  \"mcpServers\": {\n    \"reliagrow\": {\n      \"command\": \"Rscript\",\n      \"args\": [\"/absolute/path/to/mcp-server.R\"]\n    }\n  }\n}\nRestart Claude Desktop. The ReliaGrowR and ReliaPlotR tools will appear in the tool palette and Claude will call them automatically when relevant.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>AI-Assisted Reliability Analysis with MCP</span>"
+    ]
+  },
+  {
+    "objectID": "09-mcp.html#connecting-to-claude-code",
+    "href": "09-mcp.html#connecting-to-claude-code",
+    "title": "9  AI-Assisted Reliability Analysis with MCP",
+    "section": "9.7 Connecting to Claude Code",
+    "text": "9.7 Connecting to Claude Code\nFrom the terminal, register the server with Claude Code using the claude mcp add command:\nclaude mcp add -s user reliagrow -- Rscript /absolute/path/to/mcp-server.R\nVerify the server is registered:\nclaude mcp list\nFrom that point, any Claude Code session will have access to the reliability tools.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>AI-Assisted Reliability Analysis with MCP</span>"
+    ]
+  },
+  {
+    "objectID": "09-mcp.html#example-ai-conversations",
+    "href": "09-mcp.html#example-ai-conversations",
+    "title": "9  AI-Assisted Reliability Analysis with MCP",
+    "section": "9.8 Example AI Conversations",
+    "text": "9.8 Example AI Conversations\nOnce connected, you can have conversations like the following.\nExample 1 — Crow-AMSAA fit and interpretation:\n\nYou: I ran a reliability growth test. The cumulative times were 100, 200, 300, 400, 500 hours with 1, 2, 1, 3, 2 failures. Fit a Crow-AMSAA model and tell me whether reliability is improving.\nClaude: (calls fit_crow_amsaa) The fitted model gives β = 0.87 and λ = 0.023. Because β &lt; 1, cumulative failures are growing more slowly than linearly — reliability is improving. The system is responding well to corrective actions during test.\n\nExample 2 — Forecasting and test-continuation decision:\n\nYou: Using the same data, predict cumulative failures at 600, 800, and 1000 hours, and tell me whether I should continue testing.\nClaude: (calls predict_growth) At 600 hours: 10.2 failures (95% CI: 8.1–12.7). At 800 hours: 12.9 (CI: 10.1–16.5). At 1000 hours: 15.4 (CI: 11.8–20.1). The growth trend is still active (β &lt; 1). If your target is fewer than 15 cumulative failures at 1000 hours, you are on track — but the upper confidence bound exceeds 15, so additional test time would tighten that uncertainty.\n\nExample 3 — Interactive MCF plot for stakeholders:\n\nYou: I have a fleet of 3 pumps. IDs: 1,1,1,2,2,3,3. Times: 310,850,1620,420,1050,580,1890. All events are failures. End times: 3000,3000,3000. Generate an MCF plot I can share with the maintenance team.\nClaude: (calls plot_mcf) Done. The interactive MCF plot has been saved to /var/folders/.../mcf_abc123.html. Open that file in any web browser to explore it — hover over any point to see the exact expected cumulative failures per system. The MCF is concave upward across the fleet, indicating that failure rate is increasing with age; a preventive maintenance interval may be warranted.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>AI-Assisted Reliability Analysis with MCP</span>"
+    ]
+  },
+  {
+    "objectID": "09-mcp.html#when-to-use-ai-vs-scripted-r",
+    "href": "09-mcp.html#when-to-use-ai-vs-scripted-r",
+    "title": "9  AI-Assisted Reliability Analysis with MCP",
+    "section": "9.9 When to Use AI vs Scripted R",
+    "text": "9.9 When to Use AI vs Scripted R\n\n\n\nSituation\nAI + MCP\nScripted R\n\n\n\n\nQuick one-off fit during a conversation\n✅\n\n\n\nExplaining results to non-R stakeholders\n✅\n\n\n\nIterating on model choice interactively\n✅\n\n\n\nAutomating repeated batch analyses\n\n✅\n\n\nReproducible research / version control\n\n✅\n\n\nFull custom plot formatting\n\n✅\n\n\nEmbedding results in a Quarto report\n\n✅\n\n\nLarge datasets or performance-sensitive work\n\n✅\n\n\n\nThe AI + MCP path excels at conversational exploration — where you want to ask a question, get an answer in plain language, and then ask a follow-up. Scripted R remains the right choice for production pipelines and fully reproducible analyses.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>AI-Assisted Reliability Analysis with MCP</span>"
+    ]
+  },
+  {
+    "objectID": "09-mcp.html#getting-help",
+    "href": "09-mcp.html#getting-help",
+    "title": "9  AI-Assisted Reliability Analysis with MCP",
+    "section": "9.10 Getting Help",
+    "text": "9.10 Getting Help\n\nhelp(package = \"ReliaGrowR\")\nhelp(package = \"ReliaPlotR\")\n\n\nmcptools GitHub: https://github.com/posit-dev/mcptools\nellmer GitHub: https://github.com/tidyverse/ellmer\nMCP specification: https://modelcontextprotocol.io",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>AI-Assisted Reliability Analysis with MCP</span>"
+    ]
+  },
+  {
+    "objectID": "09-mcp.html#summary",
+    "href": "09-mcp.html#summary",
+    "title": "9  AI-Assisted Reliability Analysis with MCP",
+    "section": "9.11 Summary",
+    "text": "9.11 Summary\nMCP lets an AI assistant call ReliaGrowR and ReliaPlotR functions directly during a conversation. The reliagrow_mcp_tools() function defines seven tools — Duane fit, Crow-AMSAA fit, piecewise NHPP, growth forecast, NHPP for repairable systems, MCF, and RDT planning — that each return plain JSON results. The reliaplotr_mcp_tools() function adds four plot tools that save self-contained interactive HTML files. Register the server with Claude Desktop via claude_desktop_config.json or with Claude Code via claude mcp add, then describe your data in plain language and let the AI run the analysis.\n\n\n\n\n\n\nGovan, Paul. 2023. ReliaPlotR: Interactive Reliability Analysis Plots. https://doi.org/10.32614/CRAN.package.ReliaPlotR.\n\n\nGovan, Paul. 2024. ReliaGrowR: Reliability Growth Analysis. https://doi.org/10.32614/CRAN.package.ReliaGrowR.\n\n\nPosit PBC. 2025. Mcptools: Model Context Protocol Tools for r. https://github.com/posit-dev/mcptools.\n\n\nWickham, Hadley, and Joe Cheng. 2025. Ellmer: Chat with Large Language Models. https://github.com/tidyverse/ellmer.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>AI-Assisted Reliability Analysis with MCP</span>"
+    ]
   }
 ]

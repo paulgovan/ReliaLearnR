@@ -27,6 +27,7 @@ book:
     - 06-rs.qmd
     - 07-reliaplotr.qmd
     - 08-reliashiny.qmd
+    - 09-mcp.qmd
     - 98-appendix.qmd
     - 99-glossary.qmd
   sidebar:
