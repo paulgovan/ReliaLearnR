@@ -11,7 +11,8 @@ book:
     A companion reference guide to the ReliaLearnR interactive tutorials,
     covering RAM analysis, life data analysis, reliability testing, repairable
     systems, and reliability block diagrams, with additional chapters on
-    interactive visualization with ReliaPlotR and web-based analysis with ReliaShiny.
+    interactive visualization with ReliaPlotR, web-based analysis with ReliaShiny,
+    reproducible reports with Quarto, and AI-assisted analysis with MCP.
   cover-image: cover.png
   url: https://paulgovan.github.io/ReliaLearnR/
   repo-url: https://github.com/paulgovan/ReliaLearnR
@@ -27,7 +28,8 @@ book:
     - 06-rs.qmd
     - 07-reliaplotr.qmd
     - 08-reliashiny.qmd
-    - 09-mcp.qmd
+    - 09-quarto.qmd
+    - 10-mcp.qmd
     - 98-appendix.qmd
     - 99-glossary.qmd
   sidebar:

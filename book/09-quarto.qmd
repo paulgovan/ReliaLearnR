@@ -1,0 +1,474 @@
+# Reproducible Reliability Analysis with Quarto {#sec-quarto}
+
+Scripted R solves the *computation* problem — analyses are exact, repeatable, and version-controlled. But a folder of R scripts and PNG plots is still hard to share, audit, or publish. Quarto [@Quarto] solves the *documentation* problem by weaving code, equations, narrative, and figures into a single re-executable source file. The result is a document that is both the analysis *and* the report — one that any colleague can re-run months later and reproduce every number exactly. See @sec-quarto-vs-tools for guidance on when to choose Quarto over ReliaShiny or AI/MCP.
+
+## Learning Objectives
+
+By the end of this chapter, you will be able to:
+
+- Explain what reproducibility means in a reliability analysis context and why it matters for audits, re-analysis, and team collaboration.
+- Describe the role of Quarto as a literate-programming tool for combining R code, equations, and narrative.
+- Create a `.qmd` document with a YAML front matter block, code chunks, and inline LaTeX equations.
+- Render a `.qmd` to HTML, PDF, and Word from the R console or terminal.
+- Use parameterized Quarto reports to run the same analysis on different datasets without editing code.
+- Embed WeibullR, ReliaGrowR, and ReliaLearnR analyses inside a `.qmd` and save publication-quality plots.
+- Distinguish when to use Quarto, ReliaShiny, and AI/MCP for a given reliability task.
+
+## Why Reproducibility Matters {#sec-quarto-repro}
+
+### Audits and Regulatory Compliance
+
+Defence, aerospace, nuclear, and medical-device industries require that every reliability analysis be traceable — the data, the method, and the software version. A Quarto document combined with an `renv.lock` package snapshot provides an exact, time-stamped audit trail. Regulators can re-run the analysis years later and confirm the results.
+
+### Re-Analysis and Collaboration
+
+A colleague inheriting a folder of PNG plots and a spreadsheet cannot reproduce the analysis. A `.qmd` file is self-contained: every assumption, model choice, and filtering step is visible in the code. When field data is updated, re-running the document updates every table, plot, and inline number automatically.
+
+### Version Control
+
+Quarto source files are plain text. They can be committed to Git alongside data, line-diffed, and reviewed in pull requests. Changes to an analysis are visible as diffs — something not possible with binary spreadsheets or saved Shiny sessions.
+
+::: {.callout-tip}
+## Review
+
+Name two situations in a reliability engineering context where a fully reproducible analysis would be required.
+
+<details><summary>Answer</summary>
+Examples include: regulatory or contractual audits requiring traceability of parameter estimates; re-analysis after a field event using updated failure data; peer review of a reliability growth claim; handing off an analysis to a new team member.
+</details>
+:::
+
+## Introduction to Quarto {#sec-quarto-intro}
+
+Quarto is an open-source scientific and technical publishing system built on Pandoc and maintained by Posit. A `.qmd` file is a plain-text document that interleaves YAML front matter, Markdown prose, and executable code chunks. When rendered, Quarto executes the code, captures the output, and produces HTML, PDF, Word, or presentations from the same source.
+
+| Term | Meaning |
+|---|---|
+| `.qmd` | Quarto Markdown source file |
+| YAML front matter | Document metadata block delimited by `---` |
+| Code chunk | Fenced block (` ```{r} `) containing executable R code |
+| Chunk option | `#|`-prefixed line controlling chunk behaviour (`eval`, `echo`, `fig-cap`) |
+| Render | Convert the `.qmd` to its target format |
+| `_quarto.yml` | Project-level configuration for multi-file books and websites |
+
+### Installing Quarto
+
+The Quarto CLI is a standalone download from <https://quarto.org/docs/get-started/>. The `quarto` R package [@quartoR] provides R-level wrappers:
+
+```{r}
+#| eval: false
+install.packages("quarto")
+quarto::quarto_version()   # confirm the CLI is found
+```
+
+### Anatomy of a .qmd File
+
+A minimal `.qmd` has three zones: a YAML front matter block, Markdown prose, and fenced R chunks.
+
+````{.markdown}
+---
+title: "My Reliability Report"
+author: "Your Name"
+date: today
+format: html
+---
+
+## Introduction
+
+This report analyses pump failure data using the Weibull distribution.
+
+```{{r}}
+#| echo: true
+library(WeibullR)
+failures <- c(30, 49, 82, 90, 96)
+fit <- wblr.fit(wblr(failures), method.fit = "mle")
+plot(fit)
+```
+````
+
+### Rendering
+
+From the R console:
+
+```{r}
+#| eval: false
+library(quarto)
+quarto_render("my-report.qmd")                         # default format
+quarto_render("my-report.qmd", output_format = "pdf")
+quarto_render("my-report.qmd", output_format = "docx")
+```
+
+From the terminal:
+
+```bash
+quarto render my-report.qmd
+quarto render my-report.qmd --to pdf
+```
+
+## A Basic Reliability Report in Quarto {#sec-quarto-basic}
+
+### YAML Front Matter for Reliability Reports
+
+A professional deliverable typically targets both HTML and PDF. The `code-fold: true` option collapses code blocks in HTML output, keeping reports tidy for stakeholders while keeping the code accessible.
+
+```yaml
+---
+title: "Pump Fleet Weibull Analysis"
+author: "Reliability Engineering"
+date: today
+format:
+  html:
+    toc: true
+    number-sections: true
+    code-fold: true
+    code-tools: true
+  pdf:
+    toc: true
+    number-sections: true
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+```
+
+### Embedding Equations
+
+Quarto uses LaTeX for mathematical notation. Display equations are delimited by `$$...$$`:
+
+```markdown
+The Weibull reliability function is:
+
+$$R(t) = e^{-(t/\eta)^\beta}$$
+
+where $\beta$ is the shape parameter and $\eta$ is the characteristic life.
+```
+
+### Code Chunk Options
+
+| Option | Effect |
+|---|---|
+| `#\| eval: false` | Show code but do not run it |
+| `#\| echo: false` | Run code but hide the source block |
+| `#\| include: false` | Run code, hide both code and output |
+| `#\| fig-cap: "..."` | Add a figure caption |
+| `#\| fig-width: 6` | Set output figure width in inches |
+| `#\| label: fig-xxx` | Enable cross-referencing with `@fig-xxx` |
+| `#\| cache: true` | Cache the result; re-run only when the chunk changes |
+
+### A Complete Weibull Report Block
+
+```{r}
+#| echo: true
+#| fig-cap: "Weibull probability plot for pump fleet failures with MLE fit and likelihood ratio confidence bounds."
+#| label: fig-weibull-basic
+library(WeibullR)
+
+failures    <- c(30, 49, 82, 90, 96)
+suspensions <- c(100, 45, 10)
+
+obj <- wblr(failures, suspensions)
+obj <- wblr.fit(obj, method.fit = "mle")
+obj <- wblr.conf(obj, method.conf = "lrb")
+plot(obj)
+```
+
+Inline R expressions embed computed values directly in prose without hard-coding numbers — a key reproducibility benefit. For example:
+
+```markdown
+The fitted shape parameter is $\hat{\beta}$ = `r "`r round(obj$fit[[1]]$beta, 2)`"`.
+```
+
+When the analysis is re-run with updated data, this sentence updates automatically.
+
+::: {.callout-note}
+## Try It
+
+Create a file `pump-report.qmd` with the YAML front matter shown above. Add a code chunk that fits a Weibull model to failure times `c(120, 205, 310, 445, 590, 780)` using MLE and plots the result. Render it to HTML.
+
+<details><summary>Solution</summary>
+
+```{r}
+#| eval: false
+library(WeibullR)
+failures <- c(120, 205, 310, 445, 590, 780)
+obj <- wblr.fit(wblr(failures), method.fit = "mle")
+plot(obj)
+```
+
+Add `quarto_render("pump-report.qmd")` in a separate R session to render.
+</details>
+:::
+
+## Parameterized Reports {#sec-quarto-params}
+
+### What Are Parameters?
+
+Quarto parameters let a single `.qmd` template run against different datasets or settings without touching any code. Parameters are declared in YAML and accessed in R via `params$name`.
+
+### Declaring Parameters in YAML
+
+```yaml
+---
+title: "Reliability Report"
+params:
+  dataset: "pump_failures.csv"
+  component: "Pump A"
+  conf_level: 0.90
+---
+```
+
+### Using Parameters in Code
+
+```{r}
+#| eval: false
+data      <- read.csv(params$dataset)
+failures  <- data$time[data$event == 1]
+
+cat("Component:", params$component, "\n")
+cat("Confidence level:", params$conf_level, "\n")
+```
+
+### Rendering Multiple Reports
+
+A loop over `quarto_render()` produces one report per component from a single template:
+
+```{r}
+#| eval: false
+library(quarto)
+
+components <- c("Pump A", "Pump B", "Compressor C")
+datasets   <- c("pump_a.csv", "pump_b.csv", "comp_c.csv")
+
+for (i in seq_along(components)) {
+  quarto_render(
+    "reliability-report.qmd",
+    execute_params = list(
+      dataset   = datasets[i],
+      component = components[i]
+    ),
+    output_file = paste0(gsub(" ", "_", components[i]), "_report.html")
+  )
+}
+```
+
+::: {.callout-tip}
+## Review
+
+A reliability engineer must produce monthly Weibull reports for six pump models. Without parameterization, how many `.qmd` files are needed? With parameterization?
+
+<details><summary>Answer</summary>
+Without parameters: six separate files, each requiring manual edits when the analysis changes. With parameters: one template file rendered six times — changes to the analysis logic are made in one place and propagate to all reports automatically.
+</details>
+:::
+
+## Integration with Reliability R Packages {#sec-quarto-packages}
+
+All reliability packages used in this book work inside `.qmd` files without modification — Quarto captures their output automatically.
+
+### WeibullR — Life Data Analysis
+
+See @sec-lda for the statistical background. Inside a `.qmd`, a complete Weibull analysis is:
+
+```{r}
+#| echo: true
+#| fig-cap: "Weibull probability plot with MLE fit and confidence bounds."
+#| label: fig-lda-qmd
+library(WeibullR)
+
+failures    <- c(500, 1200, 900, 1500, 750)
+suspensions <- c(2000, 2000)
+
+obj <- wblr(x = failures, s = suspensions)
+obj <- wblr.fit(obj, method.fit = "mle")
+obj <- wblr.conf(obj, method.conf = "lrb")
+plot(obj)
+```
+
+### ReliaGrowR — Reliability Growth
+
+See @sec-rt for Crow-AMSAA model details:
+
+```{r}
+#| echo: true
+#| fig-cap: "Crow-AMSAA reliability growth fit."
+#| label: fig-rga-qmd
+library(ReliaGrowR)
+
+times   <- c(9.2, 25, 61.5, 260, 300, 710, 916, 1010, 1220)
+rga_fit <- rga(times, T = 1500)
+plot(rga_fit)
+```
+
+### ReliaLearnR — RAM Metrics
+
+See @sec-ram for the RAM helper functions:
+
+```{r}
+#| echo: true
+library(ReliaLearnR)
+
+reliability  <- rel(outageTime = 10,  totalTime = 5 * 365)
+availability <- avail(unavailTime = 25, totalTime = 5 * 365)
+failure_rate <- fr(failures = 12, totalTime = 5 * 365)
+
+cat(sprintf("Reliability:    %.1f%%\n", reliability * 100))
+cat(sprintf("Availability:   %.1f%%\n", availability * 100))
+cat(sprintf("Failure rate:   %.4f failures/day\n", failure_rate))
+```
+
+### Saving Plots
+
+To save a static plot from inside a `.qmd` for use in presentations or other documents:
+
+```{r}
+#| eval: false
+png("weibull_plot.png", width = 800, height = 600, res = 150)
+plot(obj)
+dev.off()
+```
+
+For interactive ReliaPlotR plots (see @sec-reliaplotr):
+
+```{r}
+#| eval: false
+library(ReliaPlotR)
+library(htmlwidgets)
+
+p <- plotly_wblr(obj)
+saveWidget(p, "weibull_interactive.html", selfcontained = TRUE)
+```
+
+::: {.callout-note}
+## Try It
+
+In a `.qmd` file, fit a Crow-AMSAA model to failure times `c(50, 100, 180, 310, 450, 620)` with `T = 800`, plot the result, and add a prose sentence using inline R that reports the fitted $\hat{\beta}$.
+
+<details><summary>Solution</summary>
+
+```{r}
+#| eval: false
+library(ReliaGrowR)
+fit <- rga(c(50, 100, 180, 310, 450, 620), T = 800)
+plot(fit)
+```
+
+Inline sentence: "The fitted shape parameter is $\hat{\beta}$ = `` `r round(fit$beta, 3)` ``."
+</details>
+:::
+
+## This Book Is Built with Quarto {#sec-quarto-meta}
+
+::: {.callout-note}
+## This Book Is a Quarto Project
+
+*Reliability Analysis with R: A Companion Guide* is itself built with Quarto. Every chapter is a `.qmd` file. Every code block you have read in this book was executed by Quarto at render time and its output captured automatically. The project configuration lives in `_quarto.yml` at the root of the book directory, which specifies the chapter order, HTML theme (`cosmo`/`darkly`), PDF document class (`scrreprt`), TOC depth, and global chunk options (`echo: true`, `warning: false`, `message: false`).
+
+To build the book yourself, clone the repository and run:
+
+```{r}
+#| eval: false
+library(quarto)
+quarto_render()   # renders all chapters in _quarto.yml order
+```
+
+or from the terminal:
+
+```bash
+quarto render
+```
+
+The rendered book is published to GitHub Pages on each push — the online version always reflects the exact source in the repository.
+:::
+
+## Quarto Books and Multi-File Projects {#sec-quarto-books}
+
+A Quarto book is a `type: book` project where `_quarto.yml` controls everything: chapter order, sidebar search, bibliography, HTML theme, PDF layout, and global execution options. Adding a new chapter requires only creating a `.qmd` file and adding one line to the chapters list — no other configuration changes.
+
+The global `execute:` block in `_quarto.yml` sets default chunk behaviour across all chapters:
+
+```yaml
+execute:
+  echo: true
+  warning: false
+  message: false
+  cache: false
+```
+
+Individual chunks can override these defaults with their own `#|` options. `cache: false` is appropriate during active writing to ensure output is always fresh; switch to `#| cache: true` on individual chunks for computationally expensive analyses.
+
+## When to Use Quarto vs. ReliaShiny vs. AI/MCP {#sec-quarto-vs-tools}
+
+Each tool in the ReliaLearnR ecosystem excels in a different context. Quarto is the right choice when the deliverable must be reproducible, auditable, or version-controlled. ReliaShiny (see @sec-reliashiny) suits rapid exploration or stakeholder demonstrations with no R requirement. AI + MCP (see @sec-mcp) enables conversational, interpretive, and iterative analysis in plain language.
+
+| Situation | Quarto | ReliaShiny | AI + MCP |
+|---|:---:|:---:|:---:|
+| Reproducible analysis with version control | ✅ | | |
+| Automated batch reports across multiple datasets | ✅ | | |
+| Embedding results in a book, paper, or report | ✅ | | |
+| Custom plot formatting and multi-panel layouts | ✅ | | |
+| Long-running or computationally intensive analyses | ✅ | | |
+| Quick one-off exploration without writing code | | ✅ | |
+| Sharing analysis with non-R users via a browser | | ✅ | |
+| Teaching or live stakeholder demonstration | | ✅ | ✅ |
+| Conversational model selection and interpretation | | | ✅ |
+| Iterating on an analysis in plain language | | | ✅ |
+| Explaining results to a non-technical audience | | ✅ | ✅ |
+
+## Getting Help
+
+```{r}
+#| eval: false
+help(package = "quarto")
+```
+
+- Quarto documentation: <https://quarto.org/docs/guide/>
+- Quarto for R: <https://quarto.org/docs/computations/r.html>
+- Quarto gallery: <https://quarto.org/docs/gallery/>
+
+## Summary
+
+Quarto is the standard tool for reproducible, publishable reliability analysis in R. By combining code, equations, prose, and figures in a single `.qmd` source file, it eliminates the gap between analysis and report and makes every result traceable back to its inputs.
+
+- **Reproducibility**: a `.qmd` file is the complete specification of an analysis; anyone with the file, data, and packages can regenerate every number and plot.
+- **Parameterization**: `params:` in YAML enables one template to produce reports for many components, datasets, or time periods without changing any code.
+- **Integration**: WeibullR, ReliaGrowR, WeibullR.ALT, ReliaPlotR, and ReliaLearnR all work inside `.qmd` files without modification.
+- **Formats**: `quarto_render()` produces HTML, PDF, Word, and more from the same source file.
+- **Books**: this guide is a `type: book` Quarto project; `_quarto.yml` controls chapter order, theme, sidebar, and global chunk options.
+- **Complement, not replacement**: Quarto does not replace ReliaShiny (use ReliaShiny for point-and-click exploration) or AI + MCP (use MCP for conversational analysis) — each tool excels in a different context (see @sec-quarto-vs-tools).
+
+## Review Questions
+
+::: {.callout-tip}
+## Review Questions
+
+**1.** What is the difference between `#| eval: false` and `#| echo: false` in a Quarto code chunk?
+
+<details><summary>Answer</summary>
+`eval: false` shows the code but does not run it — no output is produced. `echo: false` runs the code and captures the output but hides the code block from the reader.
+</details>
+
+**2.** You need to produce monthly Weibull reports for eight pump families. How would you structure a parameterized Quarto workflow?
+
+<details><summary>Answer</summary>
+Declare `params: dataset:` and `params: component:` in the YAML front matter. Write the analysis once using `params$dataset` and `params$component`. Call `quarto_render()` in a loop with different `execute_params` for each family. Eight reports are produced from one `.qmd` source file.
+</details>
+
+**3.** Name two chunk options that control figure output in a Quarto document.
+
+<details><summary>Answer</summary>
+Any two of: `fig-cap` (caption text), `fig-width` / `fig-height` (dimensions in inches), `label` (enables `@fig-xxx` cross-referencing), `fig-alt` (accessibility alt text).
+</details>
+
+**4.** This book is itself a Quarto project. What file controls the chapter order, HTML theme, and global chunk options?
+
+<details><summary>Answer</summary>
+`_quarto.yml` — the project configuration file at the root of the book directory.
+</details>
+
+**5.** When would you choose ReliaShiny over a Quarto document for a reliability analysis?
+
+<details><summary>Answer</summary>
+When the audience does not use R (ReliaShiny requires no coding), when the goal is rapid interactive exploration rather than a deliverable document, or when a live stakeholder demonstration is needed.
+</details>
+:::

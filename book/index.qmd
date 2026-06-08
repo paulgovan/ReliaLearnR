@@ -29,6 +29,7 @@ ReliaLearnR is one part of a broader suite of R packages for reliability analysi
 | **WeibullR.ALT** | Accelerated life testing |
 | **ReliaPlotR** | Interactive reliability plots |
 | **ReliaShiny** | Web-based reliability analysis app |
+| **Quarto** | Reproducible document and book publishing system |
 
 ## Installation
 
@@ -43,7 +44,8 @@ install.packages(c(
   "WeibullR.ALT",
   "DiagrammeR",
   "ReliaPlotR",
-  "ReliaShiny"
+  "ReliaShiny",
+  "quarto"
 ))
 ```
 
@@ -57,6 +59,8 @@ install.packages(c(
 6. **Repairable Systems**: Power Law Process, MCF, and fleet-level analysis.
 7. **Interactive Plots with ReliaPlotR**: Publishable interactive reliability charts.
 8. **Web-Based Analysis with ReliaShiny**: Point-and-click reliability analysis.
+9. **Reproducible Reports with Quarto**: Literate programming, parameterized reports, and version-controlled reliability analysis.
+10. **AI-Assisted Analysis with MCP**: Conversational reliability analysis using Model Context Protocol.
 
 The book also includes an **Appendix** (helper function reference) and a **Glossary** (key symbols and formulas).
 
