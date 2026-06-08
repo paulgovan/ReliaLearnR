@@ -295,8 +295,9 @@ See @sec-rt for Crow-AMSAA model details:
 #| label: fig-rga-qmd
 library(ReliaGrowR)
 
-times   <- c(9.2, 25, 61.5, 260, 300, 710, 916, 1010, 1220)
-rga_fit <- rga(times, T = 1500)
+times    <- c(9.2, 25, 61.5, 260, 300, 710, 916, 1010, 1220)
+failures <- rep(1, length(times))
+rga_fit  <- rga(times, failures)
 plot(rga_fit)
 ```
 
@@ -349,11 +350,13 @@ In a `.qmd` file, fit a Crow-AMSAA model to failure times `c(50, 100, 180, 310, 
 ```{r}
 #| eval: false
 library(ReliaGrowR)
-fit <- rga(c(50, 100, 180, 310, 450, 620), T = 800)
+times    <- c(50, 100, 180, 310, 450, 620)
+failures <- rep(1, length(times))
+fit      <- rga(times, failures)
 plot(fit)
 ```
 
-Inline sentence: "The fitted shape parameter is $\hat{\beta}$ = `` `r round(fit$beta, 3)` ``."
+Inline sentence: "The fitted shape parameter is $\hat{\beta}$ = `` `r round(fit$betas, 3)` ``."
 </details>
 :::
 
