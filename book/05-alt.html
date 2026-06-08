@@ -460,6 +460,12 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./09-mcp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">AI-Assisted Reliability Analysis with MCP</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./98-appendix.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Appendix: R Quick Reference</span></a>
   </div>
@@ -524,7 +530,7 @@ window.Quarto = {
 
 <section id="introduction" class="level2" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">5.1</span> Introduction</h2>
-<p><strong>Accelerated Life Testing (ALT)</strong> <span class="citation" data-cites="Meeker1998 Nelson1990">(<a href="#ref-Meeker1998" role="doc-biblioref">Meeker and Escobar 1998</a>; <a href="#ref-Nelson1990" role="doc-biblioref">Nelson 1990</a>)</span> subjects products to elevated stress levels — temperature, voltage, mechanical load, humidity — to induce failures more quickly than would occur under normal operating conditions. The acceleration relationship is then used to translate accelerated-test results into normal-use life predictions.</p>
+<p><strong>Accelerated Life Testing (ALT)</strong> <span class="citation" data-cites="Meeker1998 Nelson1990">(<a href="#ref-Meeker1998" role="doc-biblioref">Meeker and Escobar 1998</a>; <a href="#ref-Nelson1990" role="doc-biblioref">Nelson 1990</a>)</span> subjects products to elevated stress levels: temperature, voltage, mechanical load, humidity; to induce failures more quickly than would occur under normal operating conditions. The acceleration relationship is then used to translate accelerated-test results into normal-use life predictions.</p>
 <p>This approach is essential when products are designed for long service lives (years or decades), making it impractical to wait for failures at use conditions. ALT compresses that time by running tests at higher stress, then mathematically projecting back to the use environment.</p>
 </section>
 <section id="learning-objectives" class="level2" data-number="5.2">
@@ -564,14 +570,14 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p>An AF of 5 means the product fails five times faster under test stress — a 10,000-hour life in the field becomes a 2,000-hour test.</p>
+<p>An AF of 5 means the product fails five times faster under test stress: a 10,000-hour life in the field becomes a 2,000-hour test.</p>
 </section>
 <section id="the-arrhenius-model" class="level2" data-number="5.4">
 <h2 data-number="5.4" class="anchored" data-anchor-id="the-arrhenius-model"><span class="header-section-number">5.4</span> The Arrhenius Model</h2>
 <p>The <strong>Arrhenius Model</strong> describes the relationship between temperature and reaction rate, which maps directly to material degradation and failure:</p>
 <p><span class="math display">\[AF = \exp\left(\frac{E_a}{k}\left(\frac{1}{T_{\text{use}}} - \frac{1}{T_{\text{stress}}}\right)\right)\]</span></p>
 <p>Where: - <span class="math inline">\(E_a\)</span> = activation energy in eV (electron volts) - <span class="math inline">\(k\)</span> = Boltzmann constant (<span class="math inline">\(8.617 \times 10^{-5}\)</span> eV/K) - <span class="math inline">\(T_{\text{use}}\)</span>, <span class="math inline">\(T_{\text{stress}}\)</span> = temperatures in Kelvin</p>
-<p>Higher activation energies mean the failure mechanism is more sensitive to temperature — a small temperature increase produces a large change in failure rate.</p>
+<p>Higher activation energies mean the failure mechanism is more sensitive to temperature; a small temperature increase produces a large change in failure rate.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -625,7 +631,7 @@ window.Quarto = {
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>                   <span class="at">dist =</span> <span class="st">"lognormal"</span>, <span class="at">alt.model =</span> <span class="st">"arrhenius"</span>,</span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>                   <span class="at">method.fit =</span> <span class="st">"mle"</span>, <span class="at">view_dist_fits =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>The fitted curves shift left as temperature increases — higher temperature leads to shorter life.</p>
+<p>The fitted curves shift left as temperature increases; higher temperature leads to shorter life.</p>
 <p>Calculating the AF at 220°C vs 170°C with <span class="math inline">\(E_a = 1.0\)</span> eV:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>E_a      <span class="ot">&lt;-</span> <span class="fl">1.0</span></span>
@@ -639,7 +645,7 @@ window.Quarto = {
 <pre><code>Acceleration Factor at 220°C vs 170°C: 14.3 </code></pre>
 </div>
 </div>
-<p>As printed above, the insulation degrades approximately 14 times faster at 220°C than at 170°C — a substantial acceleration that compresses a multi-year test into a much shorter duration.</p>
+<p>As printed above, the insulation degrades approximately 14 times faster at 220°C than at 170°C, a substantial acceleration that compresses a multi-year test into a much shorter duration.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -682,7 +688,7 @@ Solution
 <h2 data-number="5.5" class="anchored" data-anchor-id="the-power-law-model"><span class="header-section-number">5.5</span> The Power Law Model</h2>
 <p>The <strong>Power Law Model</strong> describes how a product’s life is affected by non-thermal stresses (voltage, mechanical load, pressure):</p>
 <p><span class="math display">\[AF = \left(\frac{S_{\text{stress}}}{S_{\text{use}}}\right)^{n}\]</span></p>
-<p>Where <span class="math inline">\(n\)</span> is the <strong>stress exponent</strong> — the sensitivity of the failure mechanism to the applied stress. Typical values range from 1–3 for low-sensitivity mechanisms to 4–8 for voltage-driven dielectric breakdown. <span class="math inline">\(n\)</span> is estimated from the ALT data by fitting the model at multiple stress levels.</p>
+<p>Where <span class="math inline">\(n\)</span> is the <strong>stress exponent</strong>, the sensitivity of the failure mechanism to the applied stress. Typical values range from 1–3 for low-sensitivity mechanisms to 4–8 for voltage-driven dielectric breakdown. <span class="math inline">\(n\)</span> is estimated from the ALT data by fitting the model at multiple stress levels.</p>
 <section id="weibullr.alt-power-law-example" class="level3">
 <h3 class="anchored" data-anchor-id="weibullr.alt-power-law-example">WeibullR.ALT: Power Law Example</h3>
 <p>Data: electrical insulating fluids tested at 7 voltage levels (26–38 kV).</p>
@@ -707,7 +713,7 @@ Solution
 </div>
 </div>
 </div>
-<p>Curves shift left as voltage increases — higher voltage stress leads to shorter life.</p>
+<p>Curves shift left as voltage increases; higher voltage stress leads to shorter life.</p>
 </section>
 </section>
 <section id="multiple-stress-factors" class="level2" data-number="5.6">
@@ -770,7 +776,7 @@ Solution
 </div>
 </div>
 </div>
-<p>Both relationship plots confirm a negative slope — higher stress leads to shorter life in both datasets.</p>
+<p>Both relationship plots confirm a negative slope; higher stress leads to shorter life in both datasets.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -786,7 +792,7 @@ Solution
 <summary>
 Answer
 </summary>
-Higher stress leads to <strong>shorter life</strong>. This is the typical finding in ALT — stress accelerates the failure mechanism.
+Higher stress leads to <strong>shorter life</strong>. This is the typical finding in ALT; stress accelerates the failure mechanism.
 </details>
 </div>
 </div>
@@ -803,12 +809,12 @@ Higher stress leads to <strong>shorter life</strong>. This is the typical findin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>ALT is a powerful tool, but it rests on a critical assumption: <strong>the same failure mechanism operates at elevated stress as at use conditions</strong>. If high stress activates a different failure mode — one that would not appear during normal operation — the accelerated results will not transfer to real-world life predictions.</p>
+<p>ALT is a powerful tool, but it rests on a critical assumption: <strong>the same failure mechanism operates at elevated stress as at use conditions</strong>. If high stress activates a different failure mode, one that would not appear during normal operation, the accelerated results will not transfer to real-world life predictions.</p>
 <p>Common pitfalls:</p>
 <ul>
-<li><strong>New failure modes at high stress</strong> — e.g., thermal cracking from extreme temperature that would never occur at use temperature.</li>
-<li><strong>Mechanism change</strong> — e.g., ductile failure at low stress transitions to brittle fracture at high stress; the Weibull shape and the AF model no longer apply.</li>
-<li><strong>Unknown activation energy or stress exponent</strong> — small errors in <span class="math inline">\(E_a\)</span> or <span class="math inline">\(n\)</span> produce large errors in predicted AF; always perform a sensitivity analysis.</li>
+<li><strong>New failure modes at high stress</strong>, e.g., thermal cracking from extreme temperature that would never occur at use temperature.</li>
+<li><strong>Mechanism change</strong>, e.g., ductile failure at low stress transitions to brittle fracture at high stress; the Weibull shape and the AF model no longer apply.</li>
+<li><strong>Unknown activation energy or stress exponent</strong>: small errors in <span class="math inline">\(E_a\)</span> or <span class="math inline">\(n\)</span> produce large errors in predicted AF; always perform a sensitivity analysis.</li>
 </ul>
 <p>When in doubt: run tests at the <em>lowest</em> stress level possible that still produces observable failures in a reasonable time, and verify that failures look the same as field failures.</p>
 </div>
@@ -1323,7 +1329,7 @@ Silkworth, David. 2022. <em>WeibullR.ALT: Accelerated Life Testing Using ’Weib
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">## Introduction</span></span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>**Accelerated Life Testing (ALT)** <span class="co">[</span><span class="ot">@Meeker1998; @Nelson1990</span><span class="co">]</span> subjects products to elevated stress levels — temperature, voltage, mechanical load, humidity — to induce failures more quickly than would occur under normal operating conditions. The acceleration relationship is then used to translate accelerated-test results into normal-use life predictions.</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>**Accelerated Life Testing (ALT)** <span class="co">[</span><span class="ot">@Meeker1998; @Nelson1990</span><span class="co">]</span> subjects products to elevated stress levels: temperature, voltage, mechanical load, humidity; to induce failures more quickly than would occur under normal operating conditions. The acceleration relationship is then used to translate accelerated-test results into normal-use life predictions.</span>
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>This approach is essential when products are designed for long service lives (years or decades), making it impractical to wait for failures at use conditions. ALT compresses that time by running tests at higher stress, then mathematically projecting back to the use environment.</span>
 <span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
@@ -1362,7 +1368,7 @@ Silkworth, David. 2022. <em>WeibullR.ALT: Accelerated Life Testing Using ’Weib
 <span id="cb14-45"><a href="#cb14-45" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> life_normal <span class="sc">/</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">10</span>), <span class="at">col =</span> <span class="st">"gray70"</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
 <span id="cb14-46"><a href="#cb14-46" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb14-47"><a href="#cb14-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-48"><a href="#cb14-48" aria-hidden="true" tabindex="-1"></a>An AF of 5 means the product fails five times faster under test stress — a 10,000-hour life in the field becomes a 2,000-hour test.</span>
+<span id="cb14-48"><a href="#cb14-48" aria-hidden="true" tabindex="-1"></a>An AF of 5 means the product fails five times faster under test stress: a 10,000-hour life in the field becomes a 2,000-hour test.</span>
 <span id="cb14-49"><a href="#cb14-49" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-50"><a href="#cb14-50" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Arrhenius Model</span></span>
 <span id="cb14-51"><a href="#cb14-51" aria-hidden="true" tabindex="-1"></a></span>
@@ -1375,7 +1381,7 @@ Silkworth, David. 2022. <em>WeibullR.ALT: Accelerated Life Testing Using ’Weib
 <span id="cb14-58"><a href="#cb14-58" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$k$ = Boltzmann constant ($8.617 \times 10^{-5}$ eV/K)</span>
 <span id="cb14-59"><a href="#cb14-59" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$T_{\text{use}}$, $T_{\text{stress}}$ = temperatures in Kelvin</span>
 <span id="cb14-60"><a href="#cb14-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-61"><a href="#cb14-61" aria-hidden="true" tabindex="-1"></a>Higher activation energies mean the failure mechanism is more sensitive to temperature — a small temperature increase produces a large change in failure rate.</span>
+<span id="cb14-61"><a href="#cb14-61" aria-hidden="true" tabindex="-1"></a>Higher activation energies mean the failure mechanism is more sensitive to temperature; a small temperature increase produces a large change in failure rate.</span>
 <span id="cb14-62"><a href="#cb14-62" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-63"><a href="#cb14-63" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
 <span id="cb14-64"><a href="#cb14-64" aria-hidden="true" tabindex="-1"></a><span class="fu">## Choosing Activation Energy</span></span>
@@ -1407,7 +1413,7 @@ Silkworth, David. 2022. <em>WeibullR.ALT: Accelerated Life Testing Using ’Weib
 <span id="cb14-92"><a href="#cb14-92" aria-hidden="true" tabindex="-1"></a>                   <span class="at">method.fit =</span> <span class="st">"mle"</span>, <span class="at">view_dist_fits =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb14-93"><a href="#cb14-93" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb14-94"><a href="#cb14-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-95"><a href="#cb14-95" aria-hidden="true" tabindex="-1"></a>The fitted curves shift left as temperature increases — higher temperature leads to shorter life.</span>
+<span id="cb14-95"><a href="#cb14-95" aria-hidden="true" tabindex="-1"></a>The fitted curves shift left as temperature increases; higher temperature leads to shorter life.</span>
 <span id="cb14-96"><a href="#cb14-96" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-97"><a href="#cb14-97" aria-hidden="true" tabindex="-1"></a>Calculating the AF at 220°C vs 170°C with $E_a = 1.0$ eV:</span>
 <span id="cb14-98"><a href="#cb14-98" aria-hidden="true" tabindex="-1"></a></span>
@@ -1421,7 +1427,7 @@ Silkworth, David. 2022. <em>WeibullR.ALT: Accelerated Life Testing Using ’Weib
 <span id="cb14-108"><a href="#cb14-108" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Acceleration Factor at 220°C vs 170°C:"</span>, <span class="fu">round</span>(AF, <span class="dv">1</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
 <span id="cb14-109"><a href="#cb14-109" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb14-110"><a href="#cb14-110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-111"><a href="#cb14-111" aria-hidden="true" tabindex="-1"></a>As printed above, the insulation degrades approximately 14 times faster at 220°C than at 170°C — a substantial acceleration that compresses a multi-year test into a much shorter duration.</span>
+<span id="cb14-111"><a href="#cb14-111" aria-hidden="true" tabindex="-1"></a>As printed above, the insulation degrades approximately 14 times faster at 220°C than at 170°C, a substantial acceleration that compresses a multi-year test into a much shorter duration.</span>
 <span id="cb14-112"><a href="#cb14-112" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-113"><a href="#cb14-113" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
 <span id="cb14-114"><a href="#cb14-114" aria-hidden="true" tabindex="-1"></a><span class="fu">## Try It</span></span>
@@ -1454,7 +1460,7 @@ Silkworth, David. 2022. <em>WeibullR.ALT: Accelerated Life Testing Using ’Weib
 <span id="cb14-145"><a href="#cb14-145" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-146"><a href="#cb14-146" aria-hidden="true" tabindex="-1"></a>$$AF = \left(\frac{S_{\text{stress}}}{S_{\text{use}}}\right)^{n}$$</span>
 <span id="cb14-147"><a href="#cb14-147" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-148"><a href="#cb14-148" aria-hidden="true" tabindex="-1"></a>Where $n$ is the **stress exponent** — the sensitivity of the failure mechanism to the applied stress. Typical values range from 1–3 for low-sensitivity mechanisms to 4–8 for voltage-driven dielectric breakdown. $n$ is estimated from the ALT data by fitting the model at multiple stress levels.</span>
+<span id="cb14-148"><a href="#cb14-148" aria-hidden="true" tabindex="-1"></a>Where $n$ is the **stress exponent**, the sensitivity of the failure mechanism to the applied stress. Typical values range from 1–3 for low-sensitivity mechanisms to 4–8 for voltage-driven dielectric breakdown. $n$ is estimated from the ALT data by fitting the model at multiple stress levels.</span>
 <span id="cb14-149"><a href="#cb14-149" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-150"><a href="#cb14-150" aria-hidden="true" tabindex="-1"></a><span class="fu">### WeibullR.ALT: Power Law Example</span></span>
 <span id="cb14-151"><a href="#cb14-151" aria-hidden="true" tabindex="-1"></a></span>
@@ -1475,7 +1481,7 @@ Silkworth, David. 2022. <em>WeibullR.ALT: Accelerated Life Testing Using ’Weib
 <span id="cb14-168"><a href="#cb14-168" aria-hidden="true" tabindex="-1"></a>                   <span class="at">dist =</span> <span class="st">"weibull"</span>, <span class="at">alt.model =</span> <span class="st">"power"</span>)</span>
 <span id="cb14-169"><a href="#cb14-169" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb14-170"><a href="#cb14-170" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-171"><a href="#cb14-171" aria-hidden="true" tabindex="-1"></a>Curves shift left as voltage increases — higher voltage stress leads to shorter life.</span>
+<span id="cb14-171"><a href="#cb14-171" aria-hidden="true" tabindex="-1"></a>Curves shift left as voltage increases; higher voltage stress leads to shorter life.</span>
 <span id="cb14-172"><a href="#cb14-172" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-173"><a href="#cb14-173" aria-hidden="true" tabindex="-1"></a><span class="fu">## Multiple Stress Factors</span></span>
 <span id="cb14-174"><a href="#cb14-174" aria-hidden="true" tabindex="-1"></a></span>
@@ -1516,7 +1522,7 @@ Silkworth, David. 2022. <em>WeibullR.ALT: Accelerated Life Testing Using ’Weib
 <span id="cb14-215"><a href="#cb14-215" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lnrobj2, <span class="at">suppress.dev.new =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb14-216"><a href="#cb14-216" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb14-217"><a href="#cb14-217" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-218"><a href="#cb14-218" aria-hidden="true" tabindex="-1"></a>Both relationship plots confirm a negative slope — higher stress leads to shorter life in both datasets.</span>
+<span id="cb14-218"><a href="#cb14-218" aria-hidden="true" tabindex="-1"></a>Both relationship plots confirm a negative slope; higher stress leads to shorter life in both datasets.</span>
 <span id="cb14-219"><a href="#cb14-219" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-220"><a href="#cb14-220" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
 <span id="cb14-221"><a href="#cb14-221" aria-hidden="true" tabindex="-1"></a><span class="fu">## Review</span></span>
@@ -1524,7 +1530,7 @@ Silkworth, David. 2022. <em>WeibullR.ALT: Accelerated Life Testing Using ’Weib
 <span id="cb14-223"><a href="#cb14-223" aria-hidden="true" tabindex="-1"></a>What does a negative slope in a relationship plot indicate?</span>
 <span id="cb14-224"><a href="#cb14-224" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-225"><a href="#cb14-225" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Answer<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
-<span id="cb14-226"><a href="#cb14-226" aria-hidden="true" tabindex="-1"></a>Higher stress leads to **shorter life**. This is the typical finding in ALT — stress accelerates the failure mechanism.</span>
+<span id="cb14-226"><a href="#cb14-226" aria-hidden="true" tabindex="-1"></a>Higher stress leads to **shorter life**. This is the typical finding in ALT; stress accelerates the failure mechanism.</span>
 <span id="cb14-227"><a href="#cb14-227" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
 <span id="cb14-228"><a href="#cb14-228" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb14-229"><a href="#cb14-229" aria-hidden="true" tabindex="-1"></a></span>
@@ -1533,13 +1539,13 @@ Silkworth, David. 2022. <em>WeibullR.ALT: Accelerated Life Testing Using ’Weib
 <span id="cb14-232"><a href="#cb14-232" aria-hidden="true" tabindex="-1"></a>::: {.callout-important}</span>
 <span id="cb14-233"><a href="#cb14-233" aria-hidden="true" tabindex="-1"></a><span class="fu">## When ALT Predictions May Be Invalid</span></span>
 <span id="cb14-234"><a href="#cb14-234" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-235"><a href="#cb14-235" aria-hidden="true" tabindex="-1"></a>ALT is a powerful tool, but it rests on a critical assumption: **the same failure mechanism operates at elevated stress as at use conditions**. If high stress activates a different failure mode — one that would not appear during normal operation — the accelerated results will not transfer to real-world life predictions.</span>
+<span id="cb14-235"><a href="#cb14-235" aria-hidden="true" tabindex="-1"></a>ALT is a powerful tool, but it rests on a critical assumption: **the same failure mechanism operates at elevated stress as at use conditions**. If high stress activates a different failure mode, one that would not appear during normal operation, the accelerated results will not transfer to real-world life predictions.</span>
 <span id="cb14-236"><a href="#cb14-236" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-237"><a href="#cb14-237" aria-hidden="true" tabindex="-1"></a>Common pitfalls:</span>
 <span id="cb14-238"><a href="#cb14-238" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-239"><a href="#cb14-239" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**New failure modes at high stress** — e.g., thermal cracking from extreme temperature that would never occur at use temperature.</span>
-<span id="cb14-240"><a href="#cb14-240" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Mechanism change** — e.g., ductile failure at low stress transitions to brittle fracture at high stress; the Weibull shape and the AF model no longer apply.</span>
-<span id="cb14-241"><a href="#cb14-241" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Unknown activation energy or stress exponent** — small errors in $E_a$ or $n$ produce large errors in predicted AF; always perform a sensitivity analysis.</span>
+<span id="cb14-239"><a href="#cb14-239" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**New failure modes at high stress**, e.g., thermal cracking from extreme temperature that would never occur at use temperature.</span>
+<span id="cb14-240"><a href="#cb14-240" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Mechanism change**, e.g., ductile failure at low stress transitions to brittle fracture at high stress; the Weibull shape and the AF model no longer apply.</span>
+<span id="cb14-241"><a href="#cb14-241" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Unknown activation energy or stress exponent**: small errors in $E_a$ or $n$ produce large errors in predicted AF; always perform a sensitivity analysis.</span>
 <span id="cb14-242"><a href="#cb14-242" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-243"><a href="#cb14-243" aria-hidden="true" tabindex="-1"></a>When in doubt: run tests at the *lowest* stress level possible that still produces observable failures in a reasonable time, and verify that failures look the same as field failures.</span>
 <span id="cb14-244"><a href="#cb14-244" aria-hidden="true" tabindex="-1"></a>:::</span>

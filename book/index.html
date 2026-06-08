@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Paul Govan">
-<meta name="dcterms.date" content="2026-05-29">
+<meta name="dcterms.date" content="2026-06-08">
 <meta name="description" content="A companion reference guide to the ReliaLearnR interactive tutorials, covering RAM analysis, life data analysis, reliability testing, repairable systems, and reliability block diagrams, with additional chapters on interactive visualization with ReliaPlotR and web-based analysis with ReliaShiny.">
 
 <title>Reliability Analysis with R: A Companion Guide</title>
@@ -413,6 +413,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./09-mcp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">AI-Assisted Reliability Analysis with MCP</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./98-appendix.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Appendix: R Quick Reference</span></a>
   </div>
@@ -472,7 +478,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">May 29, 2026</p>
+      <p class="date">June 8, 2026</p>
     </div>
   </div>
   
@@ -487,7 +493,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="preface" class="level1 unnumbered">
 <h1 class="unnumbered">Preface</h1><p><img src="cover.png" title="Reliability Analysis with R: A Companion Guide" class="quarto-cover-image nolightbox img-fluid"></p>
-<p>This book is a companion reference guide to the <strong>ReliaLearnR</strong> interactive learning modules. Where the tutorials offer hands-on practice with immediate feedback and interactive widgets, this book provides readable, searchable, printable chapters that cover the same material in a narrative format — plus two additional chapters on the wider ReliaLearnR ecosystem.</p>
+<p>This book is a companion reference guide to the <strong>ReliaLearnR</strong> interactive learning modules. Where the tutorials offer hands-on practice with immediate feedback and interactive widgets, this book provides readable, searchable, printable chapters that cover the same material in a narrative format, plus two additional chapters on the wider ReliaLearnR ecosystem.</p>
 <section id="how-to-use-this-book-and-the-tutorials-together" class="level2">
 <h2 class="anchored" data-anchor-id="how-to-use-this-book-and-the-tutorials-together">How to Use This Book and the Tutorials Together</h2>
 <p>The interactive tutorials and this book cover the same core content but serve different purposes:</p>
@@ -590,14 +596,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="chapter-overview" class="level2">
 <h2 class="anchored" data-anchor-id="chapter-overview">Chapter Overview</h2>
 <ol type="1">
-<li><strong>RAM</strong> — Foundational reliability, availability, and maintainability metrics.</li>
-<li><strong>Reliability Block Diagrams</strong> — Series, parallel, mixed, k-out-of-n systems, and fault tree analysis.</li>
-<li><strong>Life Data Analysis</strong> — Weibull distribution, censoring, MRR vs.&nbsp;MLE, and contour plots.</li>
-<li><strong>Reliability Growth Analysis</strong> — Duane and Crow-AMSAA growth models, test planning, and forecasting.</li>
-<li><strong>Accelerated Life Testing</strong> — Arrhenius and Power Law acceleration models for compressed test time.</li>
-<li><strong>Repairable Systems</strong> — Power Law Process, MCF, and fleet-level analysis.</li>
-<li><strong>Interactive Plots with ReliaPlotR</strong> — Publishable interactive reliability charts.</li>
-<li><strong>Web-Based Analysis with ReliaShiny</strong> — Point-and-click reliability analysis.</li>
+<li><strong>RAM</strong>: Foundational reliability, availability, and maintainability metrics.</li>
+<li><strong>Reliability Block Diagrams</strong>: Series, parallel, mixed, k-out-of-n systems, and fault tree analysis.</li>
+<li><strong>Life Data Analysis</strong>: Weibull distribution, censoring, MRR vs.&nbsp;MLE, and contour plots.</li>
+<li><strong>Reliability Growth Analysis</strong>: Duane and Crow-AMSAA growth models, test planning, and forecasting.</li>
+<li><strong>Accelerated Life Testing</strong>: Arrhenius and Power Law acceleration models for compressed test time.</li>
+<li><strong>Repairable Systems</strong>: Power Law Process, MCF, and fleet-level analysis.</li>
+<li><strong>Interactive Plots with ReliaPlotR</strong>: Publishable interactive reliability charts.</li>
+<li><strong>Web-Based Analysis with ReliaShiny</strong>: Point-and-click reliability analysis.</li>
 </ol>
 <p>The book also includes an <strong>Appendix</strong> (helper function reference) and a <strong>Glossary</strong> (key symbols and formulas).</p>
 </section>
@@ -1087,7 +1093,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Preface {.unnumbered}</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>This book is a companion reference guide to the **ReliaLearnR** interactive learning modules. Where the tutorials offer hands-on practice with immediate feedback and interactive widgets, this book provides readable, searchable, printable chapters that cover the same material in a narrative format — plus two additional chapters on the wider ReliaLearnR ecosystem.</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>This book is a companion reference guide to the **ReliaLearnR** interactive learning modules. Where the tutorials offer hands-on practice with immediate feedback and interactive widgets, this book provides readable, searchable, printable chapters that cover the same material in a narrative format, plus two additional chapters on the wider ReliaLearnR ecosystem.</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">## How to Use This Book and the Tutorials Together</span></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
@@ -1136,14 +1142,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a><span class="fu">## Chapter Overview</span></span>
 <span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**RAM** — Foundational reliability, availability, and maintainability metrics.</span>
-<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Reliability Block Diagrams** — Series, parallel, mixed, k-out-of-n systems, and fault tree analysis.</span>
-<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Life Data Analysis** — Weibull distribution, censoring, MRR vs. MLE, and contour plots.</span>
-<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Reliability Growth Analysis** — Duane and Crow-AMSAA growth models, test planning, and forecasting.</span>
-<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>**Accelerated Life Testing** — Arrhenius and Power Law acceleration models for compressed test time.</span>
-<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>**Repairable Systems** — Power Law Process, MCF, and fleet-level analysis.</span>
-<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a><span class="ss">7. </span>**Interactive Plots with ReliaPlotR** — Publishable interactive reliability charts.</span>
-<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a><span class="ss">8. </span>**Web-Based Analysis with ReliaShiny** — Point-and-click reliability analysis.</span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**RAM**: Foundational reliability, availability, and maintainability metrics.</span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Reliability Block Diagrams**: Series, parallel, mixed, k-out-of-n systems, and fault tree analysis.</span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Life Data Analysis**: Weibull distribution, censoring, MRR vs. MLE, and contour plots.</span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Reliability Growth Analysis**: Duane and Crow-AMSAA growth models, test planning, and forecasting.</span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>**Accelerated Life Testing**: Arrhenius and Power Law acceleration models for compressed test time.</span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>**Repairable Systems**: Power Law Process, MCF, and fleet-level analysis.</span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a><span class="ss">7. </span>**Interactive Plots with ReliaPlotR**: Publishable interactive reliability charts.</span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a><span class="ss">8. </span>**Web-Based Analysis with ReliaShiny**: Point-and-click reliability analysis.</span>
 <span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>The book also includes an **Appendix** (helper function reference) and a **Glossary** (key symbols and formulas).</span>
 <span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a></span>

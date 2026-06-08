@@ -460,6 +460,12 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./09-mcp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">AI-Assisted Reliability Analysis with MCP</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./98-appendix.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Appendix: R Quick Reference</span></a>
   </div>
@@ -591,7 +597,7 @@ Reliability = <span class="math inline">\((1 - 5/(3 \times 365)) \times 100 = 99
 </section>
 <section id="availability" class="level2" data-number="1.5">
 <h2 data-number="1.5" class="anchored" data-anchor-id="availability"><span class="header-section-number">1.5</span> Availability</h2>
-<p>Availability accounts for both failed time <strong>and</strong> scheduled maintenance — any time the item is unavailable for service:</p>
+<p>Availability accounts for both failed time <strong>and</strong> scheduled maintenance: any time the item is unavailable for service:</p>
 <p><span class="math display">\[\text{Availability} = \left(1 - \frac{\text{Unavailable Time}}{\text{Total Time}}\right) \times 100\]</span></p>
 <p><strong>Example</strong>: A motor ran for 5 years, was failed for 10 days, and had 15 days of scheduled maintenance.</p>
 <p><span class="math display">\[\text{Availability} = \left(1 - \frac{10 + 15}{5 \times 365}\right) \times 100 = 93.2\%\]</span></p>
@@ -625,7 +631,7 @@ Availability includes scheduled maintenance downtime; reliability does not. Avai
 </section>
 <section id="mean-time-to-repair-mttr" class="level2" data-number="1.6">
 <h2 data-number="1.6" class="anchored" data-anchor-id="mean-time-to-repair-mttr"><span class="header-section-number">1.6</span> Mean Time to Repair (MTTR)</h2>
-<p><strong>MTTR</strong> measures maintainability — the average time required to repair a failed item:</p>
+<p><strong>MTTR</strong> measures maintainability: the average time required to repair a failed item:</p>
 <p><span class="math display">\[\text{MTTR} = \frac{\sum_{i=1}^{n} \text{RepairTime}_i}{\text{RepairCount}}\]</span></p>
 <p><strong>Example</strong>: 5 failures with repair times of 5, 10, 15, 8, and 12 days.</p>
 <p><span class="math display">\[\text{MTTR} = \frac{5 + 10 + 15 + 8 + 12}{5} = 10 \text{ days}\]</span></p>
@@ -889,7 +895,7 @@ Failure rate is the <strong>inverse</strong> of MTBF: <span class="math inline">
 <tr class="even">
 <td style="text-align: center;"><span class="math inline">\(= 1\)</span></td>
 <td>Constant</td>
-<td>Random failures — exponential applies</td>
+<td>Random failures, exponential applies</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;"><span class="math inline">\(&gt; 1\)</span></td>
@@ -902,9 +908,9 @@ Failure rate is the <strong>inverse</strong> of MTBF: <span class="math inline">
 </section>
 <section id="the-bathtub-curve" class="level2" data-number="1.13">
 <h2 data-number="1.13" class="anchored" data-anchor-id="the-bathtub-curve"><span class="header-section-number">1.13</span> The Bathtub Curve</h2>
-<p>The failure rate of a population of items over its lifetime traces a characteristic shape known as the <strong>bathtub curve</strong> — named for its distinctive U-profile. Rather than drawing it as a stylized cartoon, we can build it analytically by compositing the three Weibull failure modes:</p>
+<p>The failure rate of a population of items over its lifetime traces a characteristic shape known as the <strong>bathtub curve</strong>, named for its distinctive U-profile. Rather than drawing it as a stylized cartoon, we can build it analytically by compositing the three Weibull failure modes:</p>
 <p><span class="math display">\[h(t) = \underbrace{h_{\text{infant}}(t)}_{\beta &lt; 1} \;+\; \underbrace{h_{\text{random}}(t)}_{\beta = 1} \;+\; \underbrace{h_{\text{wear-out}}(t)}_{\beta &gt; 1}\]</span></p>
-<p>where the Weibull hazard rate is <span class="math inline">\(h(t) = (\beta/\eta)(t/\eta)^{\beta-1}\)</span>. Each term represents a physically distinct failure mechanism — the bathtub shape is not assumed; it <em>emerges</em> from their sum.</p>
+<p>where the Weibull hazard rate is <span class="math inline">\(h(t) = (\beta/\eta)(t/\eta)^{\beta-1}\)</span>. Each term represents a physically distinct failure mechanism; the bathtub shape is not assumed, it <em>emerges</em> from their sum.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.01</span>, <span class="dv">15</span>, <span class="at">by =</span> <span class="fl">0.01</span>)</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -941,7 +947,7 @@ Failure rate is the <strong>inverse</strong> of MTBF: <span class="math inline">
 </div>
 <p>Each region maps to a distinct engineering strategy:</p>
 <ul>
-<li><strong>Infant mortality</strong> (<span class="math inline">\(\beta &lt; 1\)</span>): manufacturing defects, assembly errors, material flaws. Mitigated by <em>burn-in testing</em> — running units briefly before shipment to screen out defective items.</li>
+<li><strong>Infant mortality</strong> (<span class="math inline">\(\beta &lt; 1\)</span>): manufacturing defects, assembly errors, material flaws. Mitigated by <em>burn-in testing</em>, running units briefly before shipment to screen out defective items.</li>
 <li><strong>Useful life</strong> (<span class="math inline">\(\beta \approx 1\)</span>): random external shocks, load spikes, operator error. The constant failure rate means failures are unrelated to age; mitigated by <em>redundancy</em>.</li>
 <li><strong>Wear-out</strong> (<span class="math inline">\(\beta &gt; 1\)</span>): fatigue, corrosion, material aging. Mitigated by <em>preventive replacement</em> scheduled before the B₅ or B₁₀ life is reached.</li>
 </ul>
@@ -960,7 +966,7 @@ Failure rate is the <strong>inverse</strong> of MTBF: <span class="math inline">
 <summary>
 Answer
 </summary>
-<span class="math inline">\(\beta &gt; 1\)</span> places it in the <strong>wear-out</strong> region. The failure rate is increasing with age, so a time-based <strong>preventive replacement</strong> strategy — replacing the pump before it reaches its B₅ or B₁₀ life — is most appropriate.
+<span class="math inline">\(\beta &gt; 1\)</span> places it in the <strong>wear-out</strong> region. The failure rate is increasing with age, so a time-based <strong>preventive replacement</strong> strategy, replacing the pump before it reaches its B₅ or B₁₀ life, is most appropriate.
 </details>
 </div>
 </div>
@@ -1000,7 +1006,7 @@ Answer
 </section>
 <section id="parallel-systems" class="level3">
 <h3 class="anchored" data-anchor-id="parallel-systems">Parallel Systems</h3>
-<p>In a <strong>parallel</strong> configuration, only one component needs to function — redundancy. The system fails only when <em>all</em> components fail:</p>
+<p>In a <strong>parallel</strong> configuration, only one component needs to function, providing redundancy. The system fails only when <em>all</em> components fail:</p>
 <p><span class="math display">\[R_{\text{sys}} = 1 - (1 - R_1)(1 - R_2) \cdots (1 - R_n)\]</span></p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>R_parallel <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fu">prod</span>(<span class="dv">1</span> <span class="sc">-</span> R_components)</span>
@@ -1093,11 +1099,11 @@ Answer
 <h2 data-number="1.15" class="anchored" data-anchor-id="summary"><span class="header-section-number">1.15</span> Summary</h2>
 <p><strong>Key takeaways:</strong></p>
 <ul>
-<li><span class="math inline">\(R(t) = e^{-\lambda t}\)</span> — exponential reliability under a constant failure rate.</li>
+<li><span class="math inline">\(R(t) = e^{-\lambda t}\)</span>, exponential reliability under a constant failure rate.</li>
 <li>At <span class="math inline">\(t = \text{MTBF} = 1/\lambda\)</span>, reliability is always 36.8%.</li>
 <li>MTTF is for non-repairable items; MTBF is for repairable systems.</li>
-<li>Series systems: <span class="math inline">\(R_{\text{sys}} = \prod R_i\)</span> — reliability decreases with more components.</li>
-<li>Parallel systems: <span class="math inline">\(R_{\text{sys}} = 1 - \prod(1 - R_i)\)</span> — redundancy increases reliability.</li>
+<li>Series systems: <span class="math inline">\(R_{\text{sys}} = \prod R_i\)</span>, reliability decreases with more components.</li>
+<li>Parallel systems: <span class="math inline">\(R_{\text{sys}} = 1 - \prod(1 - R_i)\)</span>, redundancy increases reliability.</li>
 <li>When <span class="math inline">\(\beta \neq 1\)</span>, use the Weibull distribution (see <a href="03-lda.html" class="quarto-xref"><span>Chapter 3</span></a>).</li>
 </ul>
 
@@ -1653,7 +1659,7 @@ Silkworth, David, and Jurgen Symynck. 2022. <em>WeibullR: Weibull Analysis for R
 <span id="cb37-62"><a href="#cb37-62" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-63"><a href="#cb37-63" aria-hidden="true" tabindex="-1"></a><span class="fu">## Availability</span></span>
 <span id="cb37-64"><a href="#cb37-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-65"><a href="#cb37-65" aria-hidden="true" tabindex="-1"></a>Availability accounts for both failed time **and** scheduled maintenance — any time the item is unavailable for service:</span>
+<span id="cb37-65"><a href="#cb37-65" aria-hidden="true" tabindex="-1"></a>Availability accounts for both failed time **and** scheduled maintenance: any time the item is unavailable for service:</span>
 <span id="cb37-66"><a href="#cb37-66" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-67"><a href="#cb37-67" aria-hidden="true" tabindex="-1"></a>$$\text{Availability} = \left(1 - \frac{\text{Unavailable Time}}{\text{Total Time}}\right) \times 100$$</span>
 <span id="cb37-68"><a href="#cb37-68" aria-hidden="true" tabindex="-1"></a></span>
@@ -1680,7 +1686,7 @@ Silkworth, David, and Jurgen Symynck. 2022. <em>WeibullR: Weibull Analysis for R
 <span id="cb37-91"><a href="#cb37-91" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-92"><a href="#cb37-92" aria-hidden="true" tabindex="-1"></a><span class="fu">## Mean Time to Repair (MTTR)</span></span>
 <span id="cb37-93"><a href="#cb37-93" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-94"><a href="#cb37-94" aria-hidden="true" tabindex="-1"></a>**MTTR** measures maintainability — the average time required to repair a failed item:</span>
+<span id="cb37-94"><a href="#cb37-94" aria-hidden="true" tabindex="-1"></a>**MTTR** measures maintainability: the average time required to repair a failed item:</span>
 <span id="cb37-95"><a href="#cb37-95" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-96"><a href="#cb37-96" aria-hidden="true" tabindex="-1"></a>$$\text{MTTR} = \frac{\sum_{i=1}^{n} \text{RepairTime}_i}{\text{RepairCount}}$$</span>
 <span id="cb37-97"><a href="#cb37-97" aria-hidden="true" tabindex="-1"></a></span>
@@ -1890,18 +1896,18 @@ Silkworth, David, and Jurgen Symynck. 2022. <em>WeibullR: Weibull Analysis for R
 <span id="cb37-325"><a href="#cb37-325" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> $\beta$ <span class="pp">|</span> Failure rate <span class="pp">|</span> Typical cause <span class="pp">|</span></span>
 <span id="cb37-326"><a href="#cb37-326" aria-hidden="true" tabindex="-1"></a><span class="pp">|:---:|---|---|</span></span>
 <span id="cb37-327"><a href="#cb37-327" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> $&lt; 1$ <span class="pp">|</span> Decreasing <span class="pp">|</span> Infant mortality <span class="pp">|</span></span>
-<span id="cb37-328"><a href="#cb37-328" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> $= 1$ <span class="pp">|</span> Constant <span class="pp">|</span> Random failures — exponential applies <span class="pp">|</span></span>
+<span id="cb37-328"><a href="#cb37-328" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> $= 1$ <span class="pp">|</span> Constant <span class="pp">|</span> Random failures, exponential applies <span class="pp">|</span></span>
 <span id="cb37-329"><a href="#cb37-329" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> $&gt; 1$ <span class="pp">|</span> Increasing <span class="pp">|</span> Wear-out (fatigue, corrosion, aging) <span class="pp">|</span></span>
 <span id="cb37-330"><a href="#cb37-330" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-331"><a href="#cb37-331" aria-hidden="true" tabindex="-1"></a>When $\beta = 1$, the Weibull reduces to the exponential with $\lambda = 1/\eta$.</span>
 <span id="cb37-332"><a href="#cb37-332" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-333"><a href="#cb37-333" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Bathtub Curve</span></span>
 <span id="cb37-334"><a href="#cb37-334" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-335"><a href="#cb37-335" aria-hidden="true" tabindex="-1"></a>The failure rate of a population of items over its lifetime traces a characteristic shape known as the **bathtub curve** — named for its distinctive U-profile. Rather than drawing it as a stylized cartoon, we can build it analytically by compositing the three Weibull failure modes:</span>
+<span id="cb37-335"><a href="#cb37-335" aria-hidden="true" tabindex="-1"></a>The failure rate of a population of items over its lifetime traces a characteristic shape known as the **bathtub curve**, named for its distinctive U-profile. Rather than drawing it as a stylized cartoon, we can build it analytically by compositing the three Weibull failure modes:</span>
 <span id="cb37-336"><a href="#cb37-336" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-337"><a href="#cb37-337" aria-hidden="true" tabindex="-1"></a>$$h(t) = \underbrace{h_{\text{infant}}(t)}_{\beta &lt; 1} \;+\; \underbrace{h_{\text{random}}(t)}_{\beta = 1} \;+\; \underbrace{h_{\text{wear-out}}(t)}_{\beta &gt; 1}$$</span>
 <span id="cb37-338"><a href="#cb37-338" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-339"><a href="#cb37-339" aria-hidden="true" tabindex="-1"></a>where the Weibull hazard rate is $h(t) = (\beta/\eta)(t/\eta)^{\beta-1}$. Each term represents a physically distinct failure mechanism — the bathtub shape is not assumed; it *emerges* from their sum.</span>
+<span id="cb37-339"><a href="#cb37-339" aria-hidden="true" tabindex="-1"></a>where the Weibull hazard rate is $h(t) = (\beta/\eta)(t/\eta)^{\beta-1}$. Each term represents a physically distinct failure mechanism; the bathtub shape is not assumed, it *emerges* from their sum.</span>
 <span id="cb37-340"><a href="#cb37-340" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-343"><a href="#cb37-343" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb37-344"><a href="#cb37-344" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.01</span>, <span class="dv">15</span>, <span class="at">by =</span> <span class="fl">0.01</span>)</span>
@@ -1933,7 +1939,7 @@ Silkworth, David, and Jurgen Symynck. 2022. <em>WeibullR: Weibull Analysis for R
 <span id="cb37-370"><a href="#cb37-370" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-371"><a href="#cb37-371" aria-hidden="true" tabindex="-1"></a>Each region maps to a distinct engineering strategy:</span>
 <span id="cb37-372"><a href="#cb37-372" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-373"><a href="#cb37-373" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Infant mortality** ($\beta &lt; 1$): manufacturing defects, assembly errors, material flaws. Mitigated by *burn-in testing* — running units briefly before shipment to screen out defective items.</span>
+<span id="cb37-373"><a href="#cb37-373" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Infant mortality** ($\beta &lt; 1$): manufacturing defects, assembly errors, material flaws. Mitigated by *burn-in testing*, running units briefly before shipment to screen out defective items.</span>
 <span id="cb37-374"><a href="#cb37-374" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Useful life** ($\beta \approx 1$): random external shocks, load spikes, operator error. The constant failure rate means failures are unrelated to age; mitigated by *redundancy*.</span>
 <span id="cb37-375"><a href="#cb37-375" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Wear-out** ($\beta &gt; 1$): fatigue, corrosion, material aging. Mitigated by *preventive replacement* scheduled before the B₅ or B₁₀ life is reached.</span>
 <span id="cb37-376"><a href="#cb37-376" aria-hidden="true" tabindex="-1"></a></span>
@@ -1943,7 +1949,7 @@ Silkworth, David, and Jurgen Symynck. 2022. <em>WeibullR: Weibull Analysis for R
 <span id="cb37-380"><a href="#cb37-380" aria-hidden="true" tabindex="-1"></a>A pump has $\beta = 2.8$. Which region of the bathtub curve does it occupy, and what maintenance strategy is most appropriate?</span>
 <span id="cb37-381"><a href="#cb37-381" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-382"><a href="#cb37-382" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Answer<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
-<span id="cb37-383"><a href="#cb37-383" aria-hidden="true" tabindex="-1"></a>$\beta &gt; 1$ places it in the **wear-out** region. The failure rate is increasing with age, so a time-based **preventive replacement** strategy — replacing the pump before it reaches its B₅ or B₁₀ life — is most appropriate.</span>
+<span id="cb37-383"><a href="#cb37-383" aria-hidden="true" tabindex="-1"></a>$\beta &gt; 1$ places it in the **wear-out** region. The failure rate is increasing with age, so a time-based **preventive replacement** strategy, replacing the pump before it reaches its B₅ or B₁₀ life, is most appropriate.</span>
 <span id="cb37-384"><a href="#cb37-384" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
 <span id="cb37-385"><a href="#cb37-385" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb37-386"><a href="#cb37-386" aria-hidden="true" tabindex="-1"></a></span>
@@ -1980,7 +1986,7 @@ Silkworth, David, and Jurgen Symynck. 2022. <em>WeibullR: Weibull Analysis for R
 <span id="cb37-421"><a href="#cb37-421" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-422"><a href="#cb37-422" aria-hidden="true" tabindex="-1"></a><span class="fu">### Parallel Systems</span></span>
 <span id="cb37-423"><a href="#cb37-423" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-424"><a href="#cb37-424" aria-hidden="true" tabindex="-1"></a>In a **parallel** configuration, only one component needs to function — redundancy. The system fails only when *all* components fail:</span>
+<span id="cb37-424"><a href="#cb37-424" aria-hidden="true" tabindex="-1"></a>In a **parallel** configuration, only one component needs to function, providing redundancy. The system fails only when *all* components fail:</span>
 <span id="cb37-425"><a href="#cb37-425" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-426"><a href="#cb37-426" aria-hidden="true" tabindex="-1"></a>$$R_{\text{sys}} = 1 - (1 - R_1)(1 - R_2) \cdots (1 - R_n)$$</span>
 <span id="cb37-427"><a href="#cb37-427" aria-hidden="true" tabindex="-1"></a></span>
@@ -2043,11 +2049,11 @@ Silkworth, David, and Jurgen Symynck. 2022. <em>WeibullR: Weibull Analysis for R
 <span id="cb37-492"><a href="#cb37-492" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-493"><a href="#cb37-493" aria-hidden="true" tabindex="-1"></a>**Key takeaways:**</span>
 <span id="cb37-494"><a href="#cb37-494" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-495"><a href="#cb37-495" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$R(t) = e^{-\lambda t}$ — exponential reliability under a constant failure rate.</span>
+<span id="cb37-495"><a href="#cb37-495" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$R(t) = e^{-\lambda t}$, exponential reliability under a constant failure rate.</span>
 <span id="cb37-496"><a href="#cb37-496" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>At $t = \text{MTBF} = 1/\lambda$, reliability is always 36.8%.</span>
 <span id="cb37-497"><a href="#cb37-497" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>MTTF is for non-repairable items; MTBF is for repairable systems.</span>
-<span id="cb37-498"><a href="#cb37-498" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Series systems: $R_{\text{sys}} = \prod R_i$ — reliability decreases with more components.</span>
-<span id="cb37-499"><a href="#cb37-499" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Parallel systems: $R_{\text{sys}} = 1 - \prod(1 - R_i)$ — redundancy increases reliability.</span>
+<span id="cb37-498"><a href="#cb37-498" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Series systems: $R_{\text{sys}} = \prod R_i$, reliability decreases with more components.</span>
+<span id="cb37-499"><a href="#cb37-499" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Parallel systems: $R_{\text{sys}} = 1 - \prod(1 - R_i)$, redundancy increases reliability.</span>
 <span id="cb37-500"><a href="#cb37-500" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>When $\beta \neq 1$, use the Weibull distribution (see @sec-lda).</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>

@@ -460,6 +460,12 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./09-mcp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">AI-Assisted Reliability Analysis with MCP</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./98-appendix.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Appendix: R Quick Reference</span></a>
   </div>
@@ -485,7 +491,7 @@ window.Quarto = {
   <li><a href="#reliability-growth-analysis" id="toc-reliability-growth-analysis" class="nav-link" data-scroll-target="#reliability-growth-analysis"><span class="header-section-number">4.3</span> Reliability Growth Analysis</a></li>
   <li><a href="#test-planning" id="toc-test-planning" class="nav-link" data-scroll-target="#test-planning"><span class="header-section-number">4.4</span> Test Planning</a>
   <ul class="collapse">
-  <li><a href="#reliability-demonstration-tests-rdt" id="toc-reliability-demonstration-tests-rdt" class="nav-link" data-scroll-target="#reliability-demonstration-tests-rdt">Reliability Demonstration Tests — <code>rdt()</code></a></li>
+  <li><a href="#reliability-demonstration-tests-rdt" id="toc-reliability-demonstration-tests-rdt" class="nav-link" data-scroll-target="#reliability-demonstration-tests-rdt">Reliability Demonstration Tests: <code>rdt()</code></a></li>
   </ul></li>
   <li><a href="#the-duane-model" id="toc-the-duane-model" class="nav-link" data-scroll-target="#the-duane-model"><span class="header-section-number">4.5</span> The Duane Model</a>
   <ul class="collapse">
@@ -497,7 +503,7 @@ window.Quarto = {
   <li><a href="#the-piecewise-nhpp-model" id="toc-the-piecewise-nhpp-model" class="nav-link" data-scroll-target="#the-piecewise-nhpp-model">The Piecewise NHPP Model</a></li>
   <li><a href="#change-point-detection" id="toc-change-point-detection" class="nav-link" data-scroll-target="#change-point-detection">Change Point Detection</a></li>
   </ul></li>
-  <li><a href="#forecasting-growth-predict_rga" id="toc-forecasting-growth-predict_rga" class="nav-link" data-scroll-target="#forecasting-growth-predict_rga"><span class="header-section-number">4.7</span> Forecasting Growth — <code>predict_rga()</code></a></li>
+  <li><a href="#forecasting-growth-predict_rga" id="toc-forecasting-growth-predict_rga" class="nav-link" data-scroll-target="#forecasting-growth-predict_rga"><span class="header-section-number">4.7</span> Forecasting Growth: <code>predict_rga()</code></a></li>
   <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">4.8</span> Summary</a></li>
   </ul>
 </nav>
@@ -554,7 +560,7 @@ window.Quarto = {
 <h2 data-number="4.4" class="anchored" data-anchor-id="test-planning"><span class="header-section-number">4.4</span> Test Planning</h2>
 <p>Before analyzing test data, it helps to answer two design questions: <em>How long must we test?</em> and <em>How many failures should we expect?</em> ReliaGrowR provides tools for both.</p>
 <section id="reliability-demonstration-tests-rdt" class="level3">
-<h3 class="anchored" data-anchor-id="reliability-demonstration-tests-rdt">Reliability Demonstration Tests — <code>rdt()</code></h3>
+<h3 class="anchored" data-anchor-id="reliability-demonstration-tests-rdt">Reliability Demonstration Tests: <code>rdt()</code></h3>
 <p>A <strong>Reliability Demonstration Test (RDT)</strong> is a pass/fail test designed to demonstrate that a product meets a reliability target at a specified confidence level. <code>rdt()</code> calculates the required test time given the sample size (or vice versa).</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># How long must we test 10 units to demonstrate R(1000 hrs) &gt;= 0.90</span></span>
@@ -639,7 +645,7 @@ Input Sample Size (n):  20
 Required Test Time (T):  873.94 </code></pre>
 </div>
 </div>
-More test units means shorter required test time per unit — but total test effort (n × T) stays roughly constant. Larger fleets reduce calendar time at the cost of more physical units.
+More test units means shorter required test time per unit, but total test effort (n × T) stays roughly constant. Larger fleets reduce calendar time at the cost of more physical units.
 </details>
 </div>
 </div>
@@ -764,7 +770,7 @@ Solution
 <summary>
 Answer
 </summary>
-The system’s reliability is <strong>improving</strong> — the failure rate is decreasing over time.
+The system’s reliability is <strong>improving</strong>: the failure rate is decreasing over time.
 </details>
 </div>
 </div>
@@ -910,7 +916,7 @@ Solution
 </div>
 </div>
 </div>
-<p>The two segments have different slopes — the first segment (pre-change) has a higher slope than the second (post-change), confirming the design change reduced the failure rate.</p>
+<p>The two segments have different slopes; the first segment (pre-change) has a higher slope than the second (post-change), confirming the design change reduced the failure rate.</p>
 </section>
 <section id="change-point-detection" class="level3">
 <h3 class="anchored" data-anchor-id="change-point-detection">Change Point Detection</h3>
@@ -931,8 +937,8 @@ Solution
 </section>
 </section>
 <section id="forecasting-growth-predict_rga" class="level2" data-number="4.7">
-<h2 data-number="4.7" class="anchored" data-anchor-id="forecasting-growth-predict_rga"><span class="header-section-number">4.7</span> Forecasting Growth — <code>predict_rga()</code></h2>
-<p>Once a growth test is underway, <code>predict_rga()</code> projects cumulative failures beyond the current endpoint — useful for deciding whether to continue testing or whether a reliability target will be met by a program deadline.</p>
+<h2 data-number="4.7" class="anchored" data-anchor-id="forecasting-growth-predict_rga"><span class="header-section-number">4.7</span> Forecasting Growth: <code>predict_rga()</code></h2>
+<p>Once a growth test is underway, <code>predict_rga()</code> projects cumulative failures beyond the current endpoint, useful for deciding whether to continue testing or whether a reliability target will be met by a program deadline.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>times    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">200</span>, <span class="dv">300</span>, <span class="dv">400</span>, <span class="dv">500</span>)</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>failures <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">2</span>)</span>
@@ -978,7 +984,7 @@ Solution
 <summary>
 Answer
 </summary>
-Yes — for the Crow-AMSAA model, <span class="math inline">\(\beta &lt; 1\)</span> means the cumulative failure rate is <strong>decreasing</strong> (the growth curve is concave), so reliability is still improving at time 1,000. Testing should continue until <span class="math inline">\(\beta\)</span> stabilizes near the growth target.
+Yes, for the Crow-AMSAA model, <span class="math inline">\(\beta &lt; 1\)</span> means the cumulative failure rate is <strong>decreasing</strong> (the growth curve is concave), so reliability is still improving at time 1,000. Testing should continue until <span class="math inline">\(\beta\)</span> stabilizes near the growth target.
 </details>
 </div>
 </div>
@@ -1519,7 +1525,7 @@ Govan, Paul. 2024. <em>ReliaGrowR: Reliability Growth Analysis</em>. <a href="ht
 <span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a>Before analyzing test data, it helps to answer two design questions: *How long must we test?* and *How many failures should we expect?* ReliaGrowR provides tools for both.</span>
 <span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-35"><a href="#cb20-35" aria-hidden="true" tabindex="-1"></a><span class="fu">### Reliability Demonstration Tests — `rdt()`</span></span>
+<span id="cb20-35"><a href="#cb20-35" aria-hidden="true" tabindex="-1"></a><span class="fu">### Reliability Demonstration Tests: `rdt()`</span></span>
 <span id="cb20-36"><a href="#cb20-36" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-37"><a href="#cb20-37" aria-hidden="true" tabindex="-1"></a>A **Reliability Demonstration Test (RDT)** is a pass/fail test designed to demonstrate that a product meets a reliability target at a specified confidence level. <span class="in">`rdt()`</span> calculates the required test time given the sample size (or vice versa).</span>
 <span id="cb20-38"><a href="#cb20-38" aria-hidden="true" tabindex="-1"></a></span>
@@ -1561,7 +1567,7 @@ Govan, Paul. 2024. <em>ReliaGrowR: Reliability Growth Analysis</em>. <a href="ht
 <span id="cb20-80"><a href="#cb20-80" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb20-81"><a href="#cb20-81" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb20-82"><a href="#cb20-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-83"><a href="#cb20-83" aria-hidden="true" tabindex="-1"></a>More test units means shorter required test time per unit — but total test effort (n × T) stays roughly constant. Larger fleets reduce calendar time at the cost of more physical units.</span>
+<span id="cb20-83"><a href="#cb20-83" aria-hidden="true" tabindex="-1"></a>More test units means shorter required test time per unit, but total test effort (n × T) stays roughly constant. Larger fleets reduce calendar time at the cost of more physical units.</span>
 <span id="cb20-84"><a href="#cb20-84" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
 <span id="cb20-85"><a href="#cb20-85" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb20-86"><a href="#cb20-86" aria-hidden="true" tabindex="-1"></a></span>
@@ -1636,7 +1642,7 @@ Govan, Paul. 2024. <em>ReliaGrowR: Reliability Growth Analysis</em>. <a href="ht
 <span id="cb20-163"><a href="#cb20-163" aria-hidden="true" tabindex="-1"></a>What does a Duane plot with a slope greater than 1 indicate?</span>
 <span id="cb20-164"><a href="#cb20-164" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-165"><a href="#cb20-165" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Answer<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
-<span id="cb20-166"><a href="#cb20-166" aria-hidden="true" tabindex="-1"></a>The system's reliability is **improving** — the failure rate is decreasing over time.</span>
+<span id="cb20-166"><a href="#cb20-166" aria-hidden="true" tabindex="-1"></a>The system's reliability is **improving**: the failure rate is decreasing over time.</span>
 <span id="cb20-167"><a href="#cb20-167" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
 <span id="cb20-168"><a href="#cb20-168" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb20-169"><a href="#cb20-169" aria-hidden="true" tabindex="-1"></a></span>
@@ -1729,7 +1735,7 @@ Govan, Paul. 2024. <em>ReliaGrowR: Reliability Growth Analysis</em>. <a href="ht
 <span id="cb20-266"><a href="#cb20-266" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Cumulative Time"</span>, <span class="at">ylab =</span> <span class="st">"Cumulative Failures"</span>)</span>
 <span id="cb20-267"><a href="#cb20-267" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb20-268"><a href="#cb20-268" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-269"><a href="#cb20-269" aria-hidden="true" tabindex="-1"></a>The two segments have different slopes — the first segment (pre-change) has a higher slope than the second (post-change), confirming the design change reduced the failure rate.</span>
+<span id="cb20-269"><a href="#cb20-269" aria-hidden="true" tabindex="-1"></a>The two segments have different slopes; the first segment (pre-change) has a higher slope than the second (post-change), confirming the design change reduced the failure rate.</span>
 <span id="cb20-270"><a href="#cb20-270" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-271"><a href="#cb20-271" aria-hidden="true" tabindex="-1"></a><span class="fu">### Change Point Detection</span></span>
 <span id="cb20-272"><a href="#cb20-272" aria-hidden="true" tabindex="-1"></a></span>
@@ -1743,9 +1749,9 @@ Govan, Paul. 2024. <em>ReliaGrowR: Reliability Growth Analysis</em>. <a href="ht
 <span id="cb20-282"><a href="#cb20-282" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-283"><a href="#cb20-283" aria-hidden="true" tabindex="-1"></a>The automatically detected change point is near time 500, consistent with the known design change.</span>
 <span id="cb20-284"><a href="#cb20-284" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-285"><a href="#cb20-285" aria-hidden="true" tabindex="-1"></a><span class="fu">## Forecasting Growth — `predict_rga()`</span></span>
+<span id="cb20-285"><a href="#cb20-285" aria-hidden="true" tabindex="-1"></a><span class="fu">## Forecasting Growth: `predict_rga()`</span></span>
 <span id="cb20-286"><a href="#cb20-286" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-287"><a href="#cb20-287" aria-hidden="true" tabindex="-1"></a>Once a growth test is underway, <span class="in">`predict_rga()`</span> projects cumulative failures beyond the current endpoint — useful for deciding whether to continue testing or whether a reliability target will be met by a program deadline.</span>
+<span id="cb20-287"><a href="#cb20-287" aria-hidden="true" tabindex="-1"></a>Once a growth test is underway, <span class="in">`predict_rga()`</span> projects cumulative failures beyond the current endpoint, useful for deciding whether to continue testing or whether a reliability target will be met by a program deadline.</span>
 <span id="cb20-288"><a href="#cb20-288" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-291"><a href="#cb20-291" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb20-292"><a href="#cb20-292" aria-hidden="true" tabindex="-1"></a>times    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">200</span>, <span class="dv">300</span>, <span class="dv">400</span>, <span class="dv">500</span>)</span>
@@ -1769,7 +1775,7 @@ Govan, Paul. 2024. <em>ReliaGrowR: Reliability Growth Analysis</em>. <a href="ht
 <span id="cb20-312"><a href="#cb20-312" aria-hidden="true" tabindex="-1"></a>The fitted model gives $\hat{\beta} &lt; 1$. Is the system still improving at time 1,000?</span>
 <span id="cb20-313"><a href="#cb20-313" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-314"><a href="#cb20-314" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Answer<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
-<span id="cb20-315"><a href="#cb20-315" aria-hidden="true" tabindex="-1"></a>Yes — for the Crow-AMSAA model, $\beta &lt; 1$ means the cumulative failure rate is **decreasing** (the growth curve is concave), so reliability is still improving at time 1,000. Testing should continue until $\beta$ stabilizes near the growth target.</span>
+<span id="cb20-315"><a href="#cb20-315" aria-hidden="true" tabindex="-1"></a>Yes, for the Crow-AMSAA model, $\beta &lt; 1$ means the cumulative failure rate is **decreasing** (the growth curve is concave), so reliability is still improving at time 1,000. Testing should continue until $\beta$ stabilizes near the growth target.</span>
 <span id="cb20-316"><a href="#cb20-316" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
 <span id="cb20-317"><a href="#cb20-317" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb20-318"><a href="#cb20-318" aria-hidden="true" tabindex="-1"></a></span>

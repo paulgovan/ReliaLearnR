@@ -465,6 +465,12 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./09-mcp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">AI-Assisted Reliability Analysis with MCP</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./98-appendix.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Appendix: R Quick Reference</span></a>
   </div>
@@ -547,7 +553,7 @@ window.Quarto = {
 
 <section id="introduction" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">2.1</span> Introduction</h2>
-<p>In <a href="01-ram.html" class="quarto-xref"><span>Chapter 1</span></a>, you learned to calculate reliability metrics for individual components. This chapter extends those concepts to <em>systems</em> — collections of components whose arrangement determines whether the system succeeds or fails.</p>
+<p>In <a href="01-ram.html" class="quarto-xref"><span>Chapter 1</span></a>, you learned to calculate reliability metrics for individual components. This chapter extends those concepts to <em>systems</em>, collections of components whose arrangement determines whether the system succeeds or fails.</p>
 <p>A <strong>Reliability Block Diagram (RBD)</strong> is a graphical tool for modeling how component reliabilities combine to produce system-level reliability. RBDs are widely used in reliability engineering to analyze designs, identify vulnerabilities, and evaluate the benefit of redundancy <span class="citation" data-cites="Billinton1992">(<a href="#ref-Billinton1992" role="doc-biblioref">Billinton and Allan 1992</a>)</span>.</p>
 </section>
 <section id="learning-objectives" class="level2" data-number="2.2">
@@ -563,7 +569,7 @@ window.Quarto = {
 </section>
 <section id="what-is-a-reliability-block-diagram" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="what-is-a-reliability-block-diagram"><span class="header-section-number">2.3</span> What is a Reliability Block Diagram?</h2>
-<p>An RBD represents each component as a <strong>block</strong> with a known reliability value. Blocks are connected by lines showing logical dependencies — not physical connections. A path from left (input) to right (output) through functioning blocks represents a working system.</p>
+<p>An RBD represents each component as a <strong>block</strong> with a known reliability value. Blocks are connected by lines showing logical dependencies, not physical connections. A path from left (input) to right (output) through functioning blocks represents a working system.</p>
 <p>Each block has a reliability <span class="math inline">\(R_i(t)\)</span> derived from the exponential model (<a href="01-ram.html" class="quarto-xref"><span>Chapter 1</span></a>) or a Weibull fit (<a href="03-lda.html" class="quarto-xref"><span>Chapter 3</span></a>).</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DiagrammeR)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -578,7 +584,7 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="example-water-pumping-system">Example: Water Pumping System</h3>
 <p>A pumping system requires a motor (R = 0.95), a pump (R = 0.90), and a control valve (R = 0.98) to all be operational.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grViz</span>(<span class="st">"</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (knitr<span class="sc">::</span><span class="fu">is_html_output</span>(<span class="at">excludes =</span> <span class="st">"epub"</span>)) <span class="fu">grViz</span>(<span class="st">"</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="st">digraph series {</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="st">  rankdir = LR</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="st">  graph [bgcolor = transparent]</span></span>
@@ -594,8 +600,8 @@ window.Quarto = {
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item" id="htmlwidget-fb4fd1bdf0141d72e3e1" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-fb4fd1bdf0141d72e3e1">{"x":{"diagram":"\ndigraph series {\n  rankdir = LR\n  graph [bgcolor = transparent]\n  node [shape = rectangle, style = filled, fillcolor = \"#AED6F1\",\n        fontname = \"sans-serif\", fontsize = 12, margin = \"0.2,0.1\"]\n  edge [arrowsize = 0.8]\n  I [shape = point, width = 0.15, fillcolor = black]\n  A [label = \"Motor\nR = 0.95\"]\n  B [label = \"Pump\nR = 0.90\"]\n  C [label = \"Valve\nR = 0.98\"]\n  O [shape = point, width = 0.15, fillcolor = black]\n  I -> A -> B -> C -> O\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-eff99d1da64858ef3e9d" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-eff99d1da64858ef3e9d">{"x":{"diagram":"\ndigraph series {\n  rankdir = LR\n  graph [bgcolor = transparent]\n  node [shape = rectangle, style = filled, fillcolor = \"#AED6F1\",\n        fontname = \"sans-serif\", fontsize = 12, margin = \"0.2,0.1\"]\n  edge [arrowsize = 0.8]\n  I [shape = point, width = 0.15, fillcolor = black]\n  A [label = \"Motor\nR = 0.95\"]\n  B [label = \"Pump\nR = 0.90\"]\n  C [label = \"Valve\nR = 0.98\"]\n  O [shape = point, width = 0.15, fillcolor = black]\n  I -> A -> B -> C -> O\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <div class="cell">
@@ -655,7 +661,7 @@ Solution
 <summary>
 Answer
 </summary>
-The <strong>least reliable</strong> component. It is the bottleneck — improving it produces the largest gain in system reliability.
+The <strong>least reliable</strong> component. It is the bottleneck; improving it produces the largest gain in system reliability.
 </details>
 </div>
 </div>
@@ -663,15 +669,15 @@ The <strong>least reliable</strong> component. It is the bottleneck — improvin
 </section>
 <section id="parallel-systems" class="level2" data-number="2.5">
 <h2 data-number="2.5" class="anchored" data-anchor-id="parallel-systems"><span class="header-section-number">2.5</span> Parallel Systems</h2>
-<p>In a <strong>parallel</strong> system, only one component needs to function — <strong>active redundancy</strong> (all components operate simultaneously). The system fails <em>only</em> if all components fail at the same time. Since component failures are assumed to be independent:</p>
+<p>In a <strong>parallel</strong> system, only one component needs to function, through <strong>active redundancy</strong> (all components operate simultaneously). The system fails <em>only</em> if all components fail at the same time. Since component failures are assumed to be independent:</p>
 <p><span class="math display">\[P(\text{all fail}) = \prod_{i=1}^{n}(1 - R_i)\]</span></p>
 <p><span class="math display">\[R_{\text{sys}} = 1 - \prod_{i=1}^{n}(1 - R_i)\]</span></p>
 <p>Adding parallel components always increases system reliability.</p>
 <section id="example-backup-power-system" class="level3">
 <h3 class="anchored" data-anchor-id="example-backup-power-system">Example: Backup Power System</h3>
-<p>A primary generator (R = 0.90) and a standby generator (R = 0.85) — either alone keeps the system running.</p>
+<p>A primary generator (R = 0.90) and a standby generator (R = 0.85); either alone keeps the system running.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grViz</span>(<span class="st">"</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (knitr<span class="sc">::</span><span class="fu">is_html_output</span>(<span class="at">excludes =</span> <span class="st">"epub"</span>)) <span class="fu">grViz</span>(<span class="st">"</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="st">digraph parallel {</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="st">  rankdir = LR</span></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="st">  graph [bgcolor = transparent]</span></span>
@@ -687,8 +693,8 @@ The <strong>least reliable</strong> component. It is the bottleneck — improvin
 <span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
 <span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item" id="htmlwidget-24281b69015d2e34ea01" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-24281b69015d2e34ea01">{"x":{"diagram":"\ndigraph parallel {\n  rankdir = LR\n  graph [bgcolor = transparent]\n  node [shape = rectangle, style = filled, fillcolor = \"#A9DFBF\",\n        fontname = \"sans-serif\", fontsize = 12, margin = \"0.2,0.1\"]\n  edge [arrowsize = 0.8]\n  I [shape = point, width = 0.15, fillcolor = black]\n  A [label = \"Generator 1\nR = 0.90\"]\n  B [label = \"Generator 2\nR = 0.85\"]\n  O [shape = point, width = 0.15, fillcolor = black]\n  I -> A -> O\n  I -> B -> O\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-16a6789d99b093a8a707" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-16a6789d99b093a8a707">{"x":{"diagram":"\ndigraph parallel {\n  rankdir = LR\n  graph [bgcolor = transparent]\n  node [shape = rectangle, style = filled, fillcolor = \"#A9DFBF\",\n        fontname = \"sans-serif\", fontsize = 12, margin = \"0.2,0.1\"]\n  edge [arrowsize = 0.8]\n  I [shape = point, width = 0.15, fillcolor = black]\n  A [label = \"Generator 1\nR = 0.90\"]\n  B [label = \"Generator 2\nR = 0.85\"]\n  O [shape = point, width = 0.15, fillcolor = black]\n  I -> A -> O\n  I -> B -> O\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <div class="cell">
@@ -720,7 +726,7 @@ The <strong>least reliable</strong> component. It is the bottleneck — improvin
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="02-rbd_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="02-rbd_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -768,7 +774,7 @@ Solution
 <li>Subsystems A and B in series (both must work).</li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grViz</span>(<span class="st">"</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (knitr<span class="sc">::</span><span class="fu">is_html_output</span>(<span class="at">excludes =</span> <span class="st">"epub"</span>)) <span class="fu">grViz</span>(<span class="st">"</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="st">digraph mixed {</span></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="st">  rankdir = LR</span></span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="st">  graph [bgcolor = transparent]</span></span>
@@ -786,8 +792,8 @@ Solution
 <span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
 <span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item" id="htmlwidget-47e3f78ab81c46c89ab5" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-47e3f78ab81c46c89ab5">{"x":{"diagram":"\ndigraph mixed {\n  rankdir = LR\n  graph [bgcolor = transparent]\n  node [shape = rectangle, style = filled, fillcolor = \"#F9E79F\",\n        fontname = \"sans-serif\", fontsize = 12, margin = \"0.2,0.1\"]\n  edge [arrowsize = 0.8]\n  I [shape = point, width = 0.15, fillcolor = black]\n  S [label = \"Sensor\nR = 0.95\"]\n  T [label = \"Transmitter\nR = 0.97\"]\n  A1 [label = \"Actuator 1\nR = 0.90\"]\n  A2 [label = \"Actuator 2\nR = 0.90\"]\n  O [shape = point, width = 0.15, fillcolor = black]\n  I -> S -> T -> A1 -> O\n  T -> A2 -> O\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-d6c89bbb9fb5a95b3da9" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-d6c89bbb9fb5a95b3da9">{"x":{"diagram":"\ndigraph mixed {\n  rankdir = LR\n  graph [bgcolor = transparent]\n  node [shape = rectangle, style = filled, fillcolor = \"#F9E79F\",\n        fontname = \"sans-serif\", fontsize = 12, margin = \"0.2,0.1\"]\n  edge [arrowsize = 0.8]\n  I [shape = point, width = 0.15, fillcolor = black]\n  S [label = \"Sensor\nR = 0.95\"]\n  T [label = \"Transmitter\nR = 0.97\"]\n  A1 [label = \"Actuator 1\nR = 0.90\"]\n  A2 [label = \"Actuator 2\nR = 0.90\"]\n  O [shape = point, width = 0.15, fillcolor = black]\n  I -> S -> T -> A1 -> O\n  T -> A2 -> O\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <div class="cell">
@@ -846,7 +852,7 @@ Answer
 <h3 class="anchored" data-anchor-id="example-flight-control-computers">Example: Flight Control Computers</h3>
 <p>A 2-out-of-3 voter: at least 2 of 3 computers must agree. Each computer has R = 0.99.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grViz</span>(<span class="st">"</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (knitr<span class="sc">::</span><span class="fu">is_html_output</span>(<span class="at">excludes =</span> <span class="st">"epub"</span>)) <span class="fu">grViz</span>(<span class="st">"</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="st">digraph koon {</span></span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="st">  rankdir = LR</span></span>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="st">  graph [bgcolor = transparent]</span></span>
@@ -866,8 +872,8 @@ Answer
 <span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
 <span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item" id="htmlwidget-f17b1a5110c3b557fb48" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-f17b1a5110c3b557fb48">{"x":{"diagram":"\ndigraph koon {\n  rankdir = LR\n  graph [bgcolor = transparent]\n  node [shape = rectangle, style = filled, fillcolor = \"#D7BDE2\",\n        fontname = \"sans-serif\", fontsize = 12, margin = \"0.2,0.1\"]\n  edge [arrowsize = 0.8]\n  I  [shape = point, width = 0.15, fillcolor = black]\n  C1 [label = \"Computer 1\nR = 0.99\"]\n  C2 [label = \"Computer 2\nR = 0.99\"]\n  C3 [label = \"Computer 3\nR = 0.99\"]\n  V  [label = \"Voter\n(2-of-3)\", shape = diamond, fillcolor = \"#F1948A\", fontsize = 11]\n  O  [shape = point, width = 0.15, fillcolor = black]\n  I -> C1 -> V\n  I -> C2 -> V\n  I -> C3 -> V\n  V -> O\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-79079cee7f03405a34e7" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-79079cee7f03405a34e7">{"x":{"diagram":"\ndigraph koon {\n  rankdir = LR\n  graph [bgcolor = transparent]\n  node [shape = rectangle, style = filled, fillcolor = \"#D7BDE2\",\n        fontname = \"sans-serif\", fontsize = 12, margin = \"0.2,0.1\"]\n  edge [arrowsize = 0.8]\n  I  [shape = point, width = 0.15, fillcolor = black]\n  C1 [label = \"Computer 1\nR = 0.99\"]\n  C2 [label = \"Computer 2\nR = 0.99\"]\n  C3 [label = \"Computer 3\nR = 0.99\"]\n  V  [label = \"Voter\n(2-of-3)\", shape = diamond, fillcolor = \"#F1948A\", fontsize = 11]\n  O  [shape = point, width = 0.15, fillcolor = black]\n  I -> C1 -> V\n  I -> C2 -> V\n  I -> C3 -> V\n  V -> O\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <div class="cell">
@@ -963,7 +969,7 @@ Answer
 </section>
 <section id="common-cause-failure" class="level2" data-number="2.9">
 <h2 data-number="2.9" class="anchored" data-anchor-id="common-cause-failure"><span class="header-section-number">2.9</span> Common Cause Failure</h2>
-<p>All the analyses above assume that component failures are <strong>statistically independent</strong> — if Component A fails, it tells us nothing about Component B’s probability of failing. In practice, this assumption can break down.</p>
+<p>All the analyses above assume that component failures are <strong>statistically independent</strong>: if Component A fails, it tells us nothing about Component B’s probability of failing. In practice, this assumption can break down.</p>
 <p><strong>Common Cause Failure (CCF)</strong> occurs when a single event simultaneously causes multiple components to fail. Typical sources include:</p>
 <ul>
 <li>A shared environment (vibration, temperature, contamination) that degrades all components together</li>
@@ -1016,7 +1022,7 @@ Answer
 <summary>
 Answer
 </summary>
-When <span class="math inline">\(\beta_{\text{CCF}}\)</span> is large, a significant fraction of failures are <strong>common cause</strong> — they simultaneously affect all components regardless of how many there are. Adding more identical, coupled components may even increase the common-cause failure rate if they share the same environment or design flaw. Effective mitigation requires <strong>diversity</strong> (different designs, manufacturers, or locations) rather than simple redundancy.
+When <span class="math inline">\(\beta_{\text{CCF}}\)</span> is large, a significant fraction of failures are <strong>common cause</strong>, simultaneously affecting all components regardless of how many there are. Adding more identical, coupled components may even increase the common-cause failure rate if they share the same environment or design flaw. Effective mitigation requires <strong>diversity</strong> (different designs, manufacturers, or locations) rather than simple redundancy.
 </details>
 </div>
 </div>
@@ -1030,8 +1036,8 @@ When <span class="math inline">\(\beta_{\text{CCF}}\)</span> is large, a signifi
 <section id="gates" class="level3">
 <h3 class="anchored" data-anchor-id="gates">Gates</h3>
 <ul>
-<li><strong>AND gate</strong>: top event occurs only if <em>all</em> inputs occur — corresponds to <strong>parallel</strong> RBD components (all must fail).</li>
-<li><strong>OR gate</strong>: top event occurs if <em>any</em> input occurs — corresponds to <strong>series</strong> RBD components (any failure causes system failure).</li>
+<li><strong>AND gate</strong>: top event occurs only if <em>all</em> inputs occur, corresponding to <strong>parallel</strong> RBD components (all must fail).</li>
+<li><strong>OR gate</strong>: top event occurs if <em>any</em> input occurs, corresponding to <strong>series</strong> RBD components (any failure causes system failure).</li>
 </ul>
 </section>
 <section id="rbdfault-tree-duality" class="level3">
@@ -1059,7 +1065,7 @@ When <span class="math inline">\(\beta_{\text{CCF}}\)</span> is large, a signifi
 </tbody>
 </table>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grViz</span>(<span class="st">"</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (knitr<span class="sc">::</span><span class="fu">is_html_output</span>(<span class="at">excludes =</span> <span class="st">"epub"</span>)) <span class="fu">grViz</span>(<span class="st">"</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="st">digraph fta {</span></span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="st">  rankdir = TB</span></span>
 <span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="st">  graph [bgcolor = transparent]</span></span>
@@ -1075,8 +1081,8 @@ When <span class="math inline">\(\beta_{\text{CCF}}\)</span> is large, a signifi
 <span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
 <span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item" id="htmlwidget-56fa9b8f38d048c9c80c" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-56fa9b8f38d048c9c80c">{"x":{"diagram":"\ndigraph fta {\n  rankdir = TB\n  graph [bgcolor = transparent]\n  node [fontname = \"sans-serif\", fontsize = 12, style = filled]\n  edge [arrowsize = 0.8]\n  Top [label = \"System\nFailure\",  shape = rectangle, fillcolor = \"#E74C3C\", fontcolor = white]\n  OR  [label = \"OR Gate\",          shape = diamond,   fillcolor = \"#F39C12\"]\n  F1  [label = \"Component A\nFails\", shape = ellipse, fillcolor = \"#AED6F1\"]\n  F2  [label = \"Component B\nFails\", shape = ellipse, fillcolor = \"#AED6F1\"]\n  Top -> OR\n  OR  -> F1\n  OR  -> F2\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-4feed253b7cec10f50f3" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-4feed253b7cec10f50f3">{"x":{"diagram":"\ndigraph fta {\n  rankdir = TB\n  graph [bgcolor = transparent]\n  node [fontname = \"sans-serif\", fontsize = 12, style = filled]\n  edge [arrowsize = 0.8]\n  Top [label = \"System\nFailure\",  shape = rectangle, fillcolor = \"#E74C3C\", fontcolor = white]\n  OR  [label = \"OR Gate\",          shape = diamond,   fillcolor = \"#F39C12\"]\n  F1  [label = \"Component A\nFails\", shape = ellipse, fillcolor = \"#AED6F1\"]\n  F2  [label = \"Component B\nFails\", shape = ellipse, fillcolor = \"#AED6F1\"]\n  Top -> OR\n  OR  -> F1\n  OR  -> F2\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>This OR gate corresponds to a two-component series RBD: any single failure causes system failure. For complex fault trees, the R package <code>FaultTree</code> on CRAN provides computational support.</p>
@@ -1095,7 +1101,7 @@ When <span class="math inline">\(\beta_{\text{CCF}}\)</span> is large, a signifi
 <summary>
 Answer
 </summary>
-<strong>Parallel</strong> — an AND gate means the system fails only if both components fail simultaneously, which is exactly the parallel (redundant) configuration.
+<strong>Parallel</strong>: an AND gate means the system fails only if both components fail simultaneously, which is exactly the parallel (redundant) configuration.
 </details>
 </div>
 </div>
@@ -1176,12 +1182,12 @@ Solution
 <h2 data-number="2.12" class="anchored" data-anchor-id="summary"><span class="header-section-number">2.12</span> Summary</h2>
 <p><strong>Key takeaways:</strong></p>
 <ul>
-<li><strong>Series</strong>: <span class="math inline">\(R_{\text{sys}} = \prod R_i\)</span> — every component must work; reliability decreases with more components.</li>
-<li><strong>Parallel</strong>: <span class="math inline">\(R_{\text{sys}} = 1 - \prod(1-R_i)\)</span> — redundancy; only one component needs to work.</li>
+<li><strong>Series</strong>: <span class="math inline">\(R_{\text{sys}} = \prod R_i\)</span>, every component must work; reliability decreases with more components.</li>
+<li><strong>Parallel</strong>: <span class="math inline">\(R_{\text{sys}} = 1 - \prod(1-R_i)\)</span>, redundancy; only one component needs to work.</li>
 <li><strong>Mixed</strong>: decompose into subsystems, apply formulas step by step.</li>
 <li><strong>k-out-of-n</strong>: <code>1 - pbinom(k-1, n, 1-p)</code> for voting/load-sharing systems.</li>
 <li><strong>Series MTTF</strong>: <span class="math inline">\(1/\sum\lambda_i\)</span>; <strong>Parallel MTTF</strong>: <span class="math inline">\((1/\lambda)\sum_{i=1}^{n}(1/i)\)</span>.</li>
-<li><strong>Common Cause Failure</strong>: redundancy requires <em>diversity</em> to be effective — the <span class="math inline">\(\beta_{\text{CCF}}\)</span> factor quantifies the fraction of failures caused by shared events; adding more identical, coupled components does not protect against CCF.</li>
+<li><strong>Common Cause Failure</strong>: redundancy requires <em>diversity</em> to be effective; the <span class="math inline">\(\beta_{\text{CCF}}\)</span> factor quantifies the fraction of failures caused by shared events, and adding more identical, coupled components does not protect against CCF.</li>
 <li><strong>FTA duality</strong>: series RBD ↔︎ OR gate; parallel RBD ↔︎ AND gate.</li>
 </ul>
 
@@ -1683,7 +1689,7 @@ Vesely, W., F. Goldberg, N. Roberts, and D. Haasl. 1981. <em>Fault Tree Handbook
 <span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a><span class="fu">## Introduction</span></span>
 <span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>In @sec-ram, you learned to calculate reliability metrics for individual components. This chapter extends those concepts to *systems* — collections of components whose arrangement determines whether the system succeeds or fails.</span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>In @sec-ram, you learned to calculate reliability metrics for individual components. This chapter extends those concepts to *systems*, collections of components whose arrangement determines whether the system succeeds or fails.</span>
 <span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>A **Reliability Block Diagram (RBD)** is a graphical tool for modeling how component reliabilities combine to produce system-level reliability. RBDs are widely used in reliability engineering to analyze designs, identify vulnerabilities, and evaluate the benefit of redundancy <span class="co">[</span><span class="ot">@Billinton1992</span><span class="co">]</span>.</span>
 <span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a></span>
@@ -1699,7 +1705,7 @@ Vesely, W., F. Goldberg, N. Roberts, and D. Haasl. 1981. <em>Fault Tree Handbook
 <span id="cb44-22"><a href="#cb44-22" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb44-23"><a href="#cb44-23" aria-hidden="true" tabindex="-1"></a><span class="fu">## What is a Reliability Block Diagram?</span></span>
 <span id="cb44-24"><a href="#cb44-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-25"><a href="#cb44-25" aria-hidden="true" tabindex="-1"></a>An RBD represents each component as a **block** with a known reliability value. Blocks are connected by lines showing logical dependencies — not physical connections. A path from left (input) to right (output) through functioning blocks represents a working system.</span>
+<span id="cb44-25"><a href="#cb44-25" aria-hidden="true" tabindex="-1"></a>An RBD represents each component as a **block** with a known reliability value. Blocks are connected by lines showing logical dependencies, not physical connections. A path from left (input) to right (output) through functioning blocks represents a working system.</span>
 <span id="cb44-26"><a href="#cb44-26" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb44-27"><a href="#cb44-27" aria-hidden="true" tabindex="-1"></a>Each block has a reliability $R_i(t)$ derived from the exponential model (@sec-ram) or a Weibull fit (@sec-lda).</span>
 <span id="cb44-28"><a href="#cb44-28" aria-hidden="true" tabindex="-1"></a></span>
@@ -1708,485 +1714,625 @@ Vesely, W., F. Goldberg, N. Roberts, and D. Haasl. 1981. <em>Fault Tree Handbook
 <span id="cb44-33"><a href="#cb44-33" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DiagrammeR)</span>
 <span id="cb44-34"><a href="#cb44-34" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb44-35"><a href="#cb44-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-36"><a href="#cb44-36" aria-hidden="true" tabindex="-1"></a><span class="fu">## Series Systems</span></span>
-<span id="cb44-37"><a href="#cb44-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-38"><a href="#cb44-38" aria-hidden="true" tabindex="-1"></a>In a **series** system, all components must function for the system to succeed:</span>
-<span id="cb44-39"><a href="#cb44-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-40"><a href="#cb44-40" aria-hidden="true" tabindex="-1"></a>$$R_{\text{sys}} = R_1 \times R_2 \times \cdots \times R_n = \prod_{i=1}^{n} R_i$$</span>
-<span id="cb44-41"><a href="#cb44-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-42"><a href="#cb44-42" aria-hidden="true" tabindex="-1"></a>A series system is *always less reliable* than its weakest component. Adding more components in series can only reduce system reliability.</span>
-<span id="cb44-43"><a href="#cb44-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-44"><a href="#cb44-44" aria-hidden="true" tabindex="-1"></a><span class="fu">### Example: Water Pumping System</span></span>
-<span id="cb44-45"><a href="#cb44-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-46"><a href="#cb44-46" aria-hidden="true" tabindex="-1"></a>A pumping system requires a motor (R = 0.95), a pump (R = 0.90), and a control valve (R = 0.98) to all be operational.</span>
-<span id="cb44-47"><a href="#cb44-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-50"><a href="#cb44-50" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb44-51"><a href="#cb44-51" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: !expr knitr::is_html_output(excludes = "epub")</span></span>
-<span id="cb44-52"><a href="#cb44-52" aria-hidden="true" tabindex="-1"></a><span class="fu">grViz</span>(<span class="st">"</span></span>
-<span id="cb44-53"><a href="#cb44-53" aria-hidden="true" tabindex="-1"></a><span class="st">digraph series {</span></span>
-<span id="cb44-54"><a href="#cb44-54" aria-hidden="true" tabindex="-1"></a><span class="st">  rankdir = LR</span></span>
-<span id="cb44-55"><a href="#cb44-55" aria-hidden="true" tabindex="-1"></a><span class="st">  graph [bgcolor = transparent]</span></span>
-<span id="cb44-56"><a href="#cb44-56" aria-hidden="true" tabindex="-1"></a><span class="st">  node [shape = rectangle, style = filled, fillcolor = '#AED6F1',</span></span>
-<span id="cb44-57"><a href="#cb44-57" aria-hidden="true" tabindex="-1"></a><span class="st">        fontname = 'sans-serif', fontsize = 12, margin = '0.2,0.1']</span></span>
-<span id="cb44-58"><a href="#cb44-58" aria-hidden="true" tabindex="-1"></a><span class="st">  edge [arrowsize = 0.8]</span></span>
-<span id="cb44-59"><a href="#cb44-59" aria-hidden="true" tabindex="-1"></a><span class="st">  I [shape = point, width = 0.15, fillcolor = black]</span></span>
-<span id="cb44-60"><a href="#cb44-60" aria-hidden="true" tabindex="-1"></a><span class="st">  A [label = 'Motor</span><span class="sc">\n</span><span class="st">R = 0.95']</span></span>
-<span id="cb44-61"><a href="#cb44-61" aria-hidden="true" tabindex="-1"></a><span class="st">  B [label = 'Pump</span><span class="sc">\n</span><span class="st">R = 0.90']</span></span>
-<span id="cb44-62"><a href="#cb44-62" aria-hidden="true" tabindex="-1"></a><span class="st">  C [label = 'Valve</span><span class="sc">\n</span><span class="st">R = 0.98']</span></span>
-<span id="cb44-63"><a href="#cb44-63" aria-hidden="true" tabindex="-1"></a><span class="st">  O [shape = point, width = 0.15, fillcolor = black]</span></span>
-<span id="cb44-64"><a href="#cb44-64" aria-hidden="true" tabindex="-1"></a><span class="st">  I -&gt; A -&gt; B -&gt; C -&gt; O</span></span>
-<span id="cb44-65"><a href="#cb44-65" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
-<span id="cb44-66"><a href="#cb44-66" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)</span>
-<span id="cb44-67"><a href="#cb44-67" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb44-68"><a href="#cb44-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-71"><a href="#cb44-71" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb44-72"><a href="#cb44-72" aria-hidden="true" tabindex="-1"></a>R_motor <span class="ot">&lt;-</span> <span class="fl">0.95</span></span>
-<span id="cb44-73"><a href="#cb44-73" aria-hidden="true" tabindex="-1"></a>R_pump  <span class="ot">&lt;-</span> <span class="fl">0.90</span></span>
-<span id="cb44-74"><a href="#cb44-74" aria-hidden="true" tabindex="-1"></a>R_valve <span class="ot">&lt;-</span> <span class="fl">0.98</span></span>
-<span id="cb44-75"><a href="#cb44-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-76"><a href="#cb44-76" aria-hidden="true" tabindex="-1"></a>R_series <span class="ot">&lt;-</span> R_motor <span class="sc">*</span> R_pump <span class="sc">*</span> R_valve</span>
-<span id="cb44-77"><a href="#cb44-77" aria-hidden="true" tabindex="-1"></a>R_series  <span class="co"># ~0.838</span></span>
-<span id="cb44-78"><a href="#cb44-78" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb44-79"><a href="#cb44-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-80"><a href="#cb44-80" aria-hidden="true" tabindex="-1"></a>The system reliability is approximately 83.8%, lower than any individual component.</span>
-<span id="cb44-81"><a href="#cb44-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-82"><a href="#cb44-82" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb44-83"><a href="#cb44-83" aria-hidden="true" tabindex="-1"></a><span class="fu">## Try It</span></span>
-<span id="cb44-84"><a href="#cb44-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-85"><a href="#cb44-85" aria-hidden="true" tabindex="-1"></a>A conveyor belt system has 5 components in series with reliabilities 0.98, 0.96, 0.99, 0.94, and 0.97. Calculate the system reliability.</span>
-<span id="cb44-86"><a href="#cb44-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-89"><a href="#cb44-89" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb44-90"><a href="#cb44-90" aria-hidden="true" tabindex="-1"></a>R_components <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.98</span>, <span class="fl">0.96</span>, <span class="fl">0.99</span>, <span class="fl">0.94</span>, <span class="fl">0.97</span>)</span>
-<span id="cb44-91"><a href="#cb44-91" aria-hidden="true" tabindex="-1"></a><span class="co"># R_series &lt;- prod(R_components)</span></span>
-<span id="cb44-92"><a href="#cb44-92" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb44-93"><a href="#cb44-93" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-94"><a href="#cb44-94" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Solution<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
-<span id="cb44-97"><a href="#cb44-97" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb44-98"><a href="#cb44-98" aria-hidden="true" tabindex="-1"></a>R_components <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.98</span>, <span class="fl">0.96</span>, <span class="fl">0.99</span>, <span class="fl">0.94</span>, <span class="fl">0.97</span>)</span>
-<span id="cb44-99"><a href="#cb44-99" aria-hidden="true" tabindex="-1"></a>R_series <span class="ot">&lt;-</span> <span class="fu">prod</span>(R_components)</span>
-<span id="cb44-100"><a href="#cb44-100" aria-hidden="true" tabindex="-1"></a>R_series  <span class="co"># ~0.845</span></span>
-<span id="cb44-101"><a href="#cb44-101" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb44-102"><a href="#cb44-102" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
-<span id="cb44-103"><a href="#cb44-103" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb44-104"><a href="#cb44-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-105"><a href="#cb44-105" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
-<span id="cb44-106"><a href="#cb44-106" aria-hidden="true" tabindex="-1"></a><span class="fu">## Review</span></span>
-<span id="cb44-107"><a href="#cb44-107" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-108"><a href="#cb44-108" aria-hidden="true" tabindex="-1"></a>In a series system, which component has the greatest influence on system reliability?</span>
-<span id="cb44-109"><a href="#cb44-109" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-110"><a href="#cb44-110" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Answer<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
-<span id="cb44-111"><a href="#cb44-111" aria-hidden="true" tabindex="-1"></a>The **least reliable** component. It is the bottleneck — improving it produces the largest gain in system reliability.</span>
-<span id="cb44-112"><a href="#cb44-112" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
-<span id="cb44-113"><a href="#cb44-113" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb44-114"><a href="#cb44-114" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-115"><a href="#cb44-115" aria-hidden="true" tabindex="-1"></a><span class="fu">## Parallel Systems</span></span>
-<span id="cb44-116"><a href="#cb44-116" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-117"><a href="#cb44-117" aria-hidden="true" tabindex="-1"></a>In a **parallel** system, only one component needs to function — **active redundancy** (all components operate simultaneously). The system fails *only* if all components fail at the same time. Since component failures are assumed to be independent:</span>
-<span id="cb44-118"><a href="#cb44-118" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-119"><a href="#cb44-119" aria-hidden="true" tabindex="-1"></a>$$P(\text{all fail}) = \prod_{i=1}^{n}(1 - R_i)$$</span>
-<span id="cb44-120"><a href="#cb44-120" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-121"><a href="#cb44-121" aria-hidden="true" tabindex="-1"></a>$$R_{\text{sys}} = 1 - \prod_{i=1}^{n}(1 - R_i)$$</span>
-<span id="cb44-122"><a href="#cb44-122" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-123"><a href="#cb44-123" aria-hidden="true" tabindex="-1"></a>Adding parallel components always increases system reliability.</span>
-<span id="cb44-124"><a href="#cb44-124" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-125"><a href="#cb44-125" aria-hidden="true" tabindex="-1"></a><span class="fu">### Example: Backup Power System</span></span>
-<span id="cb44-126"><a href="#cb44-126" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-127"><a href="#cb44-127" aria-hidden="true" tabindex="-1"></a>A primary generator (R = 0.90) and a standby generator (R = 0.85) — either alone keeps the system running.</span>
-<span id="cb44-128"><a href="#cb44-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-131"><a href="#cb44-131" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb44-132"><a href="#cb44-132" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: !expr knitr::is_html_output(excludes = "epub")</span></span>
-<span id="cb44-133"><a href="#cb44-133" aria-hidden="true" tabindex="-1"></a><span class="fu">grViz</span>(<span class="st">"</span></span>
-<span id="cb44-134"><a href="#cb44-134" aria-hidden="true" tabindex="-1"></a><span class="st">digraph parallel {</span></span>
-<span id="cb44-135"><a href="#cb44-135" aria-hidden="true" tabindex="-1"></a><span class="st">  rankdir = LR</span></span>
-<span id="cb44-136"><a href="#cb44-136" aria-hidden="true" tabindex="-1"></a><span class="st">  graph [bgcolor = transparent]</span></span>
-<span id="cb44-137"><a href="#cb44-137" aria-hidden="true" tabindex="-1"></a><span class="st">  node [shape = rectangle, style = filled, fillcolor = '#A9DFBF',</span></span>
-<span id="cb44-138"><a href="#cb44-138" aria-hidden="true" tabindex="-1"></a><span class="st">        fontname = 'sans-serif', fontsize = 12, margin = '0.2,0.1']</span></span>
-<span id="cb44-139"><a href="#cb44-139" aria-hidden="true" tabindex="-1"></a><span class="st">  edge [arrowsize = 0.8]</span></span>
-<span id="cb44-140"><a href="#cb44-140" aria-hidden="true" tabindex="-1"></a><span class="st">  I [shape = point, width = 0.15, fillcolor = black]</span></span>
-<span id="cb44-141"><a href="#cb44-141" aria-hidden="true" tabindex="-1"></a><span class="st">  A [label = 'Generator 1</span><span class="sc">\n</span><span class="st">R = 0.90']</span></span>
-<span id="cb44-142"><a href="#cb44-142" aria-hidden="true" tabindex="-1"></a><span class="st">  B [label = 'Generator 2</span><span class="sc">\n</span><span class="st">R = 0.85']</span></span>
-<span id="cb44-143"><a href="#cb44-143" aria-hidden="true" tabindex="-1"></a><span class="st">  O [shape = point, width = 0.15, fillcolor = black]</span></span>
-<span id="cb44-144"><a href="#cb44-144" aria-hidden="true" tabindex="-1"></a><span class="st">  I -&gt; A -&gt; O</span></span>
-<span id="cb44-145"><a href="#cb44-145" aria-hidden="true" tabindex="-1"></a><span class="st">  I -&gt; B -&gt; O</span></span>
-<span id="cb44-146"><a href="#cb44-146" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
-<span id="cb44-147"><a href="#cb44-147" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)</span>
-<span id="cb44-148"><a href="#cb44-148" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb44-149"><a href="#cb44-149" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-152"><a href="#cb44-152" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb44-153"><a href="#cb44-153" aria-hidden="true" tabindex="-1"></a>R_gen1 <span class="ot">&lt;-</span> <span class="fl">0.90</span>  <span class="co"># Generator 1</span></span>
-<span id="cb44-154"><a href="#cb44-154" aria-hidden="true" tabindex="-1"></a>R_gen2 <span class="ot">&lt;-</span> <span class="fl">0.85</span>  <span class="co"># Generator 2</span></span>
-<span id="cb44-155"><a href="#cb44-155" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-156"><a href="#cb44-156" aria-hidden="true" tabindex="-1"></a>R_parallel <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">-</span> R_gen1) <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> R_gen2)</span>
-<span id="cb44-157"><a href="#cb44-157" aria-hidden="true" tabindex="-1"></a>R_parallel  <span class="co"># 0.985</span></span>
-<span id="cb44-158"><a href="#cb44-158" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb44-159"><a href="#cb44-159" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-160"><a href="#cb44-160" aria-hidden="true" tabindex="-1"></a>The parallel system reliability is 98.5%, much higher than either generator alone.</span>
-<span id="cb44-161"><a href="#cb44-161" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-162"><a href="#cb44-162" aria-hidden="true" tabindex="-1"></a>The benefit of redundancy grows with each additional component:</span>
-<span id="cb44-163"><a href="#cb44-163" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-166"><a href="#cb44-166" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb44-167"><a href="#cb44-167" aria-hidden="true" tabindex="-1"></a>n_vals <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span></span>
-<span id="cb44-168"><a href="#cb44-168" aria-hidden="true" tabindex="-1"></a>Rc     <span class="ot">&lt;-</span> <span class="fl">0.90</span></span>
-<span id="cb44-169"><a href="#cb44-169" aria-hidden="true" tabindex="-1"></a>R_par  <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">-</span> Rc)<span class="sc">^</span>n_vals</span>
-<span id="cb44-170"><a href="#cb44-170" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-171"><a href="#cb44-171" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(n_vals, R_par, <span class="at">type =</span> <span class="st">"b"</span>, <span class="at">col =</span> <span class="st">"steelblue"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">pch =</span> <span class="dv">19</span>,</span>
-<span id="cb44-172"><a href="#cb44-172" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Number of redundant components"</span>,</span>
-<span id="cb44-173"><a href="#cb44-173" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"System Reliability"</span>,</span>
-<span id="cb44-174"><a href="#cb44-174" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Parallel System Reliability vs. Redundancy (R_component = 0.90)"</span>,</span>
-<span id="cb44-175"><a href="#cb44-175" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
-<span id="cb44-176"><a href="#cb44-176" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> Rc, <span class="at">col =</span> <span class="st">"gray50"</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb44-177"><a href="#cb44-177" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"bottomright"</span>,</span>
-<span id="cb44-178"><a href="#cb44-178" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"System reliability"</span>, <span class="st">"Single component (0.90)"</span>),</span>
-<span id="cb44-179"><a href="#cb44-179" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"steelblue"</span>, <span class="st">"gray50"</span>), <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">pch =</span> <span class="fu">c</span>(<span class="dv">19</span>, <span class="cn">NA</span>), <span class="at">lwd =</span> <span class="dv">2</span>)</span>
-<span id="cb44-180"><a href="#cb44-180" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb44-181"><a href="#cb44-181" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-182"><a href="#cb44-182" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb44-183"><a href="#cb44-183" aria-hidden="true" tabindex="-1"></a><span class="fu">## Try It</span></span>
-<span id="cb44-184"><a href="#cb44-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-185"><a href="#cb44-185" aria-hidden="true" tabindex="-1"></a>A critical pump station has 3 pumps in parallel. Each pump has reliability 0.88. What is the system reliability?</span>
-<span id="cb44-186"><a href="#cb44-186" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-189"><a href="#cb44-189" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb44-190"><a href="#cb44-190" aria-hidden="true" tabindex="-1"></a>R_components <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.88</span>, <span class="fl">0.88</span>, <span class="fl">0.88</span>)</span>
-<span id="cb44-191"><a href="#cb44-191" aria-hidden="true" tabindex="-1"></a><span class="co"># R_parallel &lt;- 1 - prod(1 - R_components)</span></span>
-<span id="cb44-192"><a href="#cb44-192" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb44-193"><a href="#cb44-193" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-194"><a href="#cb44-194" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Solution<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
+<span id="cb44-38"><a href="#cb44-38" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb44-39"><a href="#cb44-39" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: false</span></span>
+<span id="cb44-40"><a href="#cb44-40" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate static PNG fallbacks for PDF/EPUB output if not yet present</span></span>
+<span id="cb44-41"><a href="#cb44-41" aria-hidden="true" tabindex="-1"></a>imgs <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb44-42"><a href="#cb44-42" aria-hidden="true" tabindex="-1"></a>  <span class="st">"images/rbd-series.png"</span>,</span>
+<span id="cb44-43"><a href="#cb44-43" aria-hidden="true" tabindex="-1"></a>  <span class="st">"images/rbd-parallel.png"</span>,</span>
+<span id="cb44-44"><a href="#cb44-44" aria-hidden="true" tabindex="-1"></a>  <span class="st">"images/rbd-mixed.png"</span>,</span>
+<span id="cb44-45"><a href="#cb44-45" aria-hidden="true" tabindex="-1"></a>  <span class="st">"images/rbd-koon.png"</span>,</span>
+<span id="cb44-46"><a href="#cb44-46" aria-hidden="true" tabindex="-1"></a>  <span class="st">"images/rbd-faulttree.png"</span></span>
+<span id="cb44-47"><a href="#cb44-47" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb44-48"><a href="#cb44-48" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">any</span>(<span class="sc">!</span><span class="fu">file.exists</span>(imgs))) {</span>
+<span id="cb44-49"><a href="#cb44-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(DiagrammeRsvg)</span>
+<span id="cb44-50"><a href="#cb44-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(rsvg)</span>
+<span id="cb44-51"><a href="#cb44-51" aria-hidden="true" tabindex="-1"></a>  save_diagram <span class="ot">&lt;-</span> <span class="cf">function</span>(dot_src, path) {</span>
+<span id="cb44-52"><a href="#cb44-52" aria-hidden="true" tabindex="-1"></a>    svg <span class="ot">&lt;-</span> DiagrammeRsvg<span class="sc">::</span><span class="fu">export_svg</span>(<span class="fu">grViz</span>(dot_src))</span>
+<span id="cb44-53"><a href="#cb44-53" aria-hidden="true" tabindex="-1"></a>    rsvg<span class="sc">::</span><span class="fu">rsvg_png</span>(<span class="fu">charToRaw</span>(svg), path, <span class="at">width =</span> <span class="dv">800</span>)</span>
+<span id="cb44-54"><a href="#cb44-54" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb44-55"><a href="#cb44-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">save_diagram</span>(<span class="st">'digraph series {</span></span>
+<span id="cb44-56"><a href="#cb44-56" aria-hidden="true" tabindex="-1"></a><span class="st">    rankdir = LR</span></span>
+<span id="cb44-57"><a href="#cb44-57" aria-hidden="true" tabindex="-1"></a><span class="st">    graph [bgcolor = transparent]</span></span>
+<span id="cb44-58"><a href="#cb44-58" aria-hidden="true" tabindex="-1"></a><span class="st">    node [shape = rectangle, style = filled, fillcolor = "#AED6F1",</span></span>
+<span id="cb44-59"><a href="#cb44-59" aria-hidden="true" tabindex="-1"></a><span class="st">          fontname = "sans-serif", fontsize = 12, margin = "0.2,0.1"]</span></span>
+<span id="cb44-60"><a href="#cb44-60" aria-hidden="true" tabindex="-1"></a><span class="st">    edge [arrowsize = 0.8]</span></span>
+<span id="cb44-61"><a href="#cb44-61" aria-hidden="true" tabindex="-1"></a><span class="st">    I [shape = point, width = 0.15, fillcolor = black]</span></span>
+<span id="cb44-62"><a href="#cb44-62" aria-hidden="true" tabindex="-1"></a><span class="st">    A [label = "Motor</span><span class="sc">\n</span><span class="st">R = 0.95"]</span></span>
+<span id="cb44-63"><a href="#cb44-63" aria-hidden="true" tabindex="-1"></a><span class="st">    B [label = "Pump</span><span class="sc">\n</span><span class="st">R = 0.90"]</span></span>
+<span id="cb44-64"><a href="#cb44-64" aria-hidden="true" tabindex="-1"></a><span class="st">    C [label = "Valve</span><span class="sc">\n</span><span class="st">R = 0.98"]</span></span>
+<span id="cb44-65"><a href="#cb44-65" aria-hidden="true" tabindex="-1"></a><span class="st">    O [shape = point, width = 0.15, fillcolor = black]</span></span>
+<span id="cb44-66"><a href="#cb44-66" aria-hidden="true" tabindex="-1"></a><span class="st">    I -&gt; A -&gt; B -&gt; C -&gt; O</span></span>
+<span id="cb44-67"><a href="#cb44-67" aria-hidden="true" tabindex="-1"></a><span class="st">  }'</span>, <span class="st">"images/rbd-series.png"</span>)</span>
+<span id="cb44-68"><a href="#cb44-68" aria-hidden="true" tabindex="-1"></a>  <span class="fu">save_diagram</span>(<span class="st">'digraph parallel {</span></span>
+<span id="cb44-69"><a href="#cb44-69" aria-hidden="true" tabindex="-1"></a><span class="st">    rankdir = LR</span></span>
+<span id="cb44-70"><a href="#cb44-70" aria-hidden="true" tabindex="-1"></a><span class="st">    graph [bgcolor = transparent]</span></span>
+<span id="cb44-71"><a href="#cb44-71" aria-hidden="true" tabindex="-1"></a><span class="st">    node [shape = rectangle, style = filled, fillcolor = "#A9DFBF",</span></span>
+<span id="cb44-72"><a href="#cb44-72" aria-hidden="true" tabindex="-1"></a><span class="st">          fontname = "sans-serif", fontsize = 12, margin = "0.2,0.1"]</span></span>
+<span id="cb44-73"><a href="#cb44-73" aria-hidden="true" tabindex="-1"></a><span class="st">    edge [arrowsize = 0.8]</span></span>
+<span id="cb44-74"><a href="#cb44-74" aria-hidden="true" tabindex="-1"></a><span class="st">    I [shape = point, width = 0.15, fillcolor = black]</span></span>
+<span id="cb44-75"><a href="#cb44-75" aria-hidden="true" tabindex="-1"></a><span class="st">    A [label = "Generator 1</span><span class="sc">\n</span><span class="st">R = 0.90"]</span></span>
+<span id="cb44-76"><a href="#cb44-76" aria-hidden="true" tabindex="-1"></a><span class="st">    B [label = "Generator 2</span><span class="sc">\n</span><span class="st">R = 0.85"]</span></span>
+<span id="cb44-77"><a href="#cb44-77" aria-hidden="true" tabindex="-1"></a><span class="st">    O [shape = point, width = 0.15, fillcolor = black]</span></span>
+<span id="cb44-78"><a href="#cb44-78" aria-hidden="true" tabindex="-1"></a><span class="st">    I -&gt; A -&gt; O</span></span>
+<span id="cb44-79"><a href="#cb44-79" aria-hidden="true" tabindex="-1"></a><span class="st">    I -&gt; B -&gt; O</span></span>
+<span id="cb44-80"><a href="#cb44-80" aria-hidden="true" tabindex="-1"></a><span class="st">  }'</span>, <span class="st">"images/rbd-parallel.png"</span>)</span>
+<span id="cb44-81"><a href="#cb44-81" aria-hidden="true" tabindex="-1"></a>  <span class="fu">save_diagram</span>(<span class="st">'digraph mixed {</span></span>
+<span id="cb44-82"><a href="#cb44-82" aria-hidden="true" tabindex="-1"></a><span class="st">    rankdir = LR</span></span>
+<span id="cb44-83"><a href="#cb44-83" aria-hidden="true" tabindex="-1"></a><span class="st">    graph [bgcolor = transparent]</span></span>
+<span id="cb44-84"><a href="#cb44-84" aria-hidden="true" tabindex="-1"></a><span class="st">    node [shape = rectangle, style = filled, fillcolor = "#F9E79F",</span></span>
+<span id="cb44-85"><a href="#cb44-85" aria-hidden="true" tabindex="-1"></a><span class="st">          fontname = "sans-serif", fontsize = 12, margin = "0.2,0.1"]</span></span>
+<span id="cb44-86"><a href="#cb44-86" aria-hidden="true" tabindex="-1"></a><span class="st">    edge [arrowsize = 0.8]</span></span>
+<span id="cb44-87"><a href="#cb44-87" aria-hidden="true" tabindex="-1"></a><span class="st">    I  [shape = point, width = 0.15, fillcolor = black]</span></span>
+<span id="cb44-88"><a href="#cb44-88" aria-hidden="true" tabindex="-1"></a><span class="st">    S  [label = "Sensor</span><span class="sc">\n</span><span class="st">R = 0.95"]</span></span>
+<span id="cb44-89"><a href="#cb44-89" aria-hidden="true" tabindex="-1"></a><span class="st">    T  [label = "Transmitter</span><span class="sc">\n</span><span class="st">R = 0.97"]</span></span>
+<span id="cb44-90"><a href="#cb44-90" aria-hidden="true" tabindex="-1"></a><span class="st">    A1 [label = "Actuator 1</span><span class="sc">\n</span><span class="st">R = 0.90"]</span></span>
+<span id="cb44-91"><a href="#cb44-91" aria-hidden="true" tabindex="-1"></a><span class="st">    A2 [label = "Actuator 2</span><span class="sc">\n</span><span class="st">R = 0.90"]</span></span>
+<span id="cb44-92"><a href="#cb44-92" aria-hidden="true" tabindex="-1"></a><span class="st">    O  [shape = point, width = 0.15, fillcolor = black]</span></span>
+<span id="cb44-93"><a href="#cb44-93" aria-hidden="true" tabindex="-1"></a><span class="st">    I -&gt; S -&gt; T -&gt; A1 -&gt; O</span></span>
+<span id="cb44-94"><a href="#cb44-94" aria-hidden="true" tabindex="-1"></a><span class="st">    T -&gt; A2 -&gt; O</span></span>
+<span id="cb44-95"><a href="#cb44-95" aria-hidden="true" tabindex="-1"></a><span class="st">  }'</span>, <span class="st">"images/rbd-mixed.png"</span>)</span>
+<span id="cb44-96"><a href="#cb44-96" aria-hidden="true" tabindex="-1"></a>  <span class="fu">save_diagram</span>(<span class="st">'digraph koon {</span></span>
+<span id="cb44-97"><a href="#cb44-97" aria-hidden="true" tabindex="-1"></a><span class="st">    rankdir = LR</span></span>
+<span id="cb44-98"><a href="#cb44-98" aria-hidden="true" tabindex="-1"></a><span class="st">    graph [bgcolor = transparent]</span></span>
+<span id="cb44-99"><a href="#cb44-99" aria-hidden="true" tabindex="-1"></a><span class="st">    node [shape = rectangle, style = filled, fillcolor = "#D7BDE2",</span></span>
+<span id="cb44-100"><a href="#cb44-100" aria-hidden="true" tabindex="-1"></a><span class="st">          fontname = "sans-serif", fontsize = 12, margin = "0.2,0.1"]</span></span>
+<span id="cb44-101"><a href="#cb44-101" aria-hidden="true" tabindex="-1"></a><span class="st">    edge [arrowsize = 0.8]</span></span>
+<span id="cb44-102"><a href="#cb44-102" aria-hidden="true" tabindex="-1"></a><span class="st">    I  [shape = point, width = 0.15, fillcolor = black]</span></span>
+<span id="cb44-103"><a href="#cb44-103" aria-hidden="true" tabindex="-1"></a><span class="st">    C1 [label = "Computer 1</span><span class="sc">\n</span><span class="st">R = 0.99"]</span></span>
+<span id="cb44-104"><a href="#cb44-104" aria-hidden="true" tabindex="-1"></a><span class="st">    C2 [label = "Computer 2</span><span class="sc">\n</span><span class="st">R = 0.99"]</span></span>
+<span id="cb44-105"><a href="#cb44-105" aria-hidden="true" tabindex="-1"></a><span class="st">    C3 [label = "Computer 3</span><span class="sc">\n</span><span class="st">R = 0.99"]</span></span>
+<span id="cb44-106"><a href="#cb44-106" aria-hidden="true" tabindex="-1"></a><span class="st">    V  [label = "Voter</span><span class="sc">\n</span><span class="st">(2-of-3)", shape = diamond,</span></span>
+<span id="cb44-107"><a href="#cb44-107" aria-hidden="true" tabindex="-1"></a><span class="st">        fillcolor = "#F1948A", fontsize = 11]</span></span>
+<span id="cb44-108"><a href="#cb44-108" aria-hidden="true" tabindex="-1"></a><span class="st">    O  [shape = point, width = 0.15, fillcolor = black]</span></span>
+<span id="cb44-109"><a href="#cb44-109" aria-hidden="true" tabindex="-1"></a><span class="st">    I -&gt; C1 -&gt; V</span></span>
+<span id="cb44-110"><a href="#cb44-110" aria-hidden="true" tabindex="-1"></a><span class="st">    I -&gt; C2 -&gt; V</span></span>
+<span id="cb44-111"><a href="#cb44-111" aria-hidden="true" tabindex="-1"></a><span class="st">    I -&gt; C3 -&gt; V</span></span>
+<span id="cb44-112"><a href="#cb44-112" aria-hidden="true" tabindex="-1"></a><span class="st">    V -&gt; O</span></span>
+<span id="cb44-113"><a href="#cb44-113" aria-hidden="true" tabindex="-1"></a><span class="st">  }'</span>, <span class="st">"images/rbd-koon.png"</span>)</span>
+<span id="cb44-114"><a href="#cb44-114" aria-hidden="true" tabindex="-1"></a>  <span class="fu">save_diagram</span>(<span class="st">'digraph fta {</span></span>
+<span id="cb44-115"><a href="#cb44-115" aria-hidden="true" tabindex="-1"></a><span class="st">    rankdir = TB</span></span>
+<span id="cb44-116"><a href="#cb44-116" aria-hidden="true" tabindex="-1"></a><span class="st">    graph [bgcolor = transparent]</span></span>
+<span id="cb44-117"><a href="#cb44-117" aria-hidden="true" tabindex="-1"></a><span class="st">    node [fontname = "sans-serif", fontsize = 12, style = filled]</span></span>
+<span id="cb44-118"><a href="#cb44-118" aria-hidden="true" tabindex="-1"></a><span class="st">    edge [arrowsize = 0.8]</span></span>
+<span id="cb44-119"><a href="#cb44-119" aria-hidden="true" tabindex="-1"></a><span class="st">    Top [label = "System</span><span class="sc">\n</span><span class="st">Failure",  shape = rectangle,</span></span>
+<span id="cb44-120"><a href="#cb44-120" aria-hidden="true" tabindex="-1"></a><span class="st">         fillcolor = "#E74C3C", fontcolor = white]</span></span>
+<span id="cb44-121"><a href="#cb44-121" aria-hidden="true" tabindex="-1"></a><span class="st">    OR  [label = "OR Gate", shape = diamond, fillcolor = "#F39C12"]</span></span>
+<span id="cb44-122"><a href="#cb44-122" aria-hidden="true" tabindex="-1"></a><span class="st">    F1  [label = "Component A</span><span class="sc">\n</span><span class="st">Fails", shape = ellipse,</span></span>
+<span id="cb44-123"><a href="#cb44-123" aria-hidden="true" tabindex="-1"></a><span class="st">         fillcolor = "#AED6F1"]</span></span>
+<span id="cb44-124"><a href="#cb44-124" aria-hidden="true" tabindex="-1"></a><span class="st">    F2  [label = "Component B</span><span class="sc">\n</span><span class="st">Fails", shape = ellipse,</span></span>
+<span id="cb44-125"><a href="#cb44-125" aria-hidden="true" tabindex="-1"></a><span class="st">         fillcolor = "#AED6F1"]</span></span>
+<span id="cb44-126"><a href="#cb44-126" aria-hidden="true" tabindex="-1"></a><span class="st">    Top -&gt; OR</span></span>
+<span id="cb44-127"><a href="#cb44-127" aria-hidden="true" tabindex="-1"></a><span class="st">    OR  -&gt; F1</span></span>
+<span id="cb44-128"><a href="#cb44-128" aria-hidden="true" tabindex="-1"></a><span class="st">    OR  -&gt; F2</span></span>
+<span id="cb44-129"><a href="#cb44-129" aria-hidden="true" tabindex="-1"></a><span class="st">  }'</span>, <span class="st">"images/rbd-faulttree.png"</span>)</span>
+<span id="cb44-130"><a href="#cb44-130" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb44-131"><a href="#cb44-131" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-132"><a href="#cb44-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-133"><a href="#cb44-133" aria-hidden="true" tabindex="-1"></a><span class="fu">## Series Systems</span></span>
+<span id="cb44-134"><a href="#cb44-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-135"><a href="#cb44-135" aria-hidden="true" tabindex="-1"></a>In a **series** system, all components must function for the system to succeed:</span>
+<span id="cb44-136"><a href="#cb44-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-137"><a href="#cb44-137" aria-hidden="true" tabindex="-1"></a>$$R_{\text{sys}} = R_1 \times R_2 \times \cdots \times R_n = \prod_{i=1}^{n} R_i$$</span>
+<span id="cb44-138"><a href="#cb44-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-139"><a href="#cb44-139" aria-hidden="true" tabindex="-1"></a>A series system is *always less reliable* than its weakest component. Adding more components in series can only reduce system reliability.</span>
+<span id="cb44-140"><a href="#cb44-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-141"><a href="#cb44-141" aria-hidden="true" tabindex="-1"></a><span class="fu">### Example: Water Pumping System</span></span>
+<span id="cb44-142"><a href="#cb44-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-143"><a href="#cb44-143" aria-hidden="true" tabindex="-1"></a>A pumping system requires a motor (R = 0.95), a pump (R = 0.90), and a control valve (R = 0.98) to all be operational.</span>
+<span id="cb44-144"><a href="#cb44-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-145"><a href="#cb44-145" aria-hidden="true" tabindex="-1"></a>::: {.content-visible when-format="html"}</span>
+<span id="cb44-148"><a href="#cb44-148" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb44-149"><a href="#cb44-149" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (knitr<span class="sc">::</span><span class="fu">is_html_output</span>(<span class="at">excludes =</span> <span class="st">"epub"</span>)) <span class="fu">grViz</span>(<span class="st">"</span></span>
+<span id="cb44-150"><a href="#cb44-150" aria-hidden="true" tabindex="-1"></a><span class="st">digraph series {</span></span>
+<span id="cb44-151"><a href="#cb44-151" aria-hidden="true" tabindex="-1"></a><span class="st">  rankdir = LR</span></span>
+<span id="cb44-152"><a href="#cb44-152" aria-hidden="true" tabindex="-1"></a><span class="st">  graph [bgcolor = transparent]</span></span>
+<span id="cb44-153"><a href="#cb44-153" aria-hidden="true" tabindex="-1"></a><span class="st">  node [shape = rectangle, style = filled, fillcolor = '#AED6F1',</span></span>
+<span id="cb44-154"><a href="#cb44-154" aria-hidden="true" tabindex="-1"></a><span class="st">        fontname = 'sans-serif', fontsize = 12, margin = '0.2,0.1']</span></span>
+<span id="cb44-155"><a href="#cb44-155" aria-hidden="true" tabindex="-1"></a><span class="st">  edge [arrowsize = 0.8]</span></span>
+<span id="cb44-156"><a href="#cb44-156" aria-hidden="true" tabindex="-1"></a><span class="st">  I [shape = point, width = 0.15, fillcolor = black]</span></span>
+<span id="cb44-157"><a href="#cb44-157" aria-hidden="true" tabindex="-1"></a><span class="st">  A [label = 'Motor</span><span class="sc">\n</span><span class="st">R = 0.95']</span></span>
+<span id="cb44-158"><a href="#cb44-158" aria-hidden="true" tabindex="-1"></a><span class="st">  B [label = 'Pump</span><span class="sc">\n</span><span class="st">R = 0.90']</span></span>
+<span id="cb44-159"><a href="#cb44-159" aria-hidden="true" tabindex="-1"></a><span class="st">  C [label = 'Valve</span><span class="sc">\n</span><span class="st">R = 0.98']</span></span>
+<span id="cb44-160"><a href="#cb44-160" aria-hidden="true" tabindex="-1"></a><span class="st">  O [shape = point, width = 0.15, fillcolor = black]</span></span>
+<span id="cb44-161"><a href="#cb44-161" aria-hidden="true" tabindex="-1"></a><span class="st">  I -&gt; A -&gt; B -&gt; C -&gt; O</span></span>
+<span id="cb44-162"><a href="#cb44-162" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb44-163"><a href="#cb44-163" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)</span>
+<span id="cb44-164"><a href="#cb44-164" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-165"><a href="#cb44-165" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb44-166"><a href="#cb44-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-167"><a href="#cb44-167" aria-hidden="true" tabindex="-1"></a>::: {.content-visible unless-format="html"}</span>
+<span id="cb44-170"><a href="#cb44-170" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb44-171"><a href="#cb44-171" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb44-172"><a href="#cb44-172" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Series RBD: Motor → Pump → Valve (all must work)"</span></span>
+<span id="cb44-173"><a href="#cb44-173" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"images/rbd-series.png"</span>)</span>
+<span id="cb44-174"><a href="#cb44-174" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-175"><a href="#cb44-175" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb44-176"><a href="#cb44-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-179"><a href="#cb44-179" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb44-180"><a href="#cb44-180" aria-hidden="true" tabindex="-1"></a>R_motor <span class="ot">&lt;-</span> <span class="fl">0.95</span></span>
+<span id="cb44-181"><a href="#cb44-181" aria-hidden="true" tabindex="-1"></a>R_pump  <span class="ot">&lt;-</span> <span class="fl">0.90</span></span>
+<span id="cb44-182"><a href="#cb44-182" aria-hidden="true" tabindex="-1"></a>R_valve <span class="ot">&lt;-</span> <span class="fl">0.98</span></span>
+<span id="cb44-183"><a href="#cb44-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-184"><a href="#cb44-184" aria-hidden="true" tabindex="-1"></a>R_series <span class="ot">&lt;-</span> R_motor <span class="sc">*</span> R_pump <span class="sc">*</span> R_valve</span>
+<span id="cb44-185"><a href="#cb44-185" aria-hidden="true" tabindex="-1"></a>R_series  <span class="co"># ~0.838</span></span>
+<span id="cb44-186"><a href="#cb44-186" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-187"><a href="#cb44-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-188"><a href="#cb44-188" aria-hidden="true" tabindex="-1"></a>The system reliability is approximately 83.8%, lower than any individual component.</span>
+<span id="cb44-189"><a href="#cb44-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-190"><a href="#cb44-190" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb44-191"><a href="#cb44-191" aria-hidden="true" tabindex="-1"></a><span class="fu">## Try It</span></span>
+<span id="cb44-192"><a href="#cb44-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-193"><a href="#cb44-193" aria-hidden="true" tabindex="-1"></a>A conveyor belt system has 5 components in series with reliabilities 0.98, 0.96, 0.99, 0.94, and 0.97. Calculate the system reliability.</span>
+<span id="cb44-194"><a href="#cb44-194" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb44-197"><a href="#cb44-197" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb44-198"><a href="#cb44-198" aria-hidden="true" tabindex="-1"></a>R_components <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.88</span>, <span class="fl">0.88</span>, <span class="fl">0.88</span>)</span>
-<span id="cb44-199"><a href="#cb44-199" aria-hidden="true" tabindex="-1"></a>R_parallel <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fu">prod</span>(<span class="dv">1</span> <span class="sc">-</span> R_components)</span>
-<span id="cb44-200"><a href="#cb44-200" aria-hidden="true" tabindex="-1"></a>R_parallel  <span class="co"># ~0.9983</span></span>
-<span id="cb44-201"><a href="#cb44-201" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb44-202"><a href="#cb44-202" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
-<span id="cb44-203"><a href="#cb44-203" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb44-204"><a href="#cb44-204" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-205"><a href="#cb44-205" aria-hidden="true" tabindex="-1"></a><span class="fu">## Mixed Systems</span></span>
-<span id="cb44-206"><a href="#cb44-206" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-207"><a href="#cb44-207" aria-hidden="true" tabindex="-1"></a>Most real systems combine series and parallel blocks. To analyze a **mixed** system, decompose it into subsystems and apply series and parallel rules step by step, working from the innermost blocks outward.</span>
-<span id="cb44-208"><a href="#cb44-208" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-209"><a href="#cb44-209" aria-hidden="true" tabindex="-1"></a><span class="fu">### Example: Safety System</span></span>
-<span id="cb44-210"><a href="#cb44-210" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-211"><a href="#cb44-211" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Subsystem A**: a sensor (R = 0.95) and a transmitter (R = 0.97) in series.</span>
-<span id="cb44-212"><a href="#cb44-212" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Subsystem B**: two redundant actuators (each R = 0.90) in parallel.</span>
-<span id="cb44-213"><a href="#cb44-213" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Subsystems A and B in series (both must work).</span>
-<span id="cb44-214"><a href="#cb44-214" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-217"><a href="#cb44-217" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb44-218"><a href="#cb44-218" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: !expr knitr::is_html_output(excludes = "epub")</span></span>
-<span id="cb44-219"><a href="#cb44-219" aria-hidden="true" tabindex="-1"></a><span class="fu">grViz</span>(<span class="st">"</span></span>
-<span id="cb44-220"><a href="#cb44-220" aria-hidden="true" tabindex="-1"></a><span class="st">digraph mixed {</span></span>
-<span id="cb44-221"><a href="#cb44-221" aria-hidden="true" tabindex="-1"></a><span class="st">  rankdir = LR</span></span>
-<span id="cb44-222"><a href="#cb44-222" aria-hidden="true" tabindex="-1"></a><span class="st">  graph [bgcolor = transparent]</span></span>
-<span id="cb44-223"><a href="#cb44-223" aria-hidden="true" tabindex="-1"></a><span class="st">  node [shape = rectangle, style = filled, fillcolor = '#F9E79F',</span></span>
-<span id="cb44-224"><a href="#cb44-224" aria-hidden="true" tabindex="-1"></a><span class="st">        fontname = 'sans-serif', fontsize = 12, margin = '0.2,0.1']</span></span>
-<span id="cb44-225"><a href="#cb44-225" aria-hidden="true" tabindex="-1"></a><span class="st">  edge [arrowsize = 0.8]</span></span>
-<span id="cb44-226"><a href="#cb44-226" aria-hidden="true" tabindex="-1"></a><span class="st">  I [shape = point, width = 0.15, fillcolor = black]</span></span>
-<span id="cb44-227"><a href="#cb44-227" aria-hidden="true" tabindex="-1"></a><span class="st">  S [label = 'Sensor</span><span class="sc">\n</span><span class="st">R = 0.95']</span></span>
-<span id="cb44-228"><a href="#cb44-228" aria-hidden="true" tabindex="-1"></a><span class="st">  T [label = 'Transmitter</span><span class="sc">\n</span><span class="st">R = 0.97']</span></span>
-<span id="cb44-229"><a href="#cb44-229" aria-hidden="true" tabindex="-1"></a><span class="st">  A1 [label = 'Actuator 1</span><span class="sc">\n</span><span class="st">R = 0.90']</span></span>
-<span id="cb44-230"><a href="#cb44-230" aria-hidden="true" tabindex="-1"></a><span class="st">  A2 [label = 'Actuator 2</span><span class="sc">\n</span><span class="st">R = 0.90']</span></span>
-<span id="cb44-231"><a href="#cb44-231" aria-hidden="true" tabindex="-1"></a><span class="st">  O [shape = point, width = 0.15, fillcolor = black]</span></span>
-<span id="cb44-232"><a href="#cb44-232" aria-hidden="true" tabindex="-1"></a><span class="st">  I -&gt; S -&gt; T -&gt; A1 -&gt; O</span></span>
-<span id="cb44-233"><a href="#cb44-233" aria-hidden="true" tabindex="-1"></a><span class="st">  T -&gt; A2 -&gt; O</span></span>
-<span id="cb44-234"><a href="#cb44-234" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
-<span id="cb44-235"><a href="#cb44-235" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)</span>
-<span id="cb44-236"><a href="#cb44-236" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb44-237"><a href="#cb44-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-198"><a href="#cb44-198" aria-hidden="true" tabindex="-1"></a>R_components <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.98</span>, <span class="fl">0.96</span>, <span class="fl">0.99</span>, <span class="fl">0.94</span>, <span class="fl">0.97</span>)</span>
+<span id="cb44-199"><a href="#cb44-199" aria-hidden="true" tabindex="-1"></a><span class="co"># R_series &lt;- prod(R_components)</span></span>
+<span id="cb44-200"><a href="#cb44-200" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-201"><a href="#cb44-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-202"><a href="#cb44-202" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Solution<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
+<span id="cb44-205"><a href="#cb44-205" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb44-206"><a href="#cb44-206" aria-hidden="true" tabindex="-1"></a>R_components <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.98</span>, <span class="fl">0.96</span>, <span class="fl">0.99</span>, <span class="fl">0.94</span>, <span class="fl">0.97</span>)</span>
+<span id="cb44-207"><a href="#cb44-207" aria-hidden="true" tabindex="-1"></a>R_series <span class="ot">&lt;-</span> <span class="fu">prod</span>(R_components)</span>
+<span id="cb44-208"><a href="#cb44-208" aria-hidden="true" tabindex="-1"></a>R_series  <span class="co"># ~0.845</span></span>
+<span id="cb44-209"><a href="#cb44-209" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-210"><a href="#cb44-210" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
+<span id="cb44-211"><a href="#cb44-211" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb44-212"><a href="#cb44-212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-213"><a href="#cb44-213" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb44-214"><a href="#cb44-214" aria-hidden="true" tabindex="-1"></a><span class="fu">## Review</span></span>
+<span id="cb44-215"><a href="#cb44-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-216"><a href="#cb44-216" aria-hidden="true" tabindex="-1"></a>In a series system, which component has the greatest influence on system reliability?</span>
+<span id="cb44-217"><a href="#cb44-217" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-218"><a href="#cb44-218" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Answer<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
+<span id="cb44-219"><a href="#cb44-219" aria-hidden="true" tabindex="-1"></a>The **least reliable** component. It is the bottleneck; improving it produces the largest gain in system reliability.</span>
+<span id="cb44-220"><a href="#cb44-220" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
+<span id="cb44-221"><a href="#cb44-221" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb44-222"><a href="#cb44-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-223"><a href="#cb44-223" aria-hidden="true" tabindex="-1"></a><span class="fu">## Parallel Systems</span></span>
+<span id="cb44-224"><a href="#cb44-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-225"><a href="#cb44-225" aria-hidden="true" tabindex="-1"></a>In a **parallel** system, only one component needs to function, through **active redundancy** (all components operate simultaneously). The system fails *only* if all components fail at the same time. Since component failures are assumed to be independent:</span>
+<span id="cb44-226"><a href="#cb44-226" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-227"><a href="#cb44-227" aria-hidden="true" tabindex="-1"></a>$$P(\text{all fail}) = \prod_{i=1}^{n}(1 - R_i)$$</span>
+<span id="cb44-228"><a href="#cb44-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-229"><a href="#cb44-229" aria-hidden="true" tabindex="-1"></a>$$R_{\text{sys}} = 1 - \prod_{i=1}^{n}(1 - R_i)$$</span>
+<span id="cb44-230"><a href="#cb44-230" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-231"><a href="#cb44-231" aria-hidden="true" tabindex="-1"></a>Adding parallel components always increases system reliability.</span>
+<span id="cb44-232"><a href="#cb44-232" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-233"><a href="#cb44-233" aria-hidden="true" tabindex="-1"></a><span class="fu">### Example: Backup Power System</span></span>
+<span id="cb44-234"><a href="#cb44-234" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-235"><a href="#cb44-235" aria-hidden="true" tabindex="-1"></a>A primary generator (R = 0.90) and a standby generator (R = 0.85); either alone keeps the system running.</span>
+<span id="cb44-236"><a href="#cb44-236" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-237"><a href="#cb44-237" aria-hidden="true" tabindex="-1"></a>::: {.content-visible when-format="html"}</span>
 <span id="cb44-240"><a href="#cb44-240" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb44-241"><a href="#cb44-241" aria-hidden="true" tabindex="-1"></a><span class="co"># Subsystem A (series)</span></span>
-<span id="cb44-242"><a href="#cb44-242" aria-hidden="true" tabindex="-1"></a>R_A <span class="ot">&lt;-</span> <span class="fl">0.95</span> <span class="sc">*</span> <span class="fl">0.97</span></span>
-<span id="cb44-243"><a href="#cb44-243" aria-hidden="true" tabindex="-1"></a>R_A</span>
-<span id="cb44-244"><a href="#cb44-244" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-245"><a href="#cb44-245" aria-hidden="true" tabindex="-1"></a><span class="co"># Subsystem B (parallel)</span></span>
-<span id="cb44-246"><a href="#cb44-246" aria-hidden="true" tabindex="-1"></a>R_B <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.90</span>) <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.90</span>)</span>
-<span id="cb44-247"><a href="#cb44-247" aria-hidden="true" tabindex="-1"></a>R_B</span>
-<span id="cb44-248"><a href="#cb44-248" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-249"><a href="#cb44-249" aria-hidden="true" tabindex="-1"></a><span class="co"># Overall system (A and B in series)</span></span>
-<span id="cb44-250"><a href="#cb44-250" aria-hidden="true" tabindex="-1"></a>R_system <span class="ot">&lt;-</span> R_A <span class="sc">*</span> R_B</span>
-<span id="cb44-251"><a href="#cb44-251" aria-hidden="true" tabindex="-1"></a>R_system</span>
-<span id="cb44-252"><a href="#cb44-252" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb44-253"><a href="#cb44-253" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-254"><a href="#cb44-254" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
-<span id="cb44-255"><a href="#cb44-255" aria-hidden="true" tabindex="-1"></a><span class="fu">## Review</span></span>
-<span id="cb44-256"><a href="#cb44-256" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-257"><a href="#cb44-257" aria-hidden="true" tabindex="-1"></a>A system has two subsystems in series. Subsystem 1 has two components in parallel (each R = 0.85); Subsystem 2 is a single component with R = 0.92. What is the system reliability?</span>
+<span id="cb44-241"><a href="#cb44-241" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (knitr<span class="sc">::</span><span class="fu">is_html_output</span>(<span class="at">excludes =</span> <span class="st">"epub"</span>)) <span class="fu">grViz</span>(<span class="st">"</span></span>
+<span id="cb44-242"><a href="#cb44-242" aria-hidden="true" tabindex="-1"></a><span class="st">digraph parallel {</span></span>
+<span id="cb44-243"><a href="#cb44-243" aria-hidden="true" tabindex="-1"></a><span class="st">  rankdir = LR</span></span>
+<span id="cb44-244"><a href="#cb44-244" aria-hidden="true" tabindex="-1"></a><span class="st">  graph [bgcolor = transparent]</span></span>
+<span id="cb44-245"><a href="#cb44-245" aria-hidden="true" tabindex="-1"></a><span class="st">  node [shape = rectangle, style = filled, fillcolor = '#A9DFBF',</span></span>
+<span id="cb44-246"><a href="#cb44-246" aria-hidden="true" tabindex="-1"></a><span class="st">        fontname = 'sans-serif', fontsize = 12, margin = '0.2,0.1']</span></span>
+<span id="cb44-247"><a href="#cb44-247" aria-hidden="true" tabindex="-1"></a><span class="st">  edge [arrowsize = 0.8]</span></span>
+<span id="cb44-248"><a href="#cb44-248" aria-hidden="true" tabindex="-1"></a><span class="st">  I [shape = point, width = 0.15, fillcolor = black]</span></span>
+<span id="cb44-249"><a href="#cb44-249" aria-hidden="true" tabindex="-1"></a><span class="st">  A [label = 'Generator 1</span><span class="sc">\n</span><span class="st">R = 0.90']</span></span>
+<span id="cb44-250"><a href="#cb44-250" aria-hidden="true" tabindex="-1"></a><span class="st">  B [label = 'Generator 2</span><span class="sc">\n</span><span class="st">R = 0.85']</span></span>
+<span id="cb44-251"><a href="#cb44-251" aria-hidden="true" tabindex="-1"></a><span class="st">  O [shape = point, width = 0.15, fillcolor = black]</span></span>
+<span id="cb44-252"><a href="#cb44-252" aria-hidden="true" tabindex="-1"></a><span class="st">  I -&gt; A -&gt; O</span></span>
+<span id="cb44-253"><a href="#cb44-253" aria-hidden="true" tabindex="-1"></a><span class="st">  I -&gt; B -&gt; O</span></span>
+<span id="cb44-254"><a href="#cb44-254" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb44-255"><a href="#cb44-255" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)</span>
+<span id="cb44-256"><a href="#cb44-256" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-257"><a href="#cb44-257" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb44-258"><a href="#cb44-258" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-259"><a href="#cb44-259" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Answer<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
-<span id="cb44-260"><a href="#cb44-260" aria-hidden="true" tabindex="-1"></a>$R_{\text{sub1}} = 1 - (1 - 0.85)^2 = 0.9775$. $R_{\text{sys}} = 0.9775 \times 0.92 \approx 0.899$.</span>
-<span id="cb44-261"><a href="#cb44-261" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
-<span id="cb44-262"><a href="#cb44-262" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb44-263"><a href="#cb44-263" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-264"><a href="#cb44-264" aria-hidden="true" tabindex="-1"></a><span class="fu">## k-out-of-n Systems</span></span>
-<span id="cb44-265"><a href="#cb44-265" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-266"><a href="#cb44-266" aria-hidden="true" tabindex="-1"></a>A **k-out-of-n** system succeeds if at least $k$ of its $n$ identical components function:</span>
-<span id="cb44-267"><a href="#cb44-267" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-268"><a href="#cb44-268" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$k = n$: all must work → series.</span>
-<span id="cb44-269"><a href="#cb44-269" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$k = 1$: at least one works → parallel.</span>
-<span id="cb44-270"><a href="#cb44-270" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$1 &lt; k &lt; n$: voting or load-sharing system.</span>
-<span id="cb44-271"><a href="#cb44-271" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-272"><a href="#cb44-272" aria-hidden="true" tabindex="-1"></a>The reliability of a k-out-of-n system (identical components, each with reliability $p$) follows the binomial distribution:</span>
-<span id="cb44-273"><a href="#cb44-273" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-274"><a href="#cb44-274" aria-hidden="true" tabindex="-1"></a>$$R_{k/n} = \sum_{i=k}^{n} \binom{n}{i} p^i (1-p)^{n-i} = 1 - \text{pbinom}(k-1,\, n,\, 1-p)$$</span>
-<span id="cb44-275"><a href="#cb44-275" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-276"><a href="#cb44-276" aria-hidden="true" tabindex="-1"></a>The compact R expression counts the probability that *at least* $k$ components function: <span class="in">`pbinom(k-1, n, 1-p)`</span> gives the probability that $k-1$ or fewer components work (i.e., the system fails), and we subtract that from 1.</span>
-<span id="cb44-277"><a href="#cb44-277" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-278"><a href="#cb44-278" aria-hidden="true" tabindex="-1"></a><span class="fu">### Example: Flight Control Computers</span></span>
-<span id="cb44-279"><a href="#cb44-279" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-280"><a href="#cb44-280" aria-hidden="true" tabindex="-1"></a>A 2-out-of-3 voter: at least 2 of 3 computers must agree. Each computer has R = 0.99.</span>
-<span id="cb44-281"><a href="#cb44-281" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-284"><a href="#cb44-284" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb44-285"><a href="#cb44-285" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: !expr knitr::is_html_output(excludes = "epub")</span></span>
-<span id="cb44-286"><a href="#cb44-286" aria-hidden="true" tabindex="-1"></a><span class="fu">grViz</span>(<span class="st">"</span></span>
-<span id="cb44-287"><a href="#cb44-287" aria-hidden="true" tabindex="-1"></a><span class="st">digraph koon {</span></span>
-<span id="cb44-288"><a href="#cb44-288" aria-hidden="true" tabindex="-1"></a><span class="st">  rankdir = LR</span></span>
-<span id="cb44-289"><a href="#cb44-289" aria-hidden="true" tabindex="-1"></a><span class="st">  graph [bgcolor = transparent]</span></span>
-<span id="cb44-290"><a href="#cb44-290" aria-hidden="true" tabindex="-1"></a><span class="st">  node [shape = rectangle, style = filled, fillcolor = '#D7BDE2',</span></span>
-<span id="cb44-291"><a href="#cb44-291" aria-hidden="true" tabindex="-1"></a><span class="st">        fontname = 'sans-serif', fontsize = 12, margin = '0.2,0.1']</span></span>
-<span id="cb44-292"><a href="#cb44-292" aria-hidden="true" tabindex="-1"></a><span class="st">  edge [arrowsize = 0.8]</span></span>
-<span id="cb44-293"><a href="#cb44-293" aria-hidden="true" tabindex="-1"></a><span class="st">  I  [shape = point, width = 0.15, fillcolor = black]</span></span>
-<span id="cb44-294"><a href="#cb44-294" aria-hidden="true" tabindex="-1"></a><span class="st">  C1 [label = 'Computer 1</span><span class="sc">\n</span><span class="st">R = 0.99']</span></span>
-<span id="cb44-295"><a href="#cb44-295" aria-hidden="true" tabindex="-1"></a><span class="st">  C2 [label = 'Computer 2</span><span class="sc">\n</span><span class="st">R = 0.99']</span></span>
-<span id="cb44-296"><a href="#cb44-296" aria-hidden="true" tabindex="-1"></a><span class="st">  C3 [label = 'Computer 3</span><span class="sc">\n</span><span class="st">R = 0.99']</span></span>
-<span id="cb44-297"><a href="#cb44-297" aria-hidden="true" tabindex="-1"></a><span class="st">  V  [label = 'Voter</span><span class="sc">\n</span><span class="st">(2-of-3)', shape = diamond, fillcolor = '#F1948A', fontsize = 11]</span></span>
-<span id="cb44-298"><a href="#cb44-298" aria-hidden="true" tabindex="-1"></a><span class="st">  O  [shape = point, width = 0.15, fillcolor = black]</span></span>
-<span id="cb44-299"><a href="#cb44-299" aria-hidden="true" tabindex="-1"></a><span class="st">  I -&gt; C1 -&gt; V</span></span>
-<span id="cb44-300"><a href="#cb44-300" aria-hidden="true" tabindex="-1"></a><span class="st">  I -&gt; C2 -&gt; V</span></span>
-<span id="cb44-301"><a href="#cb44-301" aria-hidden="true" tabindex="-1"></a><span class="st">  I -&gt; C3 -&gt; V</span></span>
-<span id="cb44-302"><a href="#cb44-302" aria-hidden="true" tabindex="-1"></a><span class="st">  V -&gt; O</span></span>
-<span id="cb44-303"><a href="#cb44-303" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
-<span id="cb44-304"><a href="#cb44-304" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)</span>
-<span id="cb44-305"><a href="#cb44-305" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb44-306"><a href="#cb44-306" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-309"><a href="#cb44-309" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb44-310"><a href="#cb44-310" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">3</span>      <span class="co"># total components</span></span>
-<span id="cb44-311"><a href="#cb44-311" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">2</span>      <span class="co"># minimum required</span></span>
-<span id="cb44-312"><a href="#cb44-312" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fl">0.99</span>   <span class="co"># individual reliability</span></span>
-<span id="cb44-313"><a href="#cb44-313" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-314"><a href="#cb44-314" aria-hidden="true" tabindex="-1"></a>R_voting <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fu">pbinom</span>(k <span class="sc">-</span> <span class="dv">1</span>, n, <span class="dv">1</span> <span class="sc">-</span> p)</span>
-<span id="cb44-315"><a href="#cb44-315" aria-hidden="true" tabindex="-1"></a>R_voting  <span class="co"># 0.9997</span></span>
-<span id="cb44-316"><a href="#cb44-316" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb44-317"><a href="#cb44-317" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-318"><a href="#cb44-318" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb44-319"><a href="#cb44-319" aria-hidden="true" tabindex="-1"></a><span class="fu">## Try It</span></span>
-<span id="cb44-320"><a href="#cb44-320" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-321"><a href="#cb44-321" aria-hidden="true" tabindex="-1"></a>A 3-out-of-5 redundant sensor array. Each sensor has reliability p = 0.95. Calculate the system reliability.</span>
-<span id="cb44-322"><a href="#cb44-322" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-325"><a href="#cb44-325" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb44-326"><a href="#cb44-326" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">5</span></span>
-<span id="cb44-327"><a href="#cb44-327" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">3</span></span>
-<span id="cb44-328"><a href="#cb44-328" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fl">0.95</span></span>
-<span id="cb44-329"><a href="#cb44-329" aria-hidden="true" tabindex="-1"></a><span class="co"># R_sys &lt;- 1 - pbinom(k - 1, n, 1 - p)</span></span>
-<span id="cb44-330"><a href="#cb44-330" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb44-331"><a href="#cb44-331" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-332"><a href="#cb44-332" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Solution<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
-<span id="cb44-335"><a href="#cb44-335" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb44-336"><a href="#cb44-336" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">5</span></span>
-<span id="cb44-337"><a href="#cb44-337" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">3</span></span>
-<span id="cb44-338"><a href="#cb44-338" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fl">0.95</span></span>
-<span id="cb44-339"><a href="#cb44-339" aria-hidden="true" tabindex="-1"></a>R_sys <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fu">pbinom</span>(k <span class="sc">-</span> <span class="dv">1</span>, n, <span class="dv">1</span> <span class="sc">-</span> p)</span>
-<span id="cb44-340"><a href="#cb44-340" aria-hidden="true" tabindex="-1"></a>R_sys  <span class="co"># ~0.9988</span></span>
-<span id="cb44-341"><a href="#cb44-341" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb44-342"><a href="#cb44-342" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
-<span id="cb44-343"><a href="#cb44-343" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb44-344"><a href="#cb44-344" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-345"><a href="#cb44-345" aria-hidden="true" tabindex="-1"></a><span class="fu">## System MTTF</span></span>
-<span id="cb44-346"><a href="#cb44-346" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-347"><a href="#cb44-347" aria-hidden="true" tabindex="-1"></a>For a **series** system of components with constant failure rates, the system failure rate equals the sum of component failure rates:</span>
-<span id="cb44-348"><a href="#cb44-348" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-349"><a href="#cb44-349" aria-hidden="true" tabindex="-1"></a>$$\lambda_{\text{sys}} = \sum_{i=1}^{n} \lambda_i \qquad \text{MTTF}_{\text{sys}} = \frac{1}{\lambda_{\text{sys}}}$$</span>
-<span id="cb44-350"><a href="#cb44-350" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-351"><a href="#cb44-351" aria-hidden="true" tabindex="-1"></a>For $n$ identical parallel components each with failure rate $\lambda$:</span>
-<span id="cb44-352"><a href="#cb44-352" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-353"><a href="#cb44-353" aria-hidden="true" tabindex="-1"></a>$$\text{MTTF}_{\text{parallel}} = \frac{1}{\lambda}\left(1 + \frac{1}{2} + \frac{1}{3} + \cdots + \frac{1}{n}\right)$$</span>
-<span id="cb44-354"><a href="#cb44-354" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-355"><a href="#cb44-355" aria-hidden="true" tabindex="-1"></a><span class="fu">### Example: Two Pumps in Parallel</span></span>
-<span id="cb44-356"><a href="#cb44-356" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-359"><a href="#cb44-359" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb44-360"><a href="#cb44-360" aria-hidden="true" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> <span class="fl">0.01</span>  <span class="co"># failures per hour</span></span>
-<span id="cb44-361"><a href="#cb44-361" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-362"><a href="#cb44-362" aria-hidden="true" tabindex="-1"></a>MTTF_single   <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">/</span> lambda</span>
-<span id="cb44-363"><a href="#cb44-363" aria-hidden="true" tabindex="-1"></a>MTTF_parallel <span class="ot">&lt;-</span> (<span class="dv">1</span> <span class="sc">/</span> lambda) <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>)</span>
-<span id="cb44-364"><a href="#cb44-364" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-365"><a href="#cb44-365" aria-hidden="true" tabindex="-1"></a>MTTF_single    <span class="co"># 100 hours</span></span>
-<span id="cb44-366"><a href="#cb44-366" aria-hidden="true" tabindex="-1"></a>MTTF_parallel  <span class="co"># 150 hours — 50% longer with one spare</span></span>
-<span id="cb44-367"><a href="#cb44-367" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb44-368"><a href="#cb44-368" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-369"><a href="#cb44-369" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
-<span id="cb44-370"><a href="#cb44-370" aria-hidden="true" tabindex="-1"></a><span class="fu">## Review</span></span>
-<span id="cb44-371"><a href="#cb44-371" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-372"><a href="#cb44-372" aria-hidden="true" tabindex="-1"></a>Three components in series have failure rates 0.02, 0.03, and 0.05 failures/hour. What is the system MTTF?</span>
-<span id="cb44-373"><a href="#cb44-373" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-374"><a href="#cb44-374" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Answer<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
-<span id="cb44-375"><a href="#cb44-375" aria-hidden="true" tabindex="-1"></a>$\lambda_{\text{sys}} = 0.02 + 0.03 + 0.05 = 0.10$, so $\text{MTTF} = 1/0.10 = 10$ hours.</span>
-<span id="cb44-376"><a href="#cb44-376" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
-<span id="cb44-377"><a href="#cb44-377" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb44-259"><a href="#cb44-259" aria-hidden="true" tabindex="-1"></a>::: {.content-visible unless-format="html"}</span>
+<span id="cb44-262"><a href="#cb44-262" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb44-263"><a href="#cb44-263" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb44-264"><a href="#cb44-264" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Parallel RBD: Generator 1 and Generator 2 (either can work)"</span></span>
+<span id="cb44-265"><a href="#cb44-265" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"images/rbd-parallel.png"</span>)</span>
+<span id="cb44-266"><a href="#cb44-266" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-267"><a href="#cb44-267" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb44-268"><a href="#cb44-268" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-271"><a href="#cb44-271" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb44-272"><a href="#cb44-272" aria-hidden="true" tabindex="-1"></a>R_gen1 <span class="ot">&lt;-</span> <span class="fl">0.90</span>  <span class="co"># Generator 1</span></span>
+<span id="cb44-273"><a href="#cb44-273" aria-hidden="true" tabindex="-1"></a>R_gen2 <span class="ot">&lt;-</span> <span class="fl">0.85</span>  <span class="co"># Generator 2</span></span>
+<span id="cb44-274"><a href="#cb44-274" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-275"><a href="#cb44-275" aria-hidden="true" tabindex="-1"></a>R_parallel <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">-</span> R_gen1) <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> R_gen2)</span>
+<span id="cb44-276"><a href="#cb44-276" aria-hidden="true" tabindex="-1"></a>R_parallel  <span class="co"># 0.985</span></span>
+<span id="cb44-277"><a href="#cb44-277" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-278"><a href="#cb44-278" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-279"><a href="#cb44-279" aria-hidden="true" tabindex="-1"></a>The parallel system reliability is 98.5%, much higher than either generator alone.</span>
+<span id="cb44-280"><a href="#cb44-280" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-281"><a href="#cb44-281" aria-hidden="true" tabindex="-1"></a>The benefit of redundancy grows with each additional component:</span>
+<span id="cb44-282"><a href="#cb44-282" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-285"><a href="#cb44-285" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb44-286"><a href="#cb44-286" aria-hidden="true" tabindex="-1"></a>n_vals <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span></span>
+<span id="cb44-287"><a href="#cb44-287" aria-hidden="true" tabindex="-1"></a>Rc     <span class="ot">&lt;-</span> <span class="fl">0.90</span></span>
+<span id="cb44-288"><a href="#cb44-288" aria-hidden="true" tabindex="-1"></a>R_par  <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">-</span> Rc)<span class="sc">^</span>n_vals</span>
+<span id="cb44-289"><a href="#cb44-289" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-290"><a href="#cb44-290" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(n_vals, R_par, <span class="at">type =</span> <span class="st">"b"</span>, <span class="at">col =</span> <span class="st">"steelblue"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">pch =</span> <span class="dv">19</span>,</span>
+<span id="cb44-291"><a href="#cb44-291" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Number of redundant components"</span>,</span>
+<span id="cb44-292"><a href="#cb44-292" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"System Reliability"</span>,</span>
+<span id="cb44-293"><a href="#cb44-293" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Parallel System Reliability vs. Redundancy (R_component = 0.90)"</span>,</span>
+<span id="cb44-294"><a href="#cb44-294" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb44-295"><a href="#cb44-295" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> Rc, <span class="at">col =</span> <span class="st">"gray50"</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb44-296"><a href="#cb44-296" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"bottomright"</span>,</span>
+<span id="cb44-297"><a href="#cb44-297" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"System reliability"</span>, <span class="st">"Single component (0.90)"</span>),</span>
+<span id="cb44-298"><a href="#cb44-298" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"steelblue"</span>, <span class="st">"gray50"</span>), <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">pch =</span> <span class="fu">c</span>(<span class="dv">19</span>, <span class="cn">NA</span>), <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb44-299"><a href="#cb44-299" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-300"><a href="#cb44-300" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-301"><a href="#cb44-301" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb44-302"><a href="#cb44-302" aria-hidden="true" tabindex="-1"></a><span class="fu">## Try It</span></span>
+<span id="cb44-303"><a href="#cb44-303" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-304"><a href="#cb44-304" aria-hidden="true" tabindex="-1"></a>A critical pump station has 3 pumps in parallel. Each pump has reliability 0.88. What is the system reliability?</span>
+<span id="cb44-305"><a href="#cb44-305" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-308"><a href="#cb44-308" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb44-309"><a href="#cb44-309" aria-hidden="true" tabindex="-1"></a>R_components <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.88</span>, <span class="fl">0.88</span>, <span class="fl">0.88</span>)</span>
+<span id="cb44-310"><a href="#cb44-310" aria-hidden="true" tabindex="-1"></a><span class="co"># R_parallel &lt;- 1 - prod(1 - R_components)</span></span>
+<span id="cb44-311"><a href="#cb44-311" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-312"><a href="#cb44-312" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-313"><a href="#cb44-313" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Solution<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
+<span id="cb44-316"><a href="#cb44-316" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb44-317"><a href="#cb44-317" aria-hidden="true" tabindex="-1"></a>R_components <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.88</span>, <span class="fl">0.88</span>, <span class="fl">0.88</span>)</span>
+<span id="cb44-318"><a href="#cb44-318" aria-hidden="true" tabindex="-1"></a>R_parallel <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fu">prod</span>(<span class="dv">1</span> <span class="sc">-</span> R_components)</span>
+<span id="cb44-319"><a href="#cb44-319" aria-hidden="true" tabindex="-1"></a>R_parallel  <span class="co"># ~0.9983</span></span>
+<span id="cb44-320"><a href="#cb44-320" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-321"><a href="#cb44-321" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
+<span id="cb44-322"><a href="#cb44-322" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb44-323"><a href="#cb44-323" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-324"><a href="#cb44-324" aria-hidden="true" tabindex="-1"></a><span class="fu">## Mixed Systems</span></span>
+<span id="cb44-325"><a href="#cb44-325" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-326"><a href="#cb44-326" aria-hidden="true" tabindex="-1"></a>Most real systems combine series and parallel blocks. To analyze a **mixed** system, decompose it into subsystems and apply series and parallel rules step by step, working from the innermost blocks outward.</span>
+<span id="cb44-327"><a href="#cb44-327" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-328"><a href="#cb44-328" aria-hidden="true" tabindex="-1"></a><span class="fu">### Example: Safety System</span></span>
+<span id="cb44-329"><a href="#cb44-329" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-330"><a href="#cb44-330" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Subsystem A**: a sensor (R = 0.95) and a transmitter (R = 0.97) in series.</span>
+<span id="cb44-331"><a href="#cb44-331" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Subsystem B**: two redundant actuators (each R = 0.90) in parallel.</span>
+<span id="cb44-332"><a href="#cb44-332" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Subsystems A and B in series (both must work).</span>
+<span id="cb44-333"><a href="#cb44-333" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-334"><a href="#cb44-334" aria-hidden="true" tabindex="-1"></a>::: {.content-visible when-format="html"}</span>
+<span id="cb44-337"><a href="#cb44-337" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb44-338"><a href="#cb44-338" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (knitr<span class="sc">::</span><span class="fu">is_html_output</span>(<span class="at">excludes =</span> <span class="st">"epub"</span>)) <span class="fu">grViz</span>(<span class="st">"</span></span>
+<span id="cb44-339"><a href="#cb44-339" aria-hidden="true" tabindex="-1"></a><span class="st">digraph mixed {</span></span>
+<span id="cb44-340"><a href="#cb44-340" aria-hidden="true" tabindex="-1"></a><span class="st">  rankdir = LR</span></span>
+<span id="cb44-341"><a href="#cb44-341" aria-hidden="true" tabindex="-1"></a><span class="st">  graph [bgcolor = transparent]</span></span>
+<span id="cb44-342"><a href="#cb44-342" aria-hidden="true" tabindex="-1"></a><span class="st">  node [shape = rectangle, style = filled, fillcolor = '#F9E79F',</span></span>
+<span id="cb44-343"><a href="#cb44-343" aria-hidden="true" tabindex="-1"></a><span class="st">        fontname = 'sans-serif', fontsize = 12, margin = '0.2,0.1']</span></span>
+<span id="cb44-344"><a href="#cb44-344" aria-hidden="true" tabindex="-1"></a><span class="st">  edge [arrowsize = 0.8]</span></span>
+<span id="cb44-345"><a href="#cb44-345" aria-hidden="true" tabindex="-1"></a><span class="st">  I [shape = point, width = 0.15, fillcolor = black]</span></span>
+<span id="cb44-346"><a href="#cb44-346" aria-hidden="true" tabindex="-1"></a><span class="st">  S [label = 'Sensor</span><span class="sc">\n</span><span class="st">R = 0.95']</span></span>
+<span id="cb44-347"><a href="#cb44-347" aria-hidden="true" tabindex="-1"></a><span class="st">  T [label = 'Transmitter</span><span class="sc">\n</span><span class="st">R = 0.97']</span></span>
+<span id="cb44-348"><a href="#cb44-348" aria-hidden="true" tabindex="-1"></a><span class="st">  A1 [label = 'Actuator 1</span><span class="sc">\n</span><span class="st">R = 0.90']</span></span>
+<span id="cb44-349"><a href="#cb44-349" aria-hidden="true" tabindex="-1"></a><span class="st">  A2 [label = 'Actuator 2</span><span class="sc">\n</span><span class="st">R = 0.90']</span></span>
+<span id="cb44-350"><a href="#cb44-350" aria-hidden="true" tabindex="-1"></a><span class="st">  O [shape = point, width = 0.15, fillcolor = black]</span></span>
+<span id="cb44-351"><a href="#cb44-351" aria-hidden="true" tabindex="-1"></a><span class="st">  I -&gt; S -&gt; T -&gt; A1 -&gt; O</span></span>
+<span id="cb44-352"><a href="#cb44-352" aria-hidden="true" tabindex="-1"></a><span class="st">  T -&gt; A2 -&gt; O</span></span>
+<span id="cb44-353"><a href="#cb44-353" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb44-354"><a href="#cb44-354" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)</span>
+<span id="cb44-355"><a href="#cb44-355" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-356"><a href="#cb44-356" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb44-357"><a href="#cb44-357" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-358"><a href="#cb44-358" aria-hidden="true" tabindex="-1"></a>::: {.content-visible unless-format="html"}</span>
+<span id="cb44-361"><a href="#cb44-361" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb44-362"><a href="#cb44-362" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb44-363"><a href="#cb44-363" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Mixed RBD: Sensor–Transmitter in series, Actuators 1 &amp; 2 in parallel"</span></span>
+<span id="cb44-364"><a href="#cb44-364" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"images/rbd-mixed.png"</span>)</span>
+<span id="cb44-365"><a href="#cb44-365" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-366"><a href="#cb44-366" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb44-367"><a href="#cb44-367" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-370"><a href="#cb44-370" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb44-371"><a href="#cb44-371" aria-hidden="true" tabindex="-1"></a><span class="co"># Subsystem A (series)</span></span>
+<span id="cb44-372"><a href="#cb44-372" aria-hidden="true" tabindex="-1"></a>R_A <span class="ot">&lt;-</span> <span class="fl">0.95</span> <span class="sc">*</span> <span class="fl">0.97</span></span>
+<span id="cb44-373"><a href="#cb44-373" aria-hidden="true" tabindex="-1"></a>R_A</span>
+<span id="cb44-374"><a href="#cb44-374" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-375"><a href="#cb44-375" aria-hidden="true" tabindex="-1"></a><span class="co"># Subsystem B (parallel)</span></span>
+<span id="cb44-376"><a href="#cb44-376" aria-hidden="true" tabindex="-1"></a>R_B <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.90</span>) <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.90</span>)</span>
+<span id="cb44-377"><a href="#cb44-377" aria-hidden="true" tabindex="-1"></a>R_B</span>
 <span id="cb44-378"><a href="#cb44-378" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-379"><a href="#cb44-379" aria-hidden="true" tabindex="-1"></a><span class="fu">## Common Cause Failure</span></span>
-<span id="cb44-380"><a href="#cb44-380" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-381"><a href="#cb44-381" aria-hidden="true" tabindex="-1"></a>All the analyses above assume that component failures are **statistically independent** — if Component A fails, it tells us nothing about Component B's probability of failing. In practice, this assumption can break down.</span>
-<span id="cb44-382"><a href="#cb44-382" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-383"><a href="#cb44-383" aria-hidden="true" tabindex="-1"></a>**Common Cause Failure (CCF)** occurs when a single event simultaneously causes multiple components to fail. Typical sources include:</span>
-<span id="cb44-384"><a href="#cb44-384" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-385"><a href="#cb44-385" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A shared environment (vibration, temperature, contamination) that degrades all components together</span>
-<span id="cb44-386"><a href="#cb44-386" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A common design flaw or manufacturing batch defect</span>
-<span id="cb44-387"><a href="#cb44-387" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A maintenance error that affects multiple redundant units at once</span>
+<span id="cb44-379"><a href="#cb44-379" aria-hidden="true" tabindex="-1"></a><span class="co"># Overall system (A and B in series)</span></span>
+<span id="cb44-380"><a href="#cb44-380" aria-hidden="true" tabindex="-1"></a>R_system <span class="ot">&lt;-</span> R_A <span class="sc">*</span> R_B</span>
+<span id="cb44-381"><a href="#cb44-381" aria-hidden="true" tabindex="-1"></a>R_system</span>
+<span id="cb44-382"><a href="#cb44-382" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-383"><a href="#cb44-383" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-384"><a href="#cb44-384" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb44-385"><a href="#cb44-385" aria-hidden="true" tabindex="-1"></a><span class="fu">## Review</span></span>
+<span id="cb44-386"><a href="#cb44-386" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-387"><a href="#cb44-387" aria-hidden="true" tabindex="-1"></a>A system has two subsystems in series. Subsystem 1 has two components in parallel (each R = 0.85); Subsystem 2 is a single component with R = 0.92. What is the system reliability?</span>
 <span id="cb44-388"><a href="#cb44-388" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-389"><a href="#cb44-389" aria-hidden="true" tabindex="-1"></a>CCF is especially dangerous because **redundancy does not protect against it**: if both pumps in a parallel system can be destroyed by the same flooding event, adding a third pump does not help.</span>
-<span id="cb44-390"><a href="#cb44-390" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-391"><a href="#cb44-391" aria-hidden="true" tabindex="-1"></a><span class="fu">### The Beta-Factor Model</span></span>
-<span id="cb44-392"><a href="#cb44-392" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-393"><a href="#cb44-393" aria-hidden="true" tabindex="-1"></a>The simplest CCF model splits each component's total failure rate $\lambda$ into two parts:</span>
-<span id="cb44-394"><a href="#cb44-394" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-395"><a href="#cb44-395" aria-hidden="true" tabindex="-1"></a>$$\lambda_{\text{ind}} = (1 - \beta_{\text{CCF}}) \cdot \lambda \qquad \text{(independent failures)}$$</span>
-<span id="cb44-396"><a href="#cb44-396" aria-hidden="true" tabindex="-1"></a>$$\lambda_{\text{CCF}} = \beta_{\text{CCF}} \cdot \lambda \qquad \text{(common-cause failures)}$$</span>
+<span id="cb44-389"><a href="#cb44-389" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Answer<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
+<span id="cb44-390"><a href="#cb44-390" aria-hidden="true" tabindex="-1"></a>$R_{\text{sub1}} = 1 - (1 - 0.85)^2 = 0.9775$. $R_{\text{sys}} = 0.9775 \times 0.92 \approx 0.899$.</span>
+<span id="cb44-391"><a href="#cb44-391" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
+<span id="cb44-392"><a href="#cb44-392" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb44-393"><a href="#cb44-393" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-394"><a href="#cb44-394" aria-hidden="true" tabindex="-1"></a><span class="fu">## k-out-of-n Systems</span></span>
+<span id="cb44-395"><a href="#cb44-395" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-396"><a href="#cb44-396" aria-hidden="true" tabindex="-1"></a>A **k-out-of-n** system succeeds if at least $k$ of its $n$ identical components function:</span>
 <span id="cb44-397"><a href="#cb44-397" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-398"><a href="#cb44-398" aria-hidden="true" tabindex="-1"></a>The **beta-factor** $\beta_{\text{CCF}}$ is the fraction of failures attributable to common causes. Typical values range from 0.01 (1%) for well-separated, dissimilar components to 0.20 (20%) for closely coupled identical units.</span>
-<span id="cb44-399"><a href="#cb44-399" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-400"><a href="#cb44-400" aria-hidden="true" tabindex="-1"></a>System reliability for a two-component parallel system with CCF:</span>
+<span id="cb44-398"><a href="#cb44-398" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$k = n$: all must work → series.</span>
+<span id="cb44-399"><a href="#cb44-399" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$k = 1$: at least one works → parallel.</span>
+<span id="cb44-400"><a href="#cb44-400" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$1 &lt; k &lt; n$: voting or load-sharing system.</span>
 <span id="cb44-401"><a href="#cb44-401" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-402"><a href="#cb44-402" aria-hidden="true" tabindex="-1"></a>$$R_{\text{sys}} = \underbrace{\left<span class="co">[</span><span class="ot">1 - (1 - R_{\text{ind}})^2\right</span><span class="co">]</span>}_{\text{parallel, independent part}} \times \underbrace{e^{-\lambda_{\text{CCF}} \, t}}_{\text{common-cause part}}$$</span>
+<span id="cb44-402"><a href="#cb44-402" aria-hidden="true" tabindex="-1"></a>The reliability of a k-out-of-n system (identical components, each with reliability $p$) follows the binomial distribution:</span>
 <span id="cb44-403"><a href="#cb44-403" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-406"><a href="#cb44-406" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb44-407"><a href="#cb44-407" aria-hidden="true" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> <span class="fl">0.001</span>   <span class="co"># total component failure rate (per hour)</span></span>
-<span id="cb44-408"><a href="#cb44-408" aria-hidden="true" tabindex="-1"></a>t      <span class="ot">&lt;-</span> <span class="dv">1000</span>    <span class="co"># mission time (hours)</span></span>
+<span id="cb44-404"><a href="#cb44-404" aria-hidden="true" tabindex="-1"></a>$$R_{k/n} = \sum_{i=k}^{n} \binom{n}{i} p^i (1-p)^{n-i} = 1 - \text{pbinom}(k-1,\, n,\, 1-p)$$</span>
+<span id="cb44-405"><a href="#cb44-405" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-406"><a href="#cb44-406" aria-hidden="true" tabindex="-1"></a>The compact R expression counts the probability that *at least* $k$ components function: <span class="in">`pbinom(k-1, n, 1-p)`</span> gives the probability that $k-1$ or fewer components work (i.e., the system fails), and we subtract that from 1.</span>
+<span id="cb44-407"><a href="#cb44-407" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-408"><a href="#cb44-408" aria-hidden="true" tabindex="-1"></a><span class="fu">### Example: Flight Control Computers</span></span>
 <span id="cb44-409"><a href="#cb44-409" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-410"><a href="#cb44-410" aria-hidden="true" tabindex="-1"></a>beta_vals <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.05</span>, <span class="fl">0.10</span>, <span class="fl">0.20</span>)</span>
+<span id="cb44-410"><a href="#cb44-410" aria-hidden="true" tabindex="-1"></a>A 2-out-of-3 voter: at least 2 of 3 computers must agree. Each computer has R = 0.99.</span>
 <span id="cb44-411"><a href="#cb44-411" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-412"><a href="#cb44-412" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">sapply</span>(beta_vals, <span class="cf">function</span>(b) {</span>
-<span id="cb44-413"><a href="#cb44-413" aria-hidden="true" tabindex="-1"></a>  R_ind <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="sc">-</span>(<span class="dv">1</span> <span class="sc">-</span> b) <span class="sc">*</span> lambda <span class="sc">*</span> t)   <span class="co"># independent reliability</span></span>
-<span id="cb44-414"><a href="#cb44-414" aria-hidden="true" tabindex="-1"></a>  R_ccf <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="sc">-</span>b <span class="sc">*</span> lambda <span class="sc">*</span> t)         <span class="co"># common-cause reliability</span></span>
-<span id="cb44-415"><a href="#cb44-415" aria-hidden="true" tabindex="-1"></a>  R_sys <span class="ot">&lt;-</span> (<span class="dv">1</span> <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">-</span> R_ind)<span class="sc">^</span><span class="dv">2</span>) <span class="sc">*</span> R_ccf</span>
-<span id="cb44-416"><a href="#cb44-416" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>(R_sys, <span class="dv">4</span>)</span>
-<span id="cb44-417"><a href="#cb44-417" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb44-418"><a href="#cb44-418" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-419"><a href="#cb44-419" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="at">beta_CCF =</span> beta_vals, <span class="at">R_system =</span> results)</span>
-<span id="cb44-420"><a href="#cb44-420" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb44-421"><a href="#cb44-421" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-422"><a href="#cb44-422" aria-hidden="true" tabindex="-1"></a>Even a modest $\beta_{\text{CCF}} = 0.10$ visibly reduces the system reliability that redundancy would otherwise provide.</span>
-<span id="cb44-423"><a href="#cb44-423" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-424"><a href="#cb44-424" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
-<span id="cb44-425"><a href="#cb44-425" aria-hidden="true" tabindex="-1"></a><span class="fu">## Review</span></span>
-<span id="cb44-426"><a href="#cb44-426" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-427"><a href="#cb44-427" aria-hidden="true" tabindex="-1"></a>Why doesn't adding more parallel components help when $\beta_{\text{CCF}}$ is large?</span>
-<span id="cb44-428"><a href="#cb44-428" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-429"><a href="#cb44-429" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Answer<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
-<span id="cb44-430"><a href="#cb44-430" aria-hidden="true" tabindex="-1"></a>When $\beta_{\text{CCF}}$ is large, a significant fraction of failures are **common cause** — they simultaneously affect all components regardless of how many there are. Adding more identical, coupled components may even increase the common-cause failure rate if they share the same environment or design flaw. Effective mitigation requires **diversity** (different designs, manufacturers, or locations) rather than simple redundancy.</span>
-<span id="cb44-431"><a href="#cb44-431" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
-<span id="cb44-432"><a href="#cb44-432" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb44-433"><a href="#cb44-433" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-434"><a href="#cb44-434" aria-hidden="true" tabindex="-1"></a>CCF data and beta-factor values for different equipment types are tabulated in IEC 61508 (functional safety) and MIL-HDBK-217F (electronic reliability). For nuclear applications, the NUREG/CR-5497 handbook provides detailed CCF databases.</span>
-<span id="cb44-435"><a href="#cb44-435" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-436"><a href="#cb44-436" aria-hidden="true" tabindex="-1"></a><span class="fu">## Introduction to Fault Tree Analysis</span></span>
+<span id="cb44-412"><a href="#cb44-412" aria-hidden="true" tabindex="-1"></a>::: {.content-visible when-format="html"}</span>
+<span id="cb44-415"><a href="#cb44-415" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb44-416"><a href="#cb44-416" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (knitr<span class="sc">::</span><span class="fu">is_html_output</span>(<span class="at">excludes =</span> <span class="st">"epub"</span>)) <span class="fu">grViz</span>(<span class="st">"</span></span>
+<span id="cb44-417"><a href="#cb44-417" aria-hidden="true" tabindex="-1"></a><span class="st">digraph koon {</span></span>
+<span id="cb44-418"><a href="#cb44-418" aria-hidden="true" tabindex="-1"></a><span class="st">  rankdir = LR</span></span>
+<span id="cb44-419"><a href="#cb44-419" aria-hidden="true" tabindex="-1"></a><span class="st">  graph [bgcolor = transparent]</span></span>
+<span id="cb44-420"><a href="#cb44-420" aria-hidden="true" tabindex="-1"></a><span class="st">  node [shape = rectangle, style = filled, fillcolor = '#D7BDE2',</span></span>
+<span id="cb44-421"><a href="#cb44-421" aria-hidden="true" tabindex="-1"></a><span class="st">        fontname = 'sans-serif', fontsize = 12, margin = '0.2,0.1']</span></span>
+<span id="cb44-422"><a href="#cb44-422" aria-hidden="true" tabindex="-1"></a><span class="st">  edge [arrowsize = 0.8]</span></span>
+<span id="cb44-423"><a href="#cb44-423" aria-hidden="true" tabindex="-1"></a><span class="st">  I  [shape = point, width = 0.15, fillcolor = black]</span></span>
+<span id="cb44-424"><a href="#cb44-424" aria-hidden="true" tabindex="-1"></a><span class="st">  C1 [label = 'Computer 1</span><span class="sc">\n</span><span class="st">R = 0.99']</span></span>
+<span id="cb44-425"><a href="#cb44-425" aria-hidden="true" tabindex="-1"></a><span class="st">  C2 [label = 'Computer 2</span><span class="sc">\n</span><span class="st">R = 0.99']</span></span>
+<span id="cb44-426"><a href="#cb44-426" aria-hidden="true" tabindex="-1"></a><span class="st">  C3 [label = 'Computer 3</span><span class="sc">\n</span><span class="st">R = 0.99']</span></span>
+<span id="cb44-427"><a href="#cb44-427" aria-hidden="true" tabindex="-1"></a><span class="st">  V  [label = 'Voter</span><span class="sc">\n</span><span class="st">(2-of-3)', shape = diamond, fillcolor = '#F1948A', fontsize = 11]</span></span>
+<span id="cb44-428"><a href="#cb44-428" aria-hidden="true" tabindex="-1"></a><span class="st">  O  [shape = point, width = 0.15, fillcolor = black]</span></span>
+<span id="cb44-429"><a href="#cb44-429" aria-hidden="true" tabindex="-1"></a><span class="st">  I -&gt; C1 -&gt; V</span></span>
+<span id="cb44-430"><a href="#cb44-430" aria-hidden="true" tabindex="-1"></a><span class="st">  I -&gt; C2 -&gt; V</span></span>
+<span id="cb44-431"><a href="#cb44-431" aria-hidden="true" tabindex="-1"></a><span class="st">  I -&gt; C3 -&gt; V</span></span>
+<span id="cb44-432"><a href="#cb44-432" aria-hidden="true" tabindex="-1"></a><span class="st">  V -&gt; O</span></span>
+<span id="cb44-433"><a href="#cb44-433" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb44-434"><a href="#cb44-434" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)</span>
+<span id="cb44-435"><a href="#cb44-435" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-436"><a href="#cb44-436" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb44-437"><a href="#cb44-437" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-438"><a href="#cb44-438" aria-hidden="true" tabindex="-1"></a>**Fault Tree Analysis (FTA)** [@Vesely1981] is a top-down approach that starts with an undesirable event (the **top event**) and works backward to identify combinations of component failures that could cause it.</span>
-<span id="cb44-439"><a href="#cb44-439" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-440"><a href="#cb44-440" aria-hidden="true" tabindex="-1"></a>While an RBD asks "What must work for the system to succeed?", a fault tree asks "What can cause the system to fail?"</span>
-<span id="cb44-441"><a href="#cb44-441" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-442"><a href="#cb44-442" aria-hidden="true" tabindex="-1"></a><span class="fu">### Gates</span></span>
-<span id="cb44-443"><a href="#cb44-443" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-444"><a href="#cb44-444" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**AND gate**: top event occurs only if *all* inputs occur — corresponds to **parallel** RBD components (all must fail).</span>
-<span id="cb44-445"><a href="#cb44-445" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**OR gate**: top event occurs if *any* input occurs — corresponds to **series** RBD components (any failure causes system failure).</span>
-<span id="cb44-446"><a href="#cb44-446" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-447"><a href="#cb44-447" aria-hidden="true" tabindex="-1"></a><span class="fu">### RBD—Fault Tree Duality</span></span>
-<span id="cb44-448"><a href="#cb44-448" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-449"><a href="#cb44-449" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> RBD configuration <span class="pp">|</span> Fault tree gate for system failure <span class="pp">|</span></span>
-<span id="cb44-450"><a href="#cb44-450" aria-hidden="true" tabindex="-1"></a><span class="pp">|:---:|:---:|</span></span>
-<span id="cb44-451"><a href="#cb44-451" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Series (all must work) <span class="pp">|</span> OR gate (any failure causes system failure) <span class="pp">|</span></span>
-<span id="cb44-452"><a href="#cb44-452" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Parallel (any can work) <span class="pp">|</span> AND gate (all must fail for system failure) <span class="pp">|</span></span>
-<span id="cb44-453"><a href="#cb44-453" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-456"><a href="#cb44-456" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb44-457"><a href="#cb44-457" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: !expr knitr::is_html_output(excludes = "epub")</span></span>
-<span id="cb44-458"><a href="#cb44-458" aria-hidden="true" tabindex="-1"></a><span class="fu">grViz</span>(<span class="st">"</span></span>
-<span id="cb44-459"><a href="#cb44-459" aria-hidden="true" tabindex="-1"></a><span class="st">digraph fta {</span></span>
-<span id="cb44-460"><a href="#cb44-460" aria-hidden="true" tabindex="-1"></a><span class="st">  rankdir = TB</span></span>
-<span id="cb44-461"><a href="#cb44-461" aria-hidden="true" tabindex="-1"></a><span class="st">  graph [bgcolor = transparent]</span></span>
-<span id="cb44-462"><a href="#cb44-462" aria-hidden="true" tabindex="-1"></a><span class="st">  node [fontname = 'sans-serif', fontsize = 12, style = filled]</span></span>
-<span id="cb44-463"><a href="#cb44-463" aria-hidden="true" tabindex="-1"></a><span class="st">  edge [arrowsize = 0.8]</span></span>
-<span id="cb44-464"><a href="#cb44-464" aria-hidden="true" tabindex="-1"></a><span class="st">  Top [label = 'System</span><span class="sc">\n</span><span class="st">Failure',  shape = rectangle, fillcolor = '#E74C3C', fontcolor = white]</span></span>
-<span id="cb44-465"><a href="#cb44-465" aria-hidden="true" tabindex="-1"></a><span class="st">  OR  [label = 'OR Gate',          shape = diamond,   fillcolor = '#F39C12']</span></span>
-<span id="cb44-466"><a href="#cb44-466" aria-hidden="true" tabindex="-1"></a><span class="st">  F1  [label = 'Component A</span><span class="sc">\n</span><span class="st">Fails', shape = ellipse, fillcolor = '#AED6F1']</span></span>
-<span id="cb44-467"><a href="#cb44-467" aria-hidden="true" tabindex="-1"></a><span class="st">  F2  [label = 'Component B</span><span class="sc">\n</span><span class="st">Fails', shape = ellipse, fillcolor = '#AED6F1']</span></span>
-<span id="cb44-468"><a href="#cb44-468" aria-hidden="true" tabindex="-1"></a><span class="st">  Top -&gt; OR</span></span>
-<span id="cb44-469"><a href="#cb44-469" aria-hidden="true" tabindex="-1"></a><span class="st">  OR  -&gt; F1</span></span>
-<span id="cb44-470"><a href="#cb44-470" aria-hidden="true" tabindex="-1"></a><span class="st">  OR  -&gt; F2</span></span>
-<span id="cb44-471"><a href="#cb44-471" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
-<span id="cb44-472"><a href="#cb44-472" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)</span>
-<span id="cb44-473"><a href="#cb44-473" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb44-474"><a href="#cb44-474" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-475"><a href="#cb44-475" aria-hidden="true" tabindex="-1"></a>This OR gate corresponds to a two-component series RBD: any single failure causes system failure. For complex fault trees, the R package <span class="in">`FaultTree`</span> on CRAN provides computational support.</span>
-<span id="cb44-476"><a href="#cb44-476" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-477"><a href="#cb44-477" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
-<span id="cb44-478"><a href="#cb44-478" aria-hidden="true" tabindex="-1"></a><span class="fu">## Review</span></span>
-<span id="cb44-479"><a href="#cb44-479" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-480"><a href="#cb44-480" aria-hidden="true" tabindex="-1"></a>A fault tree has an AND gate combining two component failures. Which RBD configuration does this correspond to?</span>
-<span id="cb44-481"><a href="#cb44-481" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-482"><a href="#cb44-482" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Answer<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
-<span id="cb44-483"><a href="#cb44-483" aria-hidden="true" tabindex="-1"></a>**Parallel** — an AND gate means the system fails only if both components fail simultaneously, which is exactly the parallel (redundant) configuration.</span>
-<span id="cb44-484"><a href="#cb44-484" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
-<span id="cb44-485"><a href="#cb44-485" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb44-486"><a href="#cb44-486" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-487"><a href="#cb44-487" aria-hidden="true" tabindex="-1"></a><span class="fu">## Case Study: Industrial Cooling System</span></span>
-<span id="cb44-488"><a href="#cb44-488" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-489"><a href="#cb44-489" aria-hidden="true" tabindex="-1"></a>An industrial cooling system has the following architecture:</span>
-<span id="cb44-490"><a href="#cb44-490" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-491"><a href="#cb44-491" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Water supply subsystem**: two pumps in parallel (each R = 0.92), followed by a filter in series (R = 0.99).</span>
-<span id="cb44-492"><a href="#cb44-492" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Control subsystem**: a primary controller (R = 0.97) and a backup controller in parallel (R = 0.95).</span>
-<span id="cb44-493"><a href="#cb44-493" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Both subsystems must work (series at system level).</span>
-<span id="cb44-494"><a href="#cb44-494" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-497"><a href="#cb44-497" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb44-498"><a href="#cb44-498" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 1 — Water supply subsystem</span></span>
-<span id="cb44-499"><a href="#cb44-499" aria-hidden="true" tabindex="-1"></a>R_pump_parallel <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.92</span>)<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb44-500"><a href="#cb44-500" aria-hidden="true" tabindex="-1"></a>R_water <span class="ot">&lt;-</span> R_pump_parallel <span class="sc">*</span> <span class="fl">0.99</span></span>
-<span id="cb44-501"><a href="#cb44-501" aria-hidden="true" tabindex="-1"></a>R_water</span>
+<span id="cb44-438"><a href="#cb44-438" aria-hidden="true" tabindex="-1"></a>::: {.content-visible unless-format="html"}</span>
+<span id="cb44-441"><a href="#cb44-441" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb44-442"><a href="#cb44-442" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb44-443"><a href="#cb44-443" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "k-out-of-n RBD: 2-of-3 voting system with three computers"</span></span>
+<span id="cb44-444"><a href="#cb44-444" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"images/rbd-koon.png"</span>)</span>
+<span id="cb44-445"><a href="#cb44-445" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-446"><a href="#cb44-446" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb44-447"><a href="#cb44-447" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-450"><a href="#cb44-450" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb44-451"><a href="#cb44-451" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">3</span>      <span class="co"># total components</span></span>
+<span id="cb44-452"><a href="#cb44-452" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">2</span>      <span class="co"># minimum required</span></span>
+<span id="cb44-453"><a href="#cb44-453" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fl">0.99</span>   <span class="co"># individual reliability</span></span>
+<span id="cb44-454"><a href="#cb44-454" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-455"><a href="#cb44-455" aria-hidden="true" tabindex="-1"></a>R_voting <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fu">pbinom</span>(k <span class="sc">-</span> <span class="dv">1</span>, n, <span class="dv">1</span> <span class="sc">-</span> p)</span>
+<span id="cb44-456"><a href="#cb44-456" aria-hidden="true" tabindex="-1"></a>R_voting  <span class="co"># 0.9997</span></span>
+<span id="cb44-457"><a href="#cb44-457" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-458"><a href="#cb44-458" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-459"><a href="#cb44-459" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb44-460"><a href="#cb44-460" aria-hidden="true" tabindex="-1"></a><span class="fu">## Try It</span></span>
+<span id="cb44-461"><a href="#cb44-461" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-462"><a href="#cb44-462" aria-hidden="true" tabindex="-1"></a>A 3-out-of-5 redundant sensor array. Each sensor has reliability p = 0.95. Calculate the system reliability.</span>
+<span id="cb44-463"><a href="#cb44-463" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-466"><a href="#cb44-466" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb44-467"><a href="#cb44-467" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb44-468"><a href="#cb44-468" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb44-469"><a href="#cb44-469" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fl">0.95</span></span>
+<span id="cb44-470"><a href="#cb44-470" aria-hidden="true" tabindex="-1"></a><span class="co"># R_sys &lt;- 1 - pbinom(k - 1, n, 1 - p)</span></span>
+<span id="cb44-471"><a href="#cb44-471" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-472"><a href="#cb44-472" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-473"><a href="#cb44-473" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Solution<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
+<span id="cb44-476"><a href="#cb44-476" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb44-477"><a href="#cb44-477" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb44-478"><a href="#cb44-478" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb44-479"><a href="#cb44-479" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fl">0.95</span></span>
+<span id="cb44-480"><a href="#cb44-480" aria-hidden="true" tabindex="-1"></a>R_sys <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fu">pbinom</span>(k <span class="sc">-</span> <span class="dv">1</span>, n, <span class="dv">1</span> <span class="sc">-</span> p)</span>
+<span id="cb44-481"><a href="#cb44-481" aria-hidden="true" tabindex="-1"></a>R_sys  <span class="co"># ~0.9988</span></span>
+<span id="cb44-482"><a href="#cb44-482" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-483"><a href="#cb44-483" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
+<span id="cb44-484"><a href="#cb44-484" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb44-485"><a href="#cb44-485" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-486"><a href="#cb44-486" aria-hidden="true" tabindex="-1"></a><span class="fu">## System MTTF</span></span>
+<span id="cb44-487"><a href="#cb44-487" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-488"><a href="#cb44-488" aria-hidden="true" tabindex="-1"></a>For a **series** system of components with constant failure rates, the system failure rate equals the sum of component failure rates:</span>
+<span id="cb44-489"><a href="#cb44-489" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-490"><a href="#cb44-490" aria-hidden="true" tabindex="-1"></a>$$\lambda_{\text{sys}} = \sum_{i=1}^{n} \lambda_i \qquad \text{MTTF}_{\text{sys}} = \frac{1}{\lambda_{\text{sys}}}$$</span>
+<span id="cb44-491"><a href="#cb44-491" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-492"><a href="#cb44-492" aria-hidden="true" tabindex="-1"></a>For $n$ identical parallel components each with failure rate $\lambda$:</span>
+<span id="cb44-493"><a href="#cb44-493" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-494"><a href="#cb44-494" aria-hidden="true" tabindex="-1"></a>$$\text{MTTF}_{\text{parallel}} = \frac{1}{\lambda}\left(1 + \frac{1}{2} + \frac{1}{3} + \cdots + \frac{1}{n}\right)$$</span>
+<span id="cb44-495"><a href="#cb44-495" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-496"><a href="#cb44-496" aria-hidden="true" tabindex="-1"></a><span class="fu">### Example: Two Pumps in Parallel</span></span>
+<span id="cb44-497"><a href="#cb44-497" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-500"><a href="#cb44-500" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb44-501"><a href="#cb44-501" aria-hidden="true" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> <span class="fl">0.01</span>  <span class="co"># failures per hour</span></span>
 <span id="cb44-502"><a href="#cb44-502" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-503"><a href="#cb44-503" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2 — Control subsystem</span></span>
-<span id="cb44-504"><a href="#cb44-504" aria-hidden="true" tabindex="-1"></a>R_control <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.97</span>) <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.95</span>)</span>
-<span id="cb44-505"><a href="#cb44-505" aria-hidden="true" tabindex="-1"></a>R_control</span>
-<span id="cb44-506"><a href="#cb44-506" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-507"><a href="#cb44-507" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 3 — Overall system (both subsystems in series)</span></span>
-<span id="cb44-508"><a href="#cb44-508" aria-hidden="true" tabindex="-1"></a>R_system <span class="ot">&lt;-</span> R_water <span class="sc">*</span> R_control</span>
-<span id="cb44-509"><a href="#cb44-509" aria-hidden="true" tabindex="-1"></a>R_system</span>
-<span id="cb44-510"><a href="#cb44-510" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb44-511"><a href="#cb44-511" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-512"><a href="#cb44-512" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb44-513"><a href="#cb44-513" aria-hidden="true" tabindex="-1"></a><span class="fu">## Try It</span></span>
+<span id="cb44-503"><a href="#cb44-503" aria-hidden="true" tabindex="-1"></a>MTTF_single   <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">/</span> lambda</span>
+<span id="cb44-504"><a href="#cb44-504" aria-hidden="true" tabindex="-1"></a>MTTF_parallel <span class="ot">&lt;-</span> (<span class="dv">1</span> <span class="sc">/</span> lambda) <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>)</span>
+<span id="cb44-505"><a href="#cb44-505" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-506"><a href="#cb44-506" aria-hidden="true" tabindex="-1"></a>MTTF_single    <span class="co"># 100 hours</span></span>
+<span id="cb44-507"><a href="#cb44-507" aria-hidden="true" tabindex="-1"></a>MTTF_parallel  <span class="co"># 150 hours — 50% longer with one spare</span></span>
+<span id="cb44-508"><a href="#cb44-508" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-509"><a href="#cb44-509" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-510"><a href="#cb44-510" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb44-511"><a href="#cb44-511" aria-hidden="true" tabindex="-1"></a><span class="fu">## Review</span></span>
+<span id="cb44-512"><a href="#cb44-512" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-513"><a href="#cb44-513" aria-hidden="true" tabindex="-1"></a>Three components in series have failure rates 0.02, 0.03, and 0.05 failures/hour. What is the system MTTF?</span>
 <span id="cb44-514"><a href="#cb44-514" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-515"><a href="#cb44-515" aria-hidden="true" tabindex="-1"></a>Modify the case study: the filter is upgraded to R = 0.999. Recalculate the system reliability.</span>
-<span id="cb44-516"><a href="#cb44-516" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-519"><a href="#cb44-519" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb44-520"><a href="#cb44-520" aria-hidden="true" tabindex="-1"></a>R_pump1  <span class="ot">&lt;-</span> <span class="fl">0.92</span></span>
-<span id="cb44-521"><a href="#cb44-521" aria-hidden="true" tabindex="-1"></a>R_pump2  <span class="ot">&lt;-</span> <span class="fl">0.92</span></span>
-<span id="cb44-522"><a href="#cb44-522" aria-hidden="true" tabindex="-1"></a>R_filter <span class="ot">&lt;-</span> <span class="fl">0.999</span>   <span class="co"># upgraded from 0.99</span></span>
-<span id="cb44-523"><a href="#cb44-523" aria-hidden="true" tabindex="-1"></a>R_ctrl1  <span class="ot">&lt;-</span> <span class="fl">0.97</span></span>
-<span id="cb44-524"><a href="#cb44-524" aria-hidden="true" tabindex="-1"></a>R_ctrl2  <span class="ot">&lt;-</span> <span class="fl">0.95</span></span>
-<span id="cb44-525"><a href="#cb44-525" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb44-526"><a href="#cb44-526" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-527"><a href="#cb44-527" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Solution<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
-<span id="cb44-530"><a href="#cb44-530" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb44-531"><a href="#cb44-531" aria-hidden="true" tabindex="-1"></a>R_pump1  <span class="ot">&lt;-</span> <span class="fl">0.92</span></span>
-<span id="cb44-532"><a href="#cb44-532" aria-hidden="true" tabindex="-1"></a>R_pump2  <span class="ot">&lt;-</span> <span class="fl">0.92</span></span>
-<span id="cb44-533"><a href="#cb44-533" aria-hidden="true" tabindex="-1"></a>R_filter <span class="ot">&lt;-</span> <span class="fl">0.999</span></span>
-<span id="cb44-534"><a href="#cb44-534" aria-hidden="true" tabindex="-1"></a>R_ctrl1  <span class="ot">&lt;-</span> <span class="fl">0.97</span></span>
-<span id="cb44-535"><a href="#cb44-535" aria-hidden="true" tabindex="-1"></a>R_ctrl2  <span class="ot">&lt;-</span> <span class="fl">0.95</span></span>
-<span id="cb44-536"><a href="#cb44-536" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-537"><a href="#cb44-537" aria-hidden="true" tabindex="-1"></a>R_pump_parallel <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">-</span> R_pump1) <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> R_pump2)</span>
-<span id="cb44-538"><a href="#cb44-538" aria-hidden="true" tabindex="-1"></a>R_water   <span class="ot">&lt;-</span> R_pump_parallel <span class="sc">*</span> R_filter</span>
-<span id="cb44-539"><a href="#cb44-539" aria-hidden="true" tabindex="-1"></a>R_control <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">-</span> R_ctrl1) <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> R_ctrl2)</span>
-<span id="cb44-540"><a href="#cb44-540" aria-hidden="true" tabindex="-1"></a>R_system  <span class="ot">&lt;-</span> R_water <span class="sc">*</span> R_control</span>
-<span id="cb44-541"><a href="#cb44-541" aria-hidden="true" tabindex="-1"></a>R_system  <span class="co"># ~0.985</span></span>
-<span id="cb44-542"><a href="#cb44-542" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb44-543"><a href="#cb44-543" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
-<span id="cb44-544"><a href="#cb44-544" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb44-545"><a href="#cb44-545" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-546"><a href="#cb44-546" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
-<span id="cb44-547"><a href="#cb44-547" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-548"><a href="#cb44-548" aria-hidden="true" tabindex="-1"></a>**Key takeaways:**</span>
-<span id="cb44-549"><a href="#cb44-549" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-550"><a href="#cb44-550" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Series**: $R_{\text{sys}} = \prod R_i$ — every component must work; reliability decreases with more components.</span>
-<span id="cb44-551"><a href="#cb44-551" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Parallel**: $R_{\text{sys}} = 1 - \prod(1-R_i)$ — redundancy; only one component needs to work.</span>
-<span id="cb44-552"><a href="#cb44-552" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Mixed**: decompose into subsystems, apply formulas step by step.</span>
-<span id="cb44-553"><a href="#cb44-553" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**k-out-of-n**: <span class="in">`1 - pbinom(k-1, n, 1-p)`</span> for voting/load-sharing systems.</span>
-<span id="cb44-554"><a href="#cb44-554" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Series MTTF**: $1/\sum\lambda_i$; **Parallel MTTF**: $(1/\lambda)\sum_{i=1}^{n}(1/i)$.</span>
-<span id="cb44-555"><a href="#cb44-555" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Common Cause Failure**: redundancy requires *diversity* to be effective — the $\beta_{\text{CCF}}$ factor quantifies the fraction of failures caused by shared events; adding more identical, coupled components does not protect against CCF.</span>
-<span id="cb44-556"><a href="#cb44-556" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**FTA duality**: series RBD ↔ OR gate; parallel RBD ↔ AND gate.</span>
+<span id="cb44-515"><a href="#cb44-515" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Answer<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
+<span id="cb44-516"><a href="#cb44-516" aria-hidden="true" tabindex="-1"></a>$\lambda_{\text{sys}} = 0.02 + 0.03 + 0.05 = 0.10$, so $\text{MTTF} = 1/0.10 = 10$ hours.</span>
+<span id="cb44-517"><a href="#cb44-517" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
+<span id="cb44-518"><a href="#cb44-518" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb44-519"><a href="#cb44-519" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-520"><a href="#cb44-520" aria-hidden="true" tabindex="-1"></a><span class="fu">## Common Cause Failure</span></span>
+<span id="cb44-521"><a href="#cb44-521" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-522"><a href="#cb44-522" aria-hidden="true" tabindex="-1"></a>All the analyses above assume that component failures are **statistically independent**: if Component A fails, it tells us nothing about Component B's probability of failing. In practice, this assumption can break down.</span>
+<span id="cb44-523"><a href="#cb44-523" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-524"><a href="#cb44-524" aria-hidden="true" tabindex="-1"></a>**Common Cause Failure (CCF)** occurs when a single event simultaneously causes multiple components to fail. Typical sources include:</span>
+<span id="cb44-525"><a href="#cb44-525" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-526"><a href="#cb44-526" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A shared environment (vibration, temperature, contamination) that degrades all components together</span>
+<span id="cb44-527"><a href="#cb44-527" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A common design flaw or manufacturing batch defect</span>
+<span id="cb44-528"><a href="#cb44-528" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A maintenance error that affects multiple redundant units at once</span>
+<span id="cb44-529"><a href="#cb44-529" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-530"><a href="#cb44-530" aria-hidden="true" tabindex="-1"></a>CCF is especially dangerous because **redundancy does not protect against it**: if both pumps in a parallel system can be destroyed by the same flooding event, adding a third pump does not help.</span>
+<span id="cb44-531"><a href="#cb44-531" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-532"><a href="#cb44-532" aria-hidden="true" tabindex="-1"></a><span class="fu">### The Beta-Factor Model</span></span>
+<span id="cb44-533"><a href="#cb44-533" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-534"><a href="#cb44-534" aria-hidden="true" tabindex="-1"></a>The simplest CCF model splits each component's total failure rate $\lambda$ into two parts:</span>
+<span id="cb44-535"><a href="#cb44-535" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-536"><a href="#cb44-536" aria-hidden="true" tabindex="-1"></a>$$\lambda_{\text{ind}} = (1 - \beta_{\text{CCF}}) \cdot \lambda \qquad \text{(independent failures)}$$</span>
+<span id="cb44-537"><a href="#cb44-537" aria-hidden="true" tabindex="-1"></a>$$\lambda_{\text{CCF}} = \beta_{\text{CCF}} \cdot \lambda \qquad \text{(common-cause failures)}$$</span>
+<span id="cb44-538"><a href="#cb44-538" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-539"><a href="#cb44-539" aria-hidden="true" tabindex="-1"></a>The **beta-factor** $\beta_{\text{CCF}}$ is the fraction of failures attributable to common causes. Typical values range from 0.01 (1%) for well-separated, dissimilar components to 0.20 (20%) for closely coupled identical units.</span>
+<span id="cb44-540"><a href="#cb44-540" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-541"><a href="#cb44-541" aria-hidden="true" tabindex="-1"></a>System reliability for a two-component parallel system with CCF:</span>
+<span id="cb44-542"><a href="#cb44-542" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-543"><a href="#cb44-543" aria-hidden="true" tabindex="-1"></a>$$R_{\text{sys}} = \underbrace{\left<span class="co">[</span><span class="ot">1 - (1 - R_{\text{ind}})^2\right</span><span class="co">]</span>}_{\text{parallel, independent part}} \times \underbrace{e^{-\lambda_{\text{CCF}} \, t}}_{\text{common-cause part}}$$</span>
+<span id="cb44-544"><a href="#cb44-544" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-547"><a href="#cb44-547" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb44-548"><a href="#cb44-548" aria-hidden="true" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> <span class="fl">0.001</span>   <span class="co"># total component failure rate (per hour)</span></span>
+<span id="cb44-549"><a href="#cb44-549" aria-hidden="true" tabindex="-1"></a>t      <span class="ot">&lt;-</span> <span class="dv">1000</span>    <span class="co"># mission time (hours)</span></span>
+<span id="cb44-550"><a href="#cb44-550" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-551"><a href="#cb44-551" aria-hidden="true" tabindex="-1"></a>beta_vals <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.05</span>, <span class="fl">0.10</span>, <span class="fl">0.20</span>)</span>
+<span id="cb44-552"><a href="#cb44-552" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-553"><a href="#cb44-553" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">sapply</span>(beta_vals, <span class="cf">function</span>(b) {</span>
+<span id="cb44-554"><a href="#cb44-554" aria-hidden="true" tabindex="-1"></a>  R_ind <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="sc">-</span>(<span class="dv">1</span> <span class="sc">-</span> b) <span class="sc">*</span> lambda <span class="sc">*</span> t)   <span class="co"># independent reliability</span></span>
+<span id="cb44-555"><a href="#cb44-555" aria-hidden="true" tabindex="-1"></a>  R_ccf <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="sc">-</span>b <span class="sc">*</span> lambda <span class="sc">*</span> t)         <span class="co"># common-cause reliability</span></span>
+<span id="cb44-556"><a href="#cb44-556" aria-hidden="true" tabindex="-1"></a>  R_sys <span class="ot">&lt;-</span> (<span class="dv">1</span> <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">-</span> R_ind)<span class="sc">^</span><span class="dv">2</span>) <span class="sc">*</span> R_ccf</span>
+<span id="cb44-557"><a href="#cb44-557" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>(R_sys, <span class="dv">4</span>)</span>
+<span id="cb44-558"><a href="#cb44-558" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb44-559"><a href="#cb44-559" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-560"><a href="#cb44-560" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="at">beta_CCF =</span> beta_vals, <span class="at">R_system =</span> results)</span>
+<span id="cb44-561"><a href="#cb44-561" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-562"><a href="#cb44-562" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-563"><a href="#cb44-563" aria-hidden="true" tabindex="-1"></a>Even a modest $\beta_{\text{CCF}} = 0.10$ visibly reduces the system reliability that redundancy would otherwise provide.</span>
+<span id="cb44-564"><a href="#cb44-564" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-565"><a href="#cb44-565" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb44-566"><a href="#cb44-566" aria-hidden="true" tabindex="-1"></a><span class="fu">## Review</span></span>
+<span id="cb44-567"><a href="#cb44-567" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-568"><a href="#cb44-568" aria-hidden="true" tabindex="-1"></a>Why doesn't adding more parallel components help when $\beta_{\text{CCF}}$ is large?</span>
+<span id="cb44-569"><a href="#cb44-569" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-570"><a href="#cb44-570" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Answer<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
+<span id="cb44-571"><a href="#cb44-571" aria-hidden="true" tabindex="-1"></a>When $\beta_{\text{CCF}}$ is large, a significant fraction of failures are **common cause**, simultaneously affecting all components regardless of how many there are. Adding more identical, coupled components may even increase the common-cause failure rate if they share the same environment or design flaw. Effective mitigation requires **diversity** (different designs, manufacturers, or locations) rather than simple redundancy.</span>
+<span id="cb44-572"><a href="#cb44-572" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
+<span id="cb44-573"><a href="#cb44-573" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb44-574"><a href="#cb44-574" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-575"><a href="#cb44-575" aria-hidden="true" tabindex="-1"></a>CCF data and beta-factor values for different equipment types are tabulated in IEC 61508 (functional safety) and MIL-HDBK-217F (electronic reliability). For nuclear applications, the NUREG/CR-5497 handbook provides detailed CCF databases.</span>
+<span id="cb44-576"><a href="#cb44-576" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-577"><a href="#cb44-577" aria-hidden="true" tabindex="-1"></a><span class="fu">## Introduction to Fault Tree Analysis</span></span>
+<span id="cb44-578"><a href="#cb44-578" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-579"><a href="#cb44-579" aria-hidden="true" tabindex="-1"></a>**Fault Tree Analysis (FTA)** [@Vesely1981] is a top-down approach that starts with an undesirable event (the **top event**) and works backward to identify combinations of component failures that could cause it.</span>
+<span id="cb44-580"><a href="#cb44-580" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-581"><a href="#cb44-581" aria-hidden="true" tabindex="-1"></a>While an RBD asks "What must work for the system to succeed?", a fault tree asks "What can cause the system to fail?"</span>
+<span id="cb44-582"><a href="#cb44-582" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-583"><a href="#cb44-583" aria-hidden="true" tabindex="-1"></a><span class="fu">### Gates</span></span>
+<span id="cb44-584"><a href="#cb44-584" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-585"><a href="#cb44-585" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**AND gate**: top event occurs only if *all* inputs occur, corresponding to **parallel** RBD components (all must fail).</span>
+<span id="cb44-586"><a href="#cb44-586" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**OR gate**: top event occurs if *any* input occurs, corresponding to **series** RBD components (any failure causes system failure).</span>
+<span id="cb44-587"><a href="#cb44-587" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-588"><a href="#cb44-588" aria-hidden="true" tabindex="-1"></a><span class="fu">### RBD—Fault Tree Duality</span></span>
+<span id="cb44-589"><a href="#cb44-589" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-590"><a href="#cb44-590" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> RBD configuration <span class="pp">|</span> Fault tree gate for system failure <span class="pp">|</span></span>
+<span id="cb44-591"><a href="#cb44-591" aria-hidden="true" tabindex="-1"></a><span class="pp">|:---:|:---:|</span></span>
+<span id="cb44-592"><a href="#cb44-592" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Series (all must work) <span class="pp">|</span> OR gate (any failure causes system failure) <span class="pp">|</span></span>
+<span id="cb44-593"><a href="#cb44-593" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Parallel (any can work) <span class="pp">|</span> AND gate (all must fail for system failure) <span class="pp">|</span></span>
+<span id="cb44-594"><a href="#cb44-594" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-595"><a href="#cb44-595" aria-hidden="true" tabindex="-1"></a>::: {.content-visible when-format="html"}</span>
+<span id="cb44-598"><a href="#cb44-598" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb44-599"><a href="#cb44-599" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (knitr<span class="sc">::</span><span class="fu">is_html_output</span>(<span class="at">excludes =</span> <span class="st">"epub"</span>)) <span class="fu">grViz</span>(<span class="st">"</span></span>
+<span id="cb44-600"><a href="#cb44-600" aria-hidden="true" tabindex="-1"></a><span class="st">digraph fta {</span></span>
+<span id="cb44-601"><a href="#cb44-601" aria-hidden="true" tabindex="-1"></a><span class="st">  rankdir = TB</span></span>
+<span id="cb44-602"><a href="#cb44-602" aria-hidden="true" tabindex="-1"></a><span class="st">  graph [bgcolor = transparent]</span></span>
+<span id="cb44-603"><a href="#cb44-603" aria-hidden="true" tabindex="-1"></a><span class="st">  node [fontname = 'sans-serif', fontsize = 12, style = filled]</span></span>
+<span id="cb44-604"><a href="#cb44-604" aria-hidden="true" tabindex="-1"></a><span class="st">  edge [arrowsize = 0.8]</span></span>
+<span id="cb44-605"><a href="#cb44-605" aria-hidden="true" tabindex="-1"></a><span class="st">  Top [label = 'System</span><span class="sc">\n</span><span class="st">Failure',  shape = rectangle, fillcolor = '#E74C3C', fontcolor = white]</span></span>
+<span id="cb44-606"><a href="#cb44-606" aria-hidden="true" tabindex="-1"></a><span class="st">  OR  [label = 'OR Gate',          shape = diamond,   fillcolor = '#F39C12']</span></span>
+<span id="cb44-607"><a href="#cb44-607" aria-hidden="true" tabindex="-1"></a><span class="st">  F1  [label = 'Component A</span><span class="sc">\n</span><span class="st">Fails', shape = ellipse, fillcolor = '#AED6F1']</span></span>
+<span id="cb44-608"><a href="#cb44-608" aria-hidden="true" tabindex="-1"></a><span class="st">  F2  [label = 'Component B</span><span class="sc">\n</span><span class="st">Fails', shape = ellipse, fillcolor = '#AED6F1']</span></span>
+<span id="cb44-609"><a href="#cb44-609" aria-hidden="true" tabindex="-1"></a><span class="st">  Top -&gt; OR</span></span>
+<span id="cb44-610"><a href="#cb44-610" aria-hidden="true" tabindex="-1"></a><span class="st">  OR  -&gt; F1</span></span>
+<span id="cb44-611"><a href="#cb44-611" aria-hidden="true" tabindex="-1"></a><span class="st">  OR  -&gt; F2</span></span>
+<span id="cb44-612"><a href="#cb44-612" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb44-613"><a href="#cb44-613" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)</span>
+<span id="cb44-614"><a href="#cb44-614" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-615"><a href="#cb44-615" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb44-616"><a href="#cb44-616" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-617"><a href="#cb44-617" aria-hidden="true" tabindex="-1"></a>::: {.content-visible unless-format="html"}</span>
+<span id="cb44-620"><a href="#cb44-620" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb44-621"><a href="#cb44-621" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb44-622"><a href="#cb44-622" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Fault Tree: OR gate — system failure if Component A or B fails"</span></span>
+<span id="cb44-623"><a href="#cb44-623" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"images/rbd-faulttree.png"</span>)</span>
+<span id="cb44-624"><a href="#cb44-624" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-625"><a href="#cb44-625" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb44-626"><a href="#cb44-626" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-627"><a href="#cb44-627" aria-hidden="true" tabindex="-1"></a>This OR gate corresponds to a two-component series RBD: any single failure causes system failure. For complex fault trees, the R package <span class="in">`FaultTree`</span> on CRAN provides computational support.</span>
+<span id="cb44-628"><a href="#cb44-628" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-629"><a href="#cb44-629" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
+<span id="cb44-630"><a href="#cb44-630" aria-hidden="true" tabindex="-1"></a><span class="fu">## Review</span></span>
+<span id="cb44-631"><a href="#cb44-631" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-632"><a href="#cb44-632" aria-hidden="true" tabindex="-1"></a>A fault tree has an AND gate combining two component failures. Which RBD configuration does this correspond to?</span>
+<span id="cb44-633"><a href="#cb44-633" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-634"><a href="#cb44-634" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Answer<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
+<span id="cb44-635"><a href="#cb44-635" aria-hidden="true" tabindex="-1"></a>**Parallel**: an AND gate means the system fails only if both components fail simultaneously, which is exactly the parallel (redundant) configuration.</span>
+<span id="cb44-636"><a href="#cb44-636" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
+<span id="cb44-637"><a href="#cb44-637" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb44-638"><a href="#cb44-638" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-639"><a href="#cb44-639" aria-hidden="true" tabindex="-1"></a><span class="fu">## Case Study: Industrial Cooling System</span></span>
+<span id="cb44-640"><a href="#cb44-640" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-641"><a href="#cb44-641" aria-hidden="true" tabindex="-1"></a>An industrial cooling system has the following architecture:</span>
+<span id="cb44-642"><a href="#cb44-642" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-643"><a href="#cb44-643" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Water supply subsystem**: two pumps in parallel (each R = 0.92), followed by a filter in series (R = 0.99).</span>
+<span id="cb44-644"><a href="#cb44-644" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Control subsystem**: a primary controller (R = 0.97) and a backup controller in parallel (R = 0.95).</span>
+<span id="cb44-645"><a href="#cb44-645" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Both subsystems must work (series at system level).</span>
+<span id="cb44-646"><a href="#cb44-646" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-649"><a href="#cb44-649" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb44-650"><a href="#cb44-650" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 1 — Water supply subsystem</span></span>
+<span id="cb44-651"><a href="#cb44-651" aria-hidden="true" tabindex="-1"></a>R_pump_parallel <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.92</span>)<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb44-652"><a href="#cb44-652" aria-hidden="true" tabindex="-1"></a>R_water <span class="ot">&lt;-</span> R_pump_parallel <span class="sc">*</span> <span class="fl">0.99</span></span>
+<span id="cb44-653"><a href="#cb44-653" aria-hidden="true" tabindex="-1"></a>R_water</span>
+<span id="cb44-654"><a href="#cb44-654" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-655"><a href="#cb44-655" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 2 — Control subsystem</span></span>
+<span id="cb44-656"><a href="#cb44-656" aria-hidden="true" tabindex="-1"></a>R_control <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.97</span>) <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.95</span>)</span>
+<span id="cb44-657"><a href="#cb44-657" aria-hidden="true" tabindex="-1"></a>R_control</span>
+<span id="cb44-658"><a href="#cb44-658" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-659"><a href="#cb44-659" aria-hidden="true" tabindex="-1"></a><span class="co"># Step 3 — Overall system (both subsystems in series)</span></span>
+<span id="cb44-660"><a href="#cb44-660" aria-hidden="true" tabindex="-1"></a>R_system <span class="ot">&lt;-</span> R_water <span class="sc">*</span> R_control</span>
+<span id="cb44-661"><a href="#cb44-661" aria-hidden="true" tabindex="-1"></a>R_system</span>
+<span id="cb44-662"><a href="#cb44-662" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-663"><a href="#cb44-663" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-664"><a href="#cb44-664" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb44-665"><a href="#cb44-665" aria-hidden="true" tabindex="-1"></a><span class="fu">## Try It</span></span>
+<span id="cb44-666"><a href="#cb44-666" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-667"><a href="#cb44-667" aria-hidden="true" tabindex="-1"></a>Modify the case study: the filter is upgraded to R = 0.999. Recalculate the system reliability.</span>
+<span id="cb44-668"><a href="#cb44-668" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-671"><a href="#cb44-671" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb44-672"><a href="#cb44-672" aria-hidden="true" tabindex="-1"></a>R_pump1  <span class="ot">&lt;-</span> <span class="fl">0.92</span></span>
+<span id="cb44-673"><a href="#cb44-673" aria-hidden="true" tabindex="-1"></a>R_pump2  <span class="ot">&lt;-</span> <span class="fl">0.92</span></span>
+<span id="cb44-674"><a href="#cb44-674" aria-hidden="true" tabindex="-1"></a>R_filter <span class="ot">&lt;-</span> <span class="fl">0.999</span>   <span class="co"># upgraded from 0.99</span></span>
+<span id="cb44-675"><a href="#cb44-675" aria-hidden="true" tabindex="-1"></a>R_ctrl1  <span class="ot">&lt;-</span> <span class="fl">0.97</span></span>
+<span id="cb44-676"><a href="#cb44-676" aria-hidden="true" tabindex="-1"></a>R_ctrl2  <span class="ot">&lt;-</span> <span class="fl">0.95</span></span>
+<span id="cb44-677"><a href="#cb44-677" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-678"><a href="#cb44-678" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-679"><a href="#cb44-679" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Solution<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
+<span id="cb44-682"><a href="#cb44-682" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb44-683"><a href="#cb44-683" aria-hidden="true" tabindex="-1"></a>R_pump1  <span class="ot">&lt;-</span> <span class="fl">0.92</span></span>
+<span id="cb44-684"><a href="#cb44-684" aria-hidden="true" tabindex="-1"></a>R_pump2  <span class="ot">&lt;-</span> <span class="fl">0.92</span></span>
+<span id="cb44-685"><a href="#cb44-685" aria-hidden="true" tabindex="-1"></a>R_filter <span class="ot">&lt;-</span> <span class="fl">0.999</span></span>
+<span id="cb44-686"><a href="#cb44-686" aria-hidden="true" tabindex="-1"></a>R_ctrl1  <span class="ot">&lt;-</span> <span class="fl">0.97</span></span>
+<span id="cb44-687"><a href="#cb44-687" aria-hidden="true" tabindex="-1"></a>R_ctrl2  <span class="ot">&lt;-</span> <span class="fl">0.95</span></span>
+<span id="cb44-688"><a href="#cb44-688" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-689"><a href="#cb44-689" aria-hidden="true" tabindex="-1"></a>R_pump_parallel <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">-</span> R_pump1) <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> R_pump2)</span>
+<span id="cb44-690"><a href="#cb44-690" aria-hidden="true" tabindex="-1"></a>R_water   <span class="ot">&lt;-</span> R_pump_parallel <span class="sc">*</span> R_filter</span>
+<span id="cb44-691"><a href="#cb44-691" aria-hidden="true" tabindex="-1"></a>R_control <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">-</span> R_ctrl1) <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> R_ctrl2)</span>
+<span id="cb44-692"><a href="#cb44-692" aria-hidden="true" tabindex="-1"></a>R_system  <span class="ot">&lt;-</span> R_water <span class="sc">*</span> R_control</span>
+<span id="cb44-693"><a href="#cb44-693" aria-hidden="true" tabindex="-1"></a>R_system  <span class="co"># ~0.985</span></span>
+<span id="cb44-694"><a href="#cb44-694" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb44-695"><a href="#cb44-695" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
+<span id="cb44-696"><a href="#cb44-696" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb44-697"><a href="#cb44-697" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-698"><a href="#cb44-698" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
+<span id="cb44-699"><a href="#cb44-699" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-700"><a href="#cb44-700" aria-hidden="true" tabindex="-1"></a>**Key takeaways:**</span>
+<span id="cb44-701"><a href="#cb44-701" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-702"><a href="#cb44-702" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Series**: $R_{\text{sys}} = \prod R_i$, every component must work; reliability decreases with more components.</span>
+<span id="cb44-703"><a href="#cb44-703" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Parallel**: $R_{\text{sys}} = 1 - \prod(1-R_i)$, redundancy; only one component needs to work.</span>
+<span id="cb44-704"><a href="#cb44-704" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Mixed**: decompose into subsystems, apply formulas step by step.</span>
+<span id="cb44-705"><a href="#cb44-705" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**k-out-of-n**: <span class="in">`1 - pbinom(k-1, n, 1-p)`</span> for voting/load-sharing systems.</span>
+<span id="cb44-706"><a href="#cb44-706" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Series MTTF**: $1/\sum\lambda_i$; **Parallel MTTF**: $(1/\lambda)\sum_{i=1}^{n}(1/i)$.</span>
+<span id="cb44-707"><a href="#cb44-707" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Common Cause Failure**: redundancy requires *diversity* to be effective; the $\beta_{\text{CCF}}$ factor quantifies the fraction of failures caused by shared events, and adding more identical, coupled components does not protect against CCF.</span>
+<span id="cb44-708"><a href="#cb44-708" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**FTA duality**: series RBD ↔ OR gate; parallel RBD ↔ AND gate.</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

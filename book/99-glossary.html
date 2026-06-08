@@ -440,6 +440,12 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./09-mcp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">AI-Assisted Reliability Analysis with MCP</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./98-appendix.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Appendix: R Quick Reference</span></a>
   </div>
@@ -463,12 +469,12 @@ window.Quarto = {
   <li><a href="#key-symbols" id="toc-key-symbols" class="nav-link active" data-scroll-target="#key-symbols">Key Symbols</a></li>
   <li><a href="#key-formulas" id="toc-key-formulas" class="nav-link" data-scroll-target="#key-formulas">Key Formulas</a>
   <ul class="collapse">
-  <li><a href="#ram-sec-ram" id="toc-ram-sec-ram" class="nav-link" data-scroll-target="#ram-sec-ram">RAM — <span>1&nbsp; Reliability, Availability, and Maintainability (RAM)</span></a></li>
-  <li><a href="#weibull-distribution-sec-lda" id="toc-weibull-distribution-sec-lda" class="nav-link" data-scroll-target="#weibull-distribution-sec-lda">Weibull Distribution — <span>3&nbsp; Life Data Analysis</span></a></li>
-  <li><a href="#reliability-block-diagrams-sec-rbd" id="toc-reliability-block-diagrams-sec-rbd" class="nav-link" data-scroll-target="#reliability-block-diagrams-sec-rbd">Reliability Block Diagrams — <span>2&nbsp; Reliability Block Diagrams</span></a></li>
-  <li><a href="#accelerated-life-testing-sec-alt" id="toc-accelerated-life-testing-sec-alt" class="nav-link" data-scroll-target="#accelerated-life-testing-sec-alt">Accelerated Life Testing — <span>5&nbsp; Accelerated Life Testing</span></a></li>
-  <li><a href="#reliability-growth-analysis-sec-rt" id="toc-reliability-growth-analysis-sec-rt" class="nav-link" data-scroll-target="#reliability-growth-analysis-sec-rt">Reliability Growth Analysis — <span>4&nbsp; Reliability Growth Analysis</span></a></li>
-  <li><a href="#repairable-systems-sec-rs" id="toc-repairable-systems-sec-rs" class="nav-link" data-scroll-target="#repairable-systems-sec-rs">Repairable Systems — <span>6&nbsp; Repairable Systems Analysis</span></a></li>
+  <li><a href="#ram-sec-ram" id="toc-ram-sec-ram" class="nav-link" data-scroll-target="#ram-sec-ram">RAM (<span>1&nbsp; Reliability, Availability, and Maintainability (RAM)</span>)</a></li>
+  <li><a href="#weibull-distribution-sec-lda" id="toc-weibull-distribution-sec-lda" class="nav-link" data-scroll-target="#weibull-distribution-sec-lda">Weibull Distribution (<span>3&nbsp; Life Data Analysis</span>)</a></li>
+  <li><a href="#reliability-block-diagrams-sec-rbd" id="toc-reliability-block-diagrams-sec-rbd" class="nav-link" data-scroll-target="#reliability-block-diagrams-sec-rbd">Reliability Block Diagrams (<span>2&nbsp; Reliability Block Diagrams</span>)</a></li>
+  <li><a href="#accelerated-life-testing-sec-alt" id="toc-accelerated-life-testing-sec-alt" class="nav-link" data-scroll-target="#accelerated-life-testing-sec-alt">Accelerated Life Testing (<span>5&nbsp; Accelerated Life Testing</span>)</a></li>
+  <li><a href="#reliability-growth-analysis-sec-rt" id="toc-reliability-growth-analysis-sec-rt" class="nav-link" data-scroll-target="#reliability-growth-analysis-sec-rt">Reliability Growth Analysis (<span>4&nbsp; Reliability Growth Analysis</span>)</a></li>
+  <li><a href="#repairable-systems-sec-rs" id="toc-repairable-systems-sec-rs" class="nav-link" data-scroll-target="#repairable-systems-sec-rs">Repairable Systems (<span>6&nbsp; Repairable Systems Analysis</span>)</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -530,7 +536,7 @@ window.Quarto = {
 <tr class="odd">
 <td style="text-align: center;"><span class="math inline">\(\lambda\)</span></td>
 <td>Failure rate</td>
-<td>Failures per unit time (constant rate — exponential model)</td>
+<td>Failures per unit time (constant rate, exponential model)</td>
 <td style="text-align: center;"><a href="01-ram.html" class="quarto-xref"><span>1&nbsp; Reliability, Availability, and Maintainability (RAM)</span></a></td>
 </tr>
 <tr class="even">
@@ -623,7 +629,7 @@ window.Quarto = {
 <section id="key-formulas" class="level2">
 <h2 class="anchored" data-anchor-id="key-formulas">Key Formulas</h2>
 <section id="ram-sec-ram" class="level3">
-<h3 class="anchored" data-anchor-id="ram-sec-ram">RAM — <a href="01-ram.html" class="quarto-xref"><span>1&nbsp; Reliability, Availability, and Maintainability (RAM)</span></a></h3>
+<h3 class="anchored" data-anchor-id="ram-sec-ram">RAM (<a href="01-ram.html" class="quarto-xref"><span>1&nbsp; Reliability, Availability, and Maintainability (RAM)</span></a>)</h3>
 <p><span class="math display">\[R = 1 - \frac{\text{failed time}}{\text{total time}}\]</span></p>
 <p><span class="math display">\[A = 1 - \frac{\text{unavailable time}}{\text{total time}} = \frac{\text{MTTF}}{\text{MTTF} + \text{MTTR}}\]</span></p>
 <p><span class="math display">\[\lambda = \frac{\text{failures}}{\text{total time}}, \qquad \text{MTTF} = \frac{1}{\lambda}, \qquad \text{MTBF} = \frac{1}{\lambda}\]</span></p>
@@ -632,7 +638,7 @@ window.Quarto = {
 <hr>
 </section>
 <section id="weibull-distribution-sec-lda" class="level3">
-<h3 class="anchored" data-anchor-id="weibull-distribution-sec-lda">Weibull Distribution — <a href="03-lda.html" class="quarto-xref"><span>3&nbsp; Life Data Analysis</span></a></h3>
+<h3 class="anchored" data-anchor-id="weibull-distribution-sec-lda">Weibull Distribution (<a href="03-lda.html" class="quarto-xref"><span>3&nbsp; Life Data Analysis</span></a>)</h3>
 <p><span class="math display">\[R(t) = \exp\!\left[-\left(\frac{t}{\eta}\right)^{\!\beta}\right], \qquad F(t) = 1 - R(t)\]</span></p>
 <p><span class="math display">\[F(\eta) = 1 - e^{-1} \approx 63.2\% \quad \text{for any } \beta\]</span></p>
 <p>3-parameter Weibull with failure-free period <span class="math inline">\(t_0\)</span>:</p>
@@ -640,7 +646,7 @@ window.Quarto = {
 <hr>
 </section>
 <section id="reliability-block-diagrams-sec-rbd" class="level3">
-<h3 class="anchored" data-anchor-id="reliability-block-diagrams-sec-rbd">Reliability Block Diagrams — <a href="02-rbd.html" class="quarto-xref"><span>2&nbsp; Reliability Block Diagrams</span></a></h3>
+<h3 class="anchored" data-anchor-id="reliability-block-diagrams-sec-rbd">Reliability Block Diagrams (<a href="02-rbd.html" class="quarto-xref"><span>2&nbsp; Reliability Block Diagrams</span></a>)</h3>
 <p><span class="math display">\[R_{\text{series}} = \prod_{i=1}^{n} R_i\]</span></p>
 <p><span class="math display">\[R_{\text{parallel}} = 1 - \prod_{i=1}^{n}(1 - R_i)\]</span></p>
 <p><span class="math display">\[R_{\text{k-out-of-n}} = \sum_{i=k}^{n} \binom{n}{i} R^i (1-R)^{n-i}\]</span></p>
@@ -649,7 +655,7 @@ window.Quarto = {
 <hr>
 </section>
 <section id="accelerated-life-testing-sec-alt" class="level3">
-<h3 class="anchored" data-anchor-id="accelerated-life-testing-sec-alt">Accelerated Life Testing — <a href="05-alt.html" class="quarto-xref"><span>5&nbsp; Accelerated Life Testing</span></a></h3>
+<h3 class="anchored" data-anchor-id="accelerated-life-testing-sec-alt">Accelerated Life Testing (<a href="05-alt.html" class="quarto-xref"><span>5&nbsp; Accelerated Life Testing</span></a>)</h3>
 <p>Arrhenius (temperature):</p>
 <p><span class="math display">\[AF = \exp\!\left[\frac{E_a}{k}\left(\frac{1}{T_{\text{use}}} - \frac{1}{T_{\text{stress}}}\right)\right]\]</span></p>
 <p>Power Law (non-thermal stress):</p>
@@ -658,7 +664,7 @@ window.Quarto = {
 <hr>
 </section>
 <section id="reliability-growth-analysis-sec-rt" class="level3">
-<h3 class="anchored" data-anchor-id="reliability-growth-analysis-sec-rt">Reliability Growth Analysis — <a href="04-rt.html" class="quarto-xref"><span>4&nbsp; Reliability Growth Analysis</span></a></h3>
+<h3 class="anchored" data-anchor-id="reliability-growth-analysis-sec-rt">Reliability Growth Analysis (<a href="04-rt.html" class="quarto-xref"><span>4&nbsp; Reliability Growth Analysis</span></a>)</h3>
 <p>Duane cumulative MTBF (<span class="math inline">\(K\)</span> = scale parameter estimated from data):</p>
 <p><span class="math display">\[\text{CMTBF}(t) = K \cdot t^{\beta - 1}\]</span></p>
 <p>Crow-AMSAA cumulative failures (<span class="math inline">\(\lambda_0\)</span> = scale parameter; <span class="math inline">\(\beta\)</span> = shape parameter):</p>
@@ -673,15 +679,15 @@ window.Quarto = {
 <tbody>
 <tr class="odd">
 <td style="text-align: center;"><span class="math inline">\(&lt; 1\)</span></td>
-<td>Failures decreasing — reliability improving</td>
+<td>Failures decreasing, reliability improving</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;"><span class="math inline">\(= 1\)</span></td>
-<td>Constant rate — stable</td>
+<td>Constant rate, stable</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;"><span class="math inline">\(&gt; 1\)</span></td>
-<td>Failures increasing — reliability worsening</td>
+<td>Failures increasing, reliability worsening</td>
 </tr>
 </tbody>
 </table>
@@ -695,13 +701,13 @@ Warning
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Note</strong>: Crow-AMSAA <span class="math inline">\(\beta\)</span> and Duane <span class="math inline">\(\beta\)</span> have <strong>opposite</strong> interpretations — Duane <span class="math inline">\(\beta &gt; 1\)</span> means <em>improving</em>, Crow-AMSAA <span class="math inline">\(\beta &gt; 1\)</span> means <em>worsening</em>. See <a href="04-rt.html" class="quarto-xref"><span>4&nbsp; Reliability Growth Analysis</span></a> for details.</p>
+<p><strong>Note</strong>: Crow-AMSAA <span class="math inline">\(\beta\)</span> and Duane <span class="math inline">\(\beta\)</span> have <strong>opposite</strong> interpretations: Duane <span class="math inline">\(\beta &gt; 1\)</span> means <em>improving</em>, Crow-AMSAA <span class="math inline">\(\beta &gt; 1\)</span> means <em>worsening</em>. See <a href="04-rt.html" class="quarto-xref"><span>4&nbsp; Reliability Growth Analysis</span></a> for details.</p>
 </div>
 </div>
 <hr>
 </section>
 <section id="repairable-systems-sec-rs" class="level3">
-<h3 class="anchored" data-anchor-id="repairable-systems-sec-rs">Repairable Systems — <a href="06-rs.html" class="quarto-xref"><span>6&nbsp; Repairable Systems Analysis</span></a></h3>
+<h3 class="anchored" data-anchor-id="repairable-systems-sec-rs">Repairable Systems (<a href="06-rs.html" class="quarto-xref"><span>6&nbsp; Repairable Systems Analysis</span></a>)</h3>
 <p>Power Law intensity (recurrence rate):</p>
 <p><span class="math display">\[\rho(t) = \lambda \beta t^{\beta - 1}\]</span></p>
 <p>Instantaneous MTBF at time <span class="math inline">\(t\)</span>:</p>
@@ -1197,7 +1203,7 @@ Warning
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="pp">|:---:|---|---|:---:|</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> $\beta$ <span class="pp">|</span> Shape parameter <span class="pp">|</span> Controls whether the failure rate increases, decreases, or stays constant over time <span class="pp">|</span> @sec-ram <span class="pp">|</span></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> $\eta$ <span class="pp">|</span> Scale parameter (characteristic life) <span class="pp">|</span> Time at which $F(t) = 63.2\%$ for any $\beta$ <span class="pp">|</span> @sec-lda <span class="pp">|</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> $\lambda$ <span class="pp">|</span> Failure rate <span class="pp">|</span> Failures per unit time (constant rate — exponential model) <span class="pp">|</span> @sec-ram <span class="pp">|</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> $\lambda$ <span class="pp">|</span> Failure rate <span class="pp">|</span> Failures per unit time (constant rate, exponential model) <span class="pp">|</span> @sec-ram <span class="pp">|</span></span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> $\rho(t)$ <span class="pp">|</span> Intensity / recurrence rate <span class="pp">|</span> Time-varying failure rate for repairable systems <span class="pp">|</span> @sec-rs <span class="pp">|</span></span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> $R(t)$ <span class="pp">|</span> Reliability function <span class="pp">|</span> Probability of survival to time $t$ <span class="pp">|</span> @sec-ram <span class="pp">|</span></span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> $F(t)$ <span class="pp">|</span> Cumulative distribution function <span class="pp">|</span> Probability of failure by time $t$; $F(t) = 1 - R(t)$ <span class="pp">|</span> @sec-lda <span class="pp">|</span></span>
@@ -1215,7 +1221,7 @@ Warning
 <span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="fu">## Key Formulas</span></span>
 <span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="fu">### RAM — @sec-ram</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="fu">### RAM (@sec-ram)</span></span>
 <span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>$$R = 1 - \frac{\text{failed time}}{\text{total time}}$$</span>
 <span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
@@ -1229,7 +1235,7 @@ Warning
 <span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>---</span>
 <span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="fu">### Weibull Distribution — @sec-lda</span></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="fu">### Weibull Distribution (@sec-lda)</span></span>
 <span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>$$R(t) = \exp<span class="sc">\!</span>\left<span class="co">[</span><span class="ot">-\left(\frac{t}{\eta}\right)^{\!\beta}\right</span><span class="co">]</span>, \qquad F(t) = 1 - R(t)$$</span>
 <span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a></span>
@@ -1241,7 +1247,7 @@ Warning
 <span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>---</span>
 <span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a><span class="fu">### Reliability Block Diagrams — @sec-rbd</span></span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a><span class="fu">### Reliability Block Diagrams (@sec-rbd)</span></span>
 <span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>$$R_{\text{series}} = \prod_{i=1}^{n} R_i$$</span>
 <span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a></span>
@@ -1255,7 +1261,7 @@ Warning
 <span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>---</span>
 <span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a><span class="fu">### Accelerated Life Testing — @sec-alt</span></span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a><span class="fu">### Accelerated Life Testing (@sec-alt)</span></span>
 <span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>Arrhenius (temperature):</span>
 <span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a></span>
@@ -1269,7 +1275,7 @@ Warning
 <span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a>---</span>
 <span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a><span class="fu">### Reliability Growth Analysis — @sec-rt</span></span>
+<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a><span class="fu">### Reliability Growth Analysis (@sec-rt)</span></span>
 <span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a>Duane cumulative MTBF ($K$ = scale parameter estimated from data):</span>
 <span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a></span>
@@ -1281,17 +1287,17 @@ Warning
 <span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> $\beta$ (Crow-AMSAA) <span class="pp">|</span> Meaning <span class="pp">|</span></span>
 <span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a><span class="pp">|:---:|---|</span></span>
-<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> $&lt; 1$ <span class="pp">|</span> Failures decreasing — reliability improving <span class="pp">|</span></span>
-<span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> $= 1$ <span class="pp">|</span> Constant rate — stable <span class="pp">|</span></span>
-<span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> $&gt; 1$ <span class="pp">|</span> Failures increasing — reliability worsening <span class="pp">|</span></span>
+<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> $&lt; 1$ <span class="pp">|</span> Failures decreasing, reliability improving <span class="pp">|</span></span>
+<span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> $= 1$ <span class="pp">|</span> Constant rate, stable <span class="pp">|</span></span>
+<span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> $&gt; 1$ <span class="pp">|</span> Failures increasing, reliability worsening <span class="pp">|</span></span>
 <span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning}</span>
-<span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a>**Note**: Crow-AMSAA $\beta$ and Duane $\beta$ have **opposite** interpretations — Duane $\beta &gt; 1$ means *improving*, Crow-AMSAA $\beta &gt; 1$ means *worsening*. See @sec-rt for details.</span>
+<span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a>**Note**: Crow-AMSAA $\beta$ and Duane $\beta$ have **opposite** interpretations: Duane $\beta &gt; 1$ means *improving*, Crow-AMSAA $\beta &gt; 1$ means *worsening*. See @sec-rt for details.</span>
 <span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a>---</span>
 <span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a><span class="fu">### Repairable Systems — @sec-rs</span></span>
+<span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a><span class="fu">### Repairable Systems (@sec-rs)</span></span>
 <span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a>Power Law intensity (recurrence rate):</span>
 <span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a></span>

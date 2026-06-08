@@ -460,6 +460,12 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./09-mcp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">AI-Assisted Reliability Analysis with MCP</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./98-appendix.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Appendix: R Quick Reference</span></a>
   </div>
@@ -574,7 +580,7 @@ window.Quarto = {
 </tr>
 <tr class="even">
 <td>Minimal repair</td>
-<td>As-bad-as-old — failure fixed, nothing else changed</td>
+<td>As-bad-as-old, failure fixed, nothing else changed</td>
 <td>NHPP</td>
 </tr>
 </tbody>
@@ -637,7 +643,7 @@ window.Quarto = {
 <p><span class="math display">\[E[N(t)] = \lambda t^{\beta} \qquad \rho(t) = \lambda \beta t^{\beta-1}\]</span></p>
 <p><strong>Parameter interpretation:</strong></p>
 <ul>
-<li><span class="math inline">\(\lambda &gt; 0\)</span> — scale parameter; overall magnitude of the failure rate.</li>
+<li><span class="math inline">\(\lambda &gt; 0\)</span>, scale parameter; overall magnitude of the failure rate.</li>
 <li><span class="math inline">\(\beta &lt; 1\)</span>: decreasing intensity (system improving).</li>
 <li><span class="math inline">\(\beta = 1\)</span>: constant intensity = HPP.</li>
 <li><span class="math inline">\(\beta &gt; 1\)</span>: increasing intensity (system deteriorating).</li>
@@ -669,7 +675,7 @@ Answer
 <section id="exposure-analysis" class="level2" data-number="6.6">
 <h2 data-number="6.6" class="anchored" data-anchor-id="exposure-analysis"><span class="header-section-number">6.6</span> Exposure Analysis</h2>
 <p>When analyzing a <em>fleet</em>, individual units enter and leave observation at different times. <strong>Exposure</strong> is the total operating time accumulated across all units currently at risk.</p>
-<p>The <code>exposure()</code> function computes: - <strong>Cumulative exposure</strong> — total system-time at risk up to each event time. - <strong>Number at risk</strong> — how many units were under observation at each time. - <strong>Event rate</strong> — cumulative events divided by cumulative exposure.</p>
+<p>The <code>exposure()</code> function computes: - <strong>Cumulative exposure</strong>: total system-time at risk up to each event time. - <strong>Number at risk</strong>: how many units were under observation at each time. - <strong>Event rate</strong>: cumulative events divided by cumulative exposure.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>pump_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">id    =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>,  <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>,  <span class="dv">3</span>, <span class="dv">3</span>,  <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">4</span>,  <span class="dv">5</span>, <span class="dv">5</span>),</span>
@@ -704,7 +710,7 @@ Answer
 <summary>
 Answer
 </summary>
-Without normalizing by exposure, a system observed for twice as long will appear to have twice as many failures even if its underlying rate is identical. Exposure provides the denominator — failures per unit time — so rates can be compared fairly.
+Without normalizing by exposure, a system observed for twice as long will appear to have twice as many failures even if its underlying rate is identical. Exposure provides the denominator, failures per unit time, so rates can be compared fairly.
 </details>
 </div>
 </div>
@@ -715,7 +721,7 @@ Without normalizing by exposure, a system observed for twice as long will appear
 <p>The <strong>Nelson-Aalen estimator</strong> is a non-parametric method that requires no distributional assumption and naturally handles systems with different observation lengths (administrative censoring):</p>
 <p><span class="math display">\[\hat{M}(t) = \sum_{t_j \leq t} \frac{d_j}{n_j}\]</span></p>
 <p>where <span class="math inline">\(d_j\)</span> is the number of failures at time <span class="math inline">\(t_j\)</span> and <span class="math inline">\(n_j\)</span> is the number of systems at risk at <span class="math inline">\(t_j\)</span>.</p>
-<p>Pass <code>end_time</code> to <code>mcf()</code> when systems were observed beyond their last recorded failure — otherwise the risk set is deflated too early, inflating the rate estimate.</p>
+<p>Pass <code>end_time</code> to <code>mcf()</code> when systems were observed beyond their last recorded failure; otherwise the risk set is deflated too early, inflating the rate estimate.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>end_times  <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"1"</span> <span class="ot">=</span> <span class="dv">3000</span>, <span class="st">"2"</span> <span class="ot">=</span> <span class="dv">3000</span>, <span class="st">"3"</span> <span class="ot">=</span> <span class="dv">3000</span>, <span class="st">"4"</span> <span class="ot">=</span> <span class="dv">3000</span>, <span class="st">"5"</span> <span class="ot">=</span> <span class="dv">3000</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -780,7 +786,7 @@ Solution
 <section id="nhpp-analysis-with-nhpp" class="level2" data-number="6.8">
 <h2 data-number="6.8" class="anchored" data-anchor-id="nhpp-analysis-with-nhpp"><span class="header-section-number">6.8</span> NHPP Analysis with nhpp()</h2>
 <p>The <code>nhpp()</code> function fits the Power Law Process (Crow-AMSAA model) <span class="citation" data-cites="Crow1975">(<a href="#ref-Crow1975" role="doc-biblioref">Crow 1975</a>)</span> to individual failure event data by maximum likelihood, returning estimates of <span class="math inline">\(\lambda\)</span> and <span class="math inline">\(\beta\)</span>.</p>
-<p>A curve that bends downward (concave) indicates <span class="math inline">\(\hat{\beta} &lt; 1\)</span> — improving system. Upward bending (convex) indicates <span class="math inline">\(\hat{\beta} &gt; 1\)</span> — deteriorating system.</p>
+<p>A curve that bends downward (concave) indicates <span class="math inline">\(\hat{\beta} &lt; 1\)</span>, an improving system. Upward bending (convex) indicates <span class="math inline">\(\hat{\beta} &gt; 1\)</span>, a deteriorating system.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pump_data defined above in the Exposure section</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>failure_times <span class="ot">&lt;-</span> <span class="fu">sort</span>(pump_data<span class="sc">$</span>time[pump_data<span class="sc">$</span>event <span class="sc">==</span> <span class="dv">1</span>])</span>
@@ -798,7 +804,7 @@ Solution
 </div>
 </div>
 </div>
-<p>The concave curve and <span class="math inline">\(\hat{\beta} &lt; 1\)</span> indicate the pump fleet’s failure rate is decreasing — a favorable operating regime.</p>
+<p>The concave curve and <span class="math inline">\(\hat{\beta} &lt; 1\)</span> indicate the pump fleet’s failure rate is decreasing, a favorable operating regime.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -860,7 +866,7 @@ Solution
 </div>
 </div>
 </div>
-<p>The first segment (pre-overhaul, steeper slope) gives way to a flatter or downward-bending second segment, confirming the overhaul reduced the failure rate. The fitted breakpoint may differ slightly from the input value — here it is estimated near hour 9,820.</p>
+<p>The first segment (pre-overhaul, steeper slope) gives way to a flatter or downward-bending second segment, confirming the overhaul reduced the failure rate. The fitted breakpoint may differ slightly from the input value; here it is estimated near hour 9,820.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -920,10 +926,10 @@ To account for a <strong>known or suspected structural change</strong> in the fa
 <section id="cumulative-vs-instantaneous-mtbf" class="level3">
 <h3 class="anchored" data-anchor-id="cumulative-vs-instantaneous-mtbf">Cumulative vs Instantaneous MTBF</h3>
 <ul>
-<li><strong>Cumulative MTBF</strong> = <span class="math inline">\(T / N(T)\)</span> — historical average over all observed failures.</li>
-<li><strong>Instantaneous MTBF</strong> at time <span class="math inline">\(t\)</span> = <span class="math inline">\(1/\rho(t) = 1/(\hat{\lambda}\hat{\beta}\,t^{\hat{\beta}-1})\)</span> — expected time to the <em>next</em> failure.</li>
+<li><strong>Cumulative MTBF</strong> = <span class="math inline">\(T / N(T)\)</span>, the historical average over all observed failures.</li>
+<li><strong>Instantaneous MTBF</strong> at time <span class="math inline">\(t\)</span> = <span class="math inline">\(1/\rho(t) = 1/(\hat{\lambda}\hat{\beta}\,t^{\hat{\beta}-1})\)</span>, the expected time to the <em>next</em> failure.</li>
 </ul>
-<p>For <span class="math inline">\(\hat{\beta} &gt; 1\)</span> (aging system), the instantaneous MTBF falls <em>below</em> the cumulative average at late times — the system’s near-term reliability is worse than its history suggests.</p>
+<p>For <span class="math inline">\(\hat{\beta} &gt; 1\)</span> (aging system), the instantaneous MTBF falls <em>below</em> the cumulative average at late times; the system’s near-term reliability is worse than its history suggests.</p>
 </section>
 <section id="predicting-future-failures" class="level3">
 <h3 class="anchored" data-anchor-id="predicting-future-failures">Predicting Future Failures</h3>
@@ -992,7 +998,7 @@ Solution
 <summary>
 Answer
 </summary>
-The failure rate is <strong>increasing</strong> — wear-out or aging is occurring. The system may be approaching a major overhaul threshold. The instantaneous MTBF is below the cumulative historical average.
+The failure rate is <strong>increasing</strong>; wear-out or aging is occurring. The system may be approaching a major overhaul threshold. The instantaneous MTBF is below the cumulative historical average.
 </details>
 </div>
 </div>
@@ -1547,7 +1553,7 @@ Meeker, William Q., and Luis A. Escobar. 1998. <em>Statistical Methods for Relia
 <span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Repair type <span class="pp">|</span> Description <span class="pp">|</span> Model <span class="pp">|</span></span>
 <span id="cb16-38"><a href="#cb16-38" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|</span></span>
 <span id="cb16-39"><a href="#cb16-39" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Perfect repair <span class="pp">|</span> As-good-as-new after each repair <span class="pp">|</span> Renewal process <span class="pp">|</span></span>
-<span id="cb16-40"><a href="#cb16-40" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Minimal repair <span class="pp">|</span> As-bad-as-old — failure fixed, nothing else changed <span class="pp">|</span> NHPP <span class="pp">|</span></span>
+<span id="cb16-40"><a href="#cb16-40" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Minimal repair <span class="pp">|</span> As-bad-as-old, failure fixed, nothing else changed <span class="pp">|</span> NHPP <span class="pp">|</span></span>
 <span id="cb16-41"><a href="#cb16-41" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-42"><a href="#cb16-42" aria-hidden="true" tabindex="-1"></a>Most field maintenance data best fits the **minimal repair** assumption, making NHPP the standard framework.</span>
 <span id="cb16-43"><a href="#cb16-43" aria-hidden="true" tabindex="-1"></a></span>
@@ -1608,7 +1614,7 @@ Meeker, William Q., and Luis A. Escobar. 1998. <em>Statistical Methods for Relia
 <span id="cb16-100"><a href="#cb16-100" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-101"><a href="#cb16-101" aria-hidden="true" tabindex="-1"></a>**Parameter interpretation:**</span>
 <span id="cb16-102"><a href="#cb16-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-103"><a href="#cb16-103" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$\lambda &gt; 0$ — scale parameter; overall magnitude of the failure rate.</span>
+<span id="cb16-103"><a href="#cb16-103" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$\lambda &gt; 0$, scale parameter; overall magnitude of the failure rate.</span>
 <span id="cb16-104"><a href="#cb16-104" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$\beta &lt; 1$: decreasing intensity (system improving).</span>
 <span id="cb16-105"><a href="#cb16-105" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$\beta = 1$: constant intensity = HPP.</span>
 <span id="cb16-106"><a href="#cb16-106" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$\beta &gt; 1$: increasing intensity (system deteriorating).</span>
@@ -1636,9 +1642,9 @@ Meeker, William Q., and Luis A. Escobar. 1998. <em>Statistical Methods for Relia
 <span id="cb16-128"><a href="#cb16-128" aria-hidden="true" tabindex="-1"></a>When analyzing a *fleet*, individual units enter and leave observation at different times. **Exposure** is the total operating time accumulated across all units currently at risk.</span>
 <span id="cb16-129"><a href="#cb16-129" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-130"><a href="#cb16-130" aria-hidden="true" tabindex="-1"></a>The <span class="in">`exposure()`</span> function computes:</span>
-<span id="cb16-131"><a href="#cb16-131" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Cumulative exposure** — total system-time at risk up to each event time.</span>
-<span id="cb16-132"><a href="#cb16-132" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Number at risk** — how many units were under observation at each time.</span>
-<span id="cb16-133"><a href="#cb16-133" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Event rate** — cumulative events divided by cumulative exposure.</span>
+<span id="cb16-131"><a href="#cb16-131" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Cumulative exposure**: total system-time at risk up to each event time.</span>
+<span id="cb16-132"><a href="#cb16-132" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Number at risk**: how many units were under observation at each time.</span>
+<span id="cb16-133"><a href="#cb16-133" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Event rate**: cumulative events divided by cumulative exposure.</span>
 <span id="cb16-134"><a href="#cb16-134" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-137"><a href="#cb16-137" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb16-138"><a href="#cb16-138" aria-hidden="true" tabindex="-1"></a>pump_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
@@ -1660,7 +1666,7 @@ Meeker, William Q., and Luis A. Escobar. 1998. <em>Statistical Methods for Relia
 <span id="cb16-154"><a href="#cb16-154" aria-hidden="true" tabindex="-1"></a>Why is it important to account for exposure when comparing failure rates across systems with different observation periods?</span>
 <span id="cb16-155"><a href="#cb16-155" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-156"><a href="#cb16-156" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Answer<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
-<span id="cb16-157"><a href="#cb16-157" aria-hidden="true" tabindex="-1"></a>Without normalizing by exposure, a system observed for twice as long will appear to have twice as many failures even if its underlying rate is identical. Exposure provides the denominator — failures per unit time — so rates can be compared fairly.</span>
+<span id="cb16-157"><a href="#cb16-157" aria-hidden="true" tabindex="-1"></a>Without normalizing by exposure, a system observed for twice as long will appear to have twice as many failures even if its underlying rate is identical. Exposure provides the denominator, failures per unit time, so rates can be compared fairly.</span>
 <span id="cb16-158"><a href="#cb16-158" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
 <span id="cb16-159"><a href="#cb16-159" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb16-160"><a href="#cb16-160" aria-hidden="true" tabindex="-1"></a></span>
@@ -1674,7 +1680,7 @@ Meeker, William Q., and Luis A. Escobar. 1998. <em>Statistical Methods for Relia
 <span id="cb16-168"><a href="#cb16-168" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-169"><a href="#cb16-169" aria-hidden="true" tabindex="-1"></a>where $d_j$ is the number of failures at time $t_j$ and $n_j$ is the number of systems at risk at $t_j$.</span>
 <span id="cb16-170"><a href="#cb16-170" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-171"><a href="#cb16-171" aria-hidden="true" tabindex="-1"></a>Pass <span class="in">`end_time`</span> to <span class="in">`mcf()`</span> when systems were observed beyond their last recorded failure — otherwise the risk set is deflated too early, inflating the rate estimate.</span>
+<span id="cb16-171"><a href="#cb16-171" aria-hidden="true" tabindex="-1"></a>Pass <span class="in">`end_time`</span> to <span class="in">`mcf()`</span> when systems were observed beyond their last recorded failure; otherwise the risk set is deflated too early, inflating the rate estimate.</span>
 <span id="cb16-172"><a href="#cb16-172" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-175"><a href="#cb16-175" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb16-176"><a href="#cb16-176" aria-hidden="true" tabindex="-1"></a>end_times  <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"1"</span> <span class="ot">=</span> <span class="dv">3000</span>, <span class="st">"2"</span> <span class="ot">=</span> <span class="dv">3000</span>, <span class="st">"3"</span> <span class="ot">=</span> <span class="dv">3000</span>, <span class="st">"4"</span> <span class="ot">=</span> <span class="dv">3000</span>, <span class="st">"5"</span> <span class="ot">=</span> <span class="dv">3000</span>)</span>
@@ -1720,7 +1726,7 @@ Meeker, William Q., and Luis A. Escobar. 1998. <em>Statistical Methods for Relia
 <span id="cb16-220"><a href="#cb16-220" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-221"><a href="#cb16-221" aria-hidden="true" tabindex="-1"></a>The <span class="in">`nhpp()`</span> function fits the Power Law Process (Crow-AMSAA model) <span class="co">[</span><span class="ot">@Crow1975</span><span class="co">]</span> to individual failure event data by maximum likelihood, returning estimates of $\lambda$ and $\beta$.</span>
 <span id="cb16-222"><a href="#cb16-222" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-223"><a href="#cb16-223" aria-hidden="true" tabindex="-1"></a>A curve that bends downward (concave) indicates $\hat{\beta} &lt; 1$ — improving system. Upward bending (convex) indicates $\hat{\beta} &gt; 1$ — deteriorating system.</span>
+<span id="cb16-223"><a href="#cb16-223" aria-hidden="true" tabindex="-1"></a>A curve that bends downward (concave) indicates $\hat{\beta} &lt; 1$, an improving system. Upward bending (convex) indicates $\hat{\beta} &gt; 1$, a deteriorating system.</span>
 <span id="cb16-224"><a href="#cb16-224" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-227"><a href="#cb16-227" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb16-228"><a href="#cb16-228" aria-hidden="true" tabindex="-1"></a><span class="co"># pump_data defined above in the Exposure section</span></span>
@@ -1733,7 +1739,7 @@ Meeker, William Q., and Luis A. Escobar. 1998. <em>Statistical Methods for Relia
 <span id="cb16-235"><a href="#cb16-235" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Cumulative Failures"</span>)</span>
 <span id="cb16-236"><a href="#cb16-236" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb16-237"><a href="#cb16-237" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-238"><a href="#cb16-238" aria-hidden="true" tabindex="-1"></a>The concave curve and $\hat{\beta} &lt; 1$ indicate the pump fleet's failure rate is decreasing — a favorable operating regime.</span>
+<span id="cb16-238"><a href="#cb16-238" aria-hidden="true" tabindex="-1"></a>The concave curve and $\hat{\beta} &lt; 1$ indicate the pump fleet's failure rate is decreasing, a favorable operating regime.</span>
 <span id="cb16-239"><a href="#cb16-239" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-240"><a href="#cb16-240" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
 <span id="cb16-241"><a href="#cb16-241" aria-hidden="true" tabindex="-1"></a><span class="fu">## Try It</span></span>
@@ -1777,7 +1783,7 @@ Meeker, William Q., and Luis A. Escobar. 1998. <em>Statistical Methods for Relia
 <span id="cb16-285"><a href="#cb16-285" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Cumulative Failures"</span>)</span>
 <span id="cb16-286"><a href="#cb16-286" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb16-287"><a href="#cb16-287" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-288"><a href="#cb16-288" aria-hidden="true" tabindex="-1"></a>The first segment (pre-overhaul, steeper slope) gives way to a flatter or downward-bending second segment, confirming the overhaul reduced the failure rate. The fitted breakpoint may differ slightly from the input value — here it is estimated near hour 9,820.</span>
+<span id="cb16-288"><a href="#cb16-288" aria-hidden="true" tabindex="-1"></a>The first segment (pre-overhaul, steeper slope) gives way to a flatter or downward-bending second segment, confirming the overhaul reduced the failure rate. The fitted breakpoint may differ slightly from the input value; here it is estimated near hour 9,820.</span>
 <span id="cb16-289"><a href="#cb16-289" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-290"><a href="#cb16-290" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
 <span id="cb16-291"><a href="#cb16-291" aria-hidden="true" tabindex="-1"></a><span class="fu">## Review</span></span>
@@ -1801,10 +1807,10 @@ Meeker, William Q., and Luis A. Escobar. 1998. <em>Statistical Methods for Relia
 <span id="cb16-309"><a href="#cb16-309" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-310"><a href="#cb16-310" aria-hidden="true" tabindex="-1"></a><span class="fu">### Cumulative vs Instantaneous MTBF</span></span>
 <span id="cb16-311"><a href="#cb16-311" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-312"><a href="#cb16-312" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Cumulative MTBF** = $T / N(T)$ — historical average over all observed failures.</span>
-<span id="cb16-313"><a href="#cb16-313" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Instantaneous MTBF** at time $t$ = $1/\rho(t) = 1/(\hat{\lambda}\hat{\beta}\,t^{\hat{\beta}-1})$ — expected time to the *next* failure.</span>
+<span id="cb16-312"><a href="#cb16-312" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Cumulative MTBF** = $T / N(T)$, the historical average over all observed failures.</span>
+<span id="cb16-313"><a href="#cb16-313" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Instantaneous MTBF** at time $t$ = $1/\rho(t) = 1/(\hat{\lambda}\hat{\beta}\,t^{\hat{\beta}-1})$, the expected time to the *next* failure.</span>
 <span id="cb16-314"><a href="#cb16-314" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-315"><a href="#cb16-315" aria-hidden="true" tabindex="-1"></a>For $\hat{\beta} &gt; 1$ (aging system), the instantaneous MTBF falls *below* the cumulative average at late times — the system's near-term reliability is worse than its history suggests.</span>
+<span id="cb16-315"><a href="#cb16-315" aria-hidden="true" tabindex="-1"></a>For $\hat{\beta} &gt; 1$ (aging system), the instantaneous MTBF falls *below* the cumulative average at late times; the system's near-term reliability is worse than its history suggests.</span>
 <span id="cb16-316"><a href="#cb16-316" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-317"><a href="#cb16-317" aria-hidden="true" tabindex="-1"></a><span class="fu">### Predicting Future Failures</span></span>
 <span id="cb16-318"><a href="#cb16-318" aria-hidden="true" tabindex="-1"></a></span>
@@ -1853,7 +1859,7 @@ Meeker, William Q., and Luis A. Escobar. 1998. <em>Statistical Methods for Relia
 <span id="cb16-367"><a href="#cb16-367" aria-hidden="true" tabindex="-1"></a>A system has a fitted Power Law model with $\beta = 1.35$. What is the operational implication?</span>
 <span id="cb16-368"><a href="#cb16-368" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-369"><a href="#cb16-369" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Answer<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
-<span id="cb16-370"><a href="#cb16-370" aria-hidden="true" tabindex="-1"></a>The failure rate is **increasing** — wear-out or aging is occurring. The system may be approaching a major overhaul threshold. The instantaneous MTBF is below the cumulative historical average.</span>
+<span id="cb16-370"><a href="#cb16-370" aria-hidden="true" tabindex="-1"></a>The failure rate is **increasing**; wear-out or aging is occurring. The system may be approaching a major overhaul threshold. The instantaneous MTBF is below the cumulative historical average.</span>
 <span id="cb16-371"><a href="#cb16-371" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
 <span id="cb16-372"><a href="#cb16-372" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb16-373"><a href="#cb16-373" aria-hidden="true" tabindex="-1"></a></span>

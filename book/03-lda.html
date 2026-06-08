@@ -460,6 +460,12 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./09-mcp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">AI-Assisted Reliability Analysis with MCP</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./98-appendix.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Appendix: R Quick Reference</span></a>
   </div>
@@ -673,7 +679,7 @@ Answer
 </section>
 <section id="reading-the-probability-plot" class="level3">
 <h3 class="anchored" data-anchor-id="reading-the-probability-plot">Reading the Probability Plot</h3>
-<p>The <strong>Weibull probability plot</strong> shows time on the horizontal axis (log scale) and cumulative unreliability <span class="math inline">\(F(t)\)</span> on the vertical axis (log-log scale). This double-log transformation linearizes Weibull data — the result is a straight line when the Weibull model fits.</p>
+<p>The <strong>Weibull probability plot</strong> shows time on the horizontal axis (log scale) and cumulative unreliability <span class="math inline">\(F(t)\)</span> on the vertical axis (log-log scale). This double-log transformation linearizes Weibull data; the result is a straight line when the Weibull model fits.</p>
 <ul>
 <li>Read off <span class="math inline">\(F(t)\)</span> at any time to get the probability of failure by that time.</li>
 <li>Reliability at time <span class="math inline">\(t\)</span> is <span class="math inline">\(R(t) = 1 - F(t)\)</span>.</li>
@@ -716,7 +722,7 @@ Solution
 </section>
 <section id="data-censoring" class="level2" data-number="3.5">
 <h2 data-number="3.5" class="anchored" data-anchor-id="data-censoring"><span class="header-section-number">3.5</span> Data Censoring</h2>
-<p>In life data analysis, data is often <strong>censored</strong> — the exact time to failure is not known for all units.</p>
+<p>In life data analysis, data is often <strong>censored</strong>: the exact time to failure is not known for all units.</p>
 <section id="right-censored-data-suspensions" class="level3">
 <h3 class="anchored" data-anchor-id="right-censored-data-suspensions">Right-Censored Data (Suspensions)</h3>
 <p><strong>Right censoring</strong> occurs when a unit has operated for a period of time without failing (a <strong>suspension</strong>). The unit was removed from service before failing.</p>
@@ -771,7 +777,7 @@ Solution
 </section>
 <section id="interval-censored-data" class="level3">
 <h3 class="anchored" data-anchor-id="interval-censored-data">Interval-Censored Data</h3>
-<p><strong>Interval censoring</strong> occurs when failures are only detected during periodic inspections — the exact failure time is unknown, but it is known to have occurred within an interval.</p>
+<p><strong>Interval censoring</strong> occurs when failures are only detected during periodic inspections; the exact failure time is unknown, but it is known to have occurred within an interval.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>inspection_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">left  =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">6.12</span>, <span class="fl">19.92</span>, <span class="fl">29.64</span>, <span class="fl">35.4</span>, <span class="fl">39.72</span>, <span class="fl">45.32</span>, <span class="fl">52.32</span>),</span>
@@ -796,7 +802,7 @@ Solution
 </section>
 <section id="grouped-data" class="level3">
 <h3 class="anchored" data-anchor-id="grouped-data">Grouped Data</h3>
-<p>Life data is often collected in groups. The <code>qty</code> column in the inspection data above indicates how many units failed in each interval — 5 failed between time 0 and 6.12, 16 between 6.12 and 19.92, and so on.</p>
+<p>Life data is often collected in groups. The <code>qty</code> column in the inspection data above indicates how many units failed in each interval: 5 failed between time 0 and 6.12, 16 between 6.12 and 19.92, and so on.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -823,7 +829,7 @@ Answer
 <section id="mrr-vs-mle" class="level3">
 <h3 class="anchored" data-anchor-id="mrr-vs-mle">MRR vs MLE</h3>
 <p><strong>Median Rank Regression (MRR)</strong> estimates parameters by minimizing the sum of squared errors between observed and predicted values (least squares).</p>
-<p><strong>Maximum Likelihood Estimation (MLE)</strong> finds the parameters that make the observed data most probable — it maximizes the likelihood function.</p>
+<p><strong>Maximum Likelihood Estimation (MLE)</strong> finds the parameters that make the observed data most probable: it maximizes the likelihood function.</p>
 <p>Comparing both methods on the same data:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>failures    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">30</span>, <span class="dv">49</span>, <span class="dv">82</span>, <span class="dv">90</span>, <span class="dv">96</span>)</span>
@@ -840,7 +846,7 @@ Answer
 </div>
 </div>
 </div>
-<p>Both methods fit the same data. Slight differences in <span class="math inline">\(\beta\)</span> and <span class="math inline">\(\eta\)</span> are visible — the better fit can be determined objectively using the Anderson-Darling statistic. In practice, <strong>MLE is preferred for small samples and censored data</strong> (it uses all the information in the likelihood); <strong>MRR is adequate for larger, complete datasets</strong> and is computationally simpler.</p>
+<p>Both methods fit the same data. Slight differences in <span class="math inline">\(\beta\)</span> and <span class="math inline">\(\eta\)</span> are visible; the better fit can be determined objectively using the Anderson-Darling statistic. In practice, <strong>MLE is preferred for small samples and censored data</strong> (it uses all the information in the likelihood); <strong>MRR is adequate for larger, complete datasets</strong> and is computationally simpler.</p>
 </section>
 </section>
 <section id="goodness-of-fit" class="level2" data-number="3.7">
@@ -906,7 +912,7 @@ Solution
 </section>
 <section id="choosing-a-distribution" class="level2" data-number="3.8">
 <h2 data-number="3.8" class="anchored" data-anchor-id="choosing-a-distribution"><span class="header-section-number">3.8</span> Choosing a Distribution</h2>
-<p>The Weibull distribution is the default in reliability engineering, but it is not always the best fit. The <strong>lognormal</strong> distribution often fits failure data driven by fatigue crack growth, corrosion, or cumulative damage — mechanisms where the logarithm of time-to-failure is normally distributed.</p>
+<p>The Weibull distribution is the default in reliability engineering, but it is not always the best fit. The <strong>lognormal</strong> distribution often fits failure data driven by fatigue crack growth, corrosion, or cumulative damage, mechanisms where the logarithm of time-to-failure is normally distributed.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -929,7 +935,7 @@ Solution
 </tr>
 </tbody>
 </table>
-<p><code>wblr.fit()</code> supports both via the <code>dist</code> argument. The goodness-of-fit metric in the plot legend (<span class="math inline">\(r^2\)</span> for rank regression) is the tiebreaker — <strong>higher <span class="math inline">\(r^2\)</span> indicates a better fit</strong>:</p>
+<p><code>wblr.fit()</code> supports both via the <code>dist</code> argument. The goodness-of-fit metric in the plot legend (<span class="math inline">\(r^2\)</span> for rank regression) is the tiebreaker: <strong>higher <span class="math inline">\(r^2\)</span> indicates a better fit</strong>:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>failures    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">30</span>, <span class="dv">49</span>, <span class="dv">82</span>, <span class="dv">90</span>, <span class="dv">96</span>)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>suspensions <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">45</span>, <span class="dv">10</span>)</span>
@@ -949,7 +955,7 @@ Solution
 </div>
 </div>
 </div>
-<p>For this dataset, Weibull achieves <span class="math inline">\(r^2 \approx 0.953\)</span> vs.&nbsp;lognormal at <span class="math inline">\(r^2 \approx 0.914\)</span> — Weibull fits better. The choice should be driven by the data, not by habit.</p>
+<p>For this dataset, Weibull achieves <span class="math inline">\(r^2 \approx 0.953\)</span> vs.&nbsp;lognormal at <span class="math inline">\(r^2 \approx 0.914\)</span>; Weibull fits better. The choice should be driven by the data, not by habit.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -965,8 +971,9 @@ Solution
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>failures_3p <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">3.47</span>, <span class="fl">3.73</span>, <span class="fl">4.05</span>, <span class="fl">4.63</span>, <span class="fl">4.82</span>, <span class="fl">5.85</span>, <span class="fl">5.89</span>, <span class="fl">5.89</span>,</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>                 <span class="fl">8.17</span>, <span class="fl">10.03</span>, <span class="fl">10.06</span>, <span class="fl">10.50</span>, <span class="fl">11.11</span>, <span class="fl">11.87</span>, <span class="fl">12.21</span>)</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># obj_wb &lt;- wblr.fit(wblr(failures_3p, col = "blue"), method.fit = "rr")</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># obj_ln &lt;- wblr.fit(wblr(failures_3p, col = "red"),  method.fit = "rr", dist = "lognormal")</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co"># plot.wblr(list(obj_wb, obj_ln))</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># obj_ln &lt;- wblr.fit(wblr(failures_3p, col = "red"),</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co">#                    method.fit = "rr", dist = "lognormal")</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co"># plot.wblr(list(obj_wb, obj_ln))</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <details>
 <summary>
@@ -976,9 +983,10 @@ Solution
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>failures_3p <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">3.47</span>, <span class="fl">3.73</span>, <span class="fl">4.05</span>, <span class="fl">4.63</span>, <span class="fl">4.82</span>, <span class="fl">5.85</span>, <span class="fl">5.89</span>, <span class="fl">5.89</span>,</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>                 <span class="fl">8.17</span>, <span class="fl">10.03</span>, <span class="fl">10.06</span>, <span class="fl">10.50</span>, <span class="fl">11.11</span>, <span class="fl">11.87</span>, <span class="fl">12.21</span>)</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>obj_wb <span class="ot">&lt;-</span> <span class="fu">wblr.fit</span>(<span class="fu">wblr</span>(failures_3p, <span class="at">col =</span> <span class="st">"blue"</span>), <span class="at">method.fit =</span> <span class="st">"rr"</span>)</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>obj_ln <span class="ot">&lt;-</span> <span class="fu">wblr.fit</span>(<span class="fu">wblr</span>(failures_3p, <span class="at">col =</span> <span class="st">"red"</span>),  <span class="at">method.fit =</span> <span class="st">"rr"</span>, <span class="at">dist =</span> <span class="st">"lognormal"</span>)</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.wblr</span>(<span class="fu">list</span>(obj_wb, obj_ln),</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">main =</span> <span class="st">"Weibull vs. Lognormal"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>obj_ln <span class="ot">&lt;-</span> <span class="fu">wblr.fit</span>(<span class="fu">wblr</span>(failures_3p, <span class="at">col =</span> <span class="st">"red"</span>),</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">method.fit =</span> <span class="st">"rr"</span>, <span class="at">dist =</span> <span class="st">"lognormal"</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.wblr</span>(<span class="fu">list</span>(obj_wb, obj_ln),</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">main =</span> <span class="st">"Weibull vs. Lognormal"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -987,7 +995,7 @@ Solution
 </div>
 </div>
 </div>
-Compare the <span class="math inline">\(r^2\)</span> values in the legend. For this dataset the lognormal often achieves a slightly higher <span class="math inline">\(r^2\)</span>, suggesting cumulative-damage behavior — the logarithm of time-to-failure is approximately normally distributed.
+Compare the <span class="math inline">\(r^2\)</span> values in the legend. For this dataset the lognormal often achieves a slightly higher <span class="math inline">\(r^2\)</span>, suggesting cumulative-damage behavior, where the logarithm of time-to-failure is approximately normally distributed.
 </details>
 </div>
 </div>
@@ -995,7 +1003,7 @@ Compare the <span class="math inline">\(r^2\)</span> values in the legend. For t
 <section id="sample-size-considerations" class="level2" data-number="3.9">
 <h2 data-number="3.9" class="anchored" data-anchor-id="sample-size-considerations"><span class="header-section-number">3.9</span> Sample Size Considerations</h2>
 <p>Weibull parameter estimates are most reliable when based on at least 10–15 <strong>observed failures</strong>. With fewer failures, uncertainty grows substantially: confidence bounds widen, <span class="math inline">\(r^2\)</span> loses discriminating power, and estimated <span class="math inline">\(\beta\)</span> and <span class="math inline">\(\eta\)</span> can deviate significantly from the true values.</p>
-<p>The following code simulates datasets of different sizes from the same Weibull (<span class="math inline">\(\beta = 2\)</span>, <span class="math inline">\(\eta = 100\)</span>) and fits each — showing how confidence bounds tighten as sample size increases:</p>
+<p>The following code simulates datasets of different sizes from the same Weibull (<span class="math inline">\(\beta = 2\)</span>, <span class="math inline">\(\eta = 100\)</span>) and fits each, showing how confidence bounds tighten as sample size increases:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>eta_true <span class="ot">&lt;-</span> <span class="dv">100</span>; beta_true <span class="ot">&lt;-</span> <span class="dv">2</span></span>
@@ -1074,17 +1082,20 @@ Compare the <span class="math inline">\(r^2\)</span> values in the legend. For t
 </section>
 <section id="the-3-parameter-weibull" class="level3">
 <h3 class="anchored" data-anchor-id="the-3-parameter-weibull">The 3-Parameter Weibull</h3>
-<p>The <strong>3-parameter Weibull</strong> adds a failure-free period <span class="math inline">\(t_0\)</span> — the time before which no failures can occur:</p>
+<p>The <strong>3-parameter Weibull</strong> adds a failure-free period <span class="math inline">\(t_0\)</span>, the time before which no failures can occur:</p>
 <p><span class="math display">\[R(t) = e^{-((t - t_0)/\eta)^\beta}\]</span></p>
 <p>This is appropriate for components that must age, wear, or fatigue before they can fail.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>failures_3p <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">3.46623</span>, <span class="fl">3.732711</span>, <span class="fl">4.052996</span>, <span class="fl">4.628703</span>, <span class="fl">4.8157</span>, <span class="fl">5.84517</span>, <span class="fl">5.888313</span>, <span class="fl">5.892967</span>,</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>                 <span class="fl">8.168362</span>, <span class="fl">10.02799</span>, <span class="fl">10.06062</span>, <span class="fl">10.49785</span>, <span class="fl">11.11493</span>, <span class="fl">11.87369</span>, <span class="fl">12.21122</span>, <span class="fl">12.51854</span>,</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>                 <span class="fl">12.91357</span>, <span class="fl">18.04246</span>, <span class="fl">18.20712</span>, <span class="fl">19.57305</span>, <span class="fl">21.20873</span>, <span class="fl">30.03917</span>, <span class="fl">34.88001</span>, <span class="fl">36.87355</span>,</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>                 <span class="fl">53.91168</span>)</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>fit_3p <span class="ot">&lt;-</span> <span class="fu">wblr.conf</span>(<span class="fu">wblr.fit</span>(<span class="fu">wblr</span>(failures_3p), <span class="at">dist =</span> <span class="st">"weibull3p"</span>), <span class="at">col =</span> <span class="st">"darkgreen"</span>)</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit_3p)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>failures_3p <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fl">3.46623</span>,  <span class="fl">3.73271</span>,  <span class="fl">4.05300</span>,  <span class="fl">4.62870</span>,  <span class="fl">4.81570</span>,</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fl">5.84517</span>,  <span class="fl">5.88831</span>,  <span class="fl">5.89297</span>,  <span class="fl">8.16836</span>, <span class="fl">10.02799</span>,</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a> <span class="fl">10.06062</span>, <span class="fl">10.49785</span>, <span class="fl">11.11493</span>, <span class="fl">11.87369</span>, <span class="fl">12.21122</span>,</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a> <span class="fl">12.51854</span>, <span class="fl">12.91357</span>, <span class="fl">18.04246</span>, <span class="fl">18.20712</span>, <span class="fl">19.57305</span>,</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a> <span class="fl">21.20873</span>, <span class="fl">30.03917</span>, <span class="fl">34.88001</span>, <span class="fl">36.87355</span>, <span class="fl">53.91168</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>fit_3p <span class="ot">&lt;-</span> <span class="fu">wblr.conf</span>(<span class="fu">wblr.fit</span>(<span class="fu">wblr</span>(failures_3p), <span class="at">dist =</span> <span class="st">"weibull3p"</span>), <span class="at">col =</span> <span class="st">"darkgreen"</span>)</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit_3p)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1093,7 +1104,7 @@ Compare the <span class="math inline">\(r^2\)</span> values in the legend. For t
 </div>
 </div>
 </div>
-<p>The failure-free period is approximately 3.3 time units — visible as the curve flattening at low probabilities.</p>
+<p>The failure-free period is approximately 3.3 time units, visible as the curve flattening at low probabilities.</p>
 </section>
 </section>
 <section id="multi-plots" class="level2" data-number="3.11">
@@ -1152,15 +1163,18 @@ Compare the <span class="math inline">\(r^2\)</span> values in the legend. For t
 </div>
 </div>
 </div>
-<p>Each failure mode has a distinct <span class="math inline">\(\beta\)</span>: Mode A (<span class="math inline">\(\beta &lt; 1\)</span>, decreasing rate — infant mortality), Mode B (<span class="math inline">\(\beta \approx 1\)</span>, random), Mode C (<span class="math inline">\(\beta &gt; 1\)</span>, wear-out).</p>
+<p>Each failure mode has a distinct <span class="math inline">\(\beta\)</span>: Mode A (<span class="math inline">\(\beta &lt; 1\)</span>, decreasing rate, infant mortality), Mode B (<span class="math inline">\(\beta \approx 1\)</span>, random), Mode C (<span class="math inline">\(\beta &gt; 1\)</span>, wear-out).</p>
 </section>
 <section id="contour-plots" class="level2" data-number="3.13">
 <h2 data-number="3.13" class="anchored" data-anchor-id="contour-plots"><span class="header-section-number">3.13</span> Contour Plots</h2>
 <p>A <strong>contour plot</strong> shows the joint confidence region for <span class="math inline">\(\beta\)</span> and <span class="math inline">\(\eta\)</span>. Overlapping contours indicate that two distributions are not significantly different at the chosen confidence level.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>failures <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">30</span>, <span class="dv">49</span>, <span class="dv">82</span>, <span class="dv">90</span>, <span class="dv">96</span>)</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">wblr.conf</span>(<span class="fu">wblr.fit</span>(<span class="fu">wblr</span>(failures, <span class="at">col =</span> <span class="st">"blue"</span>), <span class="at">method.fit =</span> <span class="st">"mle"</span>), <span class="at">method.conf =</span> <span class="st">"lrb"</span>)</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_contour</span>(obj, <span class="at">CL =</span> <span class="fl">0.9</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">wblr.conf</span>(</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">wblr.fit</span>(<span class="fu">wblr</span>(failures, <span class="at">col =</span> <span class="st">"blue"</span>), <span class="at">method.fit =</span> <span class="st">"mle"</span>),</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">method.conf =</span> <span class="st">"lrb"</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_contour</span>(obj, <span class="at">CL =</span> <span class="fl">0.9</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1172,10 +1186,19 @@ Compare the <span class="math inline">\(r^2\)</span> values in the legend. For t
 <section id="comparing-contour-plots" class="level3">
 <h3 class="anchored" data-anchor-id="comparing-contour-plots">Comparing Contour Plots</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>obj1 <span class="ot">&lt;-</span> <span class="fu">wblr.conf</span>(<span class="fu">wblr.fit</span>(<span class="fu">wblr</span>(dat1, <span class="at">col =</span> <span class="st">"blue"</span>),   <span class="at">method.fit =</span> <span class="st">"mle"</span>), <span class="at">method.conf =</span> <span class="st">"lrb"</span>)</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>obj2 <span class="ot">&lt;-</span> <span class="fu">wblr.conf</span>(<span class="fu">wblr.fit</span>(<span class="fu">wblr</span>(dat2, <span class="at">col =</span> <span class="st">"red"</span>),    <span class="at">method.fit =</span> <span class="st">"mle"</span>), <span class="at">method.conf =</span> <span class="st">"lrb"</span>)</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>obj3 <span class="ot">&lt;-</span> <span class="fu">wblr.conf</span>(<span class="fu">wblr.fit</span>(<span class="fu">wblr</span>(dat3, <span class="at">col =</span> <span class="st">"orange"</span>), <span class="at">method.fit =</span> <span class="st">"mle"</span>), <span class="at">method.conf =</span> <span class="st">"lrb"</span>)</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_contour</span>(<span class="fu">list</span>(obj1, obj2, obj3), <span class="at">CL =</span> <span class="fl">0.9</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1500</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>obj1 <span class="ot">&lt;-</span> <span class="fu">wblr.conf</span>(</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">wblr.fit</span>(<span class="fu">wblr</span>(dat1, <span class="at">col =</span> <span class="st">"blue"</span>),   <span class="at">method.fit =</span> <span class="st">"mle"</span>),</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">method.conf =</span> <span class="st">"lrb"</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>obj2 <span class="ot">&lt;-</span> <span class="fu">wblr.conf</span>(</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">wblr.fit</span>(<span class="fu">wblr</span>(dat2, <span class="at">col =</span> <span class="st">"red"</span>),    <span class="at">method.fit =</span> <span class="st">"mle"</span>),</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">method.conf =</span> <span class="st">"lrb"</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>obj3 <span class="ot">&lt;-</span> <span class="fu">wblr.conf</span>(</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">wblr.fit</span>(<span class="fu">wblr</span>(dat3, <span class="at">col =</span> <span class="st">"orange"</span>), <span class="at">method.fit =</span> <span class="st">"mle"</span>),</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">method.conf =</span> <span class="st">"lrb"</span></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_contour</span>(<span class="fu">list</span>(obj1, obj2, obj3), <span class="at">CL =</span> <span class="fl">0.9</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1500</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1194,8 +1217,8 @@ Compare the <span class="math inline">\(r^2\)</span> values in the legend. For t
 <li>The Weibull CDF: <span class="math inline">\(R(t) = e^{-(t/\eta)^\beta}\)</span>.</li>
 <li><span class="math inline">\(\beta &lt; 1\)</span>: decreasing rate (infant mortality); <span class="math inline">\(\beta = 1\)</span>: constant (exponential); <span class="math inline">\(\beta &gt; 1\)</span>: increasing (wear-out).</li>
 <li>At <span class="math inline">\(t = \eta\)</span>: <span class="math inline">\(F(\eta) = 63.2\%\)</span> for any <span class="math inline">\(\beta\)</span>.</li>
-<li>Suspensions are units that did not fail — always include them in the analysis.</li>
-<li>MRR and MLE often give slightly different fits — use the AD statistic to choose.</li>
+<li>Suspensions are units that did not fail; always include them in the analysis.</li>
+<li>MRR and MLE often give slightly different fits; use the AD statistic to choose.</li>
 <li>Weibayes is appropriate for scarce data with prior knowledge of <span class="math inline">\(\beta\)</span>.</li>
 <li>3-parameter Weibull handles failure-free periods.</li>
 <li>Multi-plots and contour plots are powerful tools for comparing distributions.</li>
@@ -1789,7 +1812,7 @@ Silkworth, David, and Jurgen Symynck. 2022. <em>WeibullR: Weibull Analysis for R
 <span id="cb25-101"><a href="#cb25-101" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-102"><a href="#cb25-102" aria-hidden="true" tabindex="-1"></a><span class="fu">### Reading the Probability Plot</span></span>
 <span id="cb25-103"><a href="#cb25-103" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-104"><a href="#cb25-104" aria-hidden="true" tabindex="-1"></a>The **Weibull probability plot** shows time on the horizontal axis (log scale) and cumulative unreliability $F(t)$ on the vertical axis (log-log scale). This double-log transformation linearizes Weibull data — the result is a straight line when the Weibull model fits.</span>
+<span id="cb25-104"><a href="#cb25-104" aria-hidden="true" tabindex="-1"></a>The **Weibull probability plot** shows time on the horizontal axis (log scale) and cumulative unreliability $F(t)$ on the vertical axis (log-log scale). This double-log transformation linearizes Weibull data; the result is a straight line when the Weibull model fits.</span>
 <span id="cb25-105"><a href="#cb25-105" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-106"><a href="#cb25-106" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Read off $F(t)$ at any time to get the probability of failure by that time.</span>
 <span id="cb25-107"><a href="#cb25-107" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Reliability at time $t$ is $R(t) = 1 - F(t)$.</span>
@@ -1815,7 +1838,7 @@ Silkworth, David, and Jurgen Symynck. 2022. <em>WeibullR: Weibull Analysis for R
 <span id="cb25-131"><a href="#cb25-131" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-132"><a href="#cb25-132" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data Censoring</span></span>
 <span id="cb25-133"><a href="#cb25-133" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-134"><a href="#cb25-134" aria-hidden="true" tabindex="-1"></a>In life data analysis, data is often **censored** — the exact time to failure is not known for all units.</span>
+<span id="cb25-134"><a href="#cb25-134" aria-hidden="true" tabindex="-1"></a>In life data analysis, data is often **censored**: the exact time to failure is not known for all units.</span>
 <span id="cb25-135"><a href="#cb25-135" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-136"><a href="#cb25-136" aria-hidden="true" tabindex="-1"></a><span class="fu">### Right-Censored Data (Suspensions)</span></span>
 <span id="cb25-137"><a href="#cb25-137" aria-hidden="true" tabindex="-1"></a></span>
@@ -1851,7 +1874,7 @@ Silkworth, David, and Jurgen Symynck. 2022. <em>WeibullR: Weibull Analysis for R
 <span id="cb25-173"><a href="#cb25-173" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-174"><a href="#cb25-174" aria-hidden="true" tabindex="-1"></a><span class="fu">### Interval-Censored Data</span></span>
 <span id="cb25-175"><a href="#cb25-175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-176"><a href="#cb25-176" aria-hidden="true" tabindex="-1"></a>**Interval censoring** occurs when failures are only detected during periodic inspections — the exact failure time is unknown, but it is known to have occurred within an interval.</span>
+<span id="cb25-176"><a href="#cb25-176" aria-hidden="true" tabindex="-1"></a>**Interval censoring** occurs when failures are only detected during periodic inspections; the exact failure time is unknown, but it is known to have occurred within an interval.</span>
 <span id="cb25-177"><a href="#cb25-177" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-180"><a href="#cb25-180" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb25-181"><a href="#cb25-181" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
@@ -1872,7 +1895,7 @@ Silkworth, David, and Jurgen Symynck. 2022. <em>WeibullR: Weibull Analysis for R
 <span id="cb25-196"><a href="#cb25-196" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-197"><a href="#cb25-197" aria-hidden="true" tabindex="-1"></a><span class="fu">### Grouped Data</span></span>
 <span id="cb25-198"><a href="#cb25-198" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-199"><a href="#cb25-199" aria-hidden="true" tabindex="-1"></a>Life data is often collected in groups. The <span class="in">`qty`</span> column in the inspection data above indicates how many units failed in each interval — 5 failed between time 0 and 6.12, 16 between 6.12 and 19.92, and so on.</span>
+<span id="cb25-199"><a href="#cb25-199" aria-hidden="true" tabindex="-1"></a>Life data is often collected in groups. The <span class="in">`qty`</span> column in the inspection data above indicates how many units failed in each interval: 5 failed between time 0 and 6.12, 16 between 6.12 and 19.92, and so on.</span>
 <span id="cb25-200"><a href="#cb25-200" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-201"><a href="#cb25-201" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
 <span id="cb25-202"><a href="#cb25-202" aria-hidden="true" tabindex="-1"></a><span class="fu">## Review</span></span>
@@ -1890,7 +1913,7 @@ Silkworth, David, and Jurgen Symynck. 2022. <em>WeibullR: Weibull Analysis for R
 <span id="cb25-214"><a href="#cb25-214" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-215"><a href="#cb25-215" aria-hidden="true" tabindex="-1"></a>**Median Rank Regression (MRR)** estimates parameters by minimizing the sum of squared errors between observed and predicted values (least squares).</span>
 <span id="cb25-216"><a href="#cb25-216" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-217"><a href="#cb25-217" aria-hidden="true" tabindex="-1"></a>**Maximum Likelihood Estimation (MLE)** finds the parameters that make the observed data most probable — it maximizes the likelihood function.</span>
+<span id="cb25-217"><a href="#cb25-217" aria-hidden="true" tabindex="-1"></a>**Maximum Likelihood Estimation (MLE)** finds the parameters that make the observed data most probable: it maximizes the likelihood function.</span>
 <span id="cb25-218"><a href="#cb25-218" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-219"><a href="#cb25-219" aria-hidden="true" tabindex="-1"></a>Comparing both methods on the same data:</span>
 <span id="cb25-220"><a href="#cb25-220" aria-hidden="true" tabindex="-1"></a></span>
@@ -1903,7 +1926,7 @@ Silkworth, David, and Jurgen Symynck. 2022. <em>WeibullR: Weibull Analysis for R
 <span id="cb25-229"><a href="#cb25-229" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.wblr</span>(<span class="fu">list</span>(MRRfit, MLEfit))</span>
 <span id="cb25-230"><a href="#cb25-230" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb25-231"><a href="#cb25-231" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-232"><a href="#cb25-232" aria-hidden="true" tabindex="-1"></a>Both methods fit the same data. Slight differences in $\beta$ and $\eta$ are visible — the better fit can be determined objectively using the Anderson-Darling statistic. In practice, **MLE is preferred for small samples and censored data** (it uses all the information in the likelihood); **MRR is adequate for larger, complete datasets** and is computationally simpler.</span>
+<span id="cb25-232"><a href="#cb25-232" aria-hidden="true" tabindex="-1"></a>Both methods fit the same data. Slight differences in $\beta$ and $\eta$ are visible; the better fit can be determined objectively using the Anderson-Darling statistic. In practice, **MLE is preferred for small samples and censored data** (it uses all the information in the likelihood); **MRR is adequate for larger, complete datasets** and is computationally simpler.</span>
 <span id="cb25-233"><a href="#cb25-233" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-234"><a href="#cb25-234" aria-hidden="true" tabindex="-1"></a><span class="fu">## Goodness of Fit</span></span>
 <span id="cb25-235"><a href="#cb25-235" aria-hidden="true" tabindex="-1"></a></span>
@@ -1938,14 +1961,14 @@ Silkworth, David, and Jurgen Symynck. 2022. <em>WeibullR: Weibull Analysis for R
 <span id="cb25-268"><a href="#cb25-268" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-269"><a href="#cb25-269" aria-hidden="true" tabindex="-1"></a><span class="fu">## Choosing a Distribution</span></span>
 <span id="cb25-270"><a href="#cb25-270" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-271"><a href="#cb25-271" aria-hidden="true" tabindex="-1"></a>The Weibull distribution is the default in reliability engineering, but it is not always the best fit. The **lognormal** distribution often fits failure data driven by fatigue crack growth, corrosion, or cumulative damage — mechanisms where the logarithm of time-to-failure is normally distributed.</span>
+<span id="cb25-271"><a href="#cb25-271" aria-hidden="true" tabindex="-1"></a>The Weibull distribution is the default in reliability engineering, but it is not always the best fit. The **lognormal** distribution often fits failure data driven by fatigue crack growth, corrosion, or cumulative damage, mechanisms where the logarithm of time-to-failure is normally distributed.</span>
 <span id="cb25-272"><a href="#cb25-272" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-273"><a href="#cb25-273" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Distribution <span class="pp">|</span> When it tends to fit best <span class="pp">|</span></span>
 <span id="cb25-274"><a href="#cb25-274" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|</span></span>
 <span id="cb25-275"><a href="#cb25-275" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Weibull <span class="pp">|</span> Wear-out, mechanical fatigue, early-life failures <span class="pp">|</span></span>
 <span id="cb25-276"><a href="#cb25-276" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Lognormal <span class="pp">|</span> Corrosion, fatigue crack propagation, electronic degradation <span class="pp">|</span></span>
 <span id="cb25-277"><a href="#cb25-277" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-278"><a href="#cb25-278" aria-hidden="true" tabindex="-1"></a><span class="in">`wblr.fit()`</span> supports both via the <span class="in">`dist`</span> argument. The goodness-of-fit metric in the plot legend ($r^2$ for rank regression) is the tiebreaker — **higher $r^2$ indicates a better fit**:</span>
+<span id="cb25-278"><a href="#cb25-278" aria-hidden="true" tabindex="-1"></a><span class="in">`wblr.fit()`</span> supports both via the <span class="in">`dist`</span> argument. The goodness-of-fit metric in the plot legend ($r^2$ for rank regression) is the tiebreaker: **higher $r^2$ indicates a better fit**:</span>
 <span id="cb25-279"><a href="#cb25-279" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-282"><a href="#cb25-282" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb25-283"><a href="#cb25-283" aria-hidden="true" tabindex="-1"></a>failures    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">30</span>, <span class="dv">49</span>, <span class="dv">82</span>, <span class="dv">90</span>, <span class="dv">96</span>)</span>
@@ -1960,7 +1983,7 @@ Silkworth, David, and Jurgen Symynck. 2022. <em>WeibullR: Weibull Analysis for R
 <span id="cb25-292"><a href="#cb25-292" aria-hidden="true" tabindex="-1"></a>          <span class="at">main =</span> <span class="st">"Weibull vs. Lognormal: Goodness-of-Fit Comparison"</span>)</span>
 <span id="cb25-293"><a href="#cb25-293" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb25-294"><a href="#cb25-294" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-295"><a href="#cb25-295" aria-hidden="true" tabindex="-1"></a>For this dataset, Weibull achieves $r^2 \approx 0.953$ vs. lognormal at $r^2 \approx 0.914$ — Weibull fits better. The choice should be driven by the data, not by habit.</span>
+<span id="cb25-295"><a href="#cb25-295" aria-hidden="true" tabindex="-1"></a>For this dataset, Weibull achieves $r^2 \approx 0.953$ vs. lognormal at $r^2 \approx 0.914$; Weibull fits better. The choice should be driven by the data, not by habit.</span>
 <span id="cb25-296"><a href="#cb25-296" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-297"><a href="#cb25-297" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
 <span id="cb25-298"><a href="#cb25-298" aria-hidden="true" tabindex="-1"></a><span class="fu">## Try It</span></span>
@@ -1971,179 +1994,196 @@ Silkworth, David, and Jurgen Symynck. 2022. <em>WeibullR: Weibull Analysis for R
 <span id="cb25-305"><a href="#cb25-305" aria-hidden="true" tabindex="-1"></a>failures_3p <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">3.47</span>, <span class="fl">3.73</span>, <span class="fl">4.05</span>, <span class="fl">4.63</span>, <span class="fl">4.82</span>, <span class="fl">5.85</span>, <span class="fl">5.89</span>, <span class="fl">5.89</span>,</span>
 <span id="cb25-306"><a href="#cb25-306" aria-hidden="true" tabindex="-1"></a>                 <span class="fl">8.17</span>, <span class="fl">10.03</span>, <span class="fl">10.06</span>, <span class="fl">10.50</span>, <span class="fl">11.11</span>, <span class="fl">11.87</span>, <span class="fl">12.21</span>)</span>
 <span id="cb25-307"><a href="#cb25-307" aria-hidden="true" tabindex="-1"></a><span class="co"># obj_wb &lt;- wblr.fit(wblr(failures_3p, col = "blue"), method.fit = "rr")</span></span>
-<span id="cb25-308"><a href="#cb25-308" aria-hidden="true" tabindex="-1"></a><span class="co"># obj_ln &lt;- wblr.fit(wblr(failures_3p, col = "red"),  method.fit = "rr", dist = "lognormal")</span></span>
-<span id="cb25-309"><a href="#cb25-309" aria-hidden="true" tabindex="-1"></a><span class="co"># plot.wblr(list(obj_wb, obj_ln))</span></span>
-<span id="cb25-310"><a href="#cb25-310" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb25-311"><a href="#cb25-311" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-312"><a href="#cb25-312" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Solution<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
-<span id="cb25-315"><a href="#cb25-315" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb25-316"><a href="#cb25-316" aria-hidden="true" tabindex="-1"></a>failures_3p <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">3.47</span>, <span class="fl">3.73</span>, <span class="fl">4.05</span>, <span class="fl">4.63</span>, <span class="fl">4.82</span>, <span class="fl">5.85</span>, <span class="fl">5.89</span>, <span class="fl">5.89</span>,</span>
-<span id="cb25-317"><a href="#cb25-317" aria-hidden="true" tabindex="-1"></a>                 <span class="fl">8.17</span>, <span class="fl">10.03</span>, <span class="fl">10.06</span>, <span class="fl">10.50</span>, <span class="fl">11.11</span>, <span class="fl">11.87</span>, <span class="fl">12.21</span>)</span>
-<span id="cb25-318"><a href="#cb25-318" aria-hidden="true" tabindex="-1"></a>obj_wb <span class="ot">&lt;-</span> <span class="fu">wblr.fit</span>(<span class="fu">wblr</span>(failures_3p, <span class="at">col =</span> <span class="st">"blue"</span>), <span class="at">method.fit =</span> <span class="st">"rr"</span>)</span>
-<span id="cb25-319"><a href="#cb25-319" aria-hidden="true" tabindex="-1"></a>obj_ln <span class="ot">&lt;-</span> <span class="fu">wblr.fit</span>(<span class="fu">wblr</span>(failures_3p, <span class="at">col =</span> <span class="st">"red"</span>),  <span class="at">method.fit =</span> <span class="st">"rr"</span>, <span class="at">dist =</span> <span class="st">"lognormal"</span>)</span>
-<span id="cb25-320"><a href="#cb25-320" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.wblr</span>(<span class="fu">list</span>(obj_wb, obj_ln),</span>
-<span id="cb25-321"><a href="#cb25-321" aria-hidden="true" tabindex="-1"></a>          <span class="at">main =</span> <span class="st">"Weibull vs. Lognormal"</span>)</span>
-<span id="cb25-322"><a href="#cb25-322" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb25-323"><a href="#cb25-323" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-324"><a href="#cb25-324" aria-hidden="true" tabindex="-1"></a>Compare the $r^2$ values in the legend. For this dataset the lognormal often achieves a slightly higher $r^2$, suggesting cumulative-damage behavior — the logarithm of time-to-failure is approximately normally distributed.</span>
-<span id="cb25-325"><a href="#cb25-325" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
-<span id="cb25-326"><a href="#cb25-326" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb25-327"><a href="#cb25-327" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-328"><a href="#cb25-328" aria-hidden="true" tabindex="-1"></a><span class="fu">## Sample Size Considerations</span></span>
+<span id="cb25-308"><a href="#cb25-308" aria-hidden="true" tabindex="-1"></a><span class="co"># obj_ln &lt;- wblr.fit(wblr(failures_3p, col = "red"),</span></span>
+<span id="cb25-309"><a href="#cb25-309" aria-hidden="true" tabindex="-1"></a><span class="co">#                    method.fit = "rr", dist = "lognormal")</span></span>
+<span id="cb25-310"><a href="#cb25-310" aria-hidden="true" tabindex="-1"></a><span class="co"># plot.wblr(list(obj_wb, obj_ln))</span></span>
+<span id="cb25-311"><a href="#cb25-311" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb25-312"><a href="#cb25-312" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-313"><a href="#cb25-313" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Solution<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
+<span id="cb25-316"><a href="#cb25-316" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb25-317"><a href="#cb25-317" aria-hidden="true" tabindex="-1"></a>failures_3p <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">3.47</span>, <span class="fl">3.73</span>, <span class="fl">4.05</span>, <span class="fl">4.63</span>, <span class="fl">4.82</span>, <span class="fl">5.85</span>, <span class="fl">5.89</span>, <span class="fl">5.89</span>,</span>
+<span id="cb25-318"><a href="#cb25-318" aria-hidden="true" tabindex="-1"></a>                 <span class="fl">8.17</span>, <span class="fl">10.03</span>, <span class="fl">10.06</span>, <span class="fl">10.50</span>, <span class="fl">11.11</span>, <span class="fl">11.87</span>, <span class="fl">12.21</span>)</span>
+<span id="cb25-319"><a href="#cb25-319" aria-hidden="true" tabindex="-1"></a>obj_wb <span class="ot">&lt;-</span> <span class="fu">wblr.fit</span>(<span class="fu">wblr</span>(failures_3p, <span class="at">col =</span> <span class="st">"blue"</span>), <span class="at">method.fit =</span> <span class="st">"rr"</span>)</span>
+<span id="cb25-320"><a href="#cb25-320" aria-hidden="true" tabindex="-1"></a>obj_ln <span class="ot">&lt;-</span> <span class="fu">wblr.fit</span>(<span class="fu">wblr</span>(failures_3p, <span class="at">col =</span> <span class="st">"red"</span>),</span>
+<span id="cb25-321"><a href="#cb25-321" aria-hidden="true" tabindex="-1"></a>                   <span class="at">method.fit =</span> <span class="st">"rr"</span>, <span class="at">dist =</span> <span class="st">"lognormal"</span>)</span>
+<span id="cb25-322"><a href="#cb25-322" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.wblr</span>(<span class="fu">list</span>(obj_wb, obj_ln),</span>
+<span id="cb25-323"><a href="#cb25-323" aria-hidden="true" tabindex="-1"></a>          <span class="at">main =</span> <span class="st">"Weibull vs. Lognormal"</span>)</span>
+<span id="cb25-324"><a href="#cb25-324" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb25-325"><a href="#cb25-325" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-326"><a href="#cb25-326" aria-hidden="true" tabindex="-1"></a>Compare the $r^2$ values in the legend. For this dataset the lognormal often achieves a slightly higher $r^2$, suggesting cumulative-damage behavior, where the logarithm of time-to-failure is approximately normally distributed.</span>
+<span id="cb25-327"><a href="#cb25-327" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
+<span id="cb25-328"><a href="#cb25-328" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb25-329"><a href="#cb25-329" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-330"><a href="#cb25-330" aria-hidden="true" tabindex="-1"></a>Weibull parameter estimates are most reliable when based on at least 10–15 **observed failures**. With fewer failures, uncertainty grows substantially: confidence bounds widen, $r^2$ loses discriminating power, and estimated $\beta$ and $\eta$ can deviate significantly from the true values.</span>
+<span id="cb25-330"><a href="#cb25-330" aria-hidden="true" tabindex="-1"></a><span class="fu">## Sample Size Considerations</span></span>
 <span id="cb25-331"><a href="#cb25-331" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-332"><a href="#cb25-332" aria-hidden="true" tabindex="-1"></a>The following code simulates datasets of different sizes from the same Weibull ($\beta = 2$, $\eta = 100$) and fits each — showing how confidence bounds tighten as sample size increases:</span>
+<span id="cb25-332"><a href="#cb25-332" aria-hidden="true" tabindex="-1"></a>Weibull parameter estimates are most reliable when based on at least 10–15 **observed failures**. With fewer failures, uncertainty grows substantially: confidence bounds widen, $r^2$ loses discriminating power, and estimated $\beta$ and $\eta$ can deviate significantly from the true values.</span>
 <span id="cb25-333"><a href="#cb25-333" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-336"><a href="#cb25-336" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb25-337"><a href="#cb25-337" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
-<span id="cb25-338"><a href="#cb25-338" aria-hidden="true" tabindex="-1"></a>eta_true <span class="ot">&lt;-</span> <span class="dv">100</span>; beta_true <span class="ot">&lt;-</span> <span class="dv">2</span></span>
-<span id="cb25-339"><a href="#cb25-339" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-340"><a href="#cb25-340" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
-<span id="cb25-341"><a href="#cb25-341" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (n <span class="cf">in</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">15</span>, <span class="dv">30</span>)) {</span>
-<span id="cb25-342"><a href="#cb25-342" aria-hidden="true" tabindex="-1"></a>  f   <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">rweibull</span>(n, <span class="at">shape =</span> beta_true, <span class="at">scale =</span> eta_true))</span>
-<span id="cb25-343"><a href="#cb25-343" aria-hidden="true" tabindex="-1"></a>  obj <span class="ot">&lt;-</span> <span class="fu">wblr.conf</span>(<span class="fu">wblr.fit</span>(<span class="fu">wblr</span>(f, <span class="at">col =</span> <span class="st">"blue"</span>), <span class="at">method.fit =</span> <span class="st">"mle"</span>),</span>
-<span id="cb25-344"><a href="#cb25-344" aria-hidden="true" tabindex="-1"></a>                   <span class="at">method.conf =</span> <span class="st">"fm"</span>)</span>
-<span id="cb25-345"><a href="#cb25-345" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(obj, <span class="at">main =</span> <span class="fu">paste0</span>(n, <span class="st">" failures"</span>))</span>
-<span id="cb25-346"><a href="#cb25-346" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb25-347"><a href="#cb25-347" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span>
-<span id="cb25-348"><a href="#cb25-348" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb25-349"><a href="#cb25-349" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-350"><a href="#cb25-350" aria-hidden="true" tabindex="-1"></a>With only 5 failures the confidence bounds span most of the probability axis. At 30 failures they are narrow enough for confident decision-making.</span>
+<span id="cb25-334"><a href="#cb25-334" aria-hidden="true" tabindex="-1"></a>The following code simulates datasets of different sizes from the same Weibull ($\beta = 2$, $\eta = 100$) and fits each, showing how confidence bounds tighten as sample size increases:</span>
+<span id="cb25-335"><a href="#cb25-335" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-338"><a href="#cb25-338" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb25-339"><a href="#cb25-339" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb25-340"><a href="#cb25-340" aria-hidden="true" tabindex="-1"></a>eta_true <span class="ot">&lt;-</span> <span class="dv">100</span>; beta_true <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb25-341"><a href="#cb25-341" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-342"><a href="#cb25-342" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
+<span id="cb25-343"><a href="#cb25-343" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (n <span class="cf">in</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">15</span>, <span class="dv">30</span>)) {</span>
+<span id="cb25-344"><a href="#cb25-344" aria-hidden="true" tabindex="-1"></a>  f   <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">rweibull</span>(n, <span class="at">shape =</span> beta_true, <span class="at">scale =</span> eta_true))</span>
+<span id="cb25-345"><a href="#cb25-345" aria-hidden="true" tabindex="-1"></a>  obj <span class="ot">&lt;-</span> <span class="fu">wblr.conf</span>(<span class="fu">wblr.fit</span>(<span class="fu">wblr</span>(f, <span class="at">col =</span> <span class="st">"blue"</span>), <span class="at">method.fit =</span> <span class="st">"mle"</span>),</span>
+<span id="cb25-346"><a href="#cb25-346" aria-hidden="true" tabindex="-1"></a>                   <span class="at">method.conf =</span> <span class="st">"fm"</span>)</span>
+<span id="cb25-347"><a href="#cb25-347" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(obj, <span class="at">main =</span> <span class="fu">paste0</span>(n, <span class="st">" failures"</span>))</span>
+<span id="cb25-348"><a href="#cb25-348" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb25-349"><a href="#cb25-349" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb25-350"><a href="#cb25-350" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb25-351"><a href="#cb25-351" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-352"><a href="#cb25-352" aria-hidden="true" tabindex="-1"></a>**Practical guidance:**</span>
+<span id="cb25-352"><a href="#cb25-352" aria-hidden="true" tabindex="-1"></a>With only 5 failures the confidence bounds span most of the probability axis. At 30 failures they are narrow enough for confident decision-making.</span>
 <span id="cb25-353"><a href="#cb25-353" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-354"><a href="#cb25-354" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Failures observed <span class="pp">|</span> Guidance <span class="pp">|</span></span>
-<span id="cb25-355"><a href="#cb25-355" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|</span></span>
-<span id="cb25-356"><a href="#cb25-356" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> $&lt; 5$ <span class="pp">|</span> Estimates unreliable; use Weibayes (fix $\beta$ from prior knowledge) <span class="pp">|</span></span>
-<span id="cb25-357"><a href="#cb25-357" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 5–10 <span class="pp">|</span> Usable with caution; widen safety margins <span class="pp">|</span></span>
-<span id="cb25-358"><a href="#cb25-358" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 10–20 <span class="pp">|</span> Acceptable for most engineering decisions <span class="pp">|</span></span>
-<span id="cb25-359"><a href="#cb25-359" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> $&gt; 20$ <span class="pp">|</span> Reliable estimates; confidence bounds are tight <span class="pp">|</span></span>
-<span id="cb25-360"><a href="#cb25-360" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-361"><a href="#cb25-361" aria-hidden="true" tabindex="-1"></a>When fewer than 5 failures are available, the Weibayes model (next section) provides a structured way to incorporate prior knowledge about $\beta$.</span>
+<span id="cb25-354"><a href="#cb25-354" aria-hidden="true" tabindex="-1"></a>**Practical guidance:**</span>
+<span id="cb25-355"><a href="#cb25-355" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-356"><a href="#cb25-356" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Failures observed <span class="pp">|</span> Guidance <span class="pp">|</span></span>
+<span id="cb25-357"><a href="#cb25-357" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|</span></span>
+<span id="cb25-358"><a href="#cb25-358" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> $&lt; 5$ <span class="pp">|</span> Estimates unreliable; use Weibayes (fix $\beta$ from prior knowledge) <span class="pp">|</span></span>
+<span id="cb25-359"><a href="#cb25-359" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 5–10 <span class="pp">|</span> Usable with caution; widen safety margins <span class="pp">|</span></span>
+<span id="cb25-360"><a href="#cb25-360" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 10–20 <span class="pp">|</span> Acceptable for most engineering decisions <span class="pp">|</span></span>
+<span id="cb25-361"><a href="#cb25-361" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> $&gt; 20$ <span class="pp">|</span> Reliable estimates; confidence bounds are tight <span class="pp">|</span></span>
 <span id="cb25-362"><a href="#cb25-362" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-363"><a href="#cb25-363" aria-hidden="true" tabindex="-1"></a><span class="fu">## Other Weibull Models</span></span>
+<span id="cb25-363"><a href="#cb25-363" aria-hidden="true" tabindex="-1"></a>When fewer than 5 failures are available, the Weibayes model (next section) provides a structured way to incorporate prior knowledge about $\beta$.</span>
 <span id="cb25-364"><a href="#cb25-364" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-365"><a href="#cb25-365" aria-hidden="true" tabindex="-1"></a><span class="fu">### The Weibayes Model</span></span>
+<span id="cb25-365"><a href="#cb25-365" aria-hidden="true" tabindex="-1"></a><span class="fu">## Other Weibull Models</span></span>
 <span id="cb25-366"><a href="#cb25-366" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-367"><a href="#cb25-367" aria-hidden="true" tabindex="-1"></a>A **Weibayes** (one-parameter Weibull) has a fixed $\beta$ based on prior knowledge or experience. This is appropriate when failure data are scarce.</span>
+<span id="cb25-367"><a href="#cb25-367" aria-hidden="true" tabindex="-1"></a><span class="fu">### The Weibayes Model</span></span>
 <span id="cb25-368"><a href="#cb25-368" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-371"><a href="#cb25-371" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb25-372"><a href="#cb25-372" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb25-373"><a href="#cb25-373" aria-hidden="true" tabindex="-1"></a>failures    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">30</span>, <span class="dv">49</span>, <span class="dv">82</span>, <span class="dv">90</span>, <span class="dv">96</span>)</span>
-<span id="cb25-374"><a href="#cb25-374" aria-hidden="true" tabindex="-1"></a>suspensions <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">45</span>, <span class="dv">10</span>)</span>
-<span id="cb25-375"><a href="#cb25-375" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-376"><a href="#cb25-376" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">wblr.fit</span>(<span class="fu">wblr</span>(failures, suspensions, <span class="at">col =</span> <span class="st">"blue"</span>),</span>
-<span id="cb25-377"><a href="#cb25-377" aria-hidden="true" tabindex="-1"></a>                <span class="at">method.fit =</span> <span class="st">"weibayes"</span>, <span class="at">weibayes.beta =</span> <span class="dv">2</span>)</span>
-<span id="cb25-378"><a href="#cb25-378" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(obj)</span>
-<span id="cb25-379"><a href="#cb25-379" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb25-380"><a href="#cb25-380" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-381"><a href="#cb25-381" aria-hidden="true" tabindex="-1"></a>Confidence bounds are not shown for Weibayes because $\beta$ is fixed by assumption.</span>
+<span id="cb25-369"><a href="#cb25-369" aria-hidden="true" tabindex="-1"></a>A **Weibayes** (one-parameter Weibull) has a fixed $\beta$ based on prior knowledge or experience. This is appropriate when failure data are scarce.</span>
+<span id="cb25-370"><a href="#cb25-370" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-373"><a href="#cb25-373" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb25-374"><a href="#cb25-374" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb25-375"><a href="#cb25-375" aria-hidden="true" tabindex="-1"></a>failures    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">30</span>, <span class="dv">49</span>, <span class="dv">82</span>, <span class="dv">90</span>, <span class="dv">96</span>)</span>
+<span id="cb25-376"><a href="#cb25-376" aria-hidden="true" tabindex="-1"></a>suspensions <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">45</span>, <span class="dv">10</span>)</span>
+<span id="cb25-377"><a href="#cb25-377" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-378"><a href="#cb25-378" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">wblr.fit</span>(<span class="fu">wblr</span>(failures, suspensions, <span class="at">col =</span> <span class="st">"blue"</span>),</span>
+<span id="cb25-379"><a href="#cb25-379" aria-hidden="true" tabindex="-1"></a>                <span class="at">method.fit =</span> <span class="st">"weibayes"</span>, <span class="at">weibayes.beta =</span> <span class="dv">2</span>)</span>
+<span id="cb25-380"><a href="#cb25-380" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(obj)</span>
+<span id="cb25-381"><a href="#cb25-381" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb25-382"><a href="#cb25-382" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-383"><a href="#cb25-383" aria-hidden="true" tabindex="-1"></a><span class="fu">### The 3-Parameter Weibull</span></span>
+<span id="cb25-383"><a href="#cb25-383" aria-hidden="true" tabindex="-1"></a>Confidence bounds are not shown for Weibayes because $\beta$ is fixed by assumption.</span>
 <span id="cb25-384"><a href="#cb25-384" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-385"><a href="#cb25-385" aria-hidden="true" tabindex="-1"></a>The **3-parameter Weibull** adds a failure-free period $t_0$ — the time before which no failures can occur:</span>
+<span id="cb25-385"><a href="#cb25-385" aria-hidden="true" tabindex="-1"></a><span class="fu">### The 3-Parameter Weibull</span></span>
 <span id="cb25-386"><a href="#cb25-386" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-387"><a href="#cb25-387" aria-hidden="true" tabindex="-1"></a>$$R(t) = e^{-((t - t_0)/\eta)^\beta}$$</span>
+<span id="cb25-387"><a href="#cb25-387" aria-hidden="true" tabindex="-1"></a>The **3-parameter Weibull** adds a failure-free period $t_0$, the time before which no failures can occur:</span>
 <span id="cb25-388"><a href="#cb25-388" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-389"><a href="#cb25-389" aria-hidden="true" tabindex="-1"></a>This is appropriate for components that must age, wear, or fatigue before they can fail.</span>
+<span id="cb25-389"><a href="#cb25-389" aria-hidden="true" tabindex="-1"></a>$$R(t) = e^{-((t - t_0)/\eta)^\beta}$$</span>
 <span id="cb25-390"><a href="#cb25-390" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-393"><a href="#cb25-393" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb25-394"><a href="#cb25-394" aria-hidden="true" tabindex="-1"></a>failures_3p <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">3.46623</span>, <span class="fl">3.732711</span>, <span class="fl">4.052996</span>, <span class="fl">4.628703</span>, <span class="fl">4.8157</span>, <span class="fl">5.84517</span>, <span class="fl">5.888313</span>, <span class="fl">5.892967</span>,</span>
-<span id="cb25-395"><a href="#cb25-395" aria-hidden="true" tabindex="-1"></a>                 <span class="fl">8.168362</span>, <span class="fl">10.02799</span>, <span class="fl">10.06062</span>, <span class="fl">10.49785</span>, <span class="fl">11.11493</span>, <span class="fl">11.87369</span>, <span class="fl">12.21122</span>, <span class="fl">12.51854</span>,</span>
-<span id="cb25-396"><a href="#cb25-396" aria-hidden="true" tabindex="-1"></a>                 <span class="fl">12.91357</span>, <span class="fl">18.04246</span>, <span class="fl">18.20712</span>, <span class="fl">19.57305</span>, <span class="fl">21.20873</span>, <span class="fl">30.03917</span>, <span class="fl">34.88001</span>, <span class="fl">36.87355</span>,</span>
-<span id="cb25-397"><a href="#cb25-397" aria-hidden="true" tabindex="-1"></a>                 <span class="fl">53.91168</span>)</span>
-<span id="cb25-398"><a href="#cb25-398" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-399"><a href="#cb25-399" aria-hidden="true" tabindex="-1"></a>fit_3p <span class="ot">&lt;-</span> <span class="fu">wblr.conf</span>(<span class="fu">wblr.fit</span>(<span class="fu">wblr</span>(failures_3p), <span class="at">dist =</span> <span class="st">"weibull3p"</span>), <span class="at">col =</span> <span class="st">"darkgreen"</span>)</span>
-<span id="cb25-400"><a href="#cb25-400" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit_3p)</span>
-<span id="cb25-401"><a href="#cb25-401" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb25-402"><a href="#cb25-402" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-403"><a href="#cb25-403" aria-hidden="true" tabindex="-1"></a>The failure-free period is approximately 3.3 time units — visible as the curve flattening at low probabilities.</span>
-<span id="cb25-404"><a href="#cb25-404" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-405"><a href="#cb25-405" aria-hidden="true" tabindex="-1"></a><span class="fu">## Multi-Plots</span></span>
-<span id="cb25-406"><a href="#cb25-406" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-407"><a href="#cb25-407" aria-hidden="true" tabindex="-1"></a>Multi-plots overlay multiple Weibull fits on one chart, making comparisons easy.</span>
-<span id="cb25-408"><a href="#cb25-408" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-411"><a href="#cb25-411" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb25-412"><a href="#cb25-412" aria-hidden="true" tabindex="-1"></a>failures    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">30</span>, <span class="dv">49</span>, <span class="dv">82</span>, <span class="dv">90</span>, <span class="dv">96</span>)</span>
-<span id="cb25-413"><a href="#cb25-413" aria-hidden="true" tabindex="-1"></a>suspensions <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">45</span>, <span class="dv">10</span>)</span>
-<span id="cb25-414"><a href="#cb25-414" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-415"><a href="#cb25-415" aria-hidden="true" tabindex="-1"></a>obj1 <span class="ot">&lt;-</span> <span class="fu">wblr.fit</span>(<span class="fu">wblr</span>(failures),             <span class="at">col =</span> <span class="st">"red"</span>)</span>
-<span id="cb25-416"><a href="#cb25-416" aria-hidden="true" tabindex="-1"></a>obj2 <span class="ot">&lt;-</span> <span class="fu">wblr.fit</span>(<span class="fu">wblr</span>(failures, suspensions), <span class="at">col =</span> <span class="st">"purple"</span>)</span>
-<span id="cb25-417"><a href="#cb25-417" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-418"><a href="#cb25-418" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.wblr</span>(<span class="fu">list</span>(obj1, obj2))</span>
-<span id="cb25-419"><a href="#cb25-419" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb25-420"><a href="#cb25-420" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-421"><a href="#cb25-421" aria-hidden="true" tabindex="-1"></a>The red model (without suspensions) has a higher beta and lower eta than the purple model (with suspensions). Adding suspensions shifts the fitted distribution to account for units that survived longer than the observed failures.</span>
+<span id="cb25-391"><a href="#cb25-391" aria-hidden="true" tabindex="-1"></a>This is appropriate for components that must age, wear, or fatigue before they can fail.</span>
+<span id="cb25-392"><a href="#cb25-392" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-395"><a href="#cb25-395" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb25-396"><a href="#cb25-396" aria-hidden="true" tabindex="-1"></a>failures_3p <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb25-397"><a href="#cb25-397" aria-hidden="true" tabindex="-1"></a>  <span class="fl">3.46623</span>,  <span class="fl">3.73271</span>,  <span class="fl">4.05300</span>,  <span class="fl">4.62870</span>,  <span class="fl">4.81570</span>,</span>
+<span id="cb25-398"><a href="#cb25-398" aria-hidden="true" tabindex="-1"></a>  <span class="fl">5.84517</span>,  <span class="fl">5.88831</span>,  <span class="fl">5.89297</span>,  <span class="fl">8.16836</span>, <span class="fl">10.02799</span>,</span>
+<span id="cb25-399"><a href="#cb25-399" aria-hidden="true" tabindex="-1"></a> <span class="fl">10.06062</span>, <span class="fl">10.49785</span>, <span class="fl">11.11493</span>, <span class="fl">11.87369</span>, <span class="fl">12.21122</span>,</span>
+<span id="cb25-400"><a href="#cb25-400" aria-hidden="true" tabindex="-1"></a> <span class="fl">12.51854</span>, <span class="fl">12.91357</span>, <span class="fl">18.04246</span>, <span class="fl">18.20712</span>, <span class="fl">19.57305</span>,</span>
+<span id="cb25-401"><a href="#cb25-401" aria-hidden="true" tabindex="-1"></a> <span class="fl">21.20873</span>, <span class="fl">30.03917</span>, <span class="fl">34.88001</span>, <span class="fl">36.87355</span>, <span class="fl">53.91168</span></span>
+<span id="cb25-402"><a href="#cb25-402" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb25-403"><a href="#cb25-403" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-404"><a href="#cb25-404" aria-hidden="true" tabindex="-1"></a>fit_3p <span class="ot">&lt;-</span> <span class="fu">wblr.conf</span>(<span class="fu">wblr.fit</span>(<span class="fu">wblr</span>(failures_3p), <span class="at">dist =</span> <span class="st">"weibull3p"</span>), <span class="at">col =</span> <span class="st">"darkgreen"</span>)</span>
+<span id="cb25-405"><a href="#cb25-405" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit_3p)</span>
+<span id="cb25-406"><a href="#cb25-406" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb25-407"><a href="#cb25-407" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-408"><a href="#cb25-408" aria-hidden="true" tabindex="-1"></a>The failure-free period is approximately 3.3 time units, visible as the curve flattening at low probabilities.</span>
+<span id="cb25-409"><a href="#cb25-409" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-410"><a href="#cb25-410" aria-hidden="true" tabindex="-1"></a><span class="fu">## Multi-Plots</span></span>
+<span id="cb25-411"><a href="#cb25-411" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-412"><a href="#cb25-412" aria-hidden="true" tabindex="-1"></a>Multi-plots overlay multiple Weibull fits on one chart, making comparisons easy.</span>
+<span id="cb25-413"><a href="#cb25-413" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-416"><a href="#cb25-416" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb25-417"><a href="#cb25-417" aria-hidden="true" tabindex="-1"></a>failures    <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">30</span>, <span class="dv">49</span>, <span class="dv">82</span>, <span class="dv">90</span>, <span class="dv">96</span>)</span>
+<span id="cb25-418"><a href="#cb25-418" aria-hidden="true" tabindex="-1"></a>suspensions <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">100</span>, <span class="dv">45</span>, <span class="dv">10</span>)</span>
+<span id="cb25-419"><a href="#cb25-419" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-420"><a href="#cb25-420" aria-hidden="true" tabindex="-1"></a>obj1 <span class="ot">&lt;-</span> <span class="fu">wblr.fit</span>(<span class="fu">wblr</span>(failures),             <span class="at">col =</span> <span class="st">"red"</span>)</span>
+<span id="cb25-421"><a href="#cb25-421" aria-hidden="true" tabindex="-1"></a>obj2 <span class="ot">&lt;-</span> <span class="fu">wblr.fit</span>(<span class="fu">wblr</span>(failures, suspensions), <span class="at">col =</span> <span class="st">"purple"</span>)</span>
 <span id="cb25-422"><a href="#cb25-422" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-423"><a href="#cb25-423" aria-hidden="true" tabindex="-1"></a><span class="fu">## Competing Failure Modes</span></span>
-<span id="cb25-424"><a href="#cb25-424" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-425"><a href="#cb25-425" aria-hidden="true" tabindex="-1"></a>When a component can fail in several distinct ways (corrosion, fatigue, overload), fitting a single Weibull to the combined data produces a poor fit because each mode has its own distribution.</span>
-<span id="cb25-426"><a href="#cb25-426" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-427"><a href="#cb25-427" aria-hidden="true" tabindex="-1"></a>The approach: fit a separate Weibull to each failure mode, treating failures from other modes as suspensions.</span>
-<span id="cb25-428"><a href="#cb25-428" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-431"><a href="#cb25-431" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb25-432"><a href="#cb25-432" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb25-433"><a href="#cb25-433" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb25-434"><a href="#cb25-434" aria-hidden="true" tabindex="-1"></a>  <span class="at">time =</span> <span class="fu">c</span>(</span>
-<span id="cb25-435"><a href="#cb25-435" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rweibull</span>(<span class="dv">5</span>,   <span class="fl">0.5</span>, <span class="dv">20</span>),   <span class="co"># Failure Mode A</span></span>
-<span id="cb25-436"><a href="#cb25-436" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rweibull</span>(<span class="dv">10</span>,  <span class="dv">1</span>,   <span class="dv">10</span>),   <span class="co"># Failure Mode B</span></span>
-<span id="cb25-437"><a href="#cb25-437" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rweibull</span>(<span class="dv">5</span>,   <span class="dv">2</span>,    <span class="dv">5</span>),   <span class="co"># Failure Mode C</span></span>
-<span id="cb25-438"><a href="#cb25-438" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rweibull</span>(<span class="dv">100</span>, <span class="dv">2</span>,   <span class="dv">10</span>)    <span class="co"># Suspensions</span></span>
-<span id="cb25-439"><a href="#cb25-439" aria-hidden="true" tabindex="-1"></a>  ),</span>
-<span id="cb25-440"><a href="#cb25-440" aria-hidden="true" tabindex="-1"></a>  <span class="at">event =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">20</span>), <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">100</span>)),</span>
-<span id="cb25-441"><a href="#cb25-441" aria-hidden="true" tabindex="-1"></a>  <span class="at">failure_mode =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"A"</span>, <span class="dv">5</span>), <span class="fu">rep</span>(<span class="st">"B"</span>, <span class="dv">10</span>), <span class="fu">rep</span>(<span class="st">"C"</span>, <span class="dv">5</span>), <span class="fu">rep</span>(<span class="st">""</span>, <span class="dv">100</span>))</span>
-<span id="cb25-442"><a href="#cb25-442" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb25-443"><a href="#cb25-443" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-444"><a href="#cb25-444" aria-hidden="true" tabindex="-1"></a><span class="co"># Separate dataset per failure mode (others treated as suspensions)</span></span>
-<span id="cb25-445"><a href="#cb25-445" aria-hidden="true" tabindex="-1"></a>dat1 <span class="ot">&lt;-</span> dat2 <span class="ot">&lt;-</span> dat3 <span class="ot">&lt;-</span> data</span>
-<span id="cb25-446"><a href="#cb25-446" aria-hidden="true" tabindex="-1"></a>dat1<span class="sc">$</span>event[dat1<span class="sc">$</span>failure_mode <span class="sc">!=</span> <span class="st">"A"</span>] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb25-447"><a href="#cb25-447" aria-hidden="true" tabindex="-1"></a>dat2<span class="sc">$</span>event[dat2<span class="sc">$</span>failure_mode <span class="sc">!=</span> <span class="st">"B"</span>] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb25-448"><a href="#cb25-448" aria-hidden="true" tabindex="-1"></a>dat3<span class="sc">$</span>event[dat3<span class="sc">$</span>failure_mode <span class="sc">!=</span> <span class="st">"C"</span>] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb25-449"><a href="#cb25-449" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-450"><a href="#cb25-450" aria-hidden="true" tabindex="-1"></a>obj1 <span class="ot">&lt;-</span> <span class="fu">wblr.fit</span>(<span class="fu">wblr</span>(dat1, <span class="at">col =</span> <span class="st">"blue"</span>))</span>
-<span id="cb25-451"><a href="#cb25-451" aria-hidden="true" tabindex="-1"></a>obj2 <span class="ot">&lt;-</span> <span class="fu">wblr.fit</span>(<span class="fu">wblr</span>(dat2, <span class="at">col =</span> <span class="st">"red"</span>))</span>
-<span id="cb25-452"><a href="#cb25-452" aria-hidden="true" tabindex="-1"></a>obj3 <span class="ot">&lt;-</span> <span class="fu">wblr.fit</span>(<span class="fu">wblr</span>(dat3, <span class="at">col =</span> <span class="st">"orange"</span>))</span>
-<span id="cb25-453"><a href="#cb25-453" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.wblr</span>(<span class="fu">list</span>(obj1, obj2, obj3), <span class="at">is.plot.legend =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb25-454"><a href="#cb25-454" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb25-455"><a href="#cb25-455" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-456"><a href="#cb25-456" aria-hidden="true" tabindex="-1"></a>Each failure mode has a distinct $\beta$: Mode A ($\beta &lt; 1$, decreasing rate — infant mortality), Mode B ($\beta \approx 1$, random), Mode C ($\beta &gt; 1$, wear-out).</span>
-<span id="cb25-457"><a href="#cb25-457" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-458"><a href="#cb25-458" aria-hidden="true" tabindex="-1"></a><span class="fu">## Contour Plots</span></span>
-<span id="cb25-459"><a href="#cb25-459" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-460"><a href="#cb25-460" aria-hidden="true" tabindex="-1"></a>A **contour plot** shows the joint confidence region for $\beta$ and $\eta$. Overlapping contours indicate that two distributions are not significantly different at the chosen confidence level.</span>
-<span id="cb25-461"><a href="#cb25-461" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-464"><a href="#cb25-464" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb25-465"><a href="#cb25-465" aria-hidden="true" tabindex="-1"></a><span class="co">#| results: hide</span></span>
-<span id="cb25-466"><a href="#cb25-466" aria-hidden="true" tabindex="-1"></a>failures <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">30</span>, <span class="dv">49</span>, <span class="dv">82</span>, <span class="dv">90</span>, <span class="dv">96</span>)</span>
-<span id="cb25-467"><a href="#cb25-467" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">wblr.conf</span>(<span class="fu">wblr.fit</span>(<span class="fu">wblr</span>(failures, <span class="at">col =</span> <span class="st">"blue"</span>), <span class="at">method.fit =</span> <span class="st">"mle"</span>), <span class="at">method.conf =</span> <span class="st">"lrb"</span>)</span>
-<span id="cb25-468"><a href="#cb25-468" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_contour</span>(obj, <span class="at">CL =</span> <span class="fl">0.9</span>)</span>
-<span id="cb25-469"><a href="#cb25-469" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb25-470"><a href="#cb25-470" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-471"><a href="#cb25-471" aria-hidden="true" tabindex="-1"></a><span class="fu">### Comparing Contour Plots</span></span>
-<span id="cb25-472"><a href="#cb25-472" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-475"><a href="#cb25-475" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb25-476"><a href="#cb25-476" aria-hidden="true" tabindex="-1"></a><span class="co">#| results: hide</span></span>
-<span id="cb25-477"><a href="#cb25-477" aria-hidden="true" tabindex="-1"></a>obj1 <span class="ot">&lt;-</span> <span class="fu">wblr.conf</span>(<span class="fu">wblr.fit</span>(<span class="fu">wblr</span>(dat1, <span class="at">col =</span> <span class="st">"blue"</span>),   <span class="at">method.fit =</span> <span class="st">"mle"</span>), <span class="at">method.conf =</span> <span class="st">"lrb"</span>)</span>
-<span id="cb25-478"><a href="#cb25-478" aria-hidden="true" tabindex="-1"></a>obj2 <span class="ot">&lt;-</span> <span class="fu">wblr.conf</span>(<span class="fu">wblr.fit</span>(<span class="fu">wblr</span>(dat2, <span class="at">col =</span> <span class="st">"red"</span>),    <span class="at">method.fit =</span> <span class="st">"mle"</span>), <span class="at">method.conf =</span> <span class="st">"lrb"</span>)</span>
-<span id="cb25-479"><a href="#cb25-479" aria-hidden="true" tabindex="-1"></a>obj3 <span class="ot">&lt;-</span> <span class="fu">wblr.conf</span>(<span class="fu">wblr.fit</span>(<span class="fu">wblr</span>(dat3, <span class="at">col =</span> <span class="st">"orange"</span>), <span class="at">method.fit =</span> <span class="st">"mle"</span>), <span class="at">method.conf =</span> <span class="st">"lrb"</span>)</span>
-<span id="cb25-480"><a href="#cb25-480" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_contour</span>(<span class="fu">list</span>(obj1, obj2, obj3), <span class="at">CL =</span> <span class="fl">0.9</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1500</span>))</span>
-<span id="cb25-481"><a href="#cb25-481" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb25-482"><a href="#cb25-482" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-483"><a href="#cb25-483" aria-hidden="true" tabindex="-1"></a>Overlapping contours at 90% confidence level indicate that the three failure modes are not statistically distinguishable at this confidence level.</span>
-<span id="cb25-484"><a href="#cb25-484" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-485"><a href="#cb25-485" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
-<span id="cb25-486"><a href="#cb25-486" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-487"><a href="#cb25-487" aria-hidden="true" tabindex="-1"></a>**Key takeaways:**</span>
-<span id="cb25-488"><a href="#cb25-488" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-489"><a href="#cb25-489" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The Weibull CDF: $R(t) = e^{-(t/\eta)^\beta}$.</span>
-<span id="cb25-490"><a href="#cb25-490" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$\beta &lt; 1$: decreasing rate (infant mortality); $\beta = 1$: constant (exponential); $\beta &gt; 1$: increasing (wear-out).</span>
-<span id="cb25-491"><a href="#cb25-491" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>At $t = \eta$: $F(\eta) = 63.2\%$ for any $\beta$.</span>
-<span id="cb25-492"><a href="#cb25-492" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Suspensions are units that did not fail — always include them in the analysis.</span>
-<span id="cb25-493"><a href="#cb25-493" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>MRR and MLE often give slightly different fits — use the AD statistic to choose.</span>
-<span id="cb25-494"><a href="#cb25-494" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Weibayes is appropriate for scarce data with prior knowledge of $\beta$.</span>
-<span id="cb25-495"><a href="#cb25-495" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>3-parameter Weibull handles failure-free periods.</span>
-<span id="cb25-496"><a href="#cb25-496" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Multi-plots and contour plots are powerful tools for comparing distributions.</span>
+<span id="cb25-423"><a href="#cb25-423" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.wblr</span>(<span class="fu">list</span>(obj1, obj2))</span>
+<span id="cb25-424"><a href="#cb25-424" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb25-425"><a href="#cb25-425" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-426"><a href="#cb25-426" aria-hidden="true" tabindex="-1"></a>The red model (without suspensions) has a higher beta and lower eta than the purple model (with suspensions). Adding suspensions shifts the fitted distribution to account for units that survived longer than the observed failures.</span>
+<span id="cb25-427"><a href="#cb25-427" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-428"><a href="#cb25-428" aria-hidden="true" tabindex="-1"></a><span class="fu">## Competing Failure Modes</span></span>
+<span id="cb25-429"><a href="#cb25-429" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-430"><a href="#cb25-430" aria-hidden="true" tabindex="-1"></a>When a component can fail in several distinct ways (corrosion, fatigue, overload), fitting a single Weibull to the combined data produces a poor fit because each mode has its own distribution.</span>
+<span id="cb25-431"><a href="#cb25-431" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-432"><a href="#cb25-432" aria-hidden="true" tabindex="-1"></a>The approach: fit a separate Weibull to each failure mode, treating failures from other modes as suspensions.</span>
+<span id="cb25-433"><a href="#cb25-433" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-436"><a href="#cb25-436" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb25-437"><a href="#cb25-437" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb25-438"><a href="#cb25-438" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb25-439"><a href="#cb25-439" aria-hidden="true" tabindex="-1"></a>  <span class="at">time =</span> <span class="fu">c</span>(</span>
+<span id="cb25-440"><a href="#cb25-440" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rweibull</span>(<span class="dv">5</span>,   <span class="fl">0.5</span>, <span class="dv">20</span>),   <span class="co"># Failure Mode A</span></span>
+<span id="cb25-441"><a href="#cb25-441" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rweibull</span>(<span class="dv">10</span>,  <span class="dv">1</span>,   <span class="dv">10</span>),   <span class="co"># Failure Mode B</span></span>
+<span id="cb25-442"><a href="#cb25-442" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rweibull</span>(<span class="dv">5</span>,   <span class="dv">2</span>,    <span class="dv">5</span>),   <span class="co"># Failure Mode C</span></span>
+<span id="cb25-443"><a href="#cb25-443" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rweibull</span>(<span class="dv">100</span>, <span class="dv">2</span>,   <span class="dv">10</span>)    <span class="co"># Suspensions</span></span>
+<span id="cb25-444"><a href="#cb25-444" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb25-445"><a href="#cb25-445" aria-hidden="true" tabindex="-1"></a>  <span class="at">event =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">20</span>), <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">100</span>)),</span>
+<span id="cb25-446"><a href="#cb25-446" aria-hidden="true" tabindex="-1"></a>  <span class="at">failure_mode =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"A"</span>, <span class="dv">5</span>), <span class="fu">rep</span>(<span class="st">"B"</span>, <span class="dv">10</span>), <span class="fu">rep</span>(<span class="st">"C"</span>, <span class="dv">5</span>), <span class="fu">rep</span>(<span class="st">""</span>, <span class="dv">100</span>))</span>
+<span id="cb25-447"><a href="#cb25-447" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb25-448"><a href="#cb25-448" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-449"><a href="#cb25-449" aria-hidden="true" tabindex="-1"></a><span class="co"># Separate dataset per failure mode (others treated as suspensions)</span></span>
+<span id="cb25-450"><a href="#cb25-450" aria-hidden="true" tabindex="-1"></a>dat1 <span class="ot">&lt;-</span> dat2 <span class="ot">&lt;-</span> dat3 <span class="ot">&lt;-</span> data</span>
+<span id="cb25-451"><a href="#cb25-451" aria-hidden="true" tabindex="-1"></a>dat1<span class="sc">$</span>event[dat1<span class="sc">$</span>failure_mode <span class="sc">!=</span> <span class="st">"A"</span>] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb25-452"><a href="#cb25-452" aria-hidden="true" tabindex="-1"></a>dat2<span class="sc">$</span>event[dat2<span class="sc">$</span>failure_mode <span class="sc">!=</span> <span class="st">"B"</span>] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb25-453"><a href="#cb25-453" aria-hidden="true" tabindex="-1"></a>dat3<span class="sc">$</span>event[dat3<span class="sc">$</span>failure_mode <span class="sc">!=</span> <span class="st">"C"</span>] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb25-454"><a href="#cb25-454" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-455"><a href="#cb25-455" aria-hidden="true" tabindex="-1"></a>obj1 <span class="ot">&lt;-</span> <span class="fu">wblr.fit</span>(<span class="fu">wblr</span>(dat1, <span class="at">col =</span> <span class="st">"blue"</span>))</span>
+<span id="cb25-456"><a href="#cb25-456" aria-hidden="true" tabindex="-1"></a>obj2 <span class="ot">&lt;-</span> <span class="fu">wblr.fit</span>(<span class="fu">wblr</span>(dat2, <span class="at">col =</span> <span class="st">"red"</span>))</span>
+<span id="cb25-457"><a href="#cb25-457" aria-hidden="true" tabindex="-1"></a>obj3 <span class="ot">&lt;-</span> <span class="fu">wblr.fit</span>(<span class="fu">wblr</span>(dat3, <span class="at">col =</span> <span class="st">"orange"</span>))</span>
+<span id="cb25-458"><a href="#cb25-458" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.wblr</span>(<span class="fu">list</span>(obj1, obj2, obj3), <span class="at">is.plot.legend =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb25-459"><a href="#cb25-459" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb25-460"><a href="#cb25-460" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-461"><a href="#cb25-461" aria-hidden="true" tabindex="-1"></a>Each failure mode has a distinct $\beta$: Mode A ($\beta &lt; 1$, decreasing rate, infant mortality), Mode B ($\beta \approx 1$, random), Mode C ($\beta &gt; 1$, wear-out).</span>
+<span id="cb25-462"><a href="#cb25-462" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-463"><a href="#cb25-463" aria-hidden="true" tabindex="-1"></a><span class="fu">## Contour Plots</span></span>
+<span id="cb25-464"><a href="#cb25-464" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-465"><a href="#cb25-465" aria-hidden="true" tabindex="-1"></a>A **contour plot** shows the joint confidence region for $\beta$ and $\eta$. Overlapping contours indicate that two distributions are not significantly different at the chosen confidence level.</span>
+<span id="cb25-466"><a href="#cb25-466" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-469"><a href="#cb25-469" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb25-470"><a href="#cb25-470" aria-hidden="true" tabindex="-1"></a><span class="co">#| results: hide</span></span>
+<span id="cb25-471"><a href="#cb25-471" aria-hidden="true" tabindex="-1"></a>failures <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">30</span>, <span class="dv">49</span>, <span class="dv">82</span>, <span class="dv">90</span>, <span class="dv">96</span>)</span>
+<span id="cb25-472"><a href="#cb25-472" aria-hidden="true" tabindex="-1"></a>obj <span class="ot">&lt;-</span> <span class="fu">wblr.conf</span>(</span>
+<span id="cb25-473"><a href="#cb25-473" aria-hidden="true" tabindex="-1"></a>  <span class="fu">wblr.fit</span>(<span class="fu">wblr</span>(failures, <span class="at">col =</span> <span class="st">"blue"</span>), <span class="at">method.fit =</span> <span class="st">"mle"</span>),</span>
+<span id="cb25-474"><a href="#cb25-474" aria-hidden="true" tabindex="-1"></a>  <span class="at">method.conf =</span> <span class="st">"lrb"</span></span>
+<span id="cb25-475"><a href="#cb25-475" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb25-476"><a href="#cb25-476" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_contour</span>(obj, <span class="at">CL =</span> <span class="fl">0.9</span>)</span>
+<span id="cb25-477"><a href="#cb25-477" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb25-478"><a href="#cb25-478" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-479"><a href="#cb25-479" aria-hidden="true" tabindex="-1"></a><span class="fu">### Comparing Contour Plots</span></span>
+<span id="cb25-480"><a href="#cb25-480" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-483"><a href="#cb25-483" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb25-484"><a href="#cb25-484" aria-hidden="true" tabindex="-1"></a><span class="co">#| results: hide</span></span>
+<span id="cb25-485"><a href="#cb25-485" aria-hidden="true" tabindex="-1"></a>obj1 <span class="ot">&lt;-</span> <span class="fu">wblr.conf</span>(</span>
+<span id="cb25-486"><a href="#cb25-486" aria-hidden="true" tabindex="-1"></a>  <span class="fu">wblr.fit</span>(<span class="fu">wblr</span>(dat1, <span class="at">col =</span> <span class="st">"blue"</span>),   <span class="at">method.fit =</span> <span class="st">"mle"</span>),</span>
+<span id="cb25-487"><a href="#cb25-487" aria-hidden="true" tabindex="-1"></a>  <span class="at">method.conf =</span> <span class="st">"lrb"</span></span>
+<span id="cb25-488"><a href="#cb25-488" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb25-489"><a href="#cb25-489" aria-hidden="true" tabindex="-1"></a>obj2 <span class="ot">&lt;-</span> <span class="fu">wblr.conf</span>(</span>
+<span id="cb25-490"><a href="#cb25-490" aria-hidden="true" tabindex="-1"></a>  <span class="fu">wblr.fit</span>(<span class="fu">wblr</span>(dat2, <span class="at">col =</span> <span class="st">"red"</span>),    <span class="at">method.fit =</span> <span class="st">"mle"</span>),</span>
+<span id="cb25-491"><a href="#cb25-491" aria-hidden="true" tabindex="-1"></a>  <span class="at">method.conf =</span> <span class="st">"lrb"</span></span>
+<span id="cb25-492"><a href="#cb25-492" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb25-493"><a href="#cb25-493" aria-hidden="true" tabindex="-1"></a>obj3 <span class="ot">&lt;-</span> <span class="fu">wblr.conf</span>(</span>
+<span id="cb25-494"><a href="#cb25-494" aria-hidden="true" tabindex="-1"></a>  <span class="fu">wblr.fit</span>(<span class="fu">wblr</span>(dat3, <span class="at">col =</span> <span class="st">"orange"</span>), <span class="at">method.fit =</span> <span class="st">"mle"</span>),</span>
+<span id="cb25-495"><a href="#cb25-495" aria-hidden="true" tabindex="-1"></a>  <span class="at">method.conf =</span> <span class="st">"lrb"</span></span>
+<span id="cb25-496"><a href="#cb25-496" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb25-497"><a href="#cb25-497" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_contour</span>(<span class="fu">list</span>(obj1, obj2, obj3), <span class="at">CL =</span> <span class="fl">0.9</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1500</span>))</span>
+<span id="cb25-498"><a href="#cb25-498" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb25-499"><a href="#cb25-499" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-500"><a href="#cb25-500" aria-hidden="true" tabindex="-1"></a>Overlapping contours at 90% confidence level indicate that the three failure modes are not statistically distinguishable at this confidence level.</span>
+<span id="cb25-501"><a href="#cb25-501" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-502"><a href="#cb25-502" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
+<span id="cb25-503"><a href="#cb25-503" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-504"><a href="#cb25-504" aria-hidden="true" tabindex="-1"></a>**Key takeaways:**</span>
+<span id="cb25-505"><a href="#cb25-505" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-506"><a href="#cb25-506" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The Weibull CDF: $R(t) = e^{-(t/\eta)^\beta}$.</span>
+<span id="cb25-507"><a href="#cb25-507" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$\beta &lt; 1$: decreasing rate (infant mortality); $\beta = 1$: constant (exponential); $\beta &gt; 1$: increasing (wear-out).</span>
+<span id="cb25-508"><a href="#cb25-508" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>At $t = \eta$: $F(\eta) = 63.2\%$ for any $\beta$.</span>
+<span id="cb25-509"><a href="#cb25-509" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Suspensions are units that did not fail; always include them in the analysis.</span>
+<span id="cb25-510"><a href="#cb25-510" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>MRR and MLE often give slightly different fits; use the AD statistic to choose.</span>
+<span id="cb25-511"><a href="#cb25-511" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Weibayes is appropriate for scarce data with prior knowledge of $\beta$.</span>
+<span id="cb25-512"><a href="#cb25-512" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>3-parameter Weibull handles failure-free periods.</span>
+<span id="cb25-513"><a href="#cb25-513" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Multi-plots and contour plots are powerful tools for comparing distributions.</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
