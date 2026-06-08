@@ -521,9 +521,9 @@ window.Quarto = {
   </ul></li>
   <li><a href="#sec-quarto-packages" id="toc-sec-quarto-packages" class="nav-link" data-scroll-target="#sec-quarto-packages"><span class="header-section-number">9.6</span> Integration with Reliability R Packages</a>
   <ul class="collapse">
-  <li><a href="#weibullr-life-data-analysis" id="toc-weibullr-life-data-analysis" class="nav-link" data-scroll-target="#weibullr-life-data-analysis">WeibullR — Life Data Analysis</a></li>
-  <li><a href="#reliagrowr-reliability-growth" id="toc-reliagrowr-reliability-growth" class="nav-link" data-scroll-target="#reliagrowr-reliability-growth">ReliaGrowR — Reliability Growth</a></li>
-  <li><a href="#relialearnr-ram-metrics" id="toc-relialearnr-ram-metrics" class="nav-link" data-scroll-target="#relialearnr-ram-metrics">ReliaLearnR — RAM Metrics</a></li>
+  <li><a href="#weibullr-life-data-analysis" id="toc-weibullr-life-data-analysis" class="nav-link" data-scroll-target="#weibullr-life-data-analysis">WeibullR: Life Data Analysis</a></li>
+  <li><a href="#reliagrowr-reliability-growth" id="toc-reliagrowr-reliability-growth" class="nav-link" data-scroll-target="#reliagrowr-reliability-growth">ReliaGrowR: Reliability Growth</a></li>
+  <li><a href="#relialearnr-ram-metrics" id="toc-relialearnr-ram-metrics" class="nav-link" data-scroll-target="#relialearnr-ram-metrics">ReliaLearnR: RAM Metrics</a></li>
   <li><a href="#saving-plots" id="toc-saving-plots" class="nav-link" data-scroll-target="#saving-plots">Saving Plots</a></li>
   </ul></li>
   <li><a href="#sec-quarto-meta" id="toc-sec-quarto-meta" class="nav-link" data-scroll-target="#sec-quarto-meta"><span class="header-section-number">9.7</span> This Book Is Built with Quarto</a></li>
@@ -558,7 +558,7 @@ window.Quarto = {
 </header>
 
 
-<p>Scripted R solves the <em>computation</em> problem — analyses are exact, repeatable, and version-controlled. But a folder of R scripts and PNG plots is still hard to share, audit, or publish. Quarto <span class="citation" data-cites="Quarto">(<a href="#ref-Quarto" role="doc-biblioref">Allaire et al. 2024</a>)</span> solves the <em>documentation</em> problem by weaving code, equations, narrative, and figures into a single re-executable source file. The result is a document that is both the analysis <em>and</em> the report — one that any colleague can re-run months later and reproduce every number exactly. See <a href="#sec-quarto-vs-tools" class="quarto-xref"><span>Section 9.9</span></a> for guidance on when to choose Quarto over ReliaShiny or AI/MCP.</p>
+<p>Scripted R solves the <em>computation</em> problem, producing analyses that are exact, repeatable, and version-controlled. But a folder of R scripts and PNG plots is still hard to share, audit, or publish. Quarto <span class="citation" data-cites="Quarto">(<a href="#ref-Quarto" role="doc-biblioref">Allaire et al. 2024</a>)</span> solves the <em>documentation</em> problem by weaving code, equations, narrative, and figures into a single re-executable source file. The result is a document that is both the analysis <em>and</em> the report, one that any colleague can re-run months later and reproduce every number exactly. See <a href="#sec-quarto-vs-tools" class="quarto-xref"><span>Section 9.9</span></a> for guidance on when to choose Quarto over ReliaShiny or AI/MCP.</p>
 <section id="learning-objectives" class="level2" data-number="9.1">
 <h2 data-number="9.1" class="anchored" data-anchor-id="learning-objectives"><span class="header-section-number">9.1</span> Learning Objectives</h2>
 <p>By the end of this chapter, you will be able to:</p>
@@ -576,7 +576,7 @@ window.Quarto = {
 <h2 data-number="9.2" class="anchored" data-anchor-id="sec-quarto-repro"><span class="header-section-number">9.2</span> Why Reproducibility Matters</h2>
 <section id="audits-and-regulatory-compliance" class="level3">
 <h3 class="anchored" data-anchor-id="audits-and-regulatory-compliance">Audits and Regulatory Compliance</h3>
-<p>Defence, aerospace, nuclear, and medical-device industries require that every reliability analysis be traceable — the data, the method, and the software version. A Quarto document combined with an <code>renv.lock</code> package snapshot provides an exact, time-stamped audit trail. Regulators can re-run the analysis years later and confirm the results.</p>
+<p>Defence, aerospace, nuclear, and medical-device industries require that every reliability analysis be traceable, including the data, the method, and the software version. A Quarto document combined with an <code>renv.lock</code> package snapshot provides an exact, time-stamped audit trail. Regulators can re-run the analysis years later and confirm the results.</p>
 </section>
 <section id="re-analysis-and-collaboration" class="level3">
 <h3 class="anchored" data-anchor-id="re-analysis-and-collaboration">Re-Analysis and Collaboration</h3>
@@ -584,7 +584,7 @@ window.Quarto = {
 </section>
 <section id="version-control" class="level3">
 <h3 class="anchored" data-anchor-id="version-control">Version Control</h3>
-<p>Quarto source files are plain text. They can be committed to Git alongside data, line-diffed, and reviewed in pull requests. Changes to an analysis are visible as diffs — something not possible with binary spreadsheets or saved Shiny sessions.</p>
+<p>Quarto source files are plain text. They can be committed to Git alongside data, line-diffed, and reviewed in pull requests. Changes to an analysis are visible as diffs, which is not possible with binary spreadsheets or saved Shiny sessions.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -794,7 +794,7 @@ Figure&nbsp;9.1: Weibull probability plot for pump fleet failures with MLE fit a
 </div>
 </div>
 </div>
-<p>Inline R expressions embed computed values directly in prose without hard-coding numbers — a key reproducibility benefit. For example:</p>
+<p>Inline R expressions embed computed values directly in prose without hard-coding numbers, a key reproducibility benefit. For example:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>The fitted shape parameter is $\hat{\beta}$ = `r round(obj$fit[[1]]$beta, 2)`.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>When the analysis is re-run with updated data, this sentence updates automatically.</p>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -885,7 +885,7 @@ Add <code>quarto_render("pump-report.qmd")</code> in a separate R session to ren
 <summary>
 Answer
 </summary>
-Without parameters: six separate files, each requiring manual edits when the analysis changes. With parameters: one template file rendered six times — changes to the analysis logic are made in one place and propagate to all reports automatically.
+Without parameters: six separate files, each requiring manual edits when the analysis changes. With parameters: one template file rendered six times, with changes to the analysis logic made in one place and propagated to all reports automatically.
 </details>
 </div>
 </div>
@@ -893,9 +893,9 @@ Without parameters: six separate files, each requiring manual edits when the ana
 </section>
 <section id="sec-quarto-packages" class="level2" data-number="9.6">
 <h2 data-number="9.6" class="anchored" data-anchor-id="sec-quarto-packages"><span class="header-section-number">9.6</span> Integration with Reliability R Packages</h2>
-<p>All reliability packages used in this book work inside <code>.qmd</code> files without modification — Quarto captures their output automatically.</p>
+<p>All reliability packages used in this book work inside <code>.qmd</code> files without modification, and Quarto captures their output automatically.</p>
 <section id="weibullr-life-data-analysis" class="level3">
-<h3 class="anchored" data-anchor-id="weibullr-life-data-analysis">WeibullR — Life Data Analysis</h3>
+<h3 class="anchored" data-anchor-id="weibullr-life-data-analysis">WeibullR: Life Data Analysis</h3>
 <p>See <a href="03-lda.html" class="quarto-xref"><span>Chapter 3</span></a> for the statistical background. Inside a <code>.qmd</code>, a complete Weibull analysis is:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(WeibullR)</span>
@@ -922,7 +922,7 @@ Figure&nbsp;9.2: Weibull probability plot with MLE fit and confidence bounds.
 </div>
 </section>
 <section id="reliagrowr-reliability-growth" class="level3">
-<h3 class="anchored" data-anchor-id="reliagrowr-reliability-growth">ReliaGrowR — Reliability Growth</h3>
+<h3 class="anchored" data-anchor-id="reliagrowr-reliability-growth">ReliaGrowR: Reliability Growth</h3>
 <p>See <a href="04-rt.html" class="quarto-xref"><span>Chapter 4</span></a> for Crow-AMSAA model details:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ReliaGrowR)</span>
@@ -946,7 +946,7 @@ Figure&nbsp;9.3: Crow-AMSAA reliability growth fit.
 </div>
 </section>
 <section id="relialearnr-ram-metrics" class="level3">
-<h3 class="anchored" data-anchor-id="relialearnr-ram-metrics">ReliaLearnR — RAM Metrics</h3>
+<h3 class="anchored" data-anchor-id="relialearnr-ram-metrics">ReliaLearnR: RAM Metrics</h3>
 <p>See <a href="01-ram.html" class="quarto-xref"><span>Chapter 1</span></a> for the RAM helper functions:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ReliaLearnR)</span>
@@ -1033,13 +1033,13 @@ Solution
 </div>
 <p>or from the terminal:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The rendered book is published to GitHub Pages on each push — the online version always reflects the exact source in the repository.</p>
+<p>The rendered book is published to GitHub Pages on each push, so the online version always reflects the exact source in the repository.</p>
 </div>
 </div>
 </section>
 <section id="sec-quarto-books" class="level2" data-number="9.8">
 <h2 data-number="9.8" class="anchored" data-anchor-id="sec-quarto-books"><span class="header-section-number">9.8</span> Quarto Books and Multi-File Projects</h2>
-<p>A Quarto book is a <code>type: book</code> project where <code>_quarto.yml</code> controls everything: chapter order, sidebar search, bibliography, HTML theme, PDF layout, and global execution options. Adding a new chapter requires only creating a <code>.qmd</code> file and adding one line to the chapters list — no other configuration changes.</p>
+<p>A Quarto book is a <code>type: book</code> project where <code>_quarto.yml</code> controls everything: chapter order, sidebar search, bibliography, HTML theme, PDF layout, and global execution options. Adding a new chapter requires only creating a <code>.qmd</code> file and adding one line to the chapters list, with no other configuration changes needed.</p>
 <p>The global <code>execute:</code> block in <code>_quarto.yml</code> sets default chunk behaviour across all chapters:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">execute</span><span class="kw">:</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">echo</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
@@ -1150,7 +1150,7 @@ Solution
 <li><strong>Integration</strong>: WeibullR, ReliaGrowR, WeibullR.ALT, ReliaPlotR, and ReliaLearnR all work inside <code>.qmd</code> files without modification.</li>
 <li><strong>Formats</strong>: <code>quarto_render()</code> produces HTML, PDF, Word, and more from the same source file.</li>
 <li><strong>Books</strong>: this guide is a <code>type: book</code> Quarto project; <code>_quarto.yml</code> controls chapter order, theme, sidebar, and global chunk options.</li>
-<li><strong>Complement, not replacement</strong>: Quarto does not replace ReliaShiny (use ReliaShiny for point-and-click exploration) or AI + MCP (use MCP for conversational analysis) — each tool excels in a different context (see <a href="#sec-quarto-vs-tools" class="quarto-xref"><span>Section 9.9</span></a>).</li>
+<li><strong>Complement, not replacement</strong>: Quarto does not replace ReliaShiny (use ReliaShiny for point-and-click exploration) or AI + MCP (use MCP for conversational analysis), as each tool excels in a different context (see <a href="#sec-quarto-vs-tools" class="quarto-xref"><span>Section 9.9</span></a>).</li>
 </ul>
 </section>
 <section id="review-questions" class="level2" data-number="9.12">
@@ -1170,7 +1170,7 @@ Solution
 <summary>
 Answer
 </summary>
-<code>eval: false</code> shows the code but does not run it — no output is produced. <code>echo: false</code> runs the code and captures the output but hides the code block from the reader.
+<code>eval: false</code> shows the code but does not run it, so no output is produced. <code>echo: false</code> runs the code and captures the output but hides the code block from the reader.
 </details>
 <p><strong>2.</strong> You need to produce monthly Weibull reports for eight pump families. How would you structure a parameterized Quarto workflow?</p>
 <details>
@@ -1191,7 +1191,7 @@ Any two of: <code>fig-cap</code> (caption text), <code>fig-width</code> / <code>
 <summary>
 Answer
 </summary>
-<code>_quarto.yml</code> — the project configuration file at the root of the book directory.
+<code>_quarto.yml</code>, the project configuration file at the root of the book directory.
 </details>
 <p><strong>5.</strong> When would you choose ReliaShiny over a Quarto document for a reliability analysis?</p>
 <details>
@@ -1695,7 +1695,7 @@ Allaire, JJ, Charles Teague, Carlos Scheidegger, Yihui Xie, and Christophe Dervi
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Reproducible Reliability Analysis with Quarto {#sec-quarto}</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>Scripted R solves the *computation* problem — analyses are exact, repeatable, and version-controlled. But a folder of R scripts and PNG plots is still hard to share, audit, or publish. Quarto [@Quarto] solves the *documentation* problem by weaving code, equations, narrative, and figures into a single re-executable source file. The result is a document that is both the analysis *and* the report — one that any colleague can re-run months later and reproduce every number exactly. See @sec-quarto-vs-tools for guidance on when to choose Quarto over ReliaShiny or AI/MCP.</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>Scripted R solves the *computation* problem, producing analyses that are exact, repeatable, and version-controlled. But a folder of R scripts and PNG plots is still hard to share, audit, or publish. Quarto [@Quarto] solves the *documentation* problem by weaving code, equations, narrative, and figures into a single re-executable source file. The result is a document that is both the analysis *and* the report, one that any colleague can re-run months later and reproduce every number exactly. See @sec-quarto-vs-tools for guidance on when to choose Quarto over ReliaShiny or AI/MCP.</span>
 <span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="fu">## Learning Objectives</span></span>
 <span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a></span>
@@ -1713,7 +1713,7 @@ Allaire, JJ, Charles Teague, Carlos Scheidegger, Yihui Xie, and Christophe Dervi
 <span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a><span class="fu">### Audits and Regulatory Compliance</span></span>
 <span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a>Defence, aerospace, nuclear, and medical-device industries require that every reliability analysis be traceable — the data, the method, and the software version. A Quarto document combined with an <span class="in">`renv.lock`</span> package snapshot provides an exact, time-stamped audit trail. Regulators can re-run the analysis years later and confirm the results.</span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a>Defence, aerospace, nuclear, and medical-device industries require that every reliability analysis be traceable, including the data, the method, and the software version. A Quarto document combined with an <span class="in">`renv.lock`</span> package snapshot provides an exact, time-stamped audit trail. Regulators can re-run the analysis years later and confirm the results.</span>
 <span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a><span class="fu">### Re-Analysis and Collaboration</span></span>
 <span id="cb29-24"><a href="#cb29-24" aria-hidden="true" tabindex="-1"></a></span>
@@ -1721,7 +1721,7 @@ Allaire, JJ, Charles Teague, Carlos Scheidegger, Yihui Xie, and Christophe Dervi
 <span id="cb29-26"><a href="#cb29-26" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-27"><a href="#cb29-27" aria-hidden="true" tabindex="-1"></a><span class="fu">### Version Control</span></span>
 <span id="cb29-28"><a href="#cb29-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-29"><a href="#cb29-29" aria-hidden="true" tabindex="-1"></a>Quarto source files are plain text. They can be committed to Git alongside data, line-diffed, and reviewed in pull requests. Changes to an analysis are visible as diffs — something not possible with binary spreadsheets or saved Shiny sessions.</span>
+<span id="cb29-29"><a href="#cb29-29" aria-hidden="true" tabindex="-1"></a>Quarto source files are plain text. They can be committed to Git alongside data, line-diffed, and reviewed in pull requests. Changes to an analysis are visible as diffs, which is not possible with binary spreadsheets or saved Shiny sessions.</span>
 <span id="cb29-30"><a href="#cb29-30" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-31"><a href="#cb29-31" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip}</span>
 <span id="cb29-32"><a href="#cb29-32" aria-hidden="true" tabindex="-1"></a><span class="fu">## Review</span></span>
@@ -1868,7 +1868,7 @@ Allaire, JJ, Charles Teague, Carlos Scheidegger, Yihui Xie, and Christophe Dervi
 <span id="cb29-179"><a href="#cb29-179" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(obj)</span>
 <span id="cb29-180"><a href="#cb29-180" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb29-181"><a href="#cb29-181" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-182"><a href="#cb29-182" aria-hidden="true" tabindex="-1"></a>Inline R expressions embed computed values directly in prose without hard-coding numbers — a key reproducibility benefit. For example:</span>
+<span id="cb29-182"><a href="#cb29-182" aria-hidden="true" tabindex="-1"></a>Inline R expressions embed computed values directly in prose without hard-coding numbers, a key reproducibility benefit. For example:</span>
 <span id="cb29-183"><a href="#cb29-183" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-186"><a href="#cb29-186" aria-hidden="true" tabindex="-1"></a><span class="in">```{verbatim}</span></span>
 <span id="cb29-187"><a href="#cb29-187" aria-hidden="true" tabindex="-1"></a><span class="in">The fitted shape parameter is $\hat{\beta}$ = `r round(obj$fit[[1]]$beta, 2)`.</span></span>
@@ -1953,15 +1953,15 @@ Allaire, JJ, Charles Teague, Carlos Scheidegger, Yihui Xie, and Christophe Dervi
 <span id="cb29-272"><a href="#cb29-272" aria-hidden="true" tabindex="-1"></a>A reliability engineer must produce monthly Weibull reports for six pump models. Without parameterization, how many <span class="in">`.qmd`</span> files are needed? With parameterization?</span>
 <span id="cb29-273"><a href="#cb29-273" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-274"><a href="#cb29-274" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Answer<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
-<span id="cb29-275"><a href="#cb29-275" aria-hidden="true" tabindex="-1"></a>Without parameters: six separate files, each requiring manual edits when the analysis changes. With parameters: one template file rendered six times — changes to the analysis logic are made in one place and propagate to all reports automatically.</span>
+<span id="cb29-275"><a href="#cb29-275" aria-hidden="true" tabindex="-1"></a>Without parameters: six separate files, each requiring manual edits when the analysis changes. With parameters: one template file rendered six times, with changes to the analysis logic made in one place and propagated to all reports automatically.</span>
 <span id="cb29-276"><a href="#cb29-276" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
 <span id="cb29-277"><a href="#cb29-277" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb29-278"><a href="#cb29-278" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-279"><a href="#cb29-279" aria-hidden="true" tabindex="-1"></a><span class="fu">## Integration with Reliability R Packages {#sec-quarto-packages}</span></span>
 <span id="cb29-280"><a href="#cb29-280" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-281"><a href="#cb29-281" aria-hidden="true" tabindex="-1"></a>All reliability packages used in this book work inside <span class="in">`.qmd`</span> files without modification — Quarto captures their output automatically.</span>
+<span id="cb29-281"><a href="#cb29-281" aria-hidden="true" tabindex="-1"></a>All reliability packages used in this book work inside <span class="in">`.qmd`</span> files without modification, and Quarto captures their output automatically.</span>
 <span id="cb29-282"><a href="#cb29-282" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-283"><a href="#cb29-283" aria-hidden="true" tabindex="-1"></a><span class="fu">### WeibullR — Life Data Analysis</span></span>
+<span id="cb29-283"><a href="#cb29-283" aria-hidden="true" tabindex="-1"></a><span class="fu">### WeibullR: Life Data Analysis</span></span>
 <span id="cb29-284"><a href="#cb29-284" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-285"><a href="#cb29-285" aria-hidden="true" tabindex="-1"></a>See @sec-lda for the statistical background. Inside a <span class="in">`.qmd`</span>, a complete Weibull analysis is:</span>
 <span id="cb29-286"><a href="#cb29-286" aria-hidden="true" tabindex="-1"></a></span>
@@ -1980,7 +1980,7 @@ Allaire, JJ, Charles Teague, Carlos Scheidegger, Yihui Xie, and Christophe Dervi
 <span id="cb29-301"><a href="#cb29-301" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(obj)</span>
 <span id="cb29-302"><a href="#cb29-302" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb29-303"><a href="#cb29-303" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-304"><a href="#cb29-304" aria-hidden="true" tabindex="-1"></a><span class="fu">### ReliaGrowR — Reliability Growth</span></span>
+<span id="cb29-304"><a href="#cb29-304" aria-hidden="true" tabindex="-1"></a><span class="fu">### ReliaGrowR: Reliability Growth</span></span>
 <span id="cb29-305"><a href="#cb29-305" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-306"><a href="#cb29-306" aria-hidden="true" tabindex="-1"></a>See @sec-rt for Crow-AMSAA model details:</span>
 <span id="cb29-307"><a href="#cb29-307" aria-hidden="true" tabindex="-1"></a></span>
@@ -1996,7 +1996,7 @@ Allaire, JJ, Charles Teague, Carlos Scheidegger, Yihui Xie, and Christophe Dervi
 <span id="cb29-319"><a href="#cb29-319" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(rga_fit)</span>
 <span id="cb29-320"><a href="#cb29-320" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb29-321"><a href="#cb29-321" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-322"><a href="#cb29-322" aria-hidden="true" tabindex="-1"></a><span class="fu">### ReliaLearnR — RAM Metrics</span></span>
+<span id="cb29-322"><a href="#cb29-322" aria-hidden="true" tabindex="-1"></a><span class="fu">### ReliaLearnR: RAM Metrics</span></span>
 <span id="cb29-323"><a href="#cb29-323" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-324"><a href="#cb29-324" aria-hidden="true" tabindex="-1"></a>See @sec-ram for the RAM helper functions:</span>
 <span id="cb29-325"><a href="#cb29-325" aria-hidden="true" tabindex="-1"></a></span>
@@ -2078,12 +2078,12 @@ Allaire, JJ, Charles Teague, Carlos Scheidegger, Yihui Xie, and Christophe Dervi
 <span id="cb29-413"><a href="#cb29-413" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render</span>
 <span id="cb29-414"><a href="#cb29-414" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb29-415"><a href="#cb29-415" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-416"><a href="#cb29-416" aria-hidden="true" tabindex="-1"></a>The rendered book is published to GitHub Pages on each push — the online version always reflects the exact source in the repository.</span>
+<span id="cb29-416"><a href="#cb29-416" aria-hidden="true" tabindex="-1"></a>The rendered book is published to GitHub Pages on each push, so the online version always reflects the exact source in the repository.</span>
 <span id="cb29-417"><a href="#cb29-417" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb29-418"><a href="#cb29-418" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-419"><a href="#cb29-419" aria-hidden="true" tabindex="-1"></a><span class="fu">## Quarto Books and Multi-File Projects {#sec-quarto-books}</span></span>
 <span id="cb29-420"><a href="#cb29-420" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-421"><a href="#cb29-421" aria-hidden="true" tabindex="-1"></a>A Quarto book is a <span class="in">`type: book`</span> project where <span class="in">`_quarto.yml`</span> controls everything: chapter order, sidebar search, bibliography, HTML theme, PDF layout, and global execution options. Adding a new chapter requires only creating a <span class="in">`.qmd`</span> file and adding one line to the chapters list — no other configuration changes.</span>
+<span id="cb29-421"><a href="#cb29-421" aria-hidden="true" tabindex="-1"></a>A Quarto book is a <span class="in">`type: book`</span> project where <span class="in">`_quarto.yml`</span> controls everything: chapter order, sidebar search, bibliography, HTML theme, PDF layout, and global execution options. Adding a new chapter requires only creating a <span class="in">`.qmd`</span> file and adding one line to the chapters list, with no other configuration changes needed.</span>
 <span id="cb29-422"><a href="#cb29-422" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-423"><a href="#cb29-423" aria-hidden="true" tabindex="-1"></a>The global <span class="in">`execute:`</span> block in <span class="in">`_quarto.yml`</span> sets default chunk behaviour across all chapters:</span>
 <span id="cb29-424"><a href="#cb29-424" aria-hidden="true" tabindex="-1"></a></span>
@@ -2135,7 +2135,7 @@ Allaire, JJ, Charles Teague, Carlos Scheidegger, Yihui Xie, and Christophe Dervi
 <span id="cb29-472"><a href="#cb29-472" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Integration**: WeibullR, ReliaGrowR, WeibullR.ALT, ReliaPlotR, and ReliaLearnR all work inside <span class="in">`.qmd`</span> files without modification.</span>
 <span id="cb29-473"><a href="#cb29-473" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Formats**: <span class="in">`quarto_render()`</span> produces HTML, PDF, Word, and more from the same source file.</span>
 <span id="cb29-474"><a href="#cb29-474" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Books**: this guide is a <span class="in">`type: book`</span> Quarto project; <span class="in">`_quarto.yml`</span> controls chapter order, theme, sidebar, and global chunk options.</span>
-<span id="cb29-475"><a href="#cb29-475" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Complement, not replacement**: Quarto does not replace ReliaShiny (use ReliaShiny for point-and-click exploration) or AI + MCP (use MCP for conversational analysis) — each tool excels in a different context (see @sec-quarto-vs-tools).</span>
+<span id="cb29-475"><a href="#cb29-475" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Complement, not replacement**: Quarto does not replace ReliaShiny (use ReliaShiny for point-and-click exploration) or AI + MCP (use MCP for conversational analysis), as each tool excels in a different context (see @sec-quarto-vs-tools).</span>
 <span id="cb29-476"><a href="#cb29-476" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-477"><a href="#cb29-477" aria-hidden="true" tabindex="-1"></a><span class="fu">## Review Questions</span></span>
 <span id="cb29-478"><a href="#cb29-478" aria-hidden="true" tabindex="-1"></a></span>
@@ -2145,7 +2145,7 @@ Allaire, JJ, Charles Teague, Carlos Scheidegger, Yihui Xie, and Christophe Dervi
 <span id="cb29-482"><a href="#cb29-482" aria-hidden="true" tabindex="-1"></a>**1.** What is the difference between <span class="in">`#| eval: false`</span> and <span class="in">`#| echo: false`</span> in a Quarto code chunk?</span>
 <span id="cb29-483"><a href="#cb29-483" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-484"><a href="#cb29-484" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Answer<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
-<span id="cb29-485"><a href="#cb29-485" aria-hidden="true" tabindex="-1"></a><span class="in">`eval: false`</span> shows the code but does not run it — no output is produced. <span class="in">`echo: false`</span> runs the code and captures the output but hides the code block from the reader.</span>
+<span id="cb29-485"><a href="#cb29-485" aria-hidden="true" tabindex="-1"></a><span class="in">`eval: false`</span> shows the code but does not run it, so no output is produced. <span class="in">`echo: false`</span> runs the code and captures the output but hides the code block from the reader.</span>
 <span id="cb29-486"><a href="#cb29-486" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
 <span id="cb29-487"><a href="#cb29-487" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-488"><a href="#cb29-488" aria-hidden="true" tabindex="-1"></a>**2.** You need to produce monthly Weibull reports for eight pump families. How would you structure a parameterized Quarto workflow?</span>
@@ -2163,7 +2163,7 @@ Allaire, JJ, Charles Teague, Carlos Scheidegger, Yihui Xie, and Christophe Dervi
 <span id="cb29-500"><a href="#cb29-500" aria-hidden="true" tabindex="-1"></a>**4.** This book is itself a Quarto project. What file controls the chapter order, HTML theme, and global chunk options?</span>
 <span id="cb29-501"><a href="#cb29-501" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-502"><a href="#cb29-502" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">details</span><span class="dt">&gt;&lt;</span><span class="kw">summary</span><span class="dt">&gt;</span>Answer<span class="dt">&lt;/</span><span class="kw">summary</span><span class="dt">&gt;</span></span>
-<span id="cb29-503"><a href="#cb29-503" aria-hidden="true" tabindex="-1"></a><span class="in">`_quarto.yml`</span> — the project configuration file at the root of the book directory.</span>
+<span id="cb29-503"><a href="#cb29-503" aria-hidden="true" tabindex="-1"></a><span class="in">`_quarto.yml`</span>, the project configuration file at the root of the book directory.</span>
 <span id="cb29-504"><a href="#cb29-504" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">details</span><span class="dt">&gt;</span></span>
 <span id="cb29-505"><a href="#cb29-505" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-506"><a href="#cb29-506" aria-hidden="true" tabindex="-1"></a>**5.** When would you choose ReliaShiny over a Quarto document for a reliability analysis?</span>
