@@ -1,6 +1,6 @@
 # Reproducible Reliability Analysis with Quarto {#sec-quarto}
 
-Scripted R solves the *computation* problem — analyses are exact, repeatable, and version-controlled. But a folder of R scripts and PNG plots is still hard to share, audit, or publish. Quarto [@Quarto] solves the *documentation* problem by weaving code, equations, narrative, and figures into a single re-executable source file. The result is a document that is both the analysis *and* the report — one that any colleague can re-run months later and reproduce every number exactly. See @sec-quarto-vs-tools for guidance on when to choose Quarto over ReliaShiny or AI/MCP.
+Scripted R solves the *computation* problem, producing analyses that are exact, repeatable, and version-controlled. But a folder of R scripts and PNG plots is still hard to share, audit, or publish. Quarto [@Quarto] solves the *documentation* problem by weaving code, equations, narrative, and figures into a single re-executable source file. The result is a document that is both the analysis *and* the report, one that any colleague can re-run months later and reproduce every number exactly. See @sec-quarto-vs-tools for guidance on when to choose Quarto over ReliaShiny or AI/MCP.
 
 ## Learning Objectives
 
@@ -18,7 +18,7 @@ By the end of this chapter, you will be able to:
 
 ### Audits and Regulatory Compliance
 
-Defence, aerospace, nuclear, and medical-device industries require that every reliability analysis be traceable — the data, the method, and the software version. A Quarto document combined with an `renv.lock` package snapshot provides an exact, time-stamped audit trail. Regulators can re-run the analysis years later and confirm the results.
+Defence, aerospace, nuclear, and medical-device industries require that every reliability analysis be traceable, including the data, the method, and the software version. A Quarto document combined with an `renv.lock` package snapshot provides an exact, time-stamped audit trail. Regulators can re-run the analysis years later and confirm the results.
 
 ### Re-Analysis and Collaboration
 
@@ -26,7 +26,7 @@ A colleague inheriting a folder of PNG plots and a spreadsheet cannot reproduce 
 
 ### Version Control
 
-Quarto source files are plain text. They can be committed to Git alongside data, line-diffed, and reviewed in pull requests. Changes to an analysis are visible as diffs — something not possible with binary spreadsheets or saved Shiny sessions.
+Quarto source files are plain text. They can be committed to Git alongside data, line-diffed, and reviewed in pull requests. Changes to an analysis are visible as diffs, which is not possible with binary spreadsheets or saved Shiny sessions.
 
 ::: {.callout-tip}
 ## Review
@@ -173,7 +173,7 @@ obj <- wblr.conf(obj, method.conf = "lrb")
 plot(obj)
 ```
 
-Inline R expressions embed computed values directly in prose without hard-coding numbers — a key reproducibility benefit. For example:
+Inline R expressions embed computed values directly in prose without hard-coding numbers, a key reproducibility benefit. For example:
 
 ```{verbatim}
 The fitted shape parameter is $\hat{\beta}$ = `r round(obj$fit[[1]]$beta, 2)`.
@@ -258,15 +258,15 @@ for (i in seq_along(components)) {
 A reliability engineer must produce monthly Weibull reports for six pump models. Without parameterization, how many `.qmd` files are needed? With parameterization?
 
 <details><summary>Answer</summary>
-Without parameters: six separate files, each requiring manual edits when the analysis changes. With parameters: one template file rendered six times — changes to the analysis logic are made in one place and propagate to all reports automatically.
+Without parameters: six separate files, each requiring manual edits when the analysis changes. With parameters: one template file rendered six times, with changes to the analysis logic made in one place and propagated to all reports automatically.
 </details>
 :::
 
 ## Integration with Reliability R Packages {#sec-quarto-packages}
 
-All reliability packages used in this book work inside `.qmd` files without modification — Quarto captures their output automatically.
+All reliability packages used in this book work inside `.qmd` files without modification, and Quarto captures their output automatically.
 
-### WeibullR — Life Data Analysis
+### WeibullR: Life Data Analysis
 
 See @sec-lda for the statistical background. Inside a `.qmd`, a complete Weibull analysis is:
 
@@ -285,7 +285,7 @@ obj <- wblr.conf(obj, method.conf = "lrb")
 plot(obj)
 ```
 
-### ReliaGrowR — Reliability Growth
+### ReliaGrowR: Reliability Growth
 
 See @sec-rt for Crow-AMSAA model details:
 
@@ -301,7 +301,7 @@ rga_fit  <- rga(times, failures)
 plot(rga_fit)
 ```
 
-### ReliaLearnR — RAM Metrics
+### ReliaLearnR: RAM Metrics
 
 See @sec-ram for the RAM helper functions:
 
@@ -383,12 +383,12 @@ or from the terminal:
 quarto render
 ```
 
-The rendered book is published to GitHub Pages on each push — the online version always reflects the exact source in the repository.
+The rendered book is published to GitHub Pages on each push, so the online version always reflects the exact source in the repository.
 :::
 
 ## Quarto Books and Multi-File Projects {#sec-quarto-books}
 
-A Quarto book is a `type: book` project where `_quarto.yml` controls everything: chapter order, sidebar search, bibliography, HTML theme, PDF layout, and global execution options. Adding a new chapter requires only creating a `.qmd` file and adding one line to the chapters list — no other configuration changes.
+A Quarto book is a `type: book` project where `_quarto.yml` controls everything: chapter order, sidebar search, bibliography, HTML theme, PDF layout, and global execution options. Adding a new chapter requires only creating a `.qmd` file and adding one line to the chapters list, with no other configuration changes needed.
 
 The global `execute:` block in `_quarto.yml` sets default chunk behaviour across all chapters:
 
@@ -440,7 +440,7 @@ Quarto is the standard tool for reproducible, publishable reliability analysis i
 - **Integration**: WeibullR, ReliaGrowR, WeibullR.ALT, ReliaPlotR, and ReliaLearnR all work inside `.qmd` files without modification.
 - **Formats**: `quarto_render()` produces HTML, PDF, Word, and more from the same source file.
 - **Books**: this guide is a `type: book` Quarto project; `_quarto.yml` controls chapter order, theme, sidebar, and global chunk options.
-- **Complement, not replacement**: Quarto does not replace ReliaShiny (use ReliaShiny for point-and-click exploration) or AI + MCP (use MCP for conversational analysis) — each tool excels in a different context (see @sec-quarto-vs-tools).
+- **Complement, not replacement**: Quarto does not replace ReliaShiny (use ReliaShiny for point-and-click exploration) or AI + MCP (use MCP for conversational analysis), as each tool excels in a different context (see @sec-quarto-vs-tools).
 
 ## Review Questions
 
@@ -450,7 +450,7 @@ Quarto is the standard tool for reproducible, publishable reliability analysis i
 **1.** What is the difference between `#| eval: false` and `#| echo: false` in a Quarto code chunk?
 
 <details><summary>Answer</summary>
-`eval: false` shows the code but does not run it — no output is produced. `echo: false` runs the code and captures the output but hides the code block from the reader.
+`eval: false` shows the code but does not run it, so no output is produced. `echo: false` runs the code and captures the output but hides the code block from the reader.
 </details>
 
 **2.** You need to produce monthly Weibull reports for eight pump families. How would you structure a parameterized Quarto workflow?
@@ -468,7 +468,7 @@ Any two of: `fig-cap` (caption text), `fig-width` / `fig-height` (dimensions in 
 **4.** This book is itself a Quarto project. What file controls the chapter order, HTML theme, and global chunk options?
 
 <details><summary>Answer</summary>
-`_quarto.yml` — the project configuration file at the root of the book directory.
+`_quarto.yml`, the project configuration file at the root of the book directory.
 </details>
 
 **5.** When would you choose ReliaShiny over a Quarto document for a reliability analysis?
