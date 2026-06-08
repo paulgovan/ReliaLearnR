@@ -356,7 +356,9 @@ fit      <- rga(times, failures)
 plot(fit)
 ```
 
-Inline sentence: "The fitted shape parameter is $\hat{\beta}$ = `` `r round(fit$betas, 3)` ``."
+```{verbatim}
+Inline sentence: "The fitted shape parameter is $\hat{\beta}$ = `r round(fit$betas, 3)`."
+```
 </details>
 :::
 
