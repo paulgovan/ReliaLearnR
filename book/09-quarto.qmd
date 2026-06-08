@@ -175,8 +175,8 @@ plot(obj)
 
 Inline R expressions embed computed values directly in prose without hard-coding numbers — a key reproducibility benefit. For example:
 
-```markdown
-The fitted shape parameter is $\hat{\beta}$ = `r "`r round(obj$fit[[1]]$beta, 2)`"`.
+```{verbatim}
+The fitted shape parameter is $\hat{\beta}$ = `r round(obj$fit[[1]]$beta, 2)`.
 ```
 
 When the analysis is re-run with updated data, this sentence updates automatically.
