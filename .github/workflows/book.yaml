@@ -43,7 +43,7 @@ jobs:
         run: |
           install.packages(c(
             "WeibullR", "ReliaGrowR", "WeibullR.ALT",
-            "DiagrammeR", "ReliaPlotR", "ReliaShiny"
+            "DiagrammeR", "DiagrammeRsvg", "ReliaPlotR", "ReliaShiny"
           ))
         shell: Rscript {0}
 
