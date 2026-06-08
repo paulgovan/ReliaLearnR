@@ -497,7 +497,7 @@ div.csl-indent {
 <section id="introduction" class="level2" data-number="9.1">
 <h2 data-number="9.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">9.1</span> Introduction</h2>
 <p>All of the analyses in this book require writing R code or navigating a Shiny app. <strong>Model Context Protocol (MCP)</strong> opens a third path: letting an AI assistant call your R functions directly during a conversation, so you can describe what you want in plain language and the AI runs the analysis, interprets the results, and generates the plots.</p>
-<p>MCP is an open standard that defines how an AI assistant discovers and calls external tools — in the same way a web browser calls REST APIs. Reliability workflows are a natural fit: fitting a growth model, predicting future failures, computing a fleet MCF, and saving an interactive plot are all discrete, well-defined operations that map cleanly to MCP tools.</p>
+<p>MCP is an open standard that defines how an AI assistant discovers and calls external tools in the same way a web browser calls REST APIs. Reliability workflows are a natural fit: fitting a growth model, predicting future failures, computing a fleet MCF, and saving an interactive plot are all discrete, well-defined operations that map cleanly to MCP tools.</p>
 <p>This chapter shows how to expose <code>ReliaGrowR</code> <span class="citation" data-cites="ReliaGrowR">(<a href="#ref-ReliaGrowR" role="doc-biblioref">Govan 2024</a>)</span> and <code>ReliaPlotR</code> <span class="citation" data-cites="ReliaPlotR">(<a href="#ref-ReliaPlotR" role="doc-biblioref">Govan 2023</a>)</span> as an MCP server so that Claude Desktop, Claude Code, or any other MCP-compatible client can run reliability analyses on demand.</p>
 </section>
 <section id="prerequisites" class="level2" data-number="9.2">
@@ -903,7 +903,7 @@ div.csl-indent {
 </tr>
 </tbody>
 </table>
-<p>The AI + MCP path excels at conversational exploration — where you want to ask a question, get an answer in plain language, and then ask a follow-up. Scripted R remains the right choice for production pipelines and fully reproducible analyses.</p>
+<p>The AI + MCP path excels at conversational exploration, where you want to ask a question, get an answer in plain language, and then ask a follow-up. Scripted R remains the right choice for production pipelines and fully reproducible analyses.</p>
 </section>
 <section id="getting-help" class="level2" data-number="9.10">
 <h2 data-number="9.10" class="anchored" data-anchor-id="getting-help"><span class="header-section-number">9.10</span> Getting Help</h2>
@@ -919,7 +919,7 @@ div.csl-indent {
 </section>
 <section id="summary" class="level2" data-number="9.11">
 <h2 data-number="9.11" class="anchored" data-anchor-id="summary"><span class="header-section-number">9.11</span> Summary</h2>
-<p>MCP lets an AI assistant call ReliaGrowR and ReliaPlotR functions directly during a conversation. The <code>reliagrow_mcp_tools()</code> function defines seven tools — Duane fit, Crow-AMSAA fit, piecewise NHPP, growth forecast, NHPP for repairable systems, MCF, and RDT planning — that each return plain JSON results. The <code>reliaplotr_mcp_tools()</code> function adds four plot tools that save self-contained interactive HTML files. Register the server with Claude Desktop via <code>claude_desktop_config.json</code> or with Claude Code via <code>claude mcp add</code>, then describe your data in plain language and let the AI run the analysis.</p>
+<p>MCP lets an AI assistant call ReliaGrowR and ReliaPlotR functions directly during a conversation. The <code>reliagrow_mcp_tools()</code> function defines seven tools, Duane fit, Crow-AMSAA fit, piecewise NHPP, growth forecast, NHPP for repairable systems, MCF, and RDT planning, that each return plain JSON results. The <code>reliaplotr_mcp_tools()</code> function adds four plot tools that save self-contained interactive HTML files. Register the server with Claude Desktop via <code>claude_desktop_config.json</code> or with Claude Code via <code>claude mcp add</code>, then describe your data in plain language and let the AI run the analysis.</p>
 
 
 <!-- -->
@@ -1423,7 +1423,7 @@ Wickham, Hadley, and Joe Cheng. 2025. <em>Ellmer: Chat with Large Language Model
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>All of the analyses in this book require writing R code or navigating a Shiny app. **Model Context Protocol (MCP)** opens a third path: letting an AI assistant call your R functions directly during a conversation, so you can describe what you want in plain language and the AI runs the analysis, interprets the results, and generates the plots.</span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>MCP is an open standard that defines how an AI assistant discovers and calls external tools — in the same way a web browser calls REST APIs. Reliability workflows are a natural fit: fitting a growth model, predicting future failures, computing a fleet MCF, and saving an interactive plot are all discrete, well-defined operations that map cleanly to MCP tools.</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>MCP is an open standard that defines how an AI assistant discovers and calls external tools in the same way a web browser calls REST APIs. Reliability workflows are a natural fit: fitting a growth model, predicting future failures, computing a fleet MCF, and saving an interactive plot are all discrete, well-defined operations that map cleanly to MCP tools.</span>
 <span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>This chapter shows how to expose <span class="in">`ReliaGrowR`</span> <span class="co">[</span><span class="ot">@ReliaGrowR</span><span class="co">]</span> and <span class="in">`ReliaPlotR`</span> <span class="co">[</span><span class="ot">@ReliaPlotR</span><span class="co">]</span> as an MCP server so that Claude Desktop, Claude Code, or any other MCP-compatible client can run reliability analyses on demand.</span>
 <span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
@@ -1810,7 +1810,7 @@ Wickham, Hadley, and Joe Cheng. 2025. <em>Ellmer: Chat with Large Language Model
 <span id="cb10-401"><a href="#cb10-401" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Embedding results in a Quarto report <span class="pp">|</span> <span class="pp">|</span> ✅ <span class="pp">|</span></span>
 <span id="cb10-402"><a href="#cb10-402" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Large datasets or performance-sensitive work <span class="pp">|</span> <span class="pp">|</span> ✅ <span class="pp">|</span></span>
 <span id="cb10-403"><a href="#cb10-403" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-404"><a href="#cb10-404" aria-hidden="true" tabindex="-1"></a>The AI + MCP path excels at conversational exploration — where you want to ask a question, get an answer in plain language, and then ask a follow-up. Scripted R remains the right choice for production pipelines and fully reproducible analyses.</span>
+<span id="cb10-404"><a href="#cb10-404" aria-hidden="true" tabindex="-1"></a>The AI + MCP path excels at conversational exploration, where you want to ask a question, get an answer in plain language, and then ask a follow-up. Scripted R remains the right choice for production pipelines and fully reproducible analyses.</span>
 <span id="cb10-405"><a href="#cb10-405" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-406"><a href="#cb10-406" aria-hidden="true" tabindex="-1"></a><span class="fu">## Getting Help</span></span>
 <span id="cb10-407"><a href="#cb10-407" aria-hidden="true" tabindex="-1"></a></span>
@@ -1826,7 +1826,7 @@ Wickham, Hadley, and Joe Cheng. 2025. <em>Ellmer: Chat with Large Language Model
 <span id="cb10-419"><a href="#cb10-419" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-420"><a href="#cb10-420" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
 <span id="cb10-421"><a href="#cb10-421" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-422"><a href="#cb10-422" aria-hidden="true" tabindex="-1"></a>MCP lets an AI assistant call ReliaGrowR and ReliaPlotR functions directly during a conversation. The <span class="in">`reliagrow_mcp_tools()`</span> function defines seven tools — Duane fit, Crow-AMSAA fit, piecewise NHPP, growth forecast, NHPP for repairable systems, MCF, and RDT planning — that each return plain JSON results. The <span class="in">`reliaplotr_mcp_tools()`</span> function adds four plot tools that save self-contained interactive HTML files. Register the server with Claude Desktop via <span class="in">`claude_desktop_config.json`</span> or with Claude Code via <span class="in">`claude mcp add`</span>, then describe your data in plain language and let the AI run the analysis.</span>
+<span id="cb10-422"><a href="#cb10-422" aria-hidden="true" tabindex="-1"></a>MCP lets an AI assistant call ReliaGrowR and ReliaPlotR functions directly during a conversation. The <span class="in">`reliagrow_mcp_tools()`</span> function defines seven tools, Duane fit, Crow-AMSAA fit, piecewise NHPP, growth forecast, NHPP for repairable systems, MCF, and RDT planning,  that each return plain JSON results. The <span class="in">`reliaplotr_mcp_tools()`</span> function adds four plot tools that save self-contained interactive HTML files. Register the server with Claude Desktop via <span class="in">`claude_desktop_config.json`</span> or with Claude Code via <span class="in">`claude mcp add`</span>, then describe your data in plain language and let the AI run the analysis.</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

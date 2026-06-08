@@ -600,8 +600,8 @@ window.Quarto = {
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item" id="htmlwidget-cbb81ee0a4db449ffcfb" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-cbb81ee0a4db449ffcfb">{"x":{"diagram":"\ndigraph series {\n  rankdir = LR\n  graph [bgcolor = transparent]\n  node [shape = rectangle, style = filled, fillcolor = \"#AED6F1\",\n        fontname = \"sans-serif\", fontsize = 12, margin = \"0.2,0.1\"]\n  edge [arrowsize = 0.8]\n  I [shape = point, width = 0.15, fillcolor = black]\n  A [label = \"Motor\nR = 0.95\"]\n  B [label = \"Pump\nR = 0.90\"]\n  C [label = \"Valve\nR = 0.98\"]\n  O [shape = point, width = 0.15, fillcolor = black]\n  I -> A -> B -> C -> O\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-51ed15e81896ae67fbe0" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-51ed15e81896ae67fbe0">{"x":{"diagram":"\ndigraph series {\n  rankdir = LR\n  graph [bgcolor = transparent]\n  node [shape = rectangle, style = filled, fillcolor = \"#AED6F1\",\n        fontname = \"sans-serif\", fontsize = 12, margin = \"0.2,0.1\"]\n  edge [arrowsize = 0.8]\n  I [shape = point, width = 0.15, fillcolor = black]\n  A [label = \"Motor\nR = 0.95\"]\n  B [label = \"Pump\nR = 0.90\"]\n  C [label = \"Valve\nR = 0.98\"]\n  O [shape = point, width = 0.15, fillcolor = black]\n  I -> A -> B -> C -> O\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <div class="cell">
@@ -693,8 +693,8 @@ The <strong>least reliable</strong> component. It is the bottleneck; improving i
 <span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
 <span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item" id="htmlwidget-29a330c95d66eb9e07fc" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-29a330c95d66eb9e07fc">{"x":{"diagram":"\ndigraph parallel {\n  rankdir = LR\n  graph [bgcolor = transparent]\n  node [shape = rectangle, style = filled, fillcolor = \"#A9DFBF\",\n        fontname = \"sans-serif\", fontsize = 12, margin = \"0.2,0.1\"]\n  edge [arrowsize = 0.8]\n  I [shape = point, width = 0.15, fillcolor = black]\n  A [label = \"Generator 1\nR = 0.90\"]\n  B [label = \"Generator 2\nR = 0.85\"]\n  O [shape = point, width = 0.15, fillcolor = black]\n  I -> A -> O\n  I -> B -> O\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-385fffc152456a4b0eee" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-385fffc152456a4b0eee">{"x":{"diagram":"\ndigraph parallel {\n  rankdir = LR\n  graph [bgcolor = transparent]\n  node [shape = rectangle, style = filled, fillcolor = \"#A9DFBF\",\n        fontname = \"sans-serif\", fontsize = 12, margin = \"0.2,0.1\"]\n  edge [arrowsize = 0.8]\n  I [shape = point, width = 0.15, fillcolor = black]\n  A [label = \"Generator 1\nR = 0.90\"]\n  B [label = \"Generator 2\nR = 0.85\"]\n  O [shape = point, width = 0.15, fillcolor = black]\n  I -> A -> O\n  I -> B -> O\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <div class="cell">
@@ -792,8 +792,8 @@ Solution
 <span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
 <span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item" id="htmlwidget-0a489f612dfc403ef14e" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-0a489f612dfc403ef14e">{"x":{"diagram":"\ndigraph mixed {\n  rankdir = LR\n  graph [bgcolor = transparent]\n  node [shape = rectangle, style = filled, fillcolor = \"#F9E79F\",\n        fontname = \"sans-serif\", fontsize = 12, margin = \"0.2,0.1\"]\n  edge [arrowsize = 0.8]\n  I [shape = point, width = 0.15, fillcolor = black]\n  S [label = \"Sensor\nR = 0.95\"]\n  T [label = \"Transmitter\nR = 0.97\"]\n  A1 [label = \"Actuator 1\nR = 0.90\"]\n  A2 [label = \"Actuator 2\nR = 0.90\"]\n  O [shape = point, width = 0.15, fillcolor = black]\n  I -> S -> T -> A1 -> O\n  T -> A2 -> O\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-45c9281c4ef0a7d13ca4" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-45c9281c4ef0a7d13ca4">{"x":{"diagram":"\ndigraph mixed {\n  rankdir = LR\n  graph [bgcolor = transparent]\n  node [shape = rectangle, style = filled, fillcolor = \"#F9E79F\",\n        fontname = \"sans-serif\", fontsize = 12, margin = \"0.2,0.1\"]\n  edge [arrowsize = 0.8]\n  I [shape = point, width = 0.15, fillcolor = black]\n  S [label = \"Sensor\nR = 0.95\"]\n  T [label = \"Transmitter\nR = 0.97\"]\n  A1 [label = \"Actuator 1\nR = 0.90\"]\n  A2 [label = \"Actuator 2\nR = 0.90\"]\n  O [shape = point, width = 0.15, fillcolor = black]\n  I -> S -> T -> A1 -> O\n  T -> A2 -> O\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <div class="cell">
@@ -872,8 +872,8 @@ Answer
 <span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
 <span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item" id="htmlwidget-6441b03be51073c10308" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-6441b03be51073c10308">{"x":{"diagram":"\ndigraph koon {\n  rankdir = LR\n  graph [bgcolor = transparent]\n  node [shape = rectangle, style = filled, fillcolor = \"#D7BDE2\",\n        fontname = \"sans-serif\", fontsize = 12, margin = \"0.2,0.1\"]\n  edge [arrowsize = 0.8]\n  I  [shape = point, width = 0.15, fillcolor = black]\n  C1 [label = \"Computer 1\nR = 0.99\"]\n  C2 [label = \"Computer 2\nR = 0.99\"]\n  C3 [label = \"Computer 3\nR = 0.99\"]\n  V  [label = \"Voter\n(2-of-3)\", shape = diamond, fillcolor = \"#F1948A\", fontsize = 11]\n  O  [shape = point, width = 0.15, fillcolor = black]\n  I -> C1 -> V\n  I -> C2 -> V\n  I -> C3 -> V\n  V -> O\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-287119fe252dc28fe2d9" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-287119fe252dc28fe2d9">{"x":{"diagram":"\ndigraph koon {\n  rankdir = LR\n  graph [bgcolor = transparent]\n  node [shape = rectangle, style = filled, fillcolor = \"#D7BDE2\",\n        fontname = \"sans-serif\", fontsize = 12, margin = \"0.2,0.1\"]\n  edge [arrowsize = 0.8]\n  I  [shape = point, width = 0.15, fillcolor = black]\n  C1 [label = \"Computer 1\nR = 0.99\"]\n  C2 [label = \"Computer 2\nR = 0.99\"]\n  C3 [label = \"Computer 3\nR = 0.99\"]\n  V  [label = \"Voter\n(2-of-3)\", shape = diamond, fillcolor = \"#F1948A\", fontsize = 11]\n  O  [shape = point, width = 0.15, fillcolor = black]\n  I -> C1 -> V\n  I -> C2 -> V\n  I -> C3 -> V\n  V -> O\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <div class="cell">
@@ -1081,8 +1081,8 @@ When <span class="math inline">\(\beta_{\text{CCF}}\)</span> is large, a signifi
 <span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
 <span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item" id="htmlwidget-4a9b1d1007ce2bdfae4f" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-4a9b1d1007ce2bdfae4f">{"x":{"diagram":"\ndigraph fta {\n  rankdir = TB\n  graph [bgcolor = transparent]\n  node [fontname = \"sans-serif\", fontsize = 12, style = filled]\n  edge [arrowsize = 0.8]\n  Top [label = \"System\nFailure\",  shape = rectangle, fillcolor = \"#E74C3C\", fontcolor = white]\n  OR  [label = \"OR Gate\",          shape = diamond,   fillcolor = \"#F39C12\"]\n  F1  [label = \"Component A\nFails\", shape = ellipse, fillcolor = \"#AED6F1\"]\n  F2  [label = \"Component B\nFails\", shape = ellipse, fillcolor = \"#AED6F1\"]\n  Top -> OR\n  OR  -> F1\n  OR  -> F2\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-13f5fcadf27e959a713f" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-13f5fcadf27e959a713f">{"x":{"diagram":"\ndigraph fta {\n  rankdir = TB\n  graph [bgcolor = transparent]\n  node [fontname = \"sans-serif\", fontsize = 12, style = filled]\n  edge [arrowsize = 0.8]\n  Top [label = \"System\nFailure\",  shape = rectangle, fillcolor = \"#E74C3C\", fontcolor = white]\n  OR  [label = \"OR Gate\",          shape = diamond,   fillcolor = \"#F39C12\"]\n  F1  [label = \"Component A\nFails\", shape = ellipse, fillcolor = \"#AED6F1\"]\n  F2  [label = \"Component B\nFails\", shape = ellipse, fillcolor = \"#AED6F1\"]\n  Top -> OR\n  OR  -> F1\n  OR  -> F2\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>This OR gate corresponds to a two-component series RBD: any single failure causes system failure. For complex fault trees, the R package <code>FaultTree</code> on CRAN provides computational support.</p>
