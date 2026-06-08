@@ -37,15 +37,14 @@ jobs:
           extra-packages: |
             any::quarto
             local::.
+            WeibullR
+            ReliaGrowR
+            WeibullR.ALT
+            DiagrammeR
+            DiagrammeRsvg
+            ReliaPlotR
+            ReliaShiny
           needs: website
-
-      - name: Install additional book dependencies
-        run: |
-          install.packages(c(
-            "WeibullR", "ReliaGrowR", "WeibullR.ALT",
-            "DiagrammeR", "DiagrammeRsvg", "ReliaPlotR", "ReliaShiny"
-          ))
-        shell: Rscript {0}
 
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
