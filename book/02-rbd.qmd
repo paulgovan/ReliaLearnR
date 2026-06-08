@@ -140,6 +140,7 @@ A pumping system requires a motor (R = 0.95), a pump (R = 0.90), and a control v
 
 ::: {.content-visible when-format="html"}
 ```{r}
+#| eval: !expr knitr::is_html_output()
 grViz("
 digraph series {
   rankdir = LR
@@ -222,6 +223,7 @@ A primary generator (R = 0.90) and a standby generator (R = 0.85); either alone 
 
 ::: {.content-visible when-format="html"}
 ```{r}
+#| eval: !expr knitr::is_html_output()
 grViz("
 digraph parallel {
   rankdir = LR
@@ -307,6 +309,7 @@ Most real systems combine series and parallel blocks. To analyze a **mixed** sys
 
 ::: {.content-visible when-format="html"}
 ```{r}
+#| eval: !expr knitr::is_html_output()
 grViz("
 digraph mixed {
   rankdir = LR
@@ -379,6 +382,7 @@ A 2-out-of-3 voter: at least 2 of 3 computers must agree. Each computer has R = 
 
 ::: {.content-visible when-format="html"}
 ```{r}
+#| eval: !expr knitr::is_html_output()
 grViz("
 digraph koon {
   rankdir = LR
@@ -548,6 +552,7 @@ While an RBD asks "What must work for the system to succeed?", a fault tree asks
 
 ::: {.content-visible when-format="html"}
 ```{r}
+#| eval: !expr knitr::is_html_output()
 grViz("
 digraph fta {
   rankdir = TB
