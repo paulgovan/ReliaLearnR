@@ -8,7 +8,7 @@
 
 <meta name="author" content="Paul Govan">
 <meta name="dcterms.date" content="2026-06-08">
-<meta name="description" content="A companion reference guide to the ReliaLearnR interactive tutorials, covering RAM analysis, life data analysis, reliability testing, repairable systems, and reliability block diagrams, with additional chapters on interactive visualization with ReliaPlotR and web-based analysis with ReliaShiny.">
+<meta name="description" content="A companion reference guide to the ReliaLearnR interactive tutorials, covering RAM analysis, life data analysis, reliability testing, repairable systems, and reliability block diagrams, with additional chapters on interactive visualization with ReliaPlotR, web-based analysis with ReliaShiny, reproducible reports with Quarto, and AI-assisted analysis with MCP.">
 
 <title>Reliability Analysis with R: A Companion Guide</title>
 <style>
@@ -413,8 +413,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./09-mcp.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">AI-Assisted Reliability Analysis with MCP</span></span></a>
+  <a href="./09-quarto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Reproducible Reliability Analysis with Quarto</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-mcp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">AI-Assisted Reliability Analysis with MCP</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -461,7 +467,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div>
   <div class="description">
-    <p>A companion reference guide to the ReliaLearnR interactive tutorials, covering RAM analysis, life data analysis, reliability testing, repairable systems, and reliability block diagrams, with additional chapters on interactive visualization with ReliaPlotR and web-based analysis with ReliaShiny.</p>
+    <p>A companion reference guide to the ReliaLearnR interactive tutorials, covering RAM analysis, life data analysis, reliability testing, repairable systems, and reliability block diagrams, with additional chapters on interactive visualization with ReliaPlotR, web-based analysis with ReliaShiny, reproducible reports with Quarto, and AI-assisted analysis with MCP.</p>
   </div>
 </div>
 
@@ -575,6 +581,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td><strong>ReliaShiny</strong></td>
 <td>Web-based reliability analysis app</td>
 </tr>
+<tr class="odd">
+<td><strong>Quarto</strong></td>
+<td>Reproducible document and book publishing system</td>
+</tr>
 </tbody>
 </table>
 </section>
@@ -589,8 +599,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"WeibullR.ALT"</span>,</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"DiagrammeR"</span>,</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ReliaPlotR"</span>,</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ReliaShiny"</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ReliaShiny"</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"quarto"</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="chapter-overview" class="level2">
@@ -604,6 +615,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Repairable Systems</strong>: Power Law Process, MCF, and fleet-level analysis.</li>
 <li><strong>Interactive Plots with ReliaPlotR</strong>: Publishable interactive reliability charts.</li>
 <li><strong>Web-Based Analysis with ReliaShiny</strong>: Point-and-click reliability analysis.</li>
+<li><strong>Reproducible Reports with Quarto</strong>: Literate programming, parameterized reports, and version-controlled reliability analysis.</li>
+<li><strong>AI-Assisted Analysis with MCP</strong>: Conversational reliability analysis using Model Context Protocol.</li>
 </ol>
 <p>The book also includes an <strong>Appendix</strong> (helper function reference) and a <strong>Glossary</strong> (key symbols and formulas).</p>
 </section>
@@ -1122,40 +1135,44 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **WeibullR.ALT** <span class="pp">|</span> Accelerated life testing <span class="pp">|</span></span>
 <span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **ReliaPlotR** <span class="pp">|</span> Interactive reliability plots <span class="pp">|</span></span>
 <span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **ReliaShiny** <span class="pp">|</span> Web-based reliability analysis app <span class="pp">|</span></span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="fu">## Installation</span></span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>Install the core packages needed to run the code in this book:</span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(</span>
-<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ReliaLearnR"</span>,</span>
-<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>  <span class="st">"WeibullR"</span>,</span>
-<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ReliaGrowR"</span>,</span>
-<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>  <span class="st">"WeibullR.ALT"</span>,</span>
-<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>  <span class="st">"DiagrammeR"</span>,</span>
-<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ReliaPlotR"</span>,</span>
-<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ReliaShiny"</span></span>
-<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>))</span>
-<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a><span class="fu">## Chapter Overview</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Quarto** <span class="pp">|</span> Reproducible document and book publishing system <span class="pp">|</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="fu">## Installation</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>Install the core packages needed to run the code in this book:</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ReliaLearnR"</span>,</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>  <span class="st">"WeibullR"</span>,</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ReliaGrowR"</span>,</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>  <span class="st">"WeibullR.ALT"</span>,</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>  <span class="st">"DiagrammeR"</span>,</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ReliaPlotR"</span>,</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ReliaShiny"</span>,</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>  <span class="st">"quarto"</span></span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>))</span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**RAM**: Foundational reliability, availability, and maintainability metrics.</span>
-<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Reliability Block Diagrams**: Series, parallel, mixed, k-out-of-n systems, and fault tree analysis.</span>
-<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Life Data Analysis**: Weibull distribution, censoring, MRR vs. MLE, and contour plots.</span>
-<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Reliability Growth Analysis**: Duane and Crow-AMSAA growth models, test planning, and forecasting.</span>
-<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>**Accelerated Life Testing**: Arrhenius and Power Law acceleration models for compressed test time.</span>
-<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>**Repairable Systems**: Power Law Process, MCF, and fleet-level analysis.</span>
-<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a><span class="ss">7. </span>**Interactive Plots with ReliaPlotR**: Publishable interactive reliability charts.</span>
-<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a><span class="ss">8. </span>**Web-Based Analysis with ReliaShiny**: Point-and-click reliability analysis.</span>
-<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>The book also includes an **Appendix** (helper function reference) and a **Glossary** (key symbols and formulas).</span>
-<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a><span class="fu">## About the Author</span></span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a><span class="fu">## Chapter Overview</span></span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**RAM**: Foundational reliability, availability, and maintainability metrics.</span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Reliability Block Diagrams**: Series, parallel, mixed, k-out-of-n systems, and fault tree analysis.</span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Life Data Analysis**: Weibull distribution, censoring, MRR vs. MLE, and contour plots.</span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Reliability Growth Analysis**: Duane and Crow-AMSAA growth models, test planning, and forecasting.</span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>**Accelerated Life Testing**: Arrhenius and Power Law acceleration models for compressed test time.</span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a><span class="ss">6. </span>**Repairable Systems**: Power Law Process, MCF, and fleet-level analysis.</span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a><span class="ss">7. </span>**Interactive Plots with ReliaPlotR**: Publishable interactive reliability charts.</span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a><span class="ss">8. </span>**Web-Based Analysis with ReliaShiny**: Point-and-click reliability analysis.</span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a><span class="ss">9. </span>**Reproducible Reports with Quarto**: Literate programming, parameterized reports, and version-controlled reliability analysis.</span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a><span class="ss">10. </span>**AI-Assisted Analysis with MCP**: Conversational reliability analysis using Model Context Protocol.</span>
 <span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>Paul Govan is the author of ReliaLearnR, ReliaGrowR, ReliaPlotR, and ReliaShiny. He can be reached at paul.govan2@gmail.com.</span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>The book also includes an **Appendix** (helper function reference) and a **Glossary** (key symbols and formulas).</span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a><span class="fu">## About the Author</span></span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>Paul Govan is the author of ReliaLearnR, ReliaGrowR, ReliaPlotR, and ReliaShiny. He can be reached at paul.govan2@gmail.com.</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
