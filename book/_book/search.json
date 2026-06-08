@@ -1,0 +1,122 @@
+[
+  {
+    "objectID": "02-rbd.html",
+    "href": "02-rbd.html",
+    "title": "2  Reliability Block Diagrams",
+    "section": "",
+    "text": "2.1 Introduction\nIn Chapter 1, you learned to calculate reliability metrics for individual components. This chapter extends those concepts to systems, collections of components whose arrangement determines whether the system succeeds or fails.\nA Reliability Block Diagram (RBD) is a graphical tool for modeling how component reliabilities combine to produce system-level reliability. RBDs are widely used in reliability engineering to analyze designs, identify vulnerabilities, and evaluate the benefit of redundancy (Billinton and Allan 1992).",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Reliability Block Diagrams</span>"
+    ]
+  },
+  {
+    "objectID": "02-rbd.html#learning-objectives",
+    "href": "02-rbd.html#learning-objectives",
+    "title": "2  Reliability Block Diagrams",
+    "section": "2.2 Learning Objectives",
+    "text": "2.2 Learning Objectives\nBy the end of this chapter, you will be able to:\n\nDefine reliability block diagrams and relate them to physical systems.\nCompute system reliability for series, parallel, and mixed configurations.\nInterpret k-out-of-n (voting) systems and calculate their reliability.\nDescribe the relationship between RBDs and Fault Tree Analysis.\nApply RBD calculations to a realistic multi-component system.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Reliability Block Diagrams</span>"
+    ]
+  },
+  {
+    "objectID": "02-rbd.html#what-is-a-reliability-block-diagram",
+    "href": "02-rbd.html#what-is-a-reliability-block-diagram",
+    "title": "2  Reliability Block Diagrams",
+    "section": "2.3 What is a Reliability Block Diagram?",
+    "text": "2.3 What is a Reliability Block Diagram?\nAn RBD represents each component as a block with a known reliability value. Blocks are connected by lines showing logical dependencies, not physical connections. A path from left (input) to right (output) through functioning blocks represents a working system.\nEach block has a reliability \\(R_i(t)\\) derived from the exponential model (Chapter 1) or a Weibull fit (Chapter 3).\n\nlibrary(DiagrammeR)",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Reliability Block Diagrams</span>"
+    ]
+  },
+  {
+    "objectID": "02-rbd.html#series-systems",
+    "href": "02-rbd.html#series-systems",
+    "title": "2  Reliability Block Diagrams",
+    "section": "2.4 Series Systems",
+    "text": "2.4 Series Systems\nIn a series system, all components must function for the system to succeed:\n\\[R_{\\text{sys}} = R_1 \\times R_2 \\times \\cdots \\times R_n = \\prod_{i=1}^{n} R_i\\]\nA series system is always less reliable than its weakest component. Adding more components in series can only reduce system reliability.\n\nExample: Water Pumping System\nA pumping system requires a motor (R = 0.95), a pump (R = 0.90), and a control valve (R = 0.98) to all be operational.\n\nif (knitr::is_html_output(excludes = \"epub\")) grViz(\"\ndigraph series {\n  rankdir = LR\n  graph [bgcolor = transparent]\n  node [shape = rectangle, style = filled, fillcolor = '#AED6F1',\n        fontname = 'sans-serif', fontsize = 12, margin = '0.2,0.1']\n  edge [arrowsize = 0.8]\n  I [shape = point, width = 0.15, fillcolor = black]\n  A [label = 'Motor\\nR = 0.95']\n  B [label = 'Pump\\nR = 0.90']\n  C [label = 'Valve\\nR = 0.98']\n  O [shape = point, width = 0.15, fillcolor = black]\n  I -&gt; A -&gt; B -&gt; C -&gt; O\n}\n\")\n\n\n\n\n\n\nR_motor &lt;- 0.95\nR_pump  &lt;- 0.90\nR_valve &lt;- 0.98\n\nR_series &lt;- R_motor * R_pump * R_valve\nR_series  # ~0.838\n\n[1] 0.8379\n\n\nThe system reliability is approximately 83.8%, lower than any individual component.\n\n\n\n\n\n\nNoteTry It\n\n\n\nA conveyor belt system has 5 components in series with reliabilities 0.98, 0.96, 0.99, 0.94, and 0.97. Calculate the system reliability.\n\nR_components &lt;- c(0.98, 0.96, 0.99, 0.94, 0.97)\n# R_series &lt;- prod(R_components)\n\n\n\nSolution\n\n\nR_components &lt;- c(0.98, 0.96, 0.99, 0.94, 0.97)\nR_series &lt;- prod(R_components)\nR_series  # ~0.845\n\n[1] 0.8492432\n\n\n\n\n\n\n\n\n\n\n\nTipReview\n\n\n\nIn a series system, which component has the greatest influence on system reliability?\n\n\nAnswer\n\nThe least reliable component. It is the bottleneck; improving it produces the largest gain in system reliability.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Reliability Block Diagrams</span>"
+    ]
+  },
+  {
+    "objectID": "02-rbd.html#parallel-systems",
+    "href": "02-rbd.html#parallel-systems",
+    "title": "2  Reliability Block Diagrams",
+    "section": "2.5 Parallel Systems",
+    "text": "2.5 Parallel Systems\nIn a parallel system, only one component needs to function, through active redundancy (all components operate simultaneously). The system fails only if all components fail at the same time. Since component failures are assumed to be independent:\n\\[P(\\text{all fail}) = \\prod_{i=1}^{n}(1 - R_i)\\]\n\\[R_{\\text{sys}} = 1 - \\prod_{i=1}^{n}(1 - R_i)\\]\nAdding parallel components always increases system reliability.\n\nExample: Backup Power System\nA primary generator (R = 0.90) and a standby generator (R = 0.85); either alone keeps the system running.\n\nif (knitr::is_html_output(excludes = \"epub\")) grViz(\"\ndigraph parallel {\n  rankdir = LR\n  graph [bgcolor = transparent]\n  node [shape = rectangle, style = filled, fillcolor = '#A9DFBF',\n        fontname = 'sans-serif', fontsize = 12, margin = '0.2,0.1']\n  edge [arrowsize = 0.8]\n  I [shape = point, width = 0.15, fillcolor = black]\n  A [label = 'Generator 1\\nR = 0.90']\n  B [label = 'Generator 2\\nR = 0.85']\n  O [shape = point, width = 0.15, fillcolor = black]\n  I -&gt; A -&gt; O\n  I -&gt; B -&gt; O\n}\n\")\n\n\n\n\n\n\nR_gen1 &lt;- 0.90  # Generator 1\nR_gen2 &lt;- 0.85  # Generator 2\n\nR_parallel &lt;- 1 - (1 - R_gen1) * (1 - R_gen2)\nR_parallel  # 0.985\n\n[1] 0.985\n\n\nThe parallel system reliability is 98.5%, much higher than either generator alone.\nThe benefit of redundancy grows with each additional component:\n\nn_vals &lt;- 1:8\nRc     &lt;- 0.90\nR_par  &lt;- 1 - (1 - Rc)^n_vals\n\nplot(n_vals, R_par, type = \"b\", col = \"steelblue\", lwd = 2, pch = 19,\n     xlab = \"Number of redundant components\",\n     ylab = \"System Reliability\",\n     main = \"Parallel System Reliability vs. Redundancy (R_component = 0.90)\",\n     ylim = c(0, 1))\nabline(h = Rc, col = \"gray50\", lty = 2)\nlegend(\"bottomright\",\n       legend = c(\"System reliability\", \"Single component (0.90)\"),\n       col = c(\"steelblue\", \"gray50\"), lty = c(1, 2), pch = c(19, NA), lwd = 2)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNoteTry It\n\n\n\nA critical pump station has 3 pumps in parallel. Each pump has reliability 0.88. What is the system reliability?\n\nR_components &lt;- c(0.88, 0.88, 0.88)\n# R_parallel &lt;- 1 - prod(1 - R_components)\n\n\n\nSolution\n\n\nR_components &lt;- c(0.88, 0.88, 0.88)\nR_parallel &lt;- 1 - prod(1 - R_components)\nR_parallel  # ~0.9983\n\n[1] 0.998272",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Reliability Block Diagrams</span>"
+    ]
+  },
+  {
+    "objectID": "02-rbd.html#mixed-systems",
+    "href": "02-rbd.html#mixed-systems",
+    "title": "2  Reliability Block Diagrams",
+    "section": "2.6 Mixed Systems",
+    "text": "2.6 Mixed Systems\nMost real systems combine series and parallel blocks. To analyze a mixed system, decompose it into subsystems and apply series and parallel rules step by step, working from the innermost blocks outward.\n\nExample: Safety System\n\nSubsystem A: a sensor (R = 0.95) and a transmitter (R = 0.97) in series.\nSubsystem B: two redundant actuators (each R = 0.90) in parallel.\nSubsystems A and B in series (both must work).\n\n\nif (knitr::is_html_output(excludes = \"epub\")) grViz(\"\ndigraph mixed {\n  rankdir = LR\n  graph [bgcolor = transparent]\n  node [shape = rectangle, style = filled, fillcolor = '#F9E79F',\n        fontname = 'sans-serif', fontsize = 12, margin = '0.2,0.1']\n  edge [arrowsize = 0.8]\n  I [shape = point, width = 0.15, fillcolor = black]\n  S [label = 'Sensor\\nR = 0.95']\n  T [label = 'Transmitter\\nR = 0.97']\n  A1 [label = 'Actuator 1\\nR = 0.90']\n  A2 [label = 'Actuator 2\\nR = 0.90']\n  O [shape = point, width = 0.15, fillcolor = black]\n  I -&gt; S -&gt; T -&gt; A1 -&gt; O\n  T -&gt; A2 -&gt; O\n}\n\")\n\n\n\n\n\n\n# Subsystem A (series)\nR_A &lt;- 0.95 * 0.97\nR_A\n\n[1] 0.9215\n\n# Subsystem B (parallel)\nR_B &lt;- 1 - (1 - 0.90) * (1 - 0.90)\nR_B\n\n[1] 0.99\n\n# Overall system (A and B in series)\nR_system &lt;- R_A * R_B\nR_system\n\n[1] 0.912285\n\n\n\n\n\n\n\n\nTipReview\n\n\n\nA system has two subsystems in series. Subsystem 1 has two components in parallel (each R = 0.85); Subsystem 2 is a single component with R = 0.92. What is the system reliability?\n\n\nAnswer\n\n\\(R_{\\text{sub1}} = 1 - (1 - 0.85)^2 = 0.9775\\). \\(R_{\\text{sys}} = 0.9775 \\times 0.92 \\approx 0.899\\).",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Reliability Block Diagrams</span>"
+    ]
+  },
+  {
+    "objectID": "02-rbd.html#k-out-of-n-systems",
+    "href": "02-rbd.html#k-out-of-n-systems",
+    "title": "2  Reliability Block Diagrams",
+    "section": "2.7 k-out-of-n Systems",
+    "text": "2.7 k-out-of-n Systems\nA k-out-of-n system succeeds if at least \\(k\\) of its \\(n\\) identical components function:\n\n\\(k = n\\): all must work → series.\n\\(k = 1\\): at least one works → parallel.\n\\(1 &lt; k &lt; n\\): voting or load-sharing system.\n\nThe reliability of a k-out-of-n system (identical components, each with reliability \\(p\\)) follows the binomial distribution:\n\\[R_{k/n} = \\sum_{i=k}^{n} \\binom{n}{i} p^i (1-p)^{n-i} = 1 - \\text{pbinom}(k-1,\\, n,\\, 1-p)\\]\nThe compact R expression counts the probability that at least \\(k\\) components function: pbinom(k-1, n, 1-p) gives the probability that \\(k-1\\) or fewer components work (i.e., the system fails), and we subtract that from 1.\n\nExample: Flight Control Computers\nA 2-out-of-3 voter: at least 2 of 3 computers must agree. Each computer has R = 0.99.\n\nif (knitr::is_html_output(excludes = \"epub\")) grViz(\"\ndigraph koon {\n  rankdir = LR\n  graph [bgcolor = transparent]\n  node [shape = rectangle, style = filled, fillcolor = '#D7BDE2',\n        fontname = 'sans-serif', fontsize = 12, margin = '0.2,0.1']\n  edge [arrowsize = 0.8]\n  I  [shape = point, width = 0.15, fillcolor = black]\n  C1 [label = 'Computer 1\\nR = 0.99']\n  C2 [label = 'Computer 2\\nR = 0.99']\n  C3 [label = 'Computer 3\\nR = 0.99']\n  V  [label = 'Voter\\n(2-of-3)', shape = diamond, fillcolor = '#F1948A', fontsize = 11]\n  O  [shape = point, width = 0.15, fillcolor = black]\n  I -&gt; C1 -&gt; V\n  I -&gt; C2 -&gt; V\n  I -&gt; C3 -&gt; V\n  V -&gt; O\n}\n\")\n\n\n\n\n\n\nn &lt;- 3      # total components\nk &lt;- 2      # minimum required\np &lt;- 0.99   # individual reliability\n\nR_voting &lt;- 1 - pbinom(k - 1, n, 1 - p)\nR_voting  # 0.9997\n\n[1] 0.000298\n\n\n\n\n\n\n\n\nNoteTry It\n\n\n\nA 3-out-of-5 redundant sensor array. Each sensor has reliability p = 0.95. Calculate the system reliability.\n\nn &lt;- 5\nk &lt;- 3\np &lt;- 0.95\n# R_sys &lt;- 1 - pbinom(k - 1, n, 1 - p)\n\n\n\nSolution\n\n\nn &lt;- 5\nk &lt;- 3\np &lt;- 0.95\nR_sys &lt;- 1 - pbinom(k - 1, n, 1 - p)\nR_sys  # ~0.9988\n\n[1] 0.001158125",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Reliability Block Diagrams</span>"
+    ]
+  },
+  {
+    "objectID": "02-rbd.html#system-mttf",
+    "href": "02-rbd.html#system-mttf",
+    "title": "2  Reliability Block Diagrams",
+    "section": "2.8 System MTTF",
+    "text": "2.8 System MTTF\nFor a series system of components with constant failure rates, the system failure rate equals the sum of component failure rates:\n\\[\\lambda_{\\text{sys}} = \\sum_{i=1}^{n} \\lambda_i \\qquad \\text{MTTF}_{\\text{sys}} = \\frac{1}{\\lambda_{\\text{sys}}}\\]\nFor \\(n\\) identical parallel components each with failure rate \\(\\lambda\\):\n\\[\\text{MTTF}_{\\text{parallel}} = \\frac{1}{\\lambda}\\left(1 + \\frac{1}{2} + \\frac{1}{3} + \\cdots + \\frac{1}{n}\\right)\\]\n\nExample: Two Pumps in Parallel\n\nlambda &lt;- 0.01  # failures per hour\n\nMTTF_single   &lt;- 1 / lambda\nMTTF_parallel &lt;- (1 / lambda) * (1 + 1/2)\n\nMTTF_single    # 100 hours\n\n[1] 100\n\nMTTF_parallel  # 150 hours — 50% longer with one spare\n\n[1] 150\n\n\n\n\n\n\n\n\nTipReview\n\n\n\nThree components in series have failure rates 0.02, 0.03, and 0.05 failures/hour. What is the system MTTF?\n\n\nAnswer\n\n\\(\\lambda_{\\text{sys}} = 0.02 + 0.03 + 0.05 = 0.10\\), so \\(\\text{MTTF} = 1/0.10 = 10\\) hours.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Reliability Block Diagrams</span>"
+    ]
+  },
+  {
+    "objectID": "02-rbd.html#common-cause-failure",
+    "href": "02-rbd.html#common-cause-failure",
+    "title": "2  Reliability Block Diagrams",
+    "section": "2.9 Common Cause Failure",
+    "text": "2.9 Common Cause Failure\nAll the analyses above assume that component failures are statistically independent: if Component A fails, it tells us nothing about Component B’s probability of failing. In practice, this assumption can break down.\nCommon Cause Failure (CCF) occurs when a single event simultaneously causes multiple components to fail. Typical sources include:\n\nA shared environment (vibration, temperature, contamination) that degrades all components together\nA common design flaw or manufacturing batch defect\nA maintenance error that affects multiple redundant units at once\n\nCCF is especially dangerous because redundancy does not protect against it: if both pumps in a parallel system can be destroyed by the same flooding event, adding a third pump does not help.\n\nThe Beta-Factor Model\nThe simplest CCF model splits each component’s total failure rate \\(\\lambda\\) into two parts:\n\\[\\lambda_{\\text{ind}} = (1 - \\beta_{\\text{CCF}}) \\cdot \\lambda \\qquad \\text{(independent failures)}\\] \\[\\lambda_{\\text{CCF}} = \\beta_{\\text{CCF}} \\cdot \\lambda \\qquad \\text{(common-cause failures)}\\]\nThe beta-factor \\(\\beta_{\\text{CCF}}\\) is the fraction of failures attributable to common causes. Typical values range from 0.01 (1%) for well-separated, dissimilar components to 0.20 (20%) for closely coupled identical units.\nSystem reliability for a two-component parallel system with CCF:\n\\[R_{\\text{sys}} = \\underbrace{\\left[1 - (1 - R_{\\text{ind}})^2\\right]}_{\\text{parallel, independent part}} \\times \\underbrace{e^{-\\lambda_{\\text{CCF}} \\, t}}_{\\text{common-cause part}}\\]\n\nlambda &lt;- 0.001   # total component failure rate (per hour)\nt      &lt;- 1000    # mission time (hours)\n\nbeta_vals &lt;- c(0, 0.05, 0.10, 0.20)\n\nresults &lt;- sapply(beta_vals, function(b) {\n  R_ind &lt;- exp(-(1 - b) * lambda * t)   # independent reliability\n  R_ccf &lt;- exp(-b * lambda * t)         # common-cause reliability\n  R_sys &lt;- (1 - (1 - R_ind)^2) * R_ccf\n  round(R_sys, 4)\n})\n\ndata.frame(beta_CCF = beta_vals, R_system = results)\n\n  beta_CCF R_system\n1     0.00   0.6004\n2     0.05   0.5935\n3     0.10   0.5862\n4     0.20   0.5705\n\n\nEven a modest \\(\\beta_{\\text{CCF}} = 0.10\\) visibly reduces the system reliability that redundancy would otherwise provide.\n\n\n\n\n\n\nTipReview\n\n\n\nWhy doesn’t adding more parallel components help when \\(\\beta_{\\text{CCF}}\\) is large?\n\n\nAnswer\n\nWhen \\(\\beta_{\\text{CCF}}\\) is large, a significant fraction of failures are common cause, simultaneously affecting all components regardless of how many there are. Adding more identical, coupled components may even increase the common-cause failure rate if they share the same environment or design flaw. Effective mitigation requires diversity (different designs, manufacturers, or locations) rather than simple redundancy.\n\n\n\nCCF data and beta-factor values for different equipment types are tabulated in IEC 61508 (functional safety) and MIL-HDBK-217F (electronic reliability). For nuclear applications, the NUREG/CR-5497 handbook provides detailed CCF databases.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Reliability Block Diagrams</span>"
+    ]
+  },
+  {
+    "objectID": "02-rbd.html#introduction-to-fault-tree-analysis",
+    "href": "02-rbd.html#introduction-to-fault-tree-analysis",
+    "title": "2  Reliability Block Diagrams",
+    "section": "2.10 Introduction to Fault Tree Analysis",
+    "text": "2.10 Introduction to Fault Tree Analysis\nFault Tree Analysis (FTA) (Vesely et al. 1981) is a top-down approach that starts with an undesirable event (the top event) and works backward to identify combinations of component failures that could cause it.\nWhile an RBD asks “What must work for the system to succeed?”, a fault tree asks “What can cause the system to fail?”\n\nGates\n\nAND gate: top event occurs only if all inputs occur, corresponding to parallel RBD components (all must fail).\nOR gate: top event occurs if any input occurs, corresponding to series RBD components (any failure causes system failure).\n\n\n\nRBD—Fault Tree Duality\n\n\n\n\n\n\n\nRBD configuration\nFault tree gate for system failure\n\n\n\n\nSeries (all must work)\nOR gate (any failure causes system failure)\n\n\nParallel (any can work)\nAND gate (all must fail for system failure)\n\n\n\n\nif (knitr::is_html_output(excludes = \"epub\")) grViz(\"\ndigraph fta {\n  rankdir = TB\n  graph [bgcolor = transparent]\n  node [fontname = 'sans-serif', fontsize = 12, style = filled]\n  edge [arrowsize = 0.8]\n  Top [label = 'System\\nFailure',  shape = rectangle, fillcolor = '#E74C3C', fontcolor = white]\n  OR  [label = 'OR Gate',          shape = diamond,   fillcolor = '#F39C12']\n  F1  [label = 'Component A\\nFails', shape = ellipse, fillcolor = '#AED6F1']\n  F2  [label = 'Component B\\nFails', shape = ellipse, fillcolor = '#AED6F1']\n  Top -&gt; OR\n  OR  -&gt; F1\n  OR  -&gt; F2\n}\n\")\n\n\n\n\n\nThis OR gate corresponds to a two-component series RBD: any single failure causes system failure. For complex fault trees, the R package FaultTree on CRAN provides computational support.\n\n\n\n\n\n\nTipReview\n\n\n\nA fault tree has an AND gate combining two component failures. Which RBD configuration does this correspond to?\n\n\nAnswer\n\nParallel: an AND gate means the system fails only if both components fail simultaneously, which is exactly the parallel (redundant) configuration.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Reliability Block Diagrams</span>"
+    ]
+  },
+  {
+    "objectID": "02-rbd.html#case-study-industrial-cooling-system",
+    "href": "02-rbd.html#case-study-industrial-cooling-system",
+    "title": "2  Reliability Block Diagrams",
+    "section": "2.11 Case Study: Industrial Cooling System",
+    "text": "2.11 Case Study: Industrial Cooling System\nAn industrial cooling system has the following architecture:\n\nWater supply subsystem: two pumps in parallel (each R = 0.92), followed by a filter in series (R = 0.99).\nControl subsystem: a primary controller (R = 0.97) and a backup controller in parallel (R = 0.95).\nBoth subsystems must work (series at system level).\n\n\n# Step 1 — Water supply subsystem\nR_pump_parallel &lt;- 1 - (1 - 0.92)^2\nR_water &lt;- R_pump_parallel * 0.99\nR_water\n\n[1] 0.983664\n\n# Step 2 — Control subsystem\nR_control &lt;- 1 - (1 - 0.97) * (1 - 0.95)\nR_control\n\n[1] 0.9985\n\n# Step 3 — Overall system (both subsystems in series)\nR_system &lt;- R_water * R_control\nR_system\n\n[1] 0.9821885\n\n\n\n\n\n\n\n\nNoteTry It\n\n\n\nModify the case study: the filter is upgraded to R = 0.999. Recalculate the system reliability.\n\nR_pump1  &lt;- 0.92\nR_pump2  &lt;- 0.92\nR_filter &lt;- 0.999   # upgraded from 0.99\nR_ctrl1  &lt;- 0.97\nR_ctrl2  &lt;- 0.95\n\n\n\nSolution\n\n\nR_pump1  &lt;- 0.92\nR_pump2  &lt;- 0.92\nR_filter &lt;- 0.999\nR_ctrl1  &lt;- 0.97\nR_ctrl2  &lt;- 0.95\n\nR_pump_parallel &lt;- 1 - (1 - R_pump1) * (1 - R_pump2)\nR_water   &lt;- R_pump_parallel * R_filter\nR_control &lt;- 1 - (1 - R_ctrl1) * (1 - R_ctrl2)\nR_system  &lt;- R_water * R_control\nR_system  # ~0.985\n\n[1] 0.9911175",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Reliability Block Diagrams</span>"
+    ]
+  },
+  {
+    "objectID": "02-rbd.html#summary",
+    "href": "02-rbd.html#summary",
+    "title": "2  Reliability Block Diagrams",
+    "section": "2.12 Summary",
+    "text": "2.12 Summary\nKey takeaways:\n\nSeries: \\(R_{\\text{sys}} = \\prod R_i\\), every component must work; reliability decreases with more components.\nParallel: \\(R_{\\text{sys}} = 1 - \\prod(1-R_i)\\), redundancy; only one component needs to work.\nMixed: decompose into subsystems, apply formulas step by step.\nk-out-of-n: 1 - pbinom(k-1, n, 1-p) for voting/load-sharing systems.\nSeries MTTF: \\(1/\\sum\\lambda_i\\); Parallel MTTF: \\((1/\\lambda)\\sum_{i=1}^{n}(1/i)\\).\nCommon Cause Failure: redundancy requires diversity to be effective; the \\(\\beta_{\\text{CCF}}\\) factor quantifies the fraction of failures caused by shared events, and adding more identical, coupled components does not protect against CCF.\nFTA duality: series RBD ↔︎ OR gate; parallel RBD ↔︎ AND gate.\n\n\n\n\n\n\n\nBillinton, Roy, and Ronald N. Allan. 1992. Reliability Evaluation of Engineering Systems. 2nd ed. Plenum Press.\n\n\nVesely, W., F. Goldberg, N. Roberts, and D. Haasl. 1981. Fault Tree Handbook. NUREG-0492. US Nuclear Regulatory Commission.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Reliability Block Diagrams</span>"
+    ]
+  }
+]
