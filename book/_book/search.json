@@ -118,5 +118,155 @@
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Reliability Block Diagrams</span>"
     ]
+  },
+  {
+    "objectID": "01-ram.html",
+    "href": "01-ram.html",
+    "title": "1  Reliability, Availability, and Maintainability (RAM)",
+    "section": "",
+    "text": "1.1 Introduction\nReliability, Availability, and Maintainability (RAM) are the foundational metrics of reliability engineering. They describe how well a system performs its intended function, how often it is usable, and how quickly it can be restored when it fails. This chapter introduces these concepts and builds toward calculating probability of failure, \\(B_n\\) life, and system-level reliability.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Reliability, Availability, and Maintainability (RAM)</span>"
+    ]
+  },
+  {
+    "objectID": "01-ram.html#learning-objectives",
+    "href": "01-ram.html#learning-objectives",
+    "title": "1  Reliability, Availability, and Maintainability (RAM)",
+    "section": "1.2 Learning Objectives",
+    "text": "1.2 Learning Objectives\nBy the end of this chapter, you will be able to:\n\nDefine key reliability metrics: reliability, availability, and failure rate.\nDescribe the significance of MTTR, MTTF, and MTBF.\nCalculate probability of failure using reliability data.\nInterpret \\(B_n\\) (or \\(L_n\\)) life values.\nExplain the bathtub curve and identify which failure region a component occupies given its \\(\\beta\\) value.\nCompute system reliability for series and parallel configurations.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Reliability, Availability, and Maintainability (RAM)</span>"
+    ]
+  },
+  {
+    "objectID": "01-ram.html#what-is-ram",
+    "href": "01-ram.html#what-is-ram",
+    "title": "1  Reliability, Availability, and Maintainability (RAM)",
+    "section": "1.3 What is RAM?",
+    "text": "1.3 What is RAM?\nReliability: The ability of an item to perform its intended function without failure over a specified period.\nAvailability: The proportion of time an item is in a functioning condition.\nMaintainability: The ease and speed with which an item can be restored to operational status after a failure.\nThese three concepts are interrelated: a highly reliable item will be available more often, and an item that is easy to maintain can be restored to service quickly, further improving availability.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Reliability, Availability, and Maintainability (RAM)</span>"
+    ]
+  },
+  {
+    "objectID": "01-ram.html#reliability",
+    "href": "01-ram.html#reliability",
+    "title": "1  Reliability, Availability, and Maintainability (RAM)",
+    "section": "1.4 Reliability",
+    "text": "1.4 Reliability\nReliability is the probability that an item will not fail under defined conditions for a specified period:\n\\[\\text{Reliability} = \\left(1 - \\frac{\\text{Failed Time}}{\\text{Total Time}}\\right) \\times 100\\]\nExample: A motor ran for 5 years total and was failed for 10 of those days.\n\\[\\text{Reliability} = \\left(1 - \\frac{10}{5 \\times 365}\\right) \\times 100 = 94.5\\%\\]\nUnreliability is the complement:\n\\[\\text{Unreliability} = 1 - \\text{Reliability} = \\frac{\\text{Failed Time}}{\\text{Total Time}} \\times 100\\]\nThe ReliaLearnR package includes helper functions for these calculations:\n\nlibrary(ReliaLearnR)\n\n# Motor: 5 years total, 10 days failed\nrel(outageTime = 10, totalTime = 5 * 365)\n\n[1] 0.9945205\n\n\n\n\n\n\n\n\nTipReview\n\n\n\nA machine ran for 3 years total and was failed for 5 of those days. What are the reliability and unreliability?\n\n\nAnswer\n\nReliability = \\((1 - 5/(3 \\times 365)) \\times 100 = 99.5\\%\\). Unreliability = \\(0.5\\%\\).",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Reliability, Availability, and Maintainability (RAM)</span>"
+    ]
+  },
+  {
+    "objectID": "01-ram.html#availability",
+    "href": "01-ram.html#availability",
+    "title": "1  Reliability, Availability, and Maintainability (RAM)",
+    "section": "1.5 Availability",
+    "text": "1.5 Availability\nAvailability accounts for both failed time and scheduled maintenance: any time the item is unavailable for service:\n\\[\\text{Availability} = \\left(1 - \\frac{\\text{Unavailable Time}}{\\text{Total Time}}\\right) \\times 100\\]\nExample: A motor ran for 5 years, was failed for 10 days, and had 15 days of scheduled maintenance.\n\\[\\text{Availability} = \\left(1 - \\frac{10 + 15}{5 \\times 365}\\right) \\times 100 = 93.2\\%\\]\n\n# Motor: 5 years, 10 days failed + 15 days maintenance = 25 unavailable\navail(unavailTime = 25, totalTime = 5 * 365)\n\n[1] 0.9863014\n\n\nNote: standby time (available but not in use) does not count as unavailable time.\n\n\n\n\n\n\nTipReview\n\n\n\nWhat is the difference between reliability and availability?\n\n\nAnswer\n\nAvailability includes scheduled maintenance downtime; reliability does not. Availability \\(\\leq\\) Reliability (all failed time reduces both, but only availability is also reduced by planned maintenance).",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Reliability, Availability, and Maintainability (RAM)</span>"
+    ]
+  },
+  {
+    "objectID": "01-ram.html#mean-time-to-repair-mttr",
+    "href": "01-ram.html#mean-time-to-repair-mttr",
+    "title": "1  Reliability, Availability, and Maintainability (RAM)",
+    "section": "1.6 Mean Time to Repair (MTTR)",
+    "text": "1.6 Mean Time to Repair (MTTR)\nMTTR measures maintainability: the average time required to repair a failed item:\n\\[\\text{MTTR} = \\frac{\\sum_{i=1}^{n} \\text{RepairTime}_i}{\\text{RepairCount}}\\]\nExample: 5 failures with repair times of 5, 10, 15, 8, and 12 days.\n\\[\\text{MTTR} = \\frac{5 + 10 + 15 + 8 + 12}{5} = 10 \\text{ days}\\]",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Reliability, Availability, and Maintainability (RAM)</span>"
+    ]
+  },
+  {
+    "objectID": "01-ram.html#mean-time-to-failure-mttf",
+    "href": "01-ram.html#mean-time-to-failure-mttf",
+    "title": "1  Reliability, Availability, and Maintainability (RAM)",
+    "section": "1.7 Mean Time to Failure (MTTF)",
+    "text": "1.7 Mean Time to Failure (MTTF)\nMTTF is a reliability measure for non-repairable items. Once the item fails, it is replaced rather than repaired.\n\\[\\text{MTTF} = \\frac{\\text{Total Time}}{\\text{FailureCount}}\\]\nExample: 100 motors run for 5 years total; 5 failures occur.\n\\[\\text{MTTF} = \\frac{5 \\times 100}{5} = 100 \\text{ years}\\]\n\nmttf(failures = 5, totalTime = 5 * 100)\n\n[1] 100",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Reliability, Availability, and Maintainability (RAM)</span>"
+    ]
+  },
+  {
+    "objectID": "01-ram.html#mean-time-between-failures-mtbf",
+    "href": "01-ram.html#mean-time-between-failures-mtbf",
+    "title": "1  Reliability, Availability, and Maintainability (RAM)",
+    "section": "1.8 Mean Time Between Failures (MTBF)",
+    "text": "1.8 Mean Time Between Failures (MTBF)\nMTBF is the reliability measure for repairable systems, where the item is restored to service after each failure.\n\\[\\text{MTBF} = \\frac{\\text{Total Time}}{\\text{FailureCount}}\\]\nThe formula is identical to MTTF, but the interpretation differs: MTBF is the average time between successive failures on the same system.\nExample: A motor fails 5 times during 10,000 total operating hours.\n\\[\\text{MTBF} = \\frac{10{,}000}{5} = 2{,}000 \\text{ hours}\\]\n\nmtbf(failures = 5, totalTime = 10000)\n\n[1] 2000\n\n\n\n\n\n\n\n\nNoteTry It\n\n\n\nA fleet of 50 generators runs for 8 years. During that time, 20 failures occur. Calculate the MTBF in years.\n\nfleet_size &lt;- 50\nyears      &lt;- 8\nfailures   &lt;- 20\n# Calculate MTBF = (fleet_size * years) / failures\n\n\n\nSolution\n\n\nfleet_size &lt;- 50\nyears      &lt;- 8\nfailures   &lt;- 20\nMTBF &lt;- (fleet_size * years) / failures\nMTBF  # 20 years\n\n[1] 20\n\n\n\n\n\n\n\n\n\n\n\nTipReview\n\n\n\nWhat is the difference between MTTF and MTBF?\n\n\nAnswer\n\nMTTF is for non-repairable items (replaced after failure); MTBF is for repairable systems (restored to service after failure). Both use the same formula, but MTBF represents the average time between successive failures of the same system.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Reliability, Availability, and Maintainability (RAM)</span>"
+    ]
+  },
+  {
+    "objectID": "01-ram.html#failure-rate",
+    "href": "01-ram.html#failure-rate",
+    "title": "1  Reliability, Availability, and Maintainability (RAM)",
+    "section": "1.9 Failure Rate",
+    "text": "1.9 Failure Rate\nThe failure rate \\(\\lambda\\) is the inverse of MTBF:\n\\[\\lambda = \\frac{1}{\\text{MTBF}} = \\frac{\\text{FailureCount}}{\\text{Total Time}}\\]\nA key assumption of MTBF is a constant failure rate throughout the item’s life. While this is not always true in practice, it is a reasonable approximation for many systems during their useful life period.\nExample: 100 motors run for 10 years; 20 failures occur.\n\\[\\lambda = \\frac{20}{10 \\times 100} = 0.02 \\text{ failures per year}\\]\n\nfr(failures = 20, totalTime = 10 * 100)\n\n[1] 0.02",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Reliability, Availability, and Maintainability (RAM)</span>"
+    ]
+  },
+  {
+    "objectID": "01-ram.html#probability-of-failure",
+    "href": "01-ram.html#probability-of-failure",
+    "title": "1  Reliability, Availability, and Maintainability (RAM)",
+    "section": "1.10 Probability of Failure",
+    "text": "1.10 Probability of Failure\nUnder the constant failure rate assumption, failure times follow an exponential distribution. The cumulative probability of failure prior to time \\(t\\) is:\n\\[F(t) = 1 - e^{-\\lambda t}\\]\nAnd the cumulative probability of survival (reliability function) is:\n\\[R(t) = 1 - F(t) = e^{-\\lambda t}\\]\nExample: A motor has a failure rate of 0.1 failures/year. Probability of surviving 10 years:\n\\[R(10) = e^{-10 \\times 0.1} = e^{-1} \\approx 36.8\\%\\]\n\nlambda &lt;- 0.1\nt      &lt;- 10\nR &lt;- exp(-lambda * t)\nR\n\n[1] 0.3678794\n\n\n\nThe Reliability Curve\nThe shape of \\(R(t) = e^{-\\lambda t}\\) depends entirely on \\(\\lambda\\). Below are curves for three different failure rates:\n\nt &lt;- seq(0, 30, by = 0.1)\n\nplot(t, exp(-0.05 * t), type = \"l\", col = \"blue\", lwd = 2,\n     xlab = \"Time\", ylab = \"Reliability R(t)\",\n     main = \"Exponential Reliability for Different Failure Rates\",\n     ylim = c(0, 1))\nlines(t, exp(-0.1 * t),  col = \"red\",    lwd = 2)\nlines(t, exp(-0.3 * t),  col = \"darkgreen\", lwd = 2)\nabline(h = exp(-1), col = \"gray50\", lty = 2)\nlegend(\"topright\",\n       legend = c(\"λ = 0.05 (MTBF = 20)\", \"λ = 0.10 (MTBF = 10)\", \"λ = 0.30 (MTBF = 3.3)\",\n                  \"R = 36.8% at t = MTBF\"),\n       col = c(\"blue\", \"red\", \"darkgreen\", \"gray50\"),\n       lty = c(1, 1, 1, 2), lwd = 2)\n\n\n\n\n\n\n\n\nNote that at \\(t = \\text{MTBF} = 1/\\lambda\\), reliability is always \\(e^{-1} \\approx 36.8\\%\\) regardless of \\(\\lambda\\). This is a universal property of the exponential distribution.\n\n\n\n\n\n\nNoteTry It\n\n\n\nA pump has a failure rate of 0.05 failures/year. Calculate the probability of survival at \\(t = 10\\) years.\n\nlambda &lt;- 0.05\nt      &lt;- 10\n# R(t) = exp(-lambda * t)\n\n\n\nSolution\n\n\nlambda &lt;- 0.05\nt      &lt;- 10\nR &lt;- exp(-lambda * t)\nR  # ~0.607 (60.7% survival)\n\n[1] 0.6065307",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Reliability, Availability, and Maintainability (RAM)</span>"
+    ]
+  },
+  {
+    "objectID": "01-ram.html#b_n-or-l_n-life",
+    "href": "01-ram.html#b_n-or-l_n-life",
+    "title": "1  Reliability, Availability, and Maintainability (RAM)",
+    "section": "1.11 \\(B_n\\) or \\(L_n\\) Life",
+    "text": "1.11 \\(B_n\\) or \\(L_n\\) Life\nThe \\(B_n\\) life is the time at which \\(n\\)% of a population is expected to have failed. Some industries use \\(L_n\\) instead, but the concept is identical.\nTo find \\(B_n\\), set \\(F(t) = n/100\\) and solve for \\(t\\):\n\\[B_n = -\\frac{\\ln(1 - n/100)}{\\lambda}\\]\nExample: Motor with \\(\\lambda = 0.2\\) failures/year. B10 life:\n\\[B_{10} = -\\frac{\\ln(1 - 0.1)}{0.2} = 0.526 \\text{ years}\\]\n\nlambda &lt;- 0.2\nB10 &lt;- -log(1 - 0.10) / lambda\nB10  # 0.526 years\n\n[1] 0.5268026\n\n\n\n\n\n\n\n\nNoteTry It\n\n\n\nA component has a failure rate of 0.05 failures/year. Calculate the B10 life.\n\nlambda &lt;- 0.05\n# B10 = -log(1 - 0.10) / lambda\n\n\n\nSolution\n\n\nlambda &lt;- 0.05\nB10 &lt;- -log(1 - 0.10) / lambda\nB10  # ~2.1 years\n\n[1] 2.10721\n\n\n\n\n\n\n\n\n\n\n\nTipReview\n\n\n\nWhat is the relationship between failure rate and MTBF?\n\n\nAnswer\n\nFailure rate is the inverse of MTBF: \\(\\lambda = 1/\\text{MTBF}\\), and \\(\\text{MTBF} = 1/\\lambda\\).",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Reliability, Availability, and Maintainability (RAM)</span>"
+    ]
+  },
+  {
+    "objectID": "01-ram.html#from-exponential-to-weibull",
+    "href": "01-ram.html#from-exponential-to-weibull",
+    "title": "1  Reliability, Availability, and Maintainability (RAM)",
+    "section": "1.12 From Exponential to Weibull",
+    "text": "1.12 From Exponential to Weibull\nThe exponential model assumes a constant failure rate. This is appropriate for electronic components that fail at random, but many mechanical components have failure rates that change over time.\nThe Weibull distribution (Abernethy 2004) generalizes the exponential by adding a shape parameter \\(\\beta\\):\n\\[R(t) = e^{-(t/\\eta)^\\beta}\\]\n\n\n\n\\(\\beta\\)\nFailure rate\nTypical cause\n\n\n\n\n\\(&lt; 1\\)\nDecreasing\nInfant mortality\n\n\n\\(= 1\\)\nConstant\nRandom failures, exponential applies\n\n\n\\(&gt; 1\\)\nIncreasing\nWear-out (fatigue, corrosion, aging)\n\n\n\nWhen \\(\\beta = 1\\), the Weibull reduces to the exponential with \\(\\lambda = 1/\\eta\\).",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Reliability, Availability, and Maintainability (RAM)</span>"
+    ]
+  },
+  {
+    "objectID": "01-ram.html#the-bathtub-curve",
+    "href": "01-ram.html#the-bathtub-curve",
+    "title": "1  Reliability, Availability, and Maintainability (RAM)",
+    "section": "1.13 The Bathtub Curve",
+    "text": "1.13 The Bathtub Curve\nThe failure rate of a population of items over its lifetime traces a characteristic shape known as the bathtub curve, named for its distinctive U-profile. Rather than drawing it as a stylized cartoon, we can build it analytically by compositing the three Weibull failure modes:\n\\[h(t) = \\underbrace{h_{\\text{infant}}(t)}_{\\beta &lt; 1} \\;+\\; \\underbrace{h_{\\text{random}}(t)}_{\\beta = 1} \\;+\\; \\underbrace{h_{\\text{wear-out}}(t)}_{\\beta &gt; 1}\\]\nwhere the Weibull hazard rate is \\(h(t) = (\\beta/\\eta)(t/\\eta)^{\\beta-1}\\). Each term represents a physically distinct failure mechanism; the bathtub shape is not assumed, it emerges from their sum.\n\nt &lt;- seq(0.01, 15, by = 0.01)\n\n# Three Weibull hazard rate components\nh_infant  &lt;- function(t, b = 0.4, e = 2)  (b/e) * (t/e)^(b-1)   # infant mortality\nh_random  &lt;- function(t, b = 1.0, e = 5)  (b/e) * (t/e)^(b-1)   # random failures\nh_wearout &lt;- function(t, b = 3.5, e = 10) (b/e) * (t/e)^(b-1)   # wear-out\n\nh_total &lt;- h_infant(t) + h_random(t) + h_wearout(t)\n\nplot(t, h_total, type = \"l\", col = \"black\", lwd = 3,\n     xlab = \"Time\", ylab = \"Failure Rate h(t)\",\n     main = \"The Bathtub Curve: Three Composited Failure Modes\",\n     ylim = c(0, max(h_total) * 1.1))\nlines(t, h_infant(t),  col = \"blue\",      lwd = 2, lty = 2)\nlines(t, h_random(t),  col = \"red\",       lwd = 2, lty = 2)\nlines(t, h_wearout(t), col = \"darkgreen\", lwd = 2, lty = 2)\n\nabline(v = c(2.5, 9), col = \"gray60\", lty = 3)\ntext(1.25,  max(h_total) * 0.85, \"Infant\\nMortality\",    col = \"blue\",      cex = 0.85)\ntext(5.75,  max(h_total) * 0.55, \"Useful Life\\n(Random)\", col = \"red\",       cex = 0.85)\ntext(12.25, max(h_total) * 0.85, \"Wear-out\",              col = \"darkgreen\", cex = 0.85)\n\nlegend(\"top\", inset = 0.02,\n       legend = c(\"Total h(t)\", \"Infant (β = 0.4)\", \"Random (β = 1)\", \"Wear-out (β = 3.5)\"),\n       col = c(\"black\", \"blue\", \"red\", \"darkgreen\"), lwd = c(3, 2, 2, 2), lty = c(1, 2, 2, 2))\n\n\n\n\n\n\n\n\nEach region maps to a distinct engineering strategy:\n\nInfant mortality (\\(\\beta &lt; 1\\)): manufacturing defects, assembly errors, material flaws. Mitigated by burn-in testing, running units briefly before shipment to screen out defective items.\nUseful life (\\(\\beta \\approx 1\\)): random external shocks, load spikes, operator error. The constant failure rate means failures are unrelated to age; mitigated by redundancy.\nWear-out (\\(\\beta &gt; 1\\)): fatigue, corrosion, material aging. Mitigated by preventive replacement scheduled before the B₅ or B₁₀ life is reached.\n\n\n\n\n\n\n\nTipReview\n\n\n\nA pump has \\(\\beta = 2.8\\). Which region of the bathtub curve does it occupy, and what maintenance strategy is most appropriate?\n\n\nAnswer\n\n\\(\\beta &gt; 1\\) places it in the wear-out region. The failure rate is increasing with age, so a time-based preventive replacement strategy, replacing the pump before it reaches its B₅ or B₁₀ life, is most appropriate.\n\n\n\nThe bathtub curve is a population-level concept: individual units fail at random times, but the aggregate failure rate of a large fleet traces this shape. Fitting a separate Weibull to each failure mode is covered in Chapter 3.\nThe WeibullR package (Silkworth and Symynck 2022) provides functions for Weibull fitting in R.\n\nlibrary(WeibullR)\n\nfailures &lt;- c(500, 820, 1100, 1350, 1590)\nfit &lt;- MLEw2p(failures, show = TRUE)\n\n\n\n\n\n\n\n\nA \\(\\beta\\) close to 1 indicates random failures consistent with the exponential model. Higher values indicate wear-out behavior. The Life Data Analysis chapter covers Weibull analysis in depth.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Reliability, Availability, and Maintainability (RAM)</span>"
+    ]
+  },
+  {
+    "objectID": "01-ram.html#system-reliability",
+    "href": "01-ram.html#system-reliability",
+    "title": "1  Reliability, Availability, and Maintainability (RAM)",
+    "section": "1.14 System Reliability",
+    "text": "1.14 System Reliability\nReal systems combine many components. System reliability depends on how those components are arranged.\n\nSeries Systems\nIn a series configuration, every component must function for the system to function:\n\\[R_{\\text{sys}} = R_1 \\times R_2 \\times \\cdots \\times R_n = \\prod_{i=1}^{n} R_i\\]\nA series system is always less reliable than its weakest component.\n\nR_components &lt;- c(0.90, 0.90, 0.90)\nR_series &lt;- prod(R_components)\nR_series  # 72.9%\n\n[1] 0.729\n\n\n\n\nParallel Systems\nIn a parallel configuration, only one component needs to function, providing redundancy. The system fails only when all components fail:\n\\[R_{\\text{sys}} = 1 - (1 - R_1)(1 - R_2) \\cdots (1 - R_n)\\]\n\nR_parallel &lt;- 1 - prod(1 - R_components)\nR_parallel  # 99.9%\n\n[1] 0.999\n\n\nThe effect of redundancy increases dramatically with the number of parallel components:\n\nn_vals &lt;- 1:8\nR_c    &lt;- 0.90\nR_par  &lt;- 1 - (1 - R_c)^n_vals\n\nplot(n_vals, R_par, type = \"b\", col = \"steelblue\", lwd = 2, pch = 19,\n     xlab = \"Number of parallel components\",\n     ylab = \"System Reliability\",\n     main = \"Effect of Redundancy on System Reliability (R_component = 0.90)\",\n     ylim = c(0, 1))\nabline(h = R_c, col = \"gray50\", lty = 2)\nlegend(\"bottomright\",\n       legend = c(\"System reliability\", \"Single component (0.90)\"),\n       col = c(\"steelblue\", \"gray50\"), lty = c(1, 2), pch = c(19, NA), lwd = 2)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNoteTry It\n\n\n\nFour components each have reliability R = 0.85. Calculate the series and parallel system reliability.\n\nR_comp &lt;- 0.85\n# Series:   R_sys = prod(R_components)\n# Parallel: R_sys = 1 - prod(1 - R_components)\n\n\n\nSolution\n\n\nR_comp &lt;- rep(0.85, 4)\nR_series   &lt;- prod(R_comp)\nR_parallel &lt;- 1 - prod(1 - R_comp)\nR_series    # ~0.522 (52.2%)\n\n[1] 0.5220062\n\nR_parallel  # ~0.9995 (99.95%)\n\n[1] 0.9994937\n\n\n\n\n\n\n\n\n\n\n\nTipReview\n\n\n\nThree components each have 80% reliability. What is the series system reliability?\n\n\nAnswer\n\n\\(R_{\\text{sys}} = 0.8 \\times 0.8 \\times 0.8 = 0.512 = 51.2\\%\\)",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Reliability, Availability, and Maintainability (RAM)</span>"
+    ]
+  },
+  {
+    "objectID": "01-ram.html#summary",
+    "href": "01-ram.html#summary",
+    "title": "1  Reliability, Availability, and Maintainability (RAM)",
+    "section": "1.15 Summary",
+    "text": "1.15 Summary\nKey takeaways:\n\n\\(R(t) = e^{-\\lambda t}\\), exponential reliability under a constant failure rate.\nAt \\(t = \\text{MTBF} = 1/\\lambda\\), reliability is always 36.8%.\nMTTF is for non-repairable items; MTBF is for repairable systems.\nSeries systems: \\(R_{\\text{sys}} = \\prod R_i\\), reliability decreases with more components.\nParallel systems: \\(R_{\\text{sys}} = 1 - \\prod(1 - R_i)\\), redundancy increases reliability.\nWhen \\(\\beta \\neq 1\\), use the Weibull distribution (see Chapter 3).\n\n\n\n\n\n\n\nAbernethy, Robert B. 2004. The New Weibull Handbook. 5th ed. R.B. Abernethy.\n\n\nSilkworth, David, and Jurgen Symynck. 2022. WeibullR: Weibull Analysis for Reliability Engineering. https://doi.org/10.32614/CRAN.package.WeibullR.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Reliability, Availability, and Maintainability (RAM)</span>"
+    ]
   }
 ]
