@@ -17,7 +17,7 @@ book:
   url: https://paulgovan.github.io/ReliaLearnR/
   repo-url: https://github.com/paulgovan/ReliaLearnR
   sharing: [twitter, facebook, linkedin]
-  downloads: [pdf, epub]
+  downloads: []
   chapters:
     - index.qmd
     - 01-ram.qmd
